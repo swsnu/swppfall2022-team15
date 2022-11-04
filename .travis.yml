@@ -8,9 +8,9 @@ jobs:
       python: "3.9.6"
       addons:
         sonarcloud:
-          organization: swppfall2022-team15
+          organization: swsnu
           token:
-            secure: "XtbRBijrA05EqsrMqst9XUOwEX6DDyxnzaMHAE1tg59rVpTAaJsDkFKXLXvnfKE+ACVEWYp2vH8RsWBPVOvdjHxwuu8pVrNJwIkQCWJHGh+jxhU0hRo1MtJiueAZH3uj2Om8bdS3SHGWiMwJzs03XB9SDjIFKo9Gh2uZxnhKfK4CzUjPqOyOTXa8zGInfK4esn/8yHoYOD5n8QMr2zP+Y5Sk2KZXGwN+pHlRk2DGb44PAx60BumjdVoRPpc6gwZiQnsnso2mMp0yNRmvoagVEeY8XYb/jYMIwsx+gTU1sPVLvsd5sQm9lUZMOcuyNU0wgWJUtaVLrHVWdUyJCGU9eH71ZVj14BlYA9lMHZ72MGpiwrA1N8F9dw8zH68IJpG2N5X4ECv/isv7qAiXCHEIhI9ARiG/esHj1nL0xYDIv9ucYXyZkcfi11WoZG9BpKmMbW7pxPwp2e9UzO879A6ZbhPAjMRbuzncEwhO39m5dmOyXPFdi3XORMAljgDsEOlAINI4ejwaUNRUj4lSDPzsKr/pCx7VqNFfWDkivJFiRpc5xMYWwnkn6BRQHXb2V/2JGxZInluMm9qDTe+Ca8tfkrV6gdhcfcpszQu7NKvQXELkynNsVuck/J0+y+6zsXVd/6JIqFDVhw/aN3deIjp1bcFIHTS9m5BsLi2Qhd2+6tM="
+            secure: "NBYOk1r3D+RhZIWFn85uRN8sVbaEP7jVTSGBXX7vqy3Y1gUGWbakWoOtgci/Z8J0ixdhLlZCG+6QOvjB15gGFU+TLaHMJGNf9t4sL2q2xU/sGjO+HxK0CvJXzRWNjM8rDpbK/dTJo93KY3yqVkTTjnBwNTUG09/SwBE3uDCjTxbekWlc75llh587p17quhHsJWjf+lAcSd5mAqsYVJ+IsrOY5adjpszyT8WcHRghwVpkGVjZ5cFVIRYiCqtSbW1WqkThgoBXj0q6ZKJSEgkM9Gye01OrNb25A1BVlTHJXNPQ8bGR3rIovLemkxtkLZWjJmq2PNevv+KqCscTRHKMEgjnF3Ly8klZraDIJ2jU8vPtoLI+aqCB97LdPWEB/yF+GRPlSDMt6BdislmiKACwjxtycWFYRoqqAbeY2kkHjm6CcKZvb+OekVwpetL7NG0nACBjeWdQUdUekATd4W3TAxkIwjJSCt6ur470WJkyskByC77QanYnMs+l+KvFgBOpgj+6iTIHTIqyGxLYYLY0wgbG7AOvfrE6jGxqdencHSdqpHjfkPe3YjkJPvUxTodRSyFKXHi+ktKlLQvJ4/KyVrfFvlTDAhRIfFeAR4vjgsUjU0SM2j6PUAZ5TfI8swryOljrl+uAluIfK5W9xl68w1DPDPibnRbJfEIHxDg16oU="
       install:
         - cd backend
         - pip install pipenv
