@@ -1,10 +1,10 @@
-import Button from "@mui/material/Button";
 import "./App.css";
+import NotiSidebar from "./Sidebar/NotiSidebar";
 
 function App() {
   return (
     <div className="App">
-      <Button variant="contained">Hello World</Button>
+      <NotiSidebar/>
     </div>
   );
 }
