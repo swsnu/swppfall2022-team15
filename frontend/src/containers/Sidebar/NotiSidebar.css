@@ -1,0 +1,20 @@
+.background {
+    background-color: #ffffff;
+}
+
+.top {
+    background-color: #f8f8f8;
+    font-size: x-large;
+}
+
+.even {
+    background-color: #808080;
+    font-size: x-large;
+    text-align: center;
+}
+
+.odd {
+    background-color: #7393b3;
+    font-size: x-large;
+    text-align: center;
+}

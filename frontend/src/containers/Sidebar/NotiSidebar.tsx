@@ -16,11 +16,11 @@ export default function NotiSidebar() {
     const messageIcon = <MdMessage size='48'></MdMessage>
     const templateIcon = <HiTemplate size='48'></HiTemplate>
     const historyIcon = <FaHistory size='48'></FaHistory>
-    const toggleIcon = <AiOutlineMenuUnfold size='36'></AiOutlineMenuUnfold>
+    const toggleIcon = <AiOutlineMenuUnfold size='36' data-testid={"collapseIcon"} ></AiOutlineMenuUnfold>
 
     return (
         <div className="background" style={ { display: 'flex', height: '100%' } }>
-            <Sidebar className="sidebar">
+            <Sidebar className="sidebar" data-testid="sidebar">
                 <Menu>
                     <MenuItem className="top">NotiManager</MenuItem>
                 </Menu>
