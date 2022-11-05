@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { ProSidebarProvider } from 'react-pro-sidebar';
+import { Provider } from 'react-redux';
+
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ProSidebarProvider } from 'react-pro-sidebar';
+import { store } from './store';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,7 +15,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ProSidebarProvider>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </ProSidebarProvider>
   </React.StrictMode>
 );
