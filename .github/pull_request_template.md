@@ -5,7 +5,7 @@
 ### CheckList 
 - [ ] Assignee
 - [ ] Reviewer
-- [ ] Labelsg
+- [ ] Labels
 - [ ] Test Code
 - [ ] (Front) Screenshot
 
