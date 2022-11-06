@@ -6,7 +6,6 @@
 - [ ] Assignee
 - [ ] Reviewer
 - [ ] Labels
-- [ ] Local Test Pass
 - [ ] Test Code
 - [ ] (Front) Screenshot
 
