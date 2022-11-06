@@ -15,7 +15,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Iconify from "../components/iconify/Iconify";
 import Label from "../components/label/Label";
-import ProjectCreateModal from "../components/project/ProjectCreateModal";
+import ProjectCreateModal from "../components/Project/ProjectCreateModal";
 import { deleteProject } from "../services/project";
 import { AppDispatch } from "../store";
 import { fetchProjects, projectListSelector } from "../store/slices/project";
