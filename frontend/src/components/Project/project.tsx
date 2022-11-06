@@ -1,14 +1,16 @@
-import React from "react";
+import { useParams } from "react-router";
 
 interface IProps {
     name: string; 
 }
 
 
-export const Project = (props: IProps) => {
+export default function Project() {
+    const {id} = useParams();
+
     return (
         <div>
-            <h1> Hello {props.name}</h1>
+            <h1> {id} </h1>
         </div>
     )
 }
