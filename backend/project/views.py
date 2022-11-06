@@ -9,7 +9,7 @@ from project.serializers import ProjectSerializer
 class ProjectViewSet(ModelViewSet):
     permission_classes = (IsAuthenticated, IsOwner)
     serializer_class = ProjectSerializer
-    queryset = Project.objects.all()
+    queryset = Project.objects.all().order_by('-pk')
 
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user)
