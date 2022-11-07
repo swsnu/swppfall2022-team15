@@ -1,6 +1,6 @@
 import Button from "@mui/material/Button";
 import "./App.css";
-import NotiSidebar from "./containers/Sidebar/NotiSidebar";
+import NotiSidebar from "./components/Sidebar/NotiSidebar";
 
 function App() {
   return (
