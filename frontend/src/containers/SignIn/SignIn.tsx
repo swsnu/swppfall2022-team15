@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [authorized, setAuthorized] = useState<boolean>(false);
+    //const [authorized, setAuthorized] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     const handleSignIn = async () => {
+        navigate(`/home`);
     };
     const handleSignUp = () => {
-        return <Navigate to="/signup" />
+        navigate(`/signup`);
     };
 
     return (

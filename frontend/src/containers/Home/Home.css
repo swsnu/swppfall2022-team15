@@ -1,0 +1,20 @@
+.projects {
+    position: absolute;
+    left: 400px;
+    top: 100px;
+
+    font-size: 40px;
+}
+
+.project {
+    padding-top: 20px;
+    font-size: 20px;
+}
+
+.sentNotis {
+    position: absolute;
+    left: 400px;
+    top: 600px;
+
+    font-size: 20px;
+}
