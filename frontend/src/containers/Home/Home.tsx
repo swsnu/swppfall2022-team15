@@ -48,6 +48,10 @@ const mockProjectData: {
     ]
 }
 
+//Todo: create mock data for notifications
+//Todo: implement recently sent notifications list
+//Todo: implement upcoming notifications list
+
 
 export default function Home() {
     return (

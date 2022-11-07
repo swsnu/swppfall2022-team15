@@ -1,15 +1,20 @@
+import "./SignUp.css";
+
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
     const [email, setEmail] = useState<string>("")
     const [username, setUsername] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [passwordConfirm, setPasswordConfirm] = useState<string>("")
-    
+    const navigate = useNavigate();
 
     const handleCancel = async () => {
+        navigate(`/login`);
     }
     const handleSignUp = async () => {
+        //Todo: Implement SignUp
     }
 
     return (
