@@ -2,16 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ProSidebarProvider } from 'react-pro-sidebar';
 import { Provider } from 'react-redux';
+import axios from 'axios';
 
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './store';
 
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+axios.defaults.headers.common['Authorization'] =
+  'Token 303de56231bac7fcd7a54bdac1fa8a2f470c07ef';
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+
 root.render(
   <React.StrictMode>
     <ProSidebarProvider>
