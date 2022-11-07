@@ -1,12 +1,15 @@
-import Button from "@mui/material/Button";
 import "./App.css";
 import NotiSidebar from "./components/Sidebar/NotiSidebar";
 
 function App() {
   return (
-    <div className="App" style={ { height: '100vh' } }>
+    <BrowserRouter>
       <NotiSidebar/>
-    </div>
+      // TODO: Other components should be placed next to sidebar, not below
+      <Routes>
+        <Route path="/projects/" element={<ProjectListTable/>}/>
+      </Routes>
+     </BrowserRouter>
   );
 }
 

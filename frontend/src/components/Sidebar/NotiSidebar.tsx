@@ -6,38 +6,86 @@ import { MdMessage } from "react-icons/md"
 import { AiOutlineMenuUnfold } from "react-icons/ai"
 
 import "./NotiSidebar.css";
+import { useNavigate } from "react-router";
 
 export default function NotiSidebar() {
     const { collapseSidebar } = useProSidebar();
 
-    const homeIcon = <FaHome size='48'></FaHome>
-    const projectIcon = <FaFolderOpen size='48'></FaFolderOpen>
-    const targetIcon = <FiTarget size='48'></FiTarget>
-    const messageIcon = <MdMessage size='48'></MdMessage>
-    const templateIcon = <HiTemplate size='48'></HiTemplate>
-    const historyIcon = <FaHistory size='48'></FaHistory>
-    const toggleIcon = <AiOutlineMenuUnfold size='36' data-testid={"collapseIcon"} ></AiOutlineMenuUnfold>
+  const navigate = useNavigate();
 
-    return (
-        <div className="background" style={ { display: 'flex', height: '100%' } }>
-            <Sidebar className="sidebar" data-testid="sidebar">
-                <Menu>
-                    <MenuItem className="top">NotiManager</MenuItem>
-                </Menu>
-                <Menu>
-                    <MenuItem className="odd" icon={homeIcon} style={ { height: '150px' } }> Home </MenuItem>
-                    <MenuItem className="even" icon={projectIcon} style={ { height: '150px' } }> Projects </MenuItem>
-                    <MenuItem className="odd" icon={targetIcon} style={ { height: '150px' } }> Targets </MenuItem>
-                    <MenuItem className="even" icon={messageIcon} style={ { height: '150px' } }> Messages </MenuItem>
-                    <MenuItem className="odd" icon={templateIcon} style={ { height: '150px' } }> Templates </MenuItem>
-                    <MenuItem className="even" icon={historyIcon} style={ { height: '150px' } }> History </MenuItem>
-                </Menu>
-            </Sidebar>
-            <main>
-                <svg onClick={() => collapseSidebar()}>{toggleIcon}</svg>
-            </main>
-        </div>
+  const homeIcon = <FaHome size="48"></FaHome>;
+  const projectIcon = <FaFolderOpen size="48"></FaFolderOpen>;
+  const targetIcon = <FiTarget size="48"></FiTarget>;
+  const messageIcon = <MdMessage size="48"></MdMessage>;
+  const templateIcon = <HiTemplate size="48"></HiTemplate>;
+  const historyIcon = <FaHistory size="48"></FaHistory>;
+  const toggleIcon = (
+    <AiOutlineMenuUnfold
+      size="36"
+      data-testid={"collapseIcon"}
+    ></AiOutlineMenuUnfold>
+  );
 
-    )
-        
+  return (
+    <div className="background" style={{ display: "flex", height: "100%" }}>
+      <Sidebar className="sidebar" data-testid="sidebar">
+        <Menu>
+          <MenuItem className="top">NotiManager</MenuItem>
+        </Menu>
+        <Menu>
+          <MenuItem className="odd" icon={homeIcon} style={{ height: "150px" }}>
+            {" "}
+            Home{" "}
+          </MenuItem>
+          <MenuItem
+            className="even"
+            icon={projectIcon}
+            style={{ height: "150px" }}
+            // XXX(vietman2)
+            onClick={() => {
+              navigate("/projects");
+            }}
+          >
+            {" "}
+            Projects{" "}
+          </MenuItem>
+          <MenuItem
+            className="odd"
+            icon={targetIcon}
+            style={{ height: "150px" }}
+          >
+            {" "}
+            Targets{" "}
+          </MenuItem>
+          <MenuItem
+            className="even"
+            icon={messageIcon}
+            style={{ height: "150px" }}
+          >
+            {" "}
+            Messages{" "}
+          </MenuItem>
+          <MenuItem
+            className="odd"
+            icon={templateIcon}
+            style={{ height: "150px" }}
+          >
+            {" "}
+            Templates{" "}
+          </MenuItem>
+          <MenuItem
+            className="even"
+            icon={historyIcon}
+            style={{ height: "150px" }}
+          >
+            {" "}
+            History{" "}
+          </MenuItem>
+        </Menu>
+      </Sidebar>
+      <main>
+        <svg onClick={() => collapseSidebar()}>{toggleIcon}</svg>
+      </main>
+    </div>
+  );
 }
