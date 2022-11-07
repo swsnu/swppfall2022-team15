@@ -12,7 +12,7 @@ import { store } from './store';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-
+axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.headers.common['Authorization'] =
   'Token 303de56231bac7fcd7a54bdac1fa8a2f470c07ef';
 axios.defaults.headers.common['Content-Type'] = 'application/json';
