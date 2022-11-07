@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { idText } from "typescript";
-import { RootState } from "..";
 
+import { RootState } from "..";
 import { NotificationType } from "../../types";
-import { EnumNotificationType } from "../../enums";
 
 export const fetchNotifcations = createAsyncThunk(
   "notifications/fetchNotifications",
@@ -41,6 +39,6 @@ export const notificationSlice = createSlice({
 });
 
 export const notificationListSelector = (state: RootState) => state.notification.notifications;
-export const notificaitonActions = notificationSlice.actions;
+export const notificationActions = notificationSlice.actions;
 
 export default notificationSlice.reducer;

@@ -46,11 +46,11 @@ export namespace EnumTemplateType {
     // FIXME - change type to string or EnumNotificationType
     export function TemplateOf(notificationType?: string): string[] {
         let templates: EnumTemplateType[] = [];
-        if (notificationType == EnumNotificationType.EMAIL) {
+        if (notificationType === EnumNotificationType.EMAIL) {
                 templates =  [EnumTemplateType.ADVERTISEMENT, EnumTemplateType.FIND_PASSWORD, EnumTemplateType.JOIN];
-        } else if (notificationType == EnumNotificationType.SMS) {
+        } else if (notificationType === EnumNotificationType.SMS) {
                 templates =  [EnumTemplateType.JOIN_COMPLETE, EnumTemplateType.PLAIN_TEXT];
-        } else if (notificationType == EnumNotificationType.API) {
+        } else if (notificationType === EnumNotificationType.API) {
                 templates =  [EnumTemplateType.ADVERTISEMENT, EnumTemplateType.FIND_PASSWORD, EnumTemplateType.JOIN];
         }
        

@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { EnumNotificationType, EnumTemplateType, EnumProjectType } from "../enums";
+import { EnumNotificationType, EnumTemplateType, EnumProjectType } from "../Enums";
 
 import { useSelector } from "react-redux";
 import { AppDispatch } from "../store";
@@ -75,9 +75,9 @@ interface IProps {
               }}
               fullWidth
             > 
-              { projectState.selectedProject?.project_type == EnumProjectType.ORGANIZATION && 
+              { projectState.selectedProject?.project_type === EnumProjectType.ORGANIZATION && 
                 EnumNotificationType.IndividualNotificationType().map(key => <MenuItem value={key}>{key}</MenuItem>)}
-              { projectState.selectedProject?.project_type == EnumProjectType.INDIVIDUAL && 
+              { projectState.selectedProject?.project_type === EnumProjectType.INDIVIDUAL && 
                 EnumNotificationType.OrganizationNotificationType().map(key => <MenuItem value={key}>{key}</MenuItem>)}
             </Select>
             <InputLabel id="demo-simple-select-label">Template</InputLabel>

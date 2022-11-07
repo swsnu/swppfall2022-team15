@@ -1,31 +1,22 @@
-import { configureStore, PreloadedState } from "@reduxjs/toolkit";
+import { PreloadedState } from "@reduxjs/toolkit";
 import { render, RenderOptions } from "@testing-library/react";
 import { PropsWithChildren } from "react";
 import { ProSidebarProvider } from "react-pro-sidebar";
 import { Provider } from "react-redux";
 
 import { AppStore, RootState } from "../store";
-import ProjectReducer from "../store/slices/project";
+import { setupStore } from "../store/slices";
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
   preloadedState?: PreloadedState<RootState>;
   store?: AppStore;
 }
 
-export const getMockStore = (preloadedState?: PreloadedState<RootState>) => {
-  return configureStore({
-    reducer: {
-      projects: ProjectReducer,
-    },
-    preloadedState,
-  });
-};
-
 export function renderWithProviders(
   ui: React.ReactElement,
   {
     preloadedState,
-    store = getMockStore(preloadedState),
+    store = setupStore(preloadedState),
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {

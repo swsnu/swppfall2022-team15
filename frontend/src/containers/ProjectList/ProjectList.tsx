@@ -13,12 +13,12 @@ import {
 import Grid from "@mui/material/Unstable_Grid2";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Iconify from "../components/iconify/Iconify";
-import Label from "../components/label/Label";
-import ProjectCreateModal from "../components/Project/ProjectCreateModal";
-import { deleteProject } from "../services/project";
-import { AppDispatch } from "../store";
-import { fetchProjects, projectListSelector } from "../store/slices/project";
+import Iconify from "../../components/iconify/Iconify";
+import Label from "../../components/label/Label";
+import ProjectCreateModal from "../../components/project/ProjectCreateModal";
+import { deleteProject } from "../../services/project";
+import { AppDispatch } from "../../store";
+import { fetchProjects, projectListSelector } from "../../store/slices/project";
 
 export default function ProjectListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
