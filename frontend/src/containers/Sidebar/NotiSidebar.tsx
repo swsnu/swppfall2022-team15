@@ -6,9 +6,12 @@ import { MdMessage } from "react-icons/md";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 
 import "./NotiSidebar.css";
+import { useNavigate } from "react-router";
 
 export default function NotiSidebar() {
   const { collapseSidebar, collapsed } = useProSidebar();
+
+  const navigate = useNavigate();
 
   const homeIcon = <FaHome size="48"></FaHome>;
   const projectIcon = <FaFolderOpen size="48"></FaFolderOpen>;
@@ -38,6 +41,10 @@ export default function NotiSidebar() {
             className="even"
             icon={projectIcon}
             style={{ height: "150px" }}
+            // XXX(vietman2)
+            onClick={() => {
+              navigate("/projects");
+            }}
           >
             {" "}
             Projects{" "}
