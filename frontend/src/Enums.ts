@@ -1,4 +1,4 @@
-export const enum NotificationStatus {
+export const enum EnumNotificationStatus {
     // Before Sending
     PEDNING = "PENDING",
     // After Sending
