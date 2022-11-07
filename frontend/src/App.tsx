@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import "./App.css";
 import NotiSidebar from "./components/Sidebar/NotiSidebar";
-import ProjectListTable from "./containers/ProjectList";
+import ProjectListTable from "./containers/ProjectList/ProjectList";
 import ProjectDetail from "./components/ProjectDetail/ProjectDetail";
 
 

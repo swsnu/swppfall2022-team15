@@ -1,4 +1,10 @@
-import { EnumNotificationStatus } from "./enums";
+import { EnumNotificationStatus } from "./Enums";
+
+export type ProjectType = {
+  id: number;
+  project_type: string;
+  name: string;
+}
 
 export type NotificationType = {
   id: number;
