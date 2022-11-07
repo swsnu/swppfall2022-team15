@@ -1,4 +1,4 @@
-import { Sidebar, Menu, MenuItem, useProSidebar, SidebarProps } from "react-pro-sidebar";
+import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
 import { FaHome, FaHistory, FaFolderOpen } from "react-icons/fa"
 import { FiTarget } from "react-icons/fi"
 import { HiTemplate } from "react-icons/hi"
@@ -8,7 +8,7 @@ import { AiOutlineMenuUnfold } from "react-icons/ai"
 import "./NotiSidebar.css";
 
 export default function NotiSidebar() {
-    const { collapseSidebar, collapsed } = useProSidebar();
+    const { collapseSidebar } = useProSidebar();
 
     const homeIcon = <FaHome size='48'></FaHome>
     const projectIcon = <FaFolderOpen size='48'></FaFolderOpen>
