@@ -1,26 +1,48 @@
+import { Grid } from "@mui/material";
+import Button from '@mui/material/Button';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import CollapsibleTable, { IProps } from "../table/CollapsibleTable";
-import { EnumNotificationStatus } from "../../enums";
-import { NotificationType } from "../../types";
+import { AppDispatch } from "../../store";
+import { fetchNotifcations, notificationListSelector } from "../../store/slices/notifications";
+import { fetchProject } from "../../store/slices/project";
+import NotificationCreateModal from "../NotificationCreateModal";
+import CollapsibleTable from "../table/CollapsibleTable";
+
+
 
 export default function ProjectDetail() {
-  const {projectId} = useParams();
+  const [open, setOpen] = useState(false);
 
-  // get project details from backend
-  // const project = getProject(projectId);   
+  // get projectId from url
+  const {id} = useParams();
+  const projectId = Number(id);
+  
+  // get notifications from backend
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(fetchProject(projectId));
+    dispatch(fetchNotifcations(projectId));
+  }, []);
+  const notifications = useSelector(notificationListSelector);
 
-  // handler
-  const projectData: NotificationType[] = [
-    {
-      id: 1,
-      status: EnumNotificationStatus["SUCCESS"],
-      message: "data", // FIXME(Given) add some data
-      reservedAt: "2021-10-10 10:10:10",
-      // history: []
-    }
-  ]
+  // event handlers
+  const handleCreateNotification = (event: React.MouseEvent) => {
+    console.log("create notification");
+    setOpen(true);
+  }
 
   return (
-    <CollapsibleTable notifications={projectData} />
+    <div>
+      <NotificationCreateModal
+        open={open}
+        handleClose={() => setOpen(false)}
+      ></NotificationCreateModal>
+
+      <Grid container justifyContent="flex-end">
+        <Button variant="contained" onClick={handleCreateNotification}>Create Notification</Button>      
+      </Grid>
+      <CollapsibleTable notifications={notifications} />
+    </div>
   )
 };

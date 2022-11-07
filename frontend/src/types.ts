@@ -8,9 +8,11 @@ export type NotificationType = {
   history?: NotificationHistoryType[];
 };
 
+
 export type NotificationHistoryType = {
   id: number;
   endpoint: string;
   date: string;
   status: EnumNotificationStatus;
 };
+

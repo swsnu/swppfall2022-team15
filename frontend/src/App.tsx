@@ -11,7 +11,7 @@ function App() {
       // TODO: Other components should be placed next to sidebar, not below
       <Routes>
         <Route path="/projects/" element={<ProjectListTable/>}/>
-        <Route path="/projects/:projectId" element={<ProjectDetail/>}/>
+        <Route path="/projects/:id" element={<ProjectDetail/>}/>
       </Routes>
      </BrowserRouter>
   );
