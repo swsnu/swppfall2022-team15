@@ -1,15 +1,19 @@
 import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
-import { FaHome, FaHistory, FaFolderOpen } from "react-icons/fa"
-import { FiTarget } from "react-icons/fi"
-import { HiTemplate } from "react-icons/hi"
-import { MdMessage } from "react-icons/md"
-import { AiOutlineMenuUnfold } from "react-icons/ai"
+
+import { FaHome, FaHistory, FaFolderOpen } from "react-icons/fa";
+import { FiTarget } from "react-icons/fi";
+import { HiTemplate } from "react-icons/hi";
+import { MdMessage } from "react-icons/md";
+import { AiOutlineMenuUnfold } from "react-icons/ai";
+
 
 import "./NotiSidebar.css";
 import { useNavigate } from "react-router";
 
 export default function NotiSidebar() {
-    const { collapseSidebar } = useProSidebar();
+
+  const { collapseSidebar } = useProSidebar();
+
 
   const navigate = useNavigate();
 
