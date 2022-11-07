@@ -8,6 +8,7 @@ function App() {
   return (
     <BrowserRouter>
       <NotiSidebar/>
+      // TODO: Other components should be placed next to sidebar, not below
       <Routes>
         <Route path="/projects/" element={<ProjectListTable/>}/>
         <Route path="/projects/:id" element={<ProjectDetail/>}/>
