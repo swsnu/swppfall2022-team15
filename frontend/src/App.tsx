@@ -2,6 +2,7 @@ import "./App.css";
 import NotiSidebar from "./containers/Sidebar/NotiSidebar";
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import ProjectListTable from "./containers/ProjectList";
+import ProjectDetail from "./components/ProjectDetail/ProjectDetail";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       // TODO: Other components should be placed next to sidebar, not below
       <Routes>
         <Route path="/projects/" element={<ProjectListTable/>}/>
+        <Route path="/projects/:projectId" element={<ProjectDetail/>}/>
       </Routes>
      </BrowserRouter>
   );
