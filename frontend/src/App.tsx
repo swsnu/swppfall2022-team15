@@ -1,7 +1,7 @@
 import "./App.css";
 import NotiSidebar from "./containers/Sidebar/NotiSidebar";
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import ProjectListTable from "./containers/ProjectList";
+import ProjectListTable from "./components/ProjectList";
 
 function App() {
   return (
