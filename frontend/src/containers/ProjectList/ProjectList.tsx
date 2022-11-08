@@ -78,8 +78,8 @@ export default function ProjectListTable() {
             {projects.map((row) => {
               const { id, name, project_type } = row;
               return (
-                <TableRow hover key={id} onClick={()=>handleRowHandler(id)} tabIndex={-1}>
-                  <TableCell align="left" >{name}</TableCell>
+                <TableRow hover key={id} tabIndex={-1}>
+                  <TableCell align="left" onClick={()=>handleRowHandler(id)} >{name}</TableCell>
                   <TableCell align="left">
                     <Label
                       color={
