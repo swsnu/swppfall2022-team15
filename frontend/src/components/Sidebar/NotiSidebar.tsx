@@ -7,9 +7,7 @@ import { HiTemplate } from "react-icons/hi";
 import { MdMessage } from "react-icons/md";
 //import { AiOutlineMenuUnfold } from "react-icons/ai";
 
-
 import "./NotiSidebar.css";
-
 
 export default function NotiSidebar() {
   //const { collapseSidebar } = useProSidebar();
@@ -30,18 +28,24 @@ export default function NotiSidebar() {
   */
 
   return (
-    <div className="background" style={{ display: "flex", height: "100%" }}>
+    <div className="background" style={{ height: "100%" }}>
       <Sidebar className="sidebar" data-testid="sidebar" width="280px">
         <Menu className="noti">
-          <MenuItem routerLink={<Link to="/home" />} className="top">NotiManager</MenuItem>
+          <MenuItem routerLink={<Link to="/home" />} className="top">
+            NotiManager
+          </MenuItem>
         </Menu>
         <Menu className="menu">
-          <MenuItem routerLink={<Link to="/home" />} className="item" icon={homeIcon}>
+          <MenuItem
+            routerLink={<Link to="/home" />}
+            className="item"
+            icon={homeIcon}
+          >
             {" "}
             Home{" "}
           </MenuItem>
           <MenuItem
-            routerLink={<Link to="/projects" />} 
+            routerLink={<Link to="/projects" />}
             className="item"
             icon={projectIcon}
           >
@@ -49,7 +53,7 @@ export default function NotiSidebar() {
             Projects{" "}
           </MenuItem>
           <MenuItem
-            routerLink={<Link to="/targets" />} 
+            routerLink={<Link to="/targets" />}
             className="item"
             icon={targetIcon}
           >
@@ -57,7 +61,7 @@ export default function NotiSidebar() {
             Targets{" "}
           </MenuItem>
           <MenuItem
-            routerLink={<Link to="/messages" />} 
+            routerLink={<Link to="/messages" />}
             className="item"
             icon={messageIcon}
           >
@@ -65,7 +69,7 @@ export default function NotiSidebar() {
             Messages{" "}
           </MenuItem>
           <MenuItem
-            routerLink={<Link to="/templates" />} 
+            routerLink={<Link to="/templates" />}
             className="item"
             icon={templateIcon}
           >
@@ -73,7 +77,7 @@ export default function NotiSidebar() {
             Templates{" "}
           </MenuItem>
           <MenuItem
-            routerLink={<Link to="/history" />} 
+            routerLink={<Link to="/history" />}
             className="item"
             icon={historyIcon}
           >

@@ -17,7 +17,7 @@ import TargetListTable from "./containers/TargetList/TargetList";
 
 const SidebarLayout = () => (
   <>
-    <div className="sidebar">
+    <div className="sidebar" style={{ height: "100vh" }}>
       <NotiSidebar />
     </div>
     <div className="contents">
