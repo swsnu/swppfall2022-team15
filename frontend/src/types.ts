@@ -4,7 +4,7 @@ export type ProjectType = {
   id: number;
   project_type: string;
   name: string;
-}
+};
 
 export type NotificationType = {
   id: number;
@@ -14,7 +14,6 @@ export type NotificationType = {
   history?: NotificationHistoryType[];
 };
 
-
 export type NotificationHistoryType = {
   id: number;
   endpoint: string;
@@ -22,3 +21,9 @@ export type NotificationHistoryType = {
   status: EnumNotificationStatus;
 };
 
+export interface TargetType {
+  id: number;
+  target_name: string;
+  message_type: string;
+  end_point: string;
+}
