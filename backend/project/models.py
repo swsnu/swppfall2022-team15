@@ -1,8 +1,8 @@
-from enum import Enum
+from django.db import models
 
 from account.models import User
 from core.models import TimeStampedModel
-from django.db import models
+
 
 class ProjectTypeChoices(models.TextChoices):
     ORGANIZATION = 'ORGANIZATION'
