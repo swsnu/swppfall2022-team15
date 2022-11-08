@@ -38,6 +38,7 @@ function App() {
           <Route path="/projects" element={<ProjectListTable />} />
           <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route path="/targets" element={<TargetListTable />} />
+          {/* <Route path="/messages" element={<MessageListTable />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>
