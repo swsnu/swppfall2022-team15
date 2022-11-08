@@ -19,10 +19,13 @@ import ProjectCreateModal from "../../components/project/ProjectCreateModal";
 import { deleteProject } from "../../services/project";
 import { AppDispatch } from "../../store";
 import { fetchProjects, projectListSelector } from "../../store/slices/project";
+import {useNavigate} from "react-router-dom";
 
 export default function ProjectListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
   const [createModalopen, setCreateModalOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleOpenMenu = (event: any) => {
     setOpen(event.currentTarget);
@@ -42,6 +45,10 @@ export default function ProjectListTable() {
   const handleClickCreateButton = (event: React.MouseEvent) => {
     setCreateModalOpen(true);
   };
+
+  const handleRowHandler = (id: number) => {
+    navigate(`/projects/${id}`);
+  }
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
@@ -71,9 +78,8 @@ export default function ProjectListTable() {
             {projects.map((row) => {
               const { id, name, project_type } = row;
               return (
-                <TableRow hover key={id} tabIndex={-1}>
-                  <TableCell align="left">{name}</TableCell>
-
+                <TableRow hover key={id} onClick={()=>handleRowHandler(id)} tabIndex={-1}>
+                  <TableCell align="left" >{name}</TableCell>
                   <TableCell align="left">
                     <Label
                       color={
