@@ -34,13 +34,11 @@ interface IProps {
   
     const dispatch = useDispatch<AppDispatch>();
 
-    const projectState = useSelector(projectSelect);  
+    const projectState = useSelector(projectSelect);
     
     const handleClickConfirm = async () => {
       //FIXME
-      console.log("projectState", projectState);
       if (projectState.selectedProject && message &&notificationType) {
-        console.log("projectState.selectedProject", projectState.selectedProject);
         const projectId = projectState.selectedProject.id
         // TODO
         // DTO management. should decide where to place
