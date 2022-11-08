@@ -70,8 +70,8 @@ export default function ProjectCreateModal(props: IProps) {
             }}
             fullWidth
           >
-            <MenuItem value={"organization"}>Organization</MenuItem>
-            <MenuItem value={"individual"}>Individual</MenuItem>
+            <MenuItem value={"ORGANIZATION"}>Organization</MenuItem>
+            <MenuItem value={"INDIVIDUAL"}>Individual</MenuItem>
           </Select>
         </DialogContent>
         <DialogActions>
