@@ -60,18 +60,18 @@ export default function ProjectListTable() {
   const projects = useSelector(projectListSelector);
 
   return (
-    <div>
+    <>
       <ProjectCreateModal
         open={createModalopen}
         handleClose={() => setCreateModalOpen(false)}
       ></ProjectCreateModal>
-      <Grid container justifyContent="flex-end">
-        <Button onClick={handleClickCreateButton}>New Project</Button>
-      </Grid>
       <Container>
+        <Grid container justifyContent="flex-end">
+          <Button onClick={handleClickCreateButton}>New Project</Button>
+        </Grid>
         <Card>
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 800, width: "100%" }}>
+            <TableContainer sx={{ minWidth: 800 }}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -148,6 +148,6 @@ export default function ProjectListTable() {
           Delete
         </MenuItem>
       </Popover>
-    </div>
+    </>
   );
 }
