@@ -15,7 +15,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Iconify from "../../components/iconify/Iconify";
 import Label from "../../components/label/Label";
-import TargetCreateModal from "../../components/Target/TargetCreateModal";
+import TargetCreateModal from "../../components/target/TargetCreateModal";
 import { deleteTarget } from "../../services/target";
 import { AppDispatch } from "../../store";
 import { fetchTargets, targetListSelector } from "../../store/slices/target";
