@@ -13,7 +13,7 @@ export const fetchTargets = createAsyncThunk(
 );
 
 export const fetchTarget = createAsyncThunk(
-  "project/fetchTarget",
+  "target/fetchTarget",
   async (targetId: number) => {
     const response = await axios.get<TargetType>(`/api/target/${targetId}/`);
     return response.data;
