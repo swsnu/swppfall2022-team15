@@ -20,7 +20,7 @@ export const fetchTarget = createAsyncThunk(
   }
 );
 
-// 여기서 어떻게 구현하신건지?
+// 확인 필요
 const initialState: {
   targets: TargetType[];
 } = {
