@@ -1,5 +1,7 @@
 from django.db import models
 
+from core.models import TimeStampedModel
+
 
 # TODO - state definition for notification, notification log, and reservation
 class EnumNotifcationStatus(models.TextChoices):
@@ -16,24 +18,22 @@ class EnumNotificationType(models.TextChoices):
     API = 'API'
 
 
-class Notification(models.Model):
+class Notification(TimeStampedModel):
     message = models.TextField()  # TODO - should be changed to foreign key to message
     project = models.ForeignKey('project.Project', on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=EnumNotifcationStatus.choices)
     type = models.CharField(max_length=20, choices=EnumNotificationType.choices)
 
 
-class NotificationLog(models.Model):
+class NotificationLog(TimeStampedModel):
     notification = models.ForeignKey('Notification', on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=EnumNotificationType.choices)
     request = models.JSONField()
     response = models.JSONField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    # TODO - add notification target user    
+    # TODO - add notification target user
 
 
-class Reservation(models.Model):
+class Reservation(TimeStampedModel):
     notifcation = models.ForeignKey('Notification', on_delete=models.CASCADE)
     reserved_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=EnumNotifcationStatus.choices)
