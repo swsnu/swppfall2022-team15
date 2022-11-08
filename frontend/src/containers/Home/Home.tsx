@@ -57,7 +57,9 @@ export default function Home() {
     return (
         <div className="Home">
             <div className="projects">
-                Projects
+                <div className="title">
+                    Projects
+                </div>
                 <div className="project">
                     <Grid projects={mockProjectData.projects} />
                 </div>

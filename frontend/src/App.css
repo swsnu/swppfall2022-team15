@@ -4,12 +4,14 @@
 
 .sidebar {
   float: left;
-  width: 200px;
+  width: 280px;
 }
 
 .contents {
-  width: auto;
+  display: flex;
+  min-height: 100%;
   overflow: hidden;
+  width: auto;
 }
 
 .App-logo {

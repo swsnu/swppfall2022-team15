@@ -31,56 +31,51 @@ export default function NotiSidebar() {
 
   return (
     <div className="background" style={{ display: "flex", height: "100%" }}>
-      <Sidebar className="sidebar" data-testid="sidebar" width="200px">
-        <Menu>
+      <Sidebar className="sidebar" data-testid="sidebar" width="280px">
+        <Menu className="noti">
           <MenuItem routerLink={<Link to="/home" />} className="top">NotiManager</MenuItem>
         </Menu>
-        <Menu>
-          <MenuItem routerLink={<Link to="/home" />} className="odd" icon={homeIcon} style={{ height: "150px" }}>
+        <Menu className="menu">
+          <MenuItem routerLink={<Link to="/home" />} className="item" icon={homeIcon}>
             {" "}
             Home{" "}
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/projects" />} 
-            className="even"
+            className="item"
             icon={projectIcon}
-            style={{ height: "150px" }}
           >
             {" "}
             Projects{" "}
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/targets" />} 
-            className="odd"
+            className="item"
             icon={targetIcon}
-            style={{ height: "150px" }}
           >
             {" "}
             Targets{" "}
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/messages" />} 
-            className="even"
+            className="item"
             icon={messageIcon}
-            style={{ height: "150px" }}
           >
             {" "}
             Messages{" "}
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/templates" />} 
-            className="odd"
+            className="item"
             icon={templateIcon}
-            style={{ height: "150px" }}
           >
             {" "}
             Templates{" "}
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/history" />} 
-            className="even"
+            className="item"
             icon={historyIcon}
-            style={{ height: "150px" }}
           >
             {" "}
             History{" "}
