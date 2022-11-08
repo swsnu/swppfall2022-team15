@@ -1,5 +1,6 @@
 import {
   Button,
+  Card,
   IconButton,
   MenuItem,
   Popover,
@@ -19,7 +20,9 @@ import ProjectCreateModal from "../../components/project/ProjectCreateModal";
 import { deleteProject } from "../../services/project";
 import { AppDispatch } from "../../store";
 import { fetchProjects, projectListSelector } from "../../store/slices/project";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Scrollbar from "../../components/scrollbar/Scrollbar";
+import { Container } from "@mui/system";
 
 export default function ProjectListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
@@ -48,7 +51,7 @@ export default function ProjectListTable() {
 
   const handleRowHandler = (id: number) => {
     navigate(`/projects/${id}`);
-  }
+  };
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
@@ -65,48 +68,59 @@ export default function ProjectListTable() {
       <Grid container justifyContent="flex-end">
         <Button onClick={handleClickCreateButton}>New Project</Button>
       </Grid>
-      <TableContainer sx={{ minWidth: 800 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Most Recently Sent Notification</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {projects.map((row) => {
-              const { id, name, project_type } = row;
-              return (
-                <TableRow hover key={id} tabIndex={-1}>
-                  <TableCell align="left" onClick={()=>handleRowHandler(id)} >{name}</TableCell>
-                  <TableCell align="left">
-                    <Label
-                      color={
-                        (project_type === "organization" && "primary") ||
-                        "secondary"
-                      }
-                    >
-                      {project_type}
-                    </Label>
-                  </TableCell>
+      <Container>
+        <Card>
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 800, width: "100%" }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Type</TableCell>
+                    <TableCell>Most Recently Sent Notification</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {projects.map((row) => {
+                    const { id, name, project_type } = row;
+                    return (
+                      <TableRow hover key={id} tabIndex={-1}>
+                        <TableCell
+                          align="left"
+                          onClick={() => handleRowHandler(id)}
+                        >
+                          {name}
+                        </TableCell>
+                        <TableCell align="left">
+                          <Label
+                            color={
+                              (project_type === "organization" && "primary") ||
+                              "secondary"
+                            }
+                          >
+                            {project_type}
+                          </Label>
+                        </TableCell>
 
-                  <TableCell align="right">
-                    <IconButton
-                      size="large"
-                      color="inherit"
-                      onClick={handleOpenMenu}
-                      data-id={id}
-                    >
-                      <Iconify icon={"eva:more-vertical-fill"} />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                        <TableCell align="right">
+                          <IconButton
+                            size="large"
+                            color="inherit"
+                            onClick={handleOpenMenu}
+                            data-id={id}
+                          >
+                            <Iconify icon={"eva:more-vertical-fill"} />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Scrollbar>
+        </Card>
+      </Container>
       <Popover
         open={Boolean(open)}
         anchorEl={open}
