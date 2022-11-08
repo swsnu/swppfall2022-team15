@@ -34,22 +34,23 @@ interface IProps {
   
     const dispatch = useDispatch<AppDispatch>();
 
-    const projectState = useSelector(projectSelect);  
+    const projectState = useSelector(projectSelect);
     
     const handleClickConfirm = async () => {
       //FIXME
-      console.log("projectState", projectState);
       if (projectState.selectedProject && message &&notificationType) {
-        console.log("projectState.selectedProject", projectState.selectedProject);
         const projectId = projectState.selectedProject.id
+        // TODO
+        // DTO management. should decide where to place
+        // https://github.com/swsnu/swppfall2022-team15/issues/52
         const data = {
-          projectId: projectId,
-          notificationType: notificationType,
+          project: projectId,
+          type: notificationType,
           message: message,
         }
-        await createNotification(data);
+        dispatch(createNotification(data));
         props.handleClose();
-        await dispatch(fetchNotifcations(projectId));
+        dispatch(fetchNotifcations(projectId));
       }
     };
     
