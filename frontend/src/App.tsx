@@ -14,6 +14,7 @@ import Home from "./containers/Home/Home";
 import SignIn from "./containers/SignIn/SignIn";
 import SignUp from "./containers/SignUp/SignUp";
 import TargetListTable from "./containers/TargetList/TargetList";
+import MessageListTable from "./containers/MessageList/MessageList";
 
 const SidebarLayout = () => (
   <>
@@ -38,6 +39,7 @@ function App() {
           <Route path="/projects" element={<ProjectListTable />} />
           <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route path="/targets" element={<TargetListTable />} />
+          <Route path="/messages" element={<MessageListTable />} />
         </Route>
       </Routes>
     </BrowserRouter>
