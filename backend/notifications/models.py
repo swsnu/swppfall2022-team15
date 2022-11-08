@@ -19,7 +19,8 @@ class EnumNotificationType(models.TextChoices):
 
 
 class Notification(TimeStampedModel):
-    message = models.TextField()  # TODO - should be changed to foreign key to message
+    # FIXME - shouldn't be nullable
+    nmessage = models.ForeignKey('nmessages.NMessage', on_delete=models.CASCADE, null=True)
     project = models.ForeignKey('project.Project', on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=EnumNotifcationStatus.choices)
     type = models.CharField(max_length=20, choices=EnumNotificationType.choices)

@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 
-from messages.models import NMessage
-from messages.serializers import NMessageSerializer
+from nmessages.models import NMessage
+from nmessages.serializers import NMessageSerializer
 
 
 class NMessageViewSet(ModelViewSet):
