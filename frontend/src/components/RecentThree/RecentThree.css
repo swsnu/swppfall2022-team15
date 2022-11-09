@@ -1,0 +1,55 @@
+.table_recent {
+    display: flex;
+
+    -webkit-box-flex: 0;
+    -webkit-font-smoothing: antialiased;
+    text-size-adjust: 100%;
+    flex-grow: 0;
+    max-width: 100%;
+    box-sizing: inherit;
+    flex-direction: column;
+    color: rgb(33, 43, 54);
+    line-height: 1.5;
+    font-size: 1rem;
+    font-weight: 400;
+    font-family: "Public-Sans", sans-serif;
+    
+    border-collapse: separate;
+    border-spacing: 20px 30px;
+}
+
+.table_recent {
+    border: 1px solid black;
+    border-radius: 50px;
+    
+}
+
+thead {
+    border: 1px solid black;
+    border-radius: 50px 50px 0px 0px;
+}
+
+tbody {
+    border: 1px solid black;
+    border-radius: 0px 0px 50px 50px;
+}
+
+.success {
+    background-color: #00ff42;
+    height: 75px;
+}
+.success_last {
+    background-color: #00ff42;
+    height: 75px;
+    border-radius: 0px 0px 50px 50px;
+}
+
+.failed {
+    background-color: #ff4842;
+    height: 75px;
+}
+.failed_last {
+    background-color: #ff4842;
+    height: 75px;
+    border-radius: 0px 0px 50px 50px;
+}
