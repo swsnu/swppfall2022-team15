@@ -68,8 +68,9 @@ export default function MessageListTable() {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Project</TableCell>
+                    <TableCell>Id</TableCell>
                     <TableCell>Content</TableCell>
+                    <TableCell>Project</TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -78,8 +79,9 @@ export default function MessageListTable() {
                     const { id, project, content } = row;
                     return (
                       <TableRow hover key={id} tabIndex={-1}>
-                        <TableCell align="left">{project}</TableCell>
+                        <TableCell align="left">{id}</TableCell>
                         <TableCell align="left">{content}</TableCell>
+                        <TableCell align="left">{project}</TableCell>
                         <TableCell align="right">
                           <IconButton
                             size="large"

@@ -66,6 +66,7 @@ export default function TargetListTable() {
               <Table>
                 <TableHead>
                   <TableRow>
+                    <TableCell>Id</TableCell>
                     <TableCell>Name</TableCell>
                     <TableCell>Notification Type</TableCell>
                     <TableCell>End Point</TableCell>
@@ -78,6 +79,7 @@ export default function TargetListTable() {
                     const { id, name, notification_type, endpoint, project } = row;
                     return (
                       <TableRow hover key={id} tabIndex={-1}>
+                        <TableCell align="left">{id}</TableCell>
                         <TableCell align="left">{name}</TableCell>
                         <TableCell align="left">{notification_type}</TableCell>
                         <TableCell align="left">{endpoint}</TableCell>
