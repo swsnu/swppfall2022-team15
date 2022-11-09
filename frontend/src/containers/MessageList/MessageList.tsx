@@ -63,17 +63,17 @@ export default function MessageListTable() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Title</TableCell>
+              <TableCell>Project</TableCell>
               <TableCell>Content</TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
             {messages.map((row) => {
-              const { id, title, content } = row;
+              const { id, project, content } = row;
               return (
                 <TableRow hover key={id} tabIndex={-1}>
-                  <TableCell align="left">{title}</TableCell>
+                  <TableCell align="left">{project}</TableCell>
                   <TableCell align="left">{content}</TableCell>
                   <TableCell align="right">
                     <IconButton
