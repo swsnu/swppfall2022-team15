@@ -4,6 +4,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny
 
 from nmessages.models import NMessage
+from notifications.models import Notification, EnumNotifcationStatus
 from notifications.serializers import NotificationSerializer
 from notifications.services import send_api_notification, ApiNotificationDto
 from targetusers.models import TargetUser
@@ -15,9 +16,9 @@ class NotificationViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         # save notification
-        serializers = self.get_serializer(data=request.data)
-        serializers.is_valid(raise_exception=True)
-        serializers.save()
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
 
         # send notification
         targetuser_id = request.data.get('target')
@@ -34,9 +35,15 @@ class NotificationViewSet(ModelViewSet):
             headers=headers,
             data=nmessage.content,
         )
-        send_api_notification(apiDto)
+        is_success = send_api_notification(apiDto)
+
+        id = serializer.data.get('id')
+        noti = Notification.objects.get(id=id)
+        noti.status = EnumNotifcationStatus.SUCCESS if is_success else EnumNotifcationStatus.FAILURE
+        noti.save()
+
 
         return Response(
-            data=serializers.data,
+            data=serializer.data,
             status=status.HTTP_201_CREATED
         )

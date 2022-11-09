@@ -20,6 +20,8 @@ def send_api_notification(notification: ApiNotificationDto):
     except requests.exceptions.RequestException as e:
         raise NotificationServiceException from e
 
+    is_success = response.status_code < 400
+
     return response
 
 
