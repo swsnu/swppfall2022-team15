@@ -1,10 +1,10 @@
 from django.urls import path, include
 from rest_framework import routers
 
-from nmessages.views import NMessageViewSet
+from targetusers.views import TargetUserViewSet
 
 router = routers.SimpleRouter()
-router.register(r'', NMessageViewSet, basename='nmessage')
+router.register(r'', TargetUserViewSet, basename='targetuser')
 
 
 urlpatterns = [
