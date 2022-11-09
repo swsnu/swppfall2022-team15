@@ -18,7 +18,6 @@ class ProjectViewSet(ModelViewSet):
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user)
 
-
     @action(detail=True, methods=['get'], permission_classes=[AllowAny, IsAuthenticated, IsOwner])
     def notification(self, request, pk):
         project = self.get_object()
