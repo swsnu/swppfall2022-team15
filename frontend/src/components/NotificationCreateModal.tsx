@@ -57,6 +57,8 @@ interface IProps {
         const data = {
           project: projectId,
           type: notificationType,
+          // FIXME (change to id)
+          target: target,
           message: message,
         }
         dispatch(createNotification(data));
