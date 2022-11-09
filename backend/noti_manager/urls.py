@@ -24,4 +24,6 @@ urlpatterns = [
 
     path('api/project/', include('project.urls')),
     path('api/notification/', include('notifications.urls')),
+    path('api/nmessage/', include('nmessages.urls')),
+    path('api/targetuser/', include('targetusers.urls')),
 ]
