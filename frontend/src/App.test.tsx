@@ -5,7 +5,7 @@ import { ProSidebarProvider } from "react-pro-sidebar";
 import App from "./App";
 import { store } from "./store";
 
-test("renders App.tsx", () => {
+test("renders App.jsx", () => {
   render(
     <ProSidebarProvider>
       <Provider store={store}>
