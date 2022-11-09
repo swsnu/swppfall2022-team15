@@ -48,3 +48,9 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: "NotoSansKR-Medium";
+  font-weight: 50;
+  src: url("./assets/fonts/NotoSansKR-Medium.otf");
+}
