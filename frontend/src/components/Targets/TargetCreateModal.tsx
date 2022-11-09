@@ -5,13 +5,17 @@ import {
   DialogContent,
   DialogTitle,
   InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createTarget } from "../../services/target";
-import { AppDispatch } from "../../store";
-import { fetchTargets } from "../../store/slices/target";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch} from "../../store";
+import {createTarget, fetchTargets} from "../../store/slices/target";
+import {EnumNotificationType} from "../../Enums";
+import {fetchProjects, projectSelect} from "../../store/slices/project";
 
 interface IProps {
   open: any;
@@ -20,16 +24,28 @@ interface IProps {
 
 export default function TargetCreateModal(props: IProps) {
   const [targetName, setTargetName] = useState("");
-  const [messageType, setMessageType] = useState("");
+  const [notificationType, setNotificationType] = useState("");
+  const [project, setProject] = useState("");
   const [endPoint, setEndPoint] = useState("");
 
   const dispatch = useDispatch<AppDispatch>();
+    useEffect(() => {
+    dispatch(fetchProjects());
+  }, []);
+  const projectState = useSelector(projectSelect);
 
   const handleClickConfirm = async () => {
-    if (targetName && messageType && endPoint) {
-      await createTarget(targetName, messageType, endPoint);
+    if (targetName && notificationType && endPoint) {
+      const data = {
+        name: targetName,
+        notification_type: notificationType,
+        endpoint: endPoint,
+        data: {},
+        project: Number(project),
+      }
+      dispatch(createTarget(data));
       props.handleClose();
-      await dispatch(fetchTargets());
+      dispatch(fetchTargets());
     }
   };
 
@@ -44,11 +60,12 @@ export default function TargetCreateModal(props: IProps) {
       >
         <DialogTitle>New Target</DialogTitle>
         <DialogContent>
+          <InputLabel id="demo-simple-select-label">Target Name</InputLabel>
           <TextField
             autoFocus
             margin="dense"
             id="target_name"
-            label="target name"
+            // label="target name"
             type="text"
             fullWidth
             variant="standard"
@@ -58,29 +75,34 @@ export default function TargetCreateModal(props: IProps) {
             }}
             required
           />
-          <InputLabel id="demo-simple-select-label">Target Name</InputLabel>
-
-          <TextField
-            autoFocus
-            margin="dense"
-            id="message_type"
-            label="message name"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={messageType}
-            onChange={(event) => {
-              setMessageType(event.target.value);
-            }}
-            required
-          />
-          <InputLabel id="demo-simple-select-label">Message Type</InputLabel>
-
+          <br/>
+          <br/>
+          <br/>
+          <InputLabel id="demo-simple-select-label">Notification Type</InputLabel>
+          <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={notificationType}
+              label="project type"
+              onChange={(event: SelectChangeEvent) => {
+                setNotificationType(event.target.value);
+              }}
+              fullWidth
+            >
+                 {/*// TODO: change to enum*/}
+                <MenuItem value={EnumNotificationType.API.toString()}>API</MenuItem>
+                <MenuItem value={EnumNotificationType.EMAIL.toString()}>Email</MenuItem>
+                <MenuItem value={EnumNotificationType.SMS.toString()}>SMS</MenuItem>
+            </Select>
+          <br/>
+          <br/>
+          <br/>
+          <InputLabel id="demo-simple-select-label">End Point</InputLabel>
           <TextField
             autoFocus
             margin="dense"
             id="end_point"
-            label="end point"
+            // label="end point"
             type="text"
             fullWidth
             variant="standard"
@@ -90,7 +112,26 @@ export default function TargetCreateModal(props: IProps) {
             }}
             required
           />
-          <InputLabel id="demo-simple-select-label">End Point</InputLabel>
+          <br/>
+          <br/>
+          <br/>
+          <InputLabel id="demo-simple-select-label">Project</InputLabel>
+          <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={project}
+              // label="project type"
+              onChange={(event: SelectChangeEvent) => {
+                setProject(event.target.value);
+              }}
+              fullWidth
+            >
+            {/*// TODO : change to enum and add conditions (filerr) */}
+            {projectState.projects.map(project => <MenuItem value={project.id}>{project.name}</MenuItem>)}
+            </Select>
+          <br/>
+          <br/>
+          <br/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClickConfirm}>Confirm</Button>

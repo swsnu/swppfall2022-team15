@@ -61,20 +61,23 @@ export default function TargetListTable() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Target User</TableCell>
-              <TableCell>Message Type</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Notification Type</TableCell>
               <TableCell>End Point</TableCell>
+              {/*TODO - project name*/}
+              <TableCell>Project Id</TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
             {targets.map((row) => {
-              const { id, target_name, message_type, end_point } = row;
+              const { id, name, notification_type, endpoint, project } = row;
               return (
                 <TableRow hover key={id} tabIndex={-1}>
-                  <TableCell align="left">{target_name}</TableCell>
-                  <TableCell align="left">{message_type}</TableCell>
-                  <TableCell align="left">{end_point}</TableCell>
+                  <TableCell align="left">{name}</TableCell>
+                  <TableCell align="left">{notification_type}</TableCell>
+                  <TableCell align="left">{endpoint}</TableCell>
+                  <TableCell align="left">{project}</TableCell>
                   <TableCell align="right">
                     <IconButton
                       size="large"

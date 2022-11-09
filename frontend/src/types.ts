@@ -23,9 +23,10 @@ export type NotificationHistoryType = {
 
 export interface TargetType {
   id: number;
-  target_name: string;
-  message_type: string;
-  end_point: string;
+  name: string;
+  notification_type: string;
+  endpoint: string;
+  project: number;
 }
 
 // TODO: Message Type 내 attribute를 정하는 과정이 필요해 보입니다
