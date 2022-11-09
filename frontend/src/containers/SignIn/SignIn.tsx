@@ -40,6 +40,7 @@ export default function SignIn() {
           <TextField
             name="password"
             label="Password"
+            type="password"
             value={password}
             onChange={handlePasswordChange}
           />
