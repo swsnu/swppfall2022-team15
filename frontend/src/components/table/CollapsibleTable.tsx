@@ -43,6 +43,7 @@ function Row(props: { row: NotificationType }) {
         <TableCell component="th" scope="row">
           {row.id}
         </TableCell>
+        <TableCell align="right">{row.type}</TableCell>
         <TableCell align="right">{row.status}</TableCell>
         <TableCell align="right">{row.message}</TableCell>
       </TableRow>
@@ -58,8 +59,8 @@ function Row(props: { row: NotificationType }) {
                   <TableRow>
                     <TableCell>id</TableCell>
                     <TableCell></TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
+                    {/*<TableCell align="right">Amount</TableCell>*/}
+                    {/*<TableCell align="right">Total price ($)</TableCell>*/}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -94,9 +95,10 @@ export default function CollapsibleTable(props: IProps) {
           <TableRow>
             <TableCell />
             <TableCell> id </TableCell>
-            <TableCell align="right">status</TableCell>
-            <TableCell align="right">message&nbsp;</TableCell>
-            <TableCell align="right">reserved at&nbsp;</TableCell>
+            <TableCell align="right">Type</TableCell>
+            <TableCell align="right">Status</TableCell>
+            <TableCell align="right">Message&nbsp;</TableCell>
+            <TableCell align="right">Reserved At&nbsp;</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
