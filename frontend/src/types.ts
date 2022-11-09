@@ -11,6 +11,7 @@ export type NotificationType = {
   status: EnumNotificationStatus;
   message: string; // FIXME(Given) : rename to data?
   reservedAt: string;
+  type: string;
   history?: NotificationHistoryType[];
 };
 
