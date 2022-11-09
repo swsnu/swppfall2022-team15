@@ -2,9 +2,9 @@ import "./Home.css";
 import { EnumProjectType, EnumNotificationStatus } from "../../Enums";
 import { ProjectType, NotificationType } from "../../types";
 import Grid from "../../components/GridView/ProjectGridView";
-import NotiPieChart from "../../components/PieChart/PieChart";
-import RecentThree from "../../components/RecentThree/RecentThree";
-import Upcoming from "../../components/Upcoming/Upcoming";
+import NotiPieChart from "./PieChart/PieChart";
+import RecentThree from "./RecentThree/RecentThree";
+import Upcoming from "./Upcoming/Upcoming";
 
 const mockProjectData: {
     projects: ProjectType[];
