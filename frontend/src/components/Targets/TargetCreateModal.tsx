@@ -9,9 +9,8 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createTarget } from "../../services/target";
 import { AppDispatch } from "../../store";
-import { fetchTargets } from "../../store/slices/target";
+import {createTarget, fetchTargets} from "../../store/slices/target";
 
 interface IProps {
   open: any;
@@ -24,10 +23,16 @@ export default function TargetCreateModal(props: IProps) {
   const [endPoint, setEndPoint] = useState("");
 
   const dispatch = useDispatch<AppDispatch>();
-
   const handleClickConfirm = async () => {
     if (targetName && messageType && endPoint) {
-      await createTarget(targetName, messageType, endPoint);
+      const data = {
+        name: targetName,
+        notification_type: messageType,
+        endpoint: endPoint,
+        data: {},
+        project: 1,
+      }
+      dispatch(createTarget(data));
       props.handleClose();
       await dispatch(fetchTargets());
     }

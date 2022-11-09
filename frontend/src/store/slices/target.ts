@@ -7,7 +7,7 @@ import { TargetType } from "../../types";
 export const fetchTargets = createAsyncThunk(
   "target/fetchTargets",
   async () => {
-    const response = await axios.get<TargetType[]>("/api/target/");
+    const response = await axios.get<TargetType[]>("/api/targetuser/");
     return response.data;
   }
 );
@@ -15,10 +15,19 @@ export const fetchTargets = createAsyncThunk(
 export const fetchTarget = createAsyncThunk(
   "target/fetchTarget",
   async (targetId: number) => {
-    const response = await axios.get<TargetType>(`/api/target/${targetId}/`);
+    const response = await axios.get<TargetType>(`/api/targetuser/${targetId}/`);
     return response.data;
   }
 );
+
+export const createTarget = createAsyncThunk(
+    "target/createTarget",
+    async (target: {name: string, notification_type: string, endpoint: string, data:object, project: number }) => {
+        const response = await axios.post<TargetType>("/api/targetuser/", target);
+        return response.data;
+    }
+);
+
 
 const initialState: {
   targets: TargetType[];
