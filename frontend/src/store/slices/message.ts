@@ -12,6 +12,14 @@ export const fetchMessages = createAsyncThunk(
   }
 );
 
+export const fetchMessagesByProjectId = createAsyncThunk(
+  "message/fetchMessages",
+  async (projectId: number) => {
+    const response = await axios.get<MessageType[]>(`/api/message?projectId=${projectId}`);
+    return response.data;
+  }
+);
+
 export const fetchMessage = createAsyncThunk(
   "message/fetchMessage",
   async (messageId: number) => {

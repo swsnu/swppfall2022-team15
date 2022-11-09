@@ -45,11 +45,12 @@ export default function ProjectCreateModal(props: IProps) {
       >
         <DialogTitle>New Project</DialogTitle>
         <DialogContent>
+          <InputLabel id="demo-simple-select-label">Name</InputLabel>
           <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="project name"
+            // label="project name"
             type="text"
             fullWidth
             variant="standard"
@@ -59,19 +60,23 @@ export default function ProjectCreateModal(props: IProps) {
             }}
             required
           />
+          <br/>
+          <br/>
+          <br/>
+
           <InputLabel id="demo-simple-select-label">Project Type</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={projectType}
-            label="project type"
+            // label="project type"
             onChange={(event: SelectChangeEvent) => {
               setProjectType(event.target.value as string);
             }}
             fullWidth
           >
-            <MenuItem value={"ORGANIZATION"}>Organization</MenuItem>
-            <MenuItem value={"INDIVIDUAL"}>Individual</MenuItem>
+            <MenuItem value={"ORGANIZATION"}>ORGANIZATION</MenuItem>
+            <MenuItem value={"INDIVIDUAL"}>INDIVIDUAL</MenuItem>
           </Select>
         </DialogContent>
         <DialogActions>

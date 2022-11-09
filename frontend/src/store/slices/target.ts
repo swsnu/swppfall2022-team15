@@ -12,6 +12,14 @@ export const fetchTargets = createAsyncThunk(
   }
 );
 
+export const fetchTargetsByProjectId = createAsyncThunk(
+  "target/fetchTargets",
+  async (projectId:number) => {
+    const response = await axios.get<TargetType[]>(`/api/targetuser?projectId=${projectId}`);
+    return response.data;
+  }
+);
+
 export const fetchTarget = createAsyncThunk(
   "target/fetchTarget",
   async (targetId: number) => {

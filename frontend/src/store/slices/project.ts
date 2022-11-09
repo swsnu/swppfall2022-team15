@@ -41,6 +41,9 @@ export const ProjectSlice = createSlice({
     builder.addCase(fetchProjects.fulfilled, (state, action) => {
       state.projects = action.payload;
     });
+    builder.addCase(fetchProject.fulfilled, (state, action) => {
+      state.selectedProject = action.payload;
+    });
   },
 });
 

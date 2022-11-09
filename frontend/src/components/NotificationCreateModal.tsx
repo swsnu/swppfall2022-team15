@@ -9,15 +9,17 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { useDispatch } from "react-redux";
 import { EnumNotificationType, EnumTemplateType, EnumProjectType } from "../Enums";
 
 import { useSelector } from "react-redux";
 import { AppDispatch } from "../store";
 import { createNotification, fetchNotifcations } from "../store/slices/notifications";
-import { projectSelect } from "../store/slices/project";
+import {fetchProject, projectSelect} from "../store/slices/project";
 import AutoCompleteBox from "./autoComplete";
+import {fetchTargets, targetSelect} from "../store/slices/target";
+import {fetchMessages, messageSelect} from "../store/slices/message";
 
   
 interface IProps {
@@ -28,13 +30,22 @@ interface IProps {
   export default function NotificationCreateModal(props: IProps) {
     // TODO - terminology. messageType vs notificationType
     const [notificationType, setNotificationType] = useState("");
-    const [template, setTemplate] = useState("");
+    // const [template, setTemplate] = useState("");
+    const [target, setTarget] = useState("");
     
     const [message, setMessage] = useState("");
   
     const dispatch = useDispatch<AppDispatch>();
 
     const projectState = useSelector(projectSelect);
+    const targetState = useSelector(targetSelect);
+    const messageState = useSelector(messageSelect);
+
+    useEffect(() => {
+      dispatch(fetchTargets());
+      dispatch(fetchMessages());
+    }, []);
+
     
     const handleClickConfirm = async () => {
       //FIXME
@@ -75,39 +86,69 @@ interface IProps {
                 setNotificationType(event.target.value);
               }}
               fullWidth
-            > 
-              { projectState.selectedProject?.project_type === EnumProjectType.ORGANIZATION && 
-                EnumNotificationType.IndividualNotificationType().map(key => <MenuItem value={key}>{key}</MenuItem>)}
-              { projectState.selectedProject?.project_type === EnumProjectType.INDIVIDUAL && 
-                EnumNotificationType.OrganizationNotificationType().map(key => <MenuItem value={key}>{key}</MenuItem>)}
+            >
+              <MenuItem value={EnumNotificationType.API}>{EnumNotificationType.API}</MenuItem>
+              <MenuItem value={EnumNotificationType.SMS}>{EnumNotificationType.SMS}</MenuItem>
+              <MenuItem value={EnumNotificationType.EMAIL}>{EnumNotificationType.EMAIL}</MenuItem>
+              {/*{ projectState.selectedProject?.project_type === EnumProjectType.ORGANIZATION && */}
+              {/*  EnumNotificationType.OrganizationNotificationType().map(key => <MenuItem value={key}>{key}</MenuItem>)}*/}
+              {/*{ projectState.selectedProject?.project_type === EnumProjectType.INDIVIDUAL && */}
+              {/*  EnumNotificationType.IndividualNotificationType().map(key => <MenuItem value={key}>{key}</MenuItem>)}*/}
             </Select>
-            <InputLabel id="demo-simple-select-label">Template</InputLabel>
+            <br/>
+            <br/>
+            <br/>
+            {/*<InputLabel id="demo-simple-select-label">Template</InputLabel>*/}
+            {/*<Select*/}
+            {/*  labelId="demo-simple-select-label"*/}
+            {/*  id="demo-simple-select"*/}
+            {/*  value={template}*/}
+            {/*  label="notification type"*/}
+            {/*  onChange={(event: SelectChangeEvent) => {*/}
+            {/*    setTemplate(event.target.value);*/}
+            {/*  }}*/}
+            {/*  fullWidth*/}
+            {/*> */}
+            {/*  {EnumTemplateType.TemplateOf(notificationType).map(key => <MenuItem value={key}>{key}</MenuItem>)}*/}
+            {/*</Select>*/}
+
+            <InputLabel id="demo-simple-select-label">TargetUser</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={template}
-              label="notification type"
+              value={target}
+              label="target"
               onChange={(event: SelectChangeEvent) => {
-                setTemplate(event.target.value);
+                setTarget(event.target.value);
               }}
               fullWidth
-            > 
-              {EnumTemplateType.TemplateOf(notificationType).map(key => <MenuItem value={key}>{key}</MenuItem>)}
+            >
+              { targetState.targets &&
+                  targetState.targets.map(target => <MenuItem value={target.id}>{target.name}</MenuItem> )
+              }
             </Select>
-
-            <InputLabel id="demo-simple-select-label">TargetUser</InputLabel>
-            <AutoCompleteBox/>
+            <br/>
+            <br/>
+            <br/>
 
             <InputLabel id="demo-simple-select-label">Message</InputLabel>
-
-            <TextField
-              id="outlined-multiline-static"
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={message}
+              label="target"
+              onChange={(event: SelectChangeEvent) => {
+                setMessage(event.target.value);
+              }}
               fullWidth
-              multiline
-              onChange={(event: any) => {setMessage(event.target.value)}}
-              rows={4}
-              defaultValue=""
-            />
+            >
+              { messageState.messages &&
+                  messageState.messages.map(message => <MenuItem value={message.id}>{message.content}</MenuItem> )
+              }
+            </Select>
+            <br/>
+            <br/>
+            <br/>
 
           </DialogContent>
           <DialogActions>

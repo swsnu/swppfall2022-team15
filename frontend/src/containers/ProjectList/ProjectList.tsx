@@ -75,6 +75,7 @@ export default function ProjectListTable() {
               <Table>
                 <TableHead>
                   <TableRow>
+                    <TableCell>Id</TableCell>
                     <TableCell>Name</TableCell>
                     <TableCell>Type</TableCell>
                     <TableCell>Most Recently Sent Notification</TableCell>
@@ -89,12 +90,18 @@ export default function ProjectListTable() {
                           align="left"
                           onClick={() => handleRowHandler(id)}
                         >
+                          {id}
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          onClick={() => handleRowHandler(id)}
+                        >
                           {name}
                         </TableCell>
                         <TableCell align="left">
                           <Label
                             color={
-                              (project_type === "organization" && "primary") ||
+                              (project_type === "ORGANIZATION" && "primary") ||
                               "secondary"
                             }
                           >
