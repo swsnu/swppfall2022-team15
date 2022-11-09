@@ -4,14 +4,14 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  InputLabel,
+  InputLabel, MenuItem, Select, SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createMessage } from "../../services/message";
-import { fetchMessages } from "../../store/slices/message";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {createMessage, fetchMessages} from "../../store/slices/message";
 import { AppDispatch } from "../../store";
+import {fetchProjects, projectSelect} from "../../store/slices/project";
 
 interface IProps {
   open: any;
@@ -19,16 +19,26 @@ interface IProps {
 }
 
 export default function MessageCreateModal(props: IProps) {
-  const [title, setTitle] = useState("");
+  const [project, setProject] = useState("");
   const [content, setContent] = useState("");
 
+
   const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(fetchProjects());
+  }, []);
+
+  const projectState = useSelector(projectSelect);
 
   const handleClickConfirm = async () => {
-    if (title && content) {
-      await createMessage(title, content);
+    if (project && content) {
+      const data = {
+        project: Number(project),
+        content: content,
+      }
+      dispatch(createMessage(data));
       props.handleClose();
-      await dispatch(fetchMessages());
+      dispatch(fetchMessages());
     }
   };
 
@@ -43,37 +53,33 @@ export default function MessageCreateModal(props: IProps) {
       >
         <DialogTitle>New Message</DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="title"
-            label="title"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={title}
-            onChange={(event) => {
-              setTitle(event.target.value);
-            }}
-            required
-          />
-          <InputLabel id="demo-simple-select-label">Title</InputLabel>
+          <InputLabel id="demo-simple-select-label"> Project </InputLabel>
+          <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={project}
+              // label="project type"
+              onChange={(event: SelectChangeEvent) => {
+                setProject(event.target.value);
+              }}
+              fullWidth
+            >
+            {/*// TODO : change to enum and add conditions (filerr) */}
+            {projectState.projects.map(project => <MenuItem value={project.id}>{project.name}</MenuItem>)}
+            </Select>
+          <br/>
+          <br/>
+          <br/>
 
-          <TextField
-            autoFocus
-            margin="dense"
-            id="content"
-            label="content"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={content}
-            onChange={(event) => {
-              setContent(event.target.value);
-            }}
-            required
-          />
           <InputLabel id="demo-simple-select-label">Content</InputLabel>
+          <TextField
+              id="outlined-multiline-static"
+              fullWidth
+              multiline
+              onChange={(event: any) => {setContent(event.target.value)}}
+              rows={4}
+              defaultValue=""
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClickConfirm}>Confirm</Button>
