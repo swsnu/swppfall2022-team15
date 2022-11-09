@@ -1,5 +1,5 @@
 import {
-  Button,
+  Button, Card,
   IconButton,
   MenuItem,
   Popover,
@@ -20,6 +20,8 @@ import { deleteMessage } from "../../services/message";
 import { fetchMessages, messageListSelector } from "../../store/slices/message";
 
 import { AppDispatch } from "../../store";
+import {Container} from "@mui/system";
+import Scrollbar from "../../components/scrollbar/Scrollbar";
 
 export default function MessageListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
@@ -51,46 +53,52 @@ export default function MessageListTable() {
   const messages = useSelector(messageListSelector);
 
   return (
-    <div>
+    <>
       <MessageCreateModal
         open={createModalopen}
         handleClose={() => setCreateModalOpen(false)}
       ></MessageCreateModal>
+      <Container>
       <Grid container justifyContent="flex-end">
         <Button onClick={handleClickCreateButton}>New Message</Button>
       </Grid>
-      <TableContainer sx={{ minWidth: 800 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Project</TableCell>
-              <TableCell>Content</TableCell>
-            </TableRow>
-          </TableHead>
+        <Card>
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Project</TableCell>
+                    <TableCell>Content</TableCell>
+                  </TableRow>
+                </TableHead>
 
-          <TableBody>
-            {messages.map((row) => {
-              const { id, project, content } = row;
-              return (
-                <TableRow hover key={id} tabIndex={-1}>
-                  <TableCell align="left">{project}</TableCell>
-                  <TableCell align="left">{content}</TableCell>
-                  <TableCell align="right">
-                    <IconButton
-                      size="large"
-                      color="inherit"
-                      onClick={handleOpenMenu}
-                      data-id={id}
-                    >
-                      <Iconify icon={"eva:more-vertical-fill"} />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                <TableBody>
+                  {messages.map((row) => {
+                    const { id, project, content } = row;
+                    return (
+                      <TableRow hover key={id} tabIndex={-1}>
+                        <TableCell align="left">{project}</TableCell>
+                        <TableCell align="left">{content}</TableCell>
+                        <TableCell align="right">
+                          <IconButton
+                            size="large"
+                            color="inherit"
+                            onClick={handleOpenMenu}
+                            data-id={id}
+                          >
+                            <Iconify icon={"eva:more-vertical-fill"} />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Scrollbar>
+        </Card>
+      </Container>
       <Popover
         open={Boolean(open)}
         anchorEl={open}
@@ -118,6 +126,6 @@ export default function MessageListTable() {
           Delete
         </MenuItem>
       </Popover>
-    </div>
+    </>
   );
 }

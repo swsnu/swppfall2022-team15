@@ -1,5 +1,5 @@
 import {
-  Button,
+  Button, Card,
   IconButton,
   MenuItem,
   Popover,
@@ -18,6 +18,8 @@ import TargetCreateModal from "../../components/Targets/TargetCreateModal";
 import { deleteTarget } from "../../services/target";
 import { AppDispatch } from "../../store";
 import { fetchTargets, targetListSelector } from "../../store/slices/target";
+import Scrollbar from "../../components/scrollbar/Scrollbar";
+import {Container} from "@mui/system";
 
 export default function TargetListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
@@ -49,51 +51,56 @@ export default function TargetListTable() {
   const targets = useSelector(targetListSelector);
 
   return (
-    <div>
+    <>
       <TargetCreateModal
         open={createModalopen}
         handleClose={() => setCreateModalOpen(false)}
       ></TargetCreateModal>
-      <Grid container justifyContent="flex-end">
-        <Button onClick={handleClickCreateButton}>New Target</Button>
-      </Grid>
-      <TableContainer sx={{ minWidth: 800 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Notification Type</TableCell>
-              <TableCell>End Point</TableCell>
-              {/*TODO - project name*/}
-              <TableCell>Project Id</TableCell>
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {targets.map((row) => {
-              const { id, name, notification_type, endpoint, project } = row;
-              return (
-                <TableRow hover key={id} tabIndex={-1}>
-                  <TableCell align="left">{name}</TableCell>
-                  <TableCell align="left">{notification_type}</TableCell>
-                  <TableCell align="left">{endpoint}</TableCell>
-                  <TableCell align="left">{project}</TableCell>
-                  <TableCell align="right">
-                    <IconButton
-                      size="large"
-                      color="inherit"
-                      onClick={handleOpenMenu}
-                      data-id={id}
-                    >
-                      <Iconify icon={"eva:more-vertical-fill"} />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Container>
+        <Grid container justifyContent="flex-end">
+          <Button onClick={handleClickCreateButton}>New Target</Button>
+        </Grid>
+        <Card>
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Notification Type</TableCell>
+                    <TableCell>End Point</TableCell>
+                    {/*TODO - project name*/}
+                    <TableCell>Project Id</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {targets.map((row) => {
+                    const { id, name, notification_type, endpoint, project } = row;
+                    return (
+                      <TableRow hover key={id} tabIndex={-1}>
+                        <TableCell align="left">{name}</TableCell>
+                        <TableCell align="left">{notification_type}</TableCell>
+                        <TableCell align="left">{endpoint}</TableCell>
+                        <TableCell align="left">{project}</TableCell>
+                        <TableCell align="right">
+                          <IconButton
+                            size="large"
+                            color="inherit"
+                            onClick={handleOpenMenu}
+                            data-id={id}
+                          >
+                            <Iconify icon={"eva:more-vertical-fill"} />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Scrollbar>
+        </Card>
+      </Container>
       <Popover
         open={Boolean(open)}
         anchorEl={open}
@@ -121,6 +128,6 @@ export default function TargetListTable() {
           Delete
         </MenuItem>
       </Popover>
-    </div>
+    </>
   );
 }

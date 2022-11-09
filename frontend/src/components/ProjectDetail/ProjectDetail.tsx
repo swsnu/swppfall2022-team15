@@ -8,6 +8,7 @@ import { fetchNotifcations, notificationListSelector } from "../../store/slices/
 import { fetchProject } from "../../store/slices/project";
 import NotificationCreateModal from "../NotificationCreateModal";
 import CollapsibleTable from "../table/CollapsibleTable";
+import {Container} from "@mui/system";
 
 
 
@@ -33,16 +34,17 @@ export default function ProjectDetail() {
   }
 
   return (
-    <div>
+    <>
       <NotificationCreateModal
         open={open}
         handleClose={() => setOpen(false)}
       ></NotificationCreateModal>
-
-      <Grid container justifyContent="flex-end">
-        <Button variant="contained" onClick={handleCreateNotification}>Create Notification</Button>      
-      </Grid>
-      <CollapsibleTable notifications={notifications} />
-    </div>
+      <Container>
+        <Grid container justifyContent="flex-end">
+          <Button variant="contained" onClick={handleCreateNotification}>Create Notification</Button>
+        </Grid>
+        <CollapsibleTable notifications={notifications} />
+      </Container>
+    </>
   )
 };
