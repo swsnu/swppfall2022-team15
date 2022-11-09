@@ -1,5 +1,6 @@
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 import { FaHome, FaHistory, FaFolderOpen } from "react-icons/fa";
 import { FiTarget } from "react-icons/fi";
@@ -11,6 +12,7 @@ import "./NotiSidebar.css";
 
 export default function NotiSidebar() {
   //const { collapseSidebar } = useProSidebar();
+  const [ page, setPage ] = useState("home");
 
   const homeIcon = <FaHome size="48"></FaHome>;
   const projectIcon = <FaFolderOpen size="48"></FaFolderOpen>;
@@ -38,7 +40,8 @@ export default function NotiSidebar() {
         <Menu className="menu">
           <MenuItem
             routerLink={<Link to="/home" />}
-            className="item"
+            className={page === "home" ? "item active" : "item"}
+            onClick={() => setPage("home")}
             icon={homeIcon}
           >
             {" "}
@@ -46,7 +49,8 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/projects" />}
-            className="item"
+            className={page === "projects" ? "item active" : "item"}
+            onClick={() => setPage("projects")}
             icon={projectIcon}
           >
             {" "}
@@ -54,7 +58,8 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/targets" />}
-            className="item"
+            className={page === "targets" ? "item active" : "item"}
+            onClick={() => setPage("targets")}
             icon={targetIcon}
           >
             {" "}
@@ -62,7 +67,8 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/messages" />}
-            className="item"
+            className={page === "messages" ? "item active" : "item"}
+            onClick={() => setPage("messages")}
             icon={messageIcon}
           >
             {" "}
@@ -70,7 +76,8 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/templates" />}
-            className="item"
+            className={page === "templates" ? "item active" : "item"}
+            onClick={() => setPage("templates")}
             icon={templateIcon}
           >
             {" "}
@@ -78,7 +85,8 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/history" />}
-            className="item"
+            className={page === "history" ? "item active" : "item"}
+            onClick={() => setPage("history")}
             icon={historyIcon}
           >
             {" "}
@@ -86,6 +94,9 @@ export default function NotiSidebar() {
           </MenuItem>
         </Menu>
       </Sidebar>
+
     </div>
+
+    
   );
 }

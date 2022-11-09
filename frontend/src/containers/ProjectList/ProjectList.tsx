@@ -80,6 +80,7 @@ export default function ProjectListTable() {
                     <TableCell>Most Recently Sent Notification</TableCell>
                   </TableRow>
                 </TableHead>
+                
                 <TableBody>
                   {projects.map((row) => {
                     const { id, name, project_type } = row;

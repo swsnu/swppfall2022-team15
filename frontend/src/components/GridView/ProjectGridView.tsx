@@ -20,7 +20,7 @@ function GridLayout(props: { projects: ProjectType[] }) {
                 {props.projects.map((project) => (
                     <Grid item xs={12} sm={4} width="100px" height="200px" >
                         <Paper>
-                            <img src={icon(project)} alt="folder" width="140px" height="120px" />
+                            <img src={icon(project)} alt="folder" width="140px" height="100px" />
                         </Paper>
                         <p>{project.name}</p>
                     </Grid>
