@@ -84,7 +84,7 @@ export default function TargetListTable() {
                         <TableCell align="left">{notification_type}</TableCell>
                         <TableCell align="left">{endpoint}</TableCell>
                         <TableCell align="left">{project}</TableCell>
-                        <TableCell align="right">
+                        <TableCell align="left">
                           <IconButton
                             size="large"
                             color="inherit"
