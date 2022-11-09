@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'project',
     'notifications',
     'nmessages',
+    'targetusers',
 ]
 
 MIDDLEWARE = [
