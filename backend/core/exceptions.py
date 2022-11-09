@@ -1,0 +1,2 @@
+class NotificationServiceException(Exception):
+    pass

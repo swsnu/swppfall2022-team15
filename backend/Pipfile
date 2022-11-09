@@ -9,6 +9,8 @@ djangorestframework = "==3.13.1"
 django-cors-headers = "*"
 celery = "*"
 django-celery-beat = "*"
+celery-flower = "*"
+requests = "*"
 
 [dev-packages]
 pylint = "*"

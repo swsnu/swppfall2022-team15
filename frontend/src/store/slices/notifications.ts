@@ -14,7 +14,7 @@ export const fetchNotifcations = createAsyncThunk(
 
 export const createNotification = createAsyncThunk(
   "notifications/createNotification",
-  async(data: {project: number, type: string, message: string }) => {
+  async(data: {project: number, type: string, message: string, target: string}) => {
     const response = await axios.post<NotificationType>("/api/notification/", data);
     return response.data;
   }

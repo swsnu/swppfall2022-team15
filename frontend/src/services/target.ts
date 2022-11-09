@@ -20,7 +20,7 @@ export async function createTarget(
 
 export async function deleteTarget(targetId: number) {
   try {
-    return await axios.delete(`/api/target/${targetId}`);
+    return await axios.delete(`/api/targetuser/${targetId}`);
   } catch (e: any) {
     console.log(e.response);
   }
