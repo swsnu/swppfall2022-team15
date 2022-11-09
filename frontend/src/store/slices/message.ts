@@ -5,7 +5,7 @@ import { RootState } from "..";
 import { MessageType } from "../../types";
 
 export const fetchMessages = createAsyncThunk(
-  "message/fetachMessages",
+  "message/fetchMessages",
   async () => {
     const response = await axios.get<MessageType[]>("/api/message/");
     return response.data;
@@ -19,6 +19,15 @@ export const fetchMessage = createAsyncThunk(
     return response.data;
   }
 );
+
+export const createMessage = createAsyncThunk(
+    "message/createMessage",
+    async (message: {project: number, content: string}) => {
+        const response = await axios.post<MessageType>("/api/message/", message);
+        return response.data;
+    }
+);
+
 
 const initialState: {
   messages: MessageType[];
