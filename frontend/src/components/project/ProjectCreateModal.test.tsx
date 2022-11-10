@@ -1,6 +1,4 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react";
-import axios from "axios";
-import { act } from "react-dom/test-utils";
+import { fireEvent, screen } from "@testing-library/react";
 import { EnumProjectType } from "../../Enums";
 import projectService from "../../services/project";
 import { renderWithProviders } from "../../test-utils/mocks";
@@ -25,9 +23,7 @@ describe("<ProjectCreateModal />", () => {
     const nameInput = screen.getByTestId("name-input");
     const typeInput = screen.getByTestId("type-input");
     const confirmButton = screen.getByTestId("confirm-button");
-    await act(async () => {
-      fireEvent.click(confirmButton);
-    });
+    fireEvent.click(confirmButton);
     expect(projectService.createProject).toHaveBeenCalledTimes(0);
     fireEvent.change(nameInput, {
       target: { value: "proejct name" },
@@ -35,9 +31,8 @@ describe("<ProjectCreateModal />", () => {
     fireEvent.change(typeInput, {
       target: { value: EnumProjectType.ORGANIZATION },
     });
-    await act(async () => {
-      fireEvent.click(confirmButton);
-    });
+
+    fireEvent.click(confirmButton);
     expect(projectService.createProject).toHaveBeenCalled();
   });
 });

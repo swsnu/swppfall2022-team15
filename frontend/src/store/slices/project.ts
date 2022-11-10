@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 import { RootState } from "..";
-import { EnumProjectType } from "../../Enums";
 import { ProjectType } from "../../types";
 
 export const fetchProjects = createAsyncThunk(
