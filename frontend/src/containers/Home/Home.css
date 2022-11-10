@@ -9,11 +9,16 @@
 
 .flex-container {
     display: inline-flex;
+    flex-wrap: wrap;
+    height: auto;
+    width: auto;
 }
 
 .flex-item {
-    width: 48%;
-    
+    width: 50%;
+    flex-wrap: wrap;
+    height: auto;
+    width: auto;
 }
 
 .projects {
@@ -124,7 +129,7 @@
 
 .upcomingNoti {
     float: right;
-    margin-right: 100px;
+    padding: 30px;
     
     display: flex;
 }

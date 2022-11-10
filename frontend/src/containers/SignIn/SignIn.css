@@ -1,6 +1,17 @@
 .SignIn {
-  position: absolute;
-  top: 40%;
-  left: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10%;
   font-family: "NotoSansKR-Medium";
+}
+
+.email {
+  display: flex;
+  width: 300px;
+}
+
+.password {
+  display: flex;
+  width: 300px;
 }
