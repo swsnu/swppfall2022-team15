@@ -15,3 +15,8 @@
   display: flex;
   width: 300px;
 }
+
+.error {
+  color: red;
+  font-size: 16px;
+}
