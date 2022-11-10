@@ -17,10 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken.views import obtain_auth_token
 
+from account.views import SignUpView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    path('api-token-auth/', obtain_auth_token),
+    path('api/signin/', obtain_auth_token, name='signin'),
+    path('api/signup/', SignUpView.as_view(), name='signup'),
 
     path('api/project/', include('project.urls')),
     path('api/notification/', include('notifications.urls')),
