@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 
 import NotiSidebar from "./NotiSidebar";
 import { renderWithProviders } from "../../test-utils/mocks";
