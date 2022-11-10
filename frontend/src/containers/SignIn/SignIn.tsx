@@ -32,14 +32,17 @@ export default function SignIn() {
       <form>
         <Stack spacing={2}>
           <TextField
+            className="email"
             name="email"
             label="Email address"
             value={email}
             onChange={handleEmailChange}
           />
           <TextField
+            className="password"
             name="password"
             label="Password"
+            type="password"
             value={password}
             onChange={handlePasswordChange}
           />

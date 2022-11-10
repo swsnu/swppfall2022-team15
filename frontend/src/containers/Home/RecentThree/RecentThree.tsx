@@ -1,6 +1,6 @@
 import "./RecentThree.css";
-import { NotificationType } from "../../types";
-import { EnumNotificationStatus } from "../../Enums";
+import { NotificationType } from "../../../types";
+import { EnumNotificationStatus } from "../../../Enums";
 
 
 function RecentThree(props: { notifications: NotificationType[] }) {

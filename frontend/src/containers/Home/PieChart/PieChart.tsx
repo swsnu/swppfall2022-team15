@@ -1,6 +1,6 @@
 import Chart from "react-apexcharts";
 
-import { NotificationType } from '../../types';
+import { NotificationType } from '../../../types';
 
 function NotiPieChart(props: { notifications: NotificationType[] }) {
     //Todo: Implement PieChart with actual data

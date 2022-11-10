@@ -1,5 +1,5 @@
 import "./Upcoming.css"
-import { NotificationType } from "../../types";
+import { NotificationType } from "../../../types";
 
 
 function Upcoming(props: { upcomingNotifications: NotificationType[] }) {
