@@ -11,6 +11,7 @@ celery = "*"
 django-celery-beat = "*"
 celery-flower = "*"
 requests = "*"
+redis = "*"
 
 [dev-packages]
 pylint = "*"
