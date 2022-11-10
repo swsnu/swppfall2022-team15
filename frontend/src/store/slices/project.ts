@@ -25,11 +25,7 @@ const initialState: {
   selectedProject: ProjectType | null;
   projects: ProjectType[];
 } = {
-  selectedProject: {
-    id: 1,
-    project_type: EnumProjectType.ORGANIZATION,
-    name: "Project 1",
-  },
+  selectedProject: null,
   projects: [],
 };
 
