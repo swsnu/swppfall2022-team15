@@ -12,6 +12,7 @@ django-celery-beat = "*"
 celery-flower = "*"
 requests = "*"
 redis = "*"
+tornado = "==5.1.1"
 
 [dev-packages]
 pylint = "*"
