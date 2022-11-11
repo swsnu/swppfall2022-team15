@@ -15,7 +15,7 @@ export const fetchTargets = createAsyncThunk(
 export const fetchTargetsByProjectId = createAsyncThunk(
   "target/fetchTargets",
   async (projectId:number) => {
-    const response = await axios.get<TargetType[]>(`/api/targetuser?projectId=${projectId}`);
+    const response = await axios.get<TargetType[]>(`/api/targetuser/projectId=${projectId}`);
     return response.data;
   }
 );
@@ -30,7 +30,7 @@ export const fetchTarget = createAsyncThunk(
 
 export const createTarget = createAsyncThunk(
     "target/createTarget",
-    async (target: {name: string, notification_type: string, endpoint: string, data:object, project: number }) => {
+    async (target: {name: string, notification_type: string, endpoint: string, project: number }) => {
         const response = await axios.post<TargetType>("/api/targetuser/", target);
         return response.data;
     }
@@ -39,8 +39,10 @@ export const createTarget = createAsyncThunk(
 
 const initialState: {
   targets: TargetType[];
+  selectedTarget: TargetType | null;
 } = {
   targets: [],
+  selectedTarget: null,
 };
 
 export const TargetSlice = createSlice({
@@ -50,6 +52,9 @@ export const TargetSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchTargets.fulfilled, (state, action) => {
       state.targets = action.payload;
+    });
+    builder.addCase(fetchTarget.fulfilled, (state, action) => {
+      state.selectedTarget = action.payload;
     });
   },
 });
