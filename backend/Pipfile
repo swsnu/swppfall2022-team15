@@ -13,6 +13,7 @@ celery-flower = "*"
 requests = "*"
 redis = "*"
 tornado = "==5.1.1"
+django-extensions = "*"
 
 [dev-packages]
 pylint = "*"

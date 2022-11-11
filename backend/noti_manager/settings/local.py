@@ -13,12 +13,6 @@ INSTALLED_APPS += [
     'corsheaders',
 ]
 
-REST_FRAMEWORK.update({
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ],
-})
-
 # CORS
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True

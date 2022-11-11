@@ -32,10 +32,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # project apps
-    'account',
+
+    # third party
     'rest_framework',
     'rest_framework.authtoken',
+    'django_extensions',
+
+    # project apps
+    'account',
     'project',
     'notifications',
     'nmessages',

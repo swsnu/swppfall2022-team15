@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 import { RootState } from "..";
-import { EnumProjectType } from "../../Enums";
 import { ProjectType } from "../../types";
 
 export const fetchProjects = createAsyncThunk(
@@ -25,11 +24,7 @@ const initialState: {
   selectedProject: ProjectType | null;
   projects: ProjectType[];
 } = {
-  selectedProject: {
-    id: 1,
-    project_type: EnumProjectType.ORGANIZATION,
-    name: "Project 1",
-  },
+  selectedProject: null,
   projects: [],
 };
 

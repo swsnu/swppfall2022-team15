@@ -16,7 +16,7 @@ import SignUp from "./containers/SignUp/SignUp";
 import TargetListTable from "./containers/TargetList/TargetList";
 import MessageListTable from "./containers/MessageList/MessageList";
 
-const SidebarLayout = () => (
+export const SidebarLayout = () => (
   <>
     <div className="sidebar" style={{ height: "100vh" }}>
       <NotiSidebar />
