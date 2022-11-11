@@ -39,7 +39,7 @@ export default function SignIn() {
     try {
       //Todo: fix url
       const response = await axios.post(
-        "/api/users/login",
+        "http://localhost:8000/api/signin",
         JSON.stringify({
           email: email,
           password: password,
@@ -77,8 +77,9 @@ export default function SignIn() {
       <h2>NotiManager</h2>
       <form onSubmit={handleSignIn}>
         <Stack spacing={2}>
-          {error && <div className="error">{error}</div>}
+          {error && <div className="error" data-testid="error">{error}</div>}
           <TextField
+            data-testid="email"
             className="email"
             name="email"
             label="Email address"
@@ -86,6 +87,7 @@ export default function SignIn() {
             onChange={handleEmailChange}
           />
           <TextField
+            data-testid="password"
             className="password"
             name="password"
             label="Password"
@@ -98,6 +100,7 @@ export default function SignIn() {
         <Stack spacing={2} direction="row">
           <LoadingButton
             fullWidth
+            data-testid="signin"
             size="large"
             type="submit"
             variant="contained"
@@ -107,6 +110,7 @@ export default function SignIn() {
           <br />
           <LoadingButton
             fullWidth
+            data-testid="signup"
             size="large"
             variant="contained"
             onClick={() => handleSignUp()}

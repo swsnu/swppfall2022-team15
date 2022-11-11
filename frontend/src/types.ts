@@ -37,3 +37,11 @@ export interface MessageType {
   project: string;
   content: string;
 }
+
+export interface UserType {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+  is_active: boolean;
+}
