@@ -65,7 +65,8 @@
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.d.ts",
       "!src/test-utils/*",
-      "!src/index.tsx"
+      "!src/index.tsx",
+      "!src/reportWebVitals.ts"
     ]
   }
 }
