@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createProject } from "../../services/project";
+import projectService from "../../services/project";
 import { AppDispatch } from "../../store";
 import { fetchProjects } from "../../store/slices/project";
 
@@ -28,7 +28,8 @@ export default function ProjectCreateModal(props: IProps) {
 
   const handleClickConfirm = async () => {
     if (projectName && projectType) {
-      await createProject(projectName, projectType);
+      await projectService.createProject(projectName, projectType);
+      console.log("called");
       props.handleClose();
       await dispatch(fetchProjects());
     }
@@ -49,7 +50,9 @@ export default function ProjectCreateModal(props: IProps) {
           <TextField
             autoFocus
             margin="dense"
-            id="name"
+            inputProps={{
+              "data-testid": "name-input",
+            }}
             // label="project name"
             type="text"
             fullWidth
@@ -60,9 +63,9 @@ export default function ProjectCreateModal(props: IProps) {
             }}
             required
           />
-          <br/>
-          <br/>
-          <br/>
+          <br />
+          <br />
+          <br />
 
           <InputLabel id="demo-simple-select-label">Project Type</InputLabel>
           <Select
@@ -70,6 +73,9 @@ export default function ProjectCreateModal(props: IProps) {
             id="demo-simple-select"
             value={projectType}
             // label="project type"
+            inputProps={{
+              "data-testid": "type-input",
+            }}
             onChange={(event: SelectChangeEvent) => {
               setProjectType(event.target.value as string);
             }}
@@ -80,7 +86,9 @@ export default function ProjectCreateModal(props: IProps) {
           </Select>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClickConfirm}>Confirm</Button>
+          <Button data-testid="confirm-button" onClick={handleClickConfirm}>
+            Confirm
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
