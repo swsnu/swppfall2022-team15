@@ -64,7 +64,7 @@ export default function SignUp() {
     try {
       //Todo: fix url
       const response = await axios.post(
-        "/api/users/signup",
+        "http://localhost:8000/api/signup/",
         JSON.stringify({
           email: email,
           username: username,
@@ -80,7 +80,7 @@ export default function SignUp() {
       //Todo: token
       const token = response.data.token;
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         navigate(`/login`);
       }
     } catch (error: any) {
