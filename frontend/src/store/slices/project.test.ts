@@ -1,6 +1,7 @@
 import { AnyAction, configureStore, EnhancedStore } from "@reduxjs/toolkit";
 import axios from "axios";
 import { ThunkMiddleware } from "redux-thunk";
+
 import { EnumProjectType } from "../../Enums";
 import { ProjectType } from "../../types";
 import reducer, { fetchProjects, fetchProject } from "./project";
