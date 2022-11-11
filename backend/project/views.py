@@ -9,6 +9,7 @@ from project.serializers import ProjectSerializer
 
 from notifications.serializers import NotificationSerializer
 
+
 class ProjectViewSet(ModelViewSet):
     # TODO: Add permission classes
     permission_classes = (AllowAny, IsAuthenticated, IsOwner,)
@@ -23,5 +24,5 @@ class ProjectViewSet(ModelViewSet):
         project = self.get_object()
         notifications = project.notification_set.all()
         serializer = NotificationSerializer(notifications, many=True)
-        
+
         return Response(serializer.data)
