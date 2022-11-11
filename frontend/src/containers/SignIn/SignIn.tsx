@@ -39,7 +39,7 @@ export default function SignIn() {
     try {
       //Todo: fix url
       const response = await axios.post(
-        "http://localhost:8000/api/signin",
+        "/api/signin",
         JSON.stringify({
           email: email,
           password: password,
