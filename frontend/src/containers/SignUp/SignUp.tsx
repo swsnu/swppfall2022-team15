@@ -52,19 +52,19 @@ export default function SignUp() {
       password === "" ||
       passwordConfirm === ""
     ) {
-      alert("Please fill in all fields");
+      setError("Please fill in all fields");
       return;
     }
 
     if (password !== passwordConfirm) {
-      alert("Passwords do not match");
+      setError("Passwords do not match");
       return;
     }
 
     try {
       //Todo: fix url
       const response = await axios.post(
-        "http://localhost:8000/api/signup/",
+        "/api/signup/",
         JSON.stringify({
           email: email,
           username: username,
@@ -76,13 +76,18 @@ export default function SignUp() {
             withCredentials: true,
           },
         }
-      );
+      ).then(response => {
+        console.log(response);
+        console.log(response.data);
+      });
       //Todo: token
+      /*
       const token = response.data.token;
 
       if (response.status === 201) {
         navigate(`/login`);
       }
+      */
     } catch (error: any) {
       if (!error.response) {
         setError("Error connecting to server");
