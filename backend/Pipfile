@@ -7,10 +7,12 @@ name = "pypi"
 django = "==4.1.2"
 djangorestframework = "==3.13.1"
 django-cors-headers = "*"
-celery = "*"
+celery = "==4.4"
 django-celery-beat = "*"
 celery-flower = "*"
 requests = "*"
+redis = "*"
+tornado = "==5.1.1"
 django-extensions = "*"
 
 [dev-packages]

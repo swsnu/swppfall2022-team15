@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny
 
 from nmessages.models import NMessage
 from notifications.serializers import NotificationSerializer
-from notifications.services import send_api_notification, ApiNotificationDto
+from notifications.services import task_send_api_notification, ApiNotificationDto
 from targetusers.models import TargetUser
 
 
@@ -34,7 +34,8 @@ class NotificationViewSet(ModelViewSet):
             headers=headers,
             data=nmessage.content,
         )
-        send_api_notification(apiDto)
+
+        task_send_api_notification.delay(apiDto)
 
         return Response(
             data=serializers.data,
