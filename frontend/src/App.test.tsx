@@ -52,6 +52,7 @@ describe("App", () => {
       </BrowserRouter>
     );
 
-    expect(screen.queryByText("Home")).toBeInTheDocument();
+    const home = screen.queryByText("Home");
+    expect(home).toBeInTheDocument();
   });
 });
