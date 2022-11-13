@@ -63,6 +63,8 @@
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
+      "!src/Enums.ts",
+      "!src/types.ts",
       "!src/**/*.d.ts",
       "!src/test-utils/*",
       "!src/index.tsx",

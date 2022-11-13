@@ -3,38 +3,35 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle, MenuItem,
+  DialogTitle,
   InputLabel,
+  MenuItem,
   Select,
   SelectChangeEvent,
-  TextField,
 } from "@mui/material";
 import {useEffect, useState} from "react";
-import { useDispatch } from "react-redux";
-import { EnumNotificationType, EnumTemplateType, EnumProjectType } from "../Enums";
-
-import { useSelector } from "react-redux";
-import { AppDispatch } from "../store";
-import { createNotification, fetchNotifcations } from "../store/slices/notifications";
-import {fetchProject, projectSelect} from "../store/slices/project";
-import AutoCompleteBox from "./autoComplete";
+import {useDispatch, useSelector} from "react-redux";
+import {EnumNotificationType} from "../Enums";
+import {AppDispatch} from "../store";
+import {createNotification, fetchNotifcations} from "../store/slices/notifications";
+import {projectSelect} from "../store/slices/project";
 import {fetchTargets, targetSelect} from "../store/slices/target";
 import {fetchMessages, messageSelect} from "../store/slices/message";
 
-  
+
 interface IProps {
   open: any;
   handleClose: any;
 }
-  
+
   export default function NotificationCreateModal(props: IProps) {
     // TODO - terminology. messageType vs notificationType
     const [notificationType, setNotificationType] = useState("");
     // const [template, setTemplate] = useState("");
     const [target, setTarget] = useState("");
-    
+
     const [message, setMessage] = useState("");
-  
+
     const dispatch = useDispatch<AppDispatch>();
 
     const projectState = useSelector(projectSelect);
@@ -49,11 +46,13 @@ interface IProps {
     
     const handleClickConfirm = async () => {
       //FIXME
-      if (projectState.selectedProject && message &&notificationType) {
+      if (projectState.selectedProject  &&notificationType) {
         const projectId = projectState.selectedProject.id
         // TODO
         // DTO management. should decide where to place
         // https://github.com/swsnu/swppfall2022-team15/issues/52
+        setTarget("target")
+        setMessage("message")
         const data = {
           project: projectId,
           type: notificationType,
@@ -84,6 +83,9 @@ interface IProps {
               id="demo-simple-select"
               value={notificationType}
               label="project type"
+              inputProps={{
+              "data-testid": "notification-type-input",
+            }}
               onChange={(event: SelectChangeEvent) => {
                 setNotificationType(event.target.value);
               }}
@@ -120,13 +122,16 @@ interface IProps {
               id="demo-simple-select"
               value={target}
               label="target"
+              inputProps={{
+                "data-testid": "target-user-input",
+               }}
               onChange={(event: SelectChangeEvent) => {
                 setTarget(event.target.value);
               }}
               fullWidth
             >
               { targetState.targets &&
-                  targetState.targets.map(target => <MenuItem value={target.id}>{target.name}</MenuItem> )
+                  targetState.targets.map(target => <MenuItem key={target.id} value={target.id}>{target.name}</MenuItem> )
               }
             </Select>
             <br/>
@@ -139,13 +144,16 @@ interface IProps {
               id="demo-simple-select"
               value={message}
               label="target"
+              inputProps={{
+                "data-testid": "message-input",
+               }}
               onChange={(event: SelectChangeEvent) => {
                 setMessage(event.target.value);
               }}
               fullWidth
             >
               { messageState.messages &&
-                  messageState.messages.map(message => <MenuItem value={message.id}>{message.content}</MenuItem> )
+                  messageState.messages.map(message => <MenuItem key={message.id} value={message.id}>{message.id}</MenuItem> )
               }
             </Select>
             <br/>
@@ -154,7 +162,7 @@ interface IProps {
 
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClickConfirm}>Confirm</Button>
+            <Button onClick={handleClickConfirm} data-testid="confirm-button">Confirm</Button>
           </DialogActions>
         </Dialog>
       </div>

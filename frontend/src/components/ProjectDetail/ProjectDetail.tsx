@@ -29,7 +29,6 @@ export default function ProjectDetail() {
 
   // event handlers
   const handleCreateNotification = (event: React.MouseEvent) => {
-    console.log("create notification");
     setOpen(true);
   }
 
@@ -41,7 +40,7 @@ export default function ProjectDetail() {
       ></NotificationCreateModal>
       <Container>
         <Grid container justifyContent="flex-end">
-          <Button variant="contained" onClick={handleCreateNotification}>Create Notification</Button>
+          <Button data-testid="createNotificationButton" variant="contained" onClick={handleCreateNotification}>Create Notification</Button>
         </Grid>
         <CollapsibleTable notifications={notifications} />
       </Container>
