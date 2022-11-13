@@ -4,27 +4,20 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  MenuItem,
   InputLabel,
+  MenuItem,
   Select,
   SelectChangeEvent,
-  TextField,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import {
-  EnumNotificationType,
-  EnumTemplateType,
-  EnumProjectType,
-} from "../Enums";
-
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { EnumNotificationType } from "../Enums";
 import { AppDispatch } from "../store";
 import {
   createNotification,
   fetchNotifcations,
 } from "../store/slices/notifications";
-import { fetchProject, projectSelect } from "../store/slices/project";
+import { projectSelect } from "../store/slices/project";
 import { fetchTargets, targetSelect } from "../store/slices/target";
 import { fetchMessages, messageSelect } from "../store/slices/message";
 
@@ -54,11 +47,13 @@ export default function NotificationCreateModal(props: IProps) {
 
   const handleClickConfirm = async () => {
     //FIXME
-    if (projectState.selectedProject && message && notificationType) {
+    if (projectState.selectedProject && notificationType) {
       const projectId = projectState.selectedProject.id;
       // TODO
       // DTO management. should decide where to place
       // https://github.com/swsnu/swppfall2022-team15/issues/52
+      setTarget("target");
+      setMessage("message");
       const data = {
         project: projectId,
         type: notificationType,
@@ -91,6 +86,9 @@ export default function NotificationCreateModal(props: IProps) {
             id="demo-simple-select"
             value={notificationType}
             label="project type"
+            inputProps={{
+              "data-testid": "notification-type-input",
+            }}
             onChange={(event: SelectChangeEvent) => {
               setNotificationType(event.target.value);
             }}
@@ -133,6 +131,9 @@ export default function NotificationCreateModal(props: IProps) {
             id="demo-simple-select"
             value={target}
             label="target"
+            inputProps={{
+              "data-testid": "target-user-input",
+            }}
             onChange={(event: SelectChangeEvent) => {
               setTarget(event.target.value);
             }}
@@ -140,7 +141,9 @@ export default function NotificationCreateModal(props: IProps) {
           >
             {targetState.targets &&
               targetState.targets.map((target) => (
-                <MenuItem value={target.id}>{target.name}</MenuItem>
+                <MenuItem key={target.id} value={target.id}>
+                  {target.name}
+                </MenuItem>
               ))}
           </Select>
           <br />
@@ -153,6 +156,9 @@ export default function NotificationCreateModal(props: IProps) {
             id="demo-simple-select"
             value={message}
             label="target"
+            inputProps={{
+              "data-testid": "message-input",
+            }}
             onChange={(event: SelectChangeEvent) => {
               setMessage(event.target.value);
             }}
@@ -160,7 +166,9 @@ export default function NotificationCreateModal(props: IProps) {
           >
             {messageState.messages &&
               messageState.messages.map((message) => (
-                <MenuItem value={message.id}>{message.content}</MenuItem>
+                <MenuItem key={message.id} value={message.id}>
+                  {message.id}
+                </MenuItem>
               ))}
           </Select>
           <br />
@@ -168,7 +176,9 @@ export default function NotificationCreateModal(props: IProps) {
           <br />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClickConfirm}>Confirm</Button>
+          <Button onClick={handleClickConfirm} data-testid="confirm-button">
+            Confirm
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
