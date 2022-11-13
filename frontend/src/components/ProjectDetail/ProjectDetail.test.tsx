@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import {render, screen} from "@testing-library/react";
 import {Provider} from "react-redux";
 import ProjectDetail from "./ProjectDetail";
 import {store} from "../../store";
@@ -6,25 +6,35 @@ import {store} from "../../store";
 
 describe('ProjectDetail', () => {
     it('should render correctly', () => {
-        const { container } = render(
+        render(
             <Provider store={store}>
-                <ProjectDetail />
+                <ProjectDetail/>
             </Provider>
         );
-
-        expect(container).toBeInTheDocument();
     });
 
-    // handler
-    it("should handle create notificaiton button", () => {
-        const { getByText } = render(
+    it("should handle create notification button", () => {
+        render(
             <Provider store={store}>
-                <ProjectDetail />
+                <ProjectDetail/>
             </Provider>
         );
 
-        const createNotificationButton = getByText("Create Notification");
+        const createNotificationButton = screen.getByTestId("createNotificationButton");
         expect(createNotificationButton).toBeInTheDocument();
         createNotificationButton.click();
+    })
+
+    it("should handle modal ", () => {
+        render(
+            <Provider store={store}>
+                <ProjectDetail/>
+            </Provider>
+        );
+
+        const createNotificationButton = screen.getByTestId("createNotificationButton");
+        expect(createNotificationButton).toBeInTheDocument();
+        createNotificationButton.click();
+
     })
 })
