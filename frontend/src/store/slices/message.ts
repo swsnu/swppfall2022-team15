@@ -39,8 +39,10 @@ export const createMessage = createAsyncThunk(
 
 const initialState: {
   messages: MessageType[];
+    selectedMessage: MessageType | null;
 } = {
   messages: [],
+  selectedMessage: null,
 };
 
 export const MessageSlice = createSlice({

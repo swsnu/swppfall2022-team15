@@ -23,8 +23,10 @@ export const createNotification = createAsyncThunk(
 
 const initialState: {
     notifications: NotificationType[];
+    selectedNotification: NotificationType | null;
 } = {
     notifications: [],
+    selectedNotification: null,
 }
 
 export const notificationSlice = createSlice({
