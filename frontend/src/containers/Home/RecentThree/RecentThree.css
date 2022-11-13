@@ -34,22 +34,12 @@ tbody {
     border-radius: 0px 0px 50px 50px;
 }
 
-.success {
-    background-color: #00ff42;
+.messaage {
     height: 75px;
 }
-.success_last {
-    background-color: #00ff42;
+
+.message_last {
     height: 75px;
     border-radius: 0px 0px 50px 50px;
 }
 
-.failed {
-    background-color: #ff4842;
-    height: 75px;
-}
-.failed_last {
-    background-color: #ff4842;
-    height: 75px;
-    border-radius: 0px 0px 50px 50px;
-}

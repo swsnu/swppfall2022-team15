@@ -17,7 +17,6 @@ import { useSelector } from "react-redux";
 import { AppDispatch } from "../store";
 import { createNotification, fetchNotifcations } from "../store/slices/notifications";
 import {fetchProject, projectSelect} from "../store/slices/project";
-import AutoCompleteBox from "./autoComplete";
 import {fetchTargets, targetSelect} from "../store/slices/target";
 import {fetchMessages, messageSelect} from "../store/slices/message";
 

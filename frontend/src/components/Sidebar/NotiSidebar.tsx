@@ -1,6 +1,6 @@
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FaHome, FaHistory, FaFolderOpen } from "react-icons/fa";
 import { FiTarget } from "react-icons/fi";
@@ -42,6 +42,7 @@ export default function NotiSidebar() {
             routerLink={<Link to="/home" />}
             className={page === "home" ? "item active" : "item"}
             onClick={() => setPage("home")}
+            data-testid="homeButton"
             icon={homeIcon}
           >
             {" "}
@@ -51,6 +52,7 @@ export default function NotiSidebar() {
             routerLink={<Link to="/projects" />}
             className={page === "projects" ? "item active" : "item"}
             onClick={() => setPage("projects")}
+            data-testid="projectsButton"
             icon={projectIcon}
           >
             {" "}
@@ -60,6 +62,7 @@ export default function NotiSidebar() {
             routerLink={<Link to="/targets" />}
             className={page === "targets" ? "item active" : "item"}
             onClick={() => setPage("targets")}
+            data-testid="targetsButton"
             icon={targetIcon}
           >
             {" "}
@@ -69,6 +72,7 @@ export default function NotiSidebar() {
             routerLink={<Link to="/messages" />}
             className={page === "messages" ? "item active" : "item"}
             onClick={() => setPage("messages")}
+            data-testid="messagesButton"
             icon={messageIcon}
           >
             {" "}
@@ -78,6 +82,7 @@ export default function NotiSidebar() {
             routerLink={<Link to="/templates" />}
             className={page === "templates" ? "item active" : "item"}
             onClick={() => setPage("templates")}
+            data-testid="templatesButton"
             icon={templateIcon}
           >
             {" "}
@@ -87,6 +92,7 @@ export default function NotiSidebar() {
             routerLink={<Link to="/history" />}
             className={page === "history" ? "item active" : "item"}
             onClick={() => setPage("history")}
+            data-testid="historyButton"
             icon={historyIcon}
           >
             {" "}
@@ -100,3 +106,4 @@ export default function NotiSidebar() {
     
   );
 }
+

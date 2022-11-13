@@ -41,6 +41,7 @@ function App() {
           <Route path="/targets" element={<TargetListTable />} />
           <Route path="/messages" element={<MessageListTable />} />
         </Route>
+        <Route path="*" element={<Navigate replace to={"/login"} />} />
       </Routes>
     </BrowserRouter>
   );
