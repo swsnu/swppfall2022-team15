@@ -15,3 +15,9 @@ class SignUpSerializer(serializers.ModelSerializer):
             username=validated_data['username']
         )
         return user
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['email', 'username']
