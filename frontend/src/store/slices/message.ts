@@ -44,7 +44,6 @@ const initialState: {
 } = {
   selectedMessage: null,
   messages: [],
-  selectedMessage: null,
 };
 
 export const MessageSlice = createSlice({

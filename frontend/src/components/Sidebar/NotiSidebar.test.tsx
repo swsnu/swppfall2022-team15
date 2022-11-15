@@ -1,23 +1,87 @@
-import { screen } from "@testing-library/react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 
 import NotiSidebar from "./NotiSidebar";
 import { renderWithProviders } from "../../test-utils/mocks";
-import { MemoryRouter, Route, Routes } from "react-router";
+import { MemoryRouter } from "react-router";
+import React from "react";
 
 describe("Sidebar Testing", () => {
-  it("should render correctly", () => {
-    renderWithProviders(
-      <MemoryRouter>
-        <Routes>
-          <Route path="" element={<NotiSidebar />} />
-        </Routes>
+  let sidebar: JSX.Element;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    sidebar = (
+      <MemoryRouter initialEntries={["/home"]}>
+        <NotiSidebar />
       </MemoryRouter>
     );
+  });
+
+  it("should render correctly", () => {
+    const { container } = renderWithProviders(sidebar);
+    expect(container).toBeTruthy();
+
     screen.getByText("Home");
     screen.getByText("Projects");
     screen.getByText("Targets");
     screen.getByText("Messages");
     screen.getByText("Templates");
     screen.getByText("History");
+
   });
+
+  it("should handle buttons", async () => {
+    const setStateMock = jest.fn();
+    const useStateMock: any = (useState: any) => [useState, setStateMock];
+    jest.spyOn(React, "useState").mockImplementation(useStateMock);
+
+    renderWithProviders(sidebar);
+
+    const homeButton = screen.getByTestId("homeButton");
+    fireEvent.click(homeButton);
+
+    await waitFor(() => {
+      expect(setStateMock).toHaveBeenCalledWith("home");
+    });
+
+    const projectsButton = screen.getByTestId("projectsButton");
+    fireEvent.click(projectsButton);
+
+    await waitFor(() => {
+      expect(setStateMock).toHaveBeenCalledWith("projects");
+    });
+
+    const targetsButton = screen.getByTestId("targetsButton");
+    fireEvent.click(targetsButton);
+    await waitFor(() => {
+      expect(setStateMock).toHaveBeenCalledWith("targets");
+    }
+    );
+    
+    const messagesButton = screen.getByTestId("messagesButton");
+    fireEvent.click(messagesButton);
+    await waitFor(() => {
+      expect(setStateMock).toHaveBeenCalledWith("messages");
+    }
+    );
+
+    const templatesButton = screen.getByTestId("templatesButton");
+    fireEvent.click(templatesButton);
+    await waitFor(() => {
+      expect(setStateMock).toHaveBeenCalledWith("templates");
+    }
+    );
+
+    const historyButton = screen.getByTestId("historyButton");
+    fireEvent.click(historyButton);
+    await waitFor(() => {
+      expect(setStateMock).toHaveBeenCalledWith("history");
+    }
+    );
+
+  });
+
+
+
+
 });
