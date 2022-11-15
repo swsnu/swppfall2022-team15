@@ -37,6 +37,7 @@ jobs:
           cd backend
           coverage run --source='.' manage.py test
           coverage xml
+          sed -i 's/<source>.<\/source>/<source>\/github\/workspace\/backend<\/source>/g' coverage.xml
           coverage lcov
       - name: Frontend Coverage
         run: |
@@ -46,8 +47,7 @@ jobs:
           yarn test --coverage --watchAll=false
           cp coverage/lcov.info coverage.lcov
           cd ..
-          lcov-result-merger '*/coverage.lcov' 'coverage.lcov'  --prepend-source-files --prepend-path-fix "." 
-          cat coverage.lcov
+          lcov-result-merger '*/coverage.lcov' 'coverage.lcov'  --prepend-source-files --prepend-path-fix "."
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
