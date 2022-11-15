@@ -58,7 +58,7 @@ export default function TargetListTable() {
       ></TargetCreateModal>
       <Container>
         <Grid container justifyContent="flex-end">
-          <Button onClick={handleClickCreateButton}>New Target</Button>
+          <Button  data-testid="create-button" onClick={handleClickCreateButton}>New Target</Button>
         </Grid>
         <Card>
           <Scrollbar>
@@ -86,6 +86,7 @@ export default function TargetListTable() {
                           <IconButton
                             size="large"
                             color="inherit"
+                            data-testid="open-menu"
                             onClick={handleOpenMenu}
                             data-id={id}
                           >
@@ -123,7 +124,7 @@ export default function TargetListTable() {
           <Iconify icon={"eva:edit-fill"} sx={{ mr: 2 }} />
           Edit
         </MenuItem>
-        <MenuItem sx={{ color: "error.main" }} onClick={handleClickDelete}>
+        <MenuItem sx={{ color: "error.main" }}  data-testid="delete-button" onClick={handleClickDelete}>
           <Iconify icon={"eva:trash-2-outline"} sx={{ mr: 2 }} />
           Delete
         </MenuItem>
