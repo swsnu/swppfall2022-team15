@@ -1,13 +1,20 @@
 import {RootState} from "../store";
 
-const preloadedState:  RootState = {
+const preloadedState: RootState = {
     project: {
         selectedProject: {
             id: 1,
             project_type: "ORGANIZATION",
             name: "test",
         },
-        projects: [],
+        projects: [
+            {
+                id: 1,
+                project_type: "ORGANIZATION",
+                name: "test",
+            },
+        ],
+
     },
     notification: {
         notifications: [],
