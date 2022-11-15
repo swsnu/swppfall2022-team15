@@ -15,7 +15,7 @@ const failure_style = {
 };
 
 function RecentThree(props: { notifications: NotificationType[] }) {
-  const lastIndex = props.notifications.length - 1;
+  const length = props.notifications.length;
 
   if (props.notifications.length === 0) {
     return (
@@ -32,41 +32,21 @@ function RecentThree(props: { notifications: NotificationType[] }) {
           </tr>
         </thead>
         <tbody>
-          <tr
-            style={
-              props.notifications[lastIndex].status ===
-              EnumNotificationStatus.SUCCESS
-                ? success_style
-                : failure_style
-            }
-            className="message"
+          {props.notifications.slice(length-3, length).map((notification) => {
+            return (
+            <tr
+              style={
+                notification.status ===
+                EnumNotificationStatus.SUCCESS
+                  ? success_style
+                  : failure_style
+              }
+              className="message"
           >
-            <td>{props.notifications[lastIndex].message}</td>
+            <td>{notification.message}</td>
           </tr>
-
-          <tr
-            style={
-              props.notifications[lastIndex - 1].status ===
-              EnumNotificationStatus.SUCCESS
-                ? success_style
-                : failure_style
-            }
-            className="message"
-          >
-            <td>{props.notifications[lastIndex - 1].message}</td>
-          </tr>
-
-          <tr
-            style={
-              props.notifications[lastIndex - 2].status ===
-              EnumNotificationStatus.SUCCESS
-                ? success_style
-                : failure_style
-            }
-            className="message_last"
-          >
-            <td>{props.notifications[lastIndex - 2].message}</td>
-          </tr>
+            )}
+          )}
         </tbody>
       </table>
     );
