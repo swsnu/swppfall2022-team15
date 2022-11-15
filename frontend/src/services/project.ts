@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export async function createProject(projectName: string, projectType: string) {
-  console.log(">>>>>>>real impl");
   try {
     const resp = await axios.post("/api/project/", {
       name: projectName,

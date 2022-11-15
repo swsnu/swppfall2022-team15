@@ -49,7 +49,7 @@ export default function ProjectListTable() {
     setCreateModalOpen(true);
   };
 
-  const handleRowHandler = (id: number) => {
+  const handleClickRow = (id: number) => {
     navigate(`/projects/${id}`);
   };
 
@@ -67,7 +67,9 @@ export default function ProjectListTable() {
       ></ProjectCreateModal>
       <Container>
         <Grid container justifyContent="flex-end">
-          <Button onClick={handleClickCreateButton}>New Project</Button>
+          <Button data-testid="create-button" onClick={handleClickCreateButton}>
+            New Project
+          </Button>
         </Grid>
         <Card>
           <Scrollbar>
@@ -81,7 +83,7 @@ export default function ProjectListTable() {
                     <TableCell>Most Recently Sent Notification</TableCell>
                   </TableRow>
                 </TableHead>
-                
+
                 <TableBody>
                   {projects.map((row) => {
                     const { id, name, project_type } = row;
@@ -89,13 +91,13 @@ export default function ProjectListTable() {
                       <TableRow hover key={id} tabIndex={-1}>
                         <TableCell
                           align="left"
-                          onClick={() => handleRowHandler(id)}
+                          onClick={() => handleClickRow(id)}
                         >
                           {id}
                         </TableCell>
                         <TableCell
                           align="left"
-                          onClick={() => handleRowHandler(id)}
+                          onClick={() => handleClickRow(id)}
                         >
                           {name}
                         </TableCell>
@@ -116,6 +118,7 @@ export default function ProjectListTable() {
                             color="inherit"
                             onClick={handleOpenMenu}
                             data-id={id}
+                            data-testid="icon-button"
                           >
                             <Iconify icon={"eva:more-vertical-fill"} />
                           </IconButton>
@@ -151,7 +154,11 @@ export default function ProjectListTable() {
           <Iconify icon={"eva:edit-fill"} sx={{ mr: 2 }} />
           Edit
         </MenuItem>
-        <MenuItem sx={{ color: "error.main" }} onClick={handleClickDelete}>
+        <MenuItem
+          sx={{ color: "error.main" }}
+          onClick={handleClickDelete}
+          data-testid="delete-button"
+        >
           <Iconify icon={"eva:trash-2-outline"} sx={{ mr: 2 }} />
           Delete
         </MenuItem>

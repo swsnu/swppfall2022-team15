@@ -29,7 +29,6 @@ export default function ProjectCreateModal(props: IProps) {
   const handleClickConfirm = async () => {
     if (projectName && projectType) {
       await projectService.createProject(projectName, projectType);
-      console.log("called");
       props.handleClose();
       await dispatch(fetchProjects());
     }
