@@ -35,6 +35,7 @@ function Row(props: { row: NotificationType }) {
           <IconButton
             aria-label="expand row"
             size="small"
+            data-testid="expand-button"
             onClick={() => setOpen(!open)}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
