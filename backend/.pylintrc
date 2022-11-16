@@ -1,6 +1,6 @@
 [MASTER]
 disable=
-    C0114,C0115,C0116,R0901
+    C0103,C0114,C0115,C0116,R0901,W0511
 
 ignore=manage.py
 ignore-paths=.*/migrations
