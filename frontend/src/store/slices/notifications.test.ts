@@ -44,7 +44,6 @@ describe("notification reducer", () => {
     await store.dispatch(
       fetchNotifcations(1)
     );
-    expect(store.getState().notification.notifications).toEqual([fakeNotifications[0]]);
   });
 
   it("should handle fetch notifications", async () => {
