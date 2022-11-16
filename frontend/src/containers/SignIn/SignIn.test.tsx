@@ -2,6 +2,7 @@ import SignIn from "./SignIn";
 
 import { screen, fireEvent } from "@testing-library/react";
 import { renderWithProviders } from "../../test-utils/mocks";
+import axios from "axios";
 
 const mockNavigate = jest.fn();
 jest.mock("react-router-dom", () => {
@@ -61,9 +62,32 @@ describe("<SignIn />", () => {
     expect(passwordInput).toHaveValue("hello");
   });
 
-  it("should show error message when submitted with invalid inputs", async () => {
-    renderWithProviders(<SignIn />);
+  it("should log in correctly", async () => {
+    jest.spyOn(axios, "post").mockResolvedValue(
+        Promise.resolve({
+          status: 200,
+          data: {
+            token: "token",
+          }
+    }));
 
+    renderWithProviders(<SignIn />);
+    fireEvent.change(screen.getByLabelText("Email address"), {
+      target: { value: "test" },
+    });
+    fireEvent.change(screen.getByLabelText("Password"), {
+      target: { value: "test" },
+    });
+    fireEvent.click(screen.getByTestId("signin"));
+
+  });
+
+  it("should show error message when submitted - error logging in", async () => {
+    jest.spyOn(axios, "post").mockImplementation( () => {
+      return Promise.reject({response: {status: 500}})
+    });
+
+    renderWithProviders(<SignIn />);
 
     fireEvent.change(screen.getByLabelText("Email address"), {
       target: { value: "test" },
@@ -76,5 +100,45 @@ describe("<SignIn />", () => {
     const error = screen.findByTestId("error");
 
     expect((await error).textContent).toBe("Error logging in");
+  });
+
+  it("should show error message when submitted with invalid inputs", async () => {
+    jest.spyOn(axios, "post").mockImplementation( () => {
+      return Promise.reject({response: {status: 401}})
+    });
+
+    renderWithProviders(<SignIn />);
+
+    fireEvent.change(screen.getByLabelText("Email address"), {
+      target: { value: "test" },
+    });
+    fireEvent.change(screen.getByLabelText("Password"), {
+      target: { value: "test" },
+    });
+    fireEvent.click(screen.getByTestId("signin"));
+
+    const error = screen.findByTestId("error");
+
+    expect((await error).textContent).toBe("Invalid email or password");
+  });
+
+  it("should show error message when submitted - error connecting to server", async () => {
+    jest.spyOn(axios, "post").mockImplementation( () => {
+      return Promise.reject({response: null})
+    });
+
+    renderWithProviders(<SignIn />);
+
+    fireEvent.change(screen.getByLabelText("Email address"), {
+      target: { value: "test" },
+    });
+    fireEvent.change(screen.getByLabelText("Password"), {
+      target: { value: "test" },
+    });
+    fireEvent.click(screen.getByTestId("signin"));
+
+    const error = screen.findByTestId("error");
+
+    expect((await error).textContent).toBe("Error connecting to server");
   });
 });

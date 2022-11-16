@@ -24,7 +24,7 @@ const fakeNotifications: NotificationType[] = [
   {
     id: 3,
     message: "This is a test message",
-    status: EnumNotificationStatus.SUCCESS,
+    status: EnumNotificationStatus.FAILURE,
     reservedAt: "2021-01-01",
     type: "Test Type",
   },

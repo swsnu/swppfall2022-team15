@@ -60,7 +60,7 @@ export default function MessageListTable() {
       ></MessageCreateModal>
       <Container>
       <Grid container justifyContent="flex-end">
-        <Button onClick={handleClickCreateButton}>New Message</Button>
+        <Button data-testid="create-button" onClick={handleClickCreateButton}>New Message</Button>
       </Grid>
         <Card>
           <Scrollbar>
@@ -84,6 +84,7 @@ export default function MessageListTable() {
                           <IconButton
                             size="large"
                             color="inherit"
+                            data-testid="open-menu-button"
                             onClick={handleOpenMenu}
                             data-id={id}
                           >
@@ -121,7 +122,7 @@ export default function MessageListTable() {
           <Iconify icon={"eva:edit-fill"} sx={{ mr: 2 }} />
           Edit
         </MenuItem>
-        <MenuItem sx={{ color: "error.main" }} onClick={handleClickDelete}>
+        <MenuItem sx={{ color: "error.main" }} data-testid="delete-button" onClick={handleClickDelete}>
           <Iconify icon={"eva:trash-2-outline"} sx={{ mr: 2 }} />
           Delete
         </MenuItem>

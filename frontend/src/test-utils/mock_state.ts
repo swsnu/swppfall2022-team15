@@ -1,16 +1,33 @@
 import {RootState} from "../store";
+import {EnumNotificationStatus} from "../Enums";
 
-const preloadedState:  RootState = {
+const preloadedState: RootState = {
     project: {
         selectedProject: {
             id: 1,
             project_type: "ORGANIZATION",
             name: "test",
         },
-        projects: [],
+        projects: [
+            {
+                id: 1,
+                project_type: "ORGANIZATION",
+                name: "test",
+            },
+        ],
+
     },
     notification: {
-        notifications: [],
+        notifications: [
+            {
+                id: 1,
+                status: EnumNotificationStatus.SUCCESS,
+                message: "test",
+                reservedAt: "2021-10-10T00:00:00Z",
+                type: "test",
+                history: []
+            }
+        ],
         selectedNotification: null,
     },
     target: {

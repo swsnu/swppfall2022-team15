@@ -35,6 +35,7 @@ export default function TargetCreateModal(props: IProps) {
   const projectState = useSelector(projectSelect);
 
   const handleClickConfirm = async () => {
+    console.log(targetName, notificationType, endPoint)
     if (targetName && notificationType && endPoint) {
       const data = {
         name: targetName,
@@ -70,6 +71,9 @@ export default function TargetCreateModal(props: IProps) {
             fullWidth
             variant="standard"
             value={targetName}
+            inputProps={
+              {"data-testid" : "target-input"}
+            }
             onChange={(event) => {
               setTargetName(event.target.value);
             }}
@@ -86,6 +90,9 @@ export default function TargetCreateModal(props: IProps) {
               label="project type"
               onChange={(event: SelectChangeEvent) => {
                 setNotificationType(event.target.value);
+              }}
+              inputProps={{
+                "data-testid": "project-type"
               }}
               fullWidth
             >
@@ -107,6 +114,7 @@ export default function TargetCreateModal(props: IProps) {
             fullWidth
             variant="standard"
             value={endPoint}
+            inputProps={{"data-testid" : "endpoint-input"}}
             onChange={(event) => {
               setEndPoint(event.target.value);
             }}
@@ -124,17 +132,18 @@ export default function TargetCreateModal(props: IProps) {
               onChange={(event: SelectChangeEvent) => {
                 setProject(event.target.value);
               }}
+              inputProps={{"data-testid" : "project-id"}}
               fullWidth
             >
             {/*// TODO : change to enum and add conditions (filerr) */}
-            {projectState.projects.map(project => <MenuItem value={project.id}>{project.name}</MenuItem>)}
+            {projectState.projects.map(project => <MenuItem key={project.id} value={project.id}>{project.name}</MenuItem>)}
             </Select>
           <br/>
           <br/>
           <br/>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClickConfirm}>Confirm</Button>
+          <Button data-testid={"create-button"} onClick={handleClickConfirm}>Confirm</Button>
         </DialogActions>
       </Dialog>
     </div>

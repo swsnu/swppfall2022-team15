@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react";
+import {fireEvent, render, screen, waitFor} from "@testing-library/react";
 
 import NotiSidebar from "./NotiSidebar";
 import { renderWithProviders } from "../../test-utils/mocks";
@@ -78,10 +78,5 @@ describe("Sidebar Testing", () => {
       expect(setStateMock).toHaveBeenCalledWith("history");
     }
     );
-
   });
-
-
-
-
 });
