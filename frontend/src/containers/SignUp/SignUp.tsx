@@ -110,6 +110,7 @@ export default function SignUp() {
             name="email"
             label="Email address"
             value={email}
+            inputProps={{ "data-testid": "email-input" }}
             onChange={handleEmailChange}
           />
           <TextField
@@ -117,6 +118,7 @@ export default function SignUp() {
             name="username"
             label="Username"
             value={username}
+            inputProps={{"data-testid" : "username-input"}}
             onChange={handleUsernameChange}
           />
           <TextField
@@ -125,6 +127,7 @@ export default function SignUp() {
             label="Password"
             type="password"
             value={password}
+            inputProps={{"data-testid" : "password-input"}}
             onChange={handlePasswordChange}
           />
           <TextField
@@ -133,6 +136,7 @@ export default function SignUp() {
             label="Confirm Password"
             type="password"
             value={passwordConfirm}
+            inputProps={{"data-testid" : "password-confirm"}}
             onChange={handlePasswordConfirmChange}
           />
         </Stack>
@@ -142,6 +146,7 @@ export default function SignUp() {
             fullWidth
             size="large"
             variant="contained"
+            data-testid={"cancel-button"}
             onClick={() => handleCancel()}
           >
             Cancel
@@ -151,6 +156,7 @@ export default function SignUp() {
             size="large"
             type="submit"
             variant="contained"
+            data-testid={"signup-button"}
           >
             SignUp
           </LoadingButton>

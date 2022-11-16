@@ -4,6 +4,7 @@ import NotiPieChart from "./PieChart/PieChart";
 import RecentThree from "./RecentThree/RecentThree";
 import Upcoming from "./Upcoming/Upcoming";
 import Scrollbar from "../../components/scrollbar/Scrollbar";
+import preloadedState from "../../test-utils/mock_state";
 
 //Todo: create mock data for notifications
 //Todo: implement recently sent notifications list
@@ -28,7 +29,7 @@ export default function Home() {
                 <div className="title_noti">Recently Sent Notifications</div>
                 <body>
                   <div className="noti">
-                    <NotiPieChart notifications={[]} />
+                    <NotiPieChart notifications={preloadedState.notification.notifications} />
                   </div>
                   <div className="recentThree">
                     <RecentThree notifications={[]} />

@@ -28,7 +28,6 @@ export default function NotiSidebar() {
     ></AiOutlineMenuUnfold>
   );
   */
-
   return (
     <div className="background" style={{ height: "100%" }}>
       <Sidebar className="sidebar" data-testid="sidebar" width="280px">
@@ -40,7 +39,7 @@ export default function NotiSidebar() {
         <Menu className="menu">
           <MenuItem
             routerLink={<Link to="/home" />}
-            className={page === "home" ? "item active" : "item"}
+            // className={page === "home" ? "item active" : "item"}
             onClick={() => setPage("home")}
             data-testid="homeButton"
             icon={homeIcon}
@@ -50,7 +49,7 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/projects" />}
-            className={page === "projects" ? "item active" : "item"}
+            // className={page === "projects" ? "item active" : "item"}
             onClick={() => setPage("projects")}
             data-testid="projectsButton"
             icon={projectIcon}
@@ -60,7 +59,7 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/targets" />}
-            className={page === "targets" ? "item active" : "item"}
+            // className={page === "targets" ? "item active" : "item"}
             onClick={() => setPage("targets")}
             data-testid="targetsButton"
             icon={targetIcon}
@@ -70,8 +69,8 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/messages" />}
-            className={page === "messages" ? "item active" : "item"}
-            onClick={() => setPage("messages")}
+            // className={page === "messages" ? "item active" : "item"}
+            onClick={() => {console.log(page); setPage("messages")}}
             data-testid="messagesButton"
             icon={messageIcon}
           >
@@ -80,7 +79,7 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/templates" />}
-            className={page === "templates" ? "item active" : "item"}
+            // className={page === "templates" ? "item active" : "item"}
             onClick={() => setPage("templates")}
             data-testid="templatesButton"
             icon={templateIcon}
@@ -90,7 +89,7 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/history" />}
-            className={page === "history" ? "item active" : "item"}
+            // className={page === "history" ? "item active" : "item"}
             onClick={() => setPage("history")}
             data-testid="historyButton"
             icon={historyIcon}
@@ -100,10 +99,7 @@ export default function NotiSidebar() {
           </MenuItem>
         </Menu>
       </Sidebar>
-
     </div>
-
-    
   );
 }
 

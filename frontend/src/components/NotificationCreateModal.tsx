@@ -46,7 +46,7 @@ interface IProps {
     
     const handleClickConfirm = async () => {
       //FIXME
-      if (projectState.selectedProject  &&notificationType) {
+      if (projectState.selectedProject && notificationType) {
         const projectId = projectState.selectedProject.id
         // TODO
         // DTO management. should decide where to place
@@ -147,9 +147,8 @@ interface IProps {
               inputProps={{
                 "data-testid": "message-input",
                }}
-              onChange={(event: SelectChangeEvent) => {
-                setMessage(event.target.value);
-              }}
+              // onChange={(event: SelectChangeEvent) => {setMessage(event.target.value);}}
+
               fullWidth
             >
               { messageState.messages &&

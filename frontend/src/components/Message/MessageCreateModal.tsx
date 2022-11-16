@@ -19,7 +19,7 @@ interface IProps {
 }
 
 export default function MessageCreateModal(props: IProps) {
-  const [project, setProject] = useState("");
+  const [project, setProject] = useState("1");
   const [content, setContent] = useState("");
 
 
@@ -57,6 +57,7 @@ export default function MessageCreateModal(props: IProps) {
           <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
+              inputProps = {{ "data-testid" : "project-id" }}
               value={project}
               // label="project type"
               onChange={(event: SelectChangeEvent) => {
@@ -65,7 +66,7 @@ export default function MessageCreateModal(props: IProps) {
               fullWidth
             >
             {/*// TODO : change to enum and add conditions (filerr) */}
-            {projectState.projects.map(project => <MenuItem value={project.id}>{project.name}</MenuItem>)}
+            {projectState.projects.map(project => <MenuItem key={project.id} value={project.name}>{project.name}</MenuItem>)}
             </Select>
           <br/>
           <br/>
@@ -76,13 +77,16 @@ export default function MessageCreateModal(props: IProps) {
               id="outlined-multiline-static"
               fullWidth
               multiline
-              onChange={(event: any) => {setContent(event.target.value)}}
+              inputProps={{ "data-testid": "content-input" }}
+              onChange={
+                (event: any) => {setContent(event.target.value)}
+              }
               rows={4}
               defaultValue=""
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClickConfirm}>Confirm</Button>
+          <Button data-testid="create-button" onClick={handleClickConfirm}>Confirm</Button>
         </DialogActions>
       </Dialog>
     </div>
