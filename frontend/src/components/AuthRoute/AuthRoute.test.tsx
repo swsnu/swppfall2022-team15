@@ -2,7 +2,6 @@ import { screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router";
 import { setToken } from "../../store/slices/auth";
 import { renderWithProviders } from "../../test-utils/mocks";
-import preloadedState from "../../test-utils/mock_state";
 import AuthRoute from "./AuthRoute";
 
 export function Child() {
@@ -47,7 +46,6 @@ describe("<AuthRoute />", () => {
     );
     expect(mockNavigate).toHaveBeenCalled();
   });
-  ``;
 
   it("should render with token", async () => {
     setToken("token string");
