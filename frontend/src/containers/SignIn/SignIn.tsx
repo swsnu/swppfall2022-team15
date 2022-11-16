@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Stack, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import axios from "axios";
+import { setToken } from "../../store/slices/auth";
 
 export default function SignIn() {
   const [email, setEmail] = useState<string>("");
@@ -39,9 +40,9 @@ export default function SignIn() {
     try {
       //Todo: fix url
       const response = await axios.post(
-        "/api/signin",
+        "/api/signin/",
         JSON.stringify({
-          email: email,
+          username: email,
           password: password,
         }),
         {
@@ -55,6 +56,7 @@ export default function SignIn() {
       const token = response.data.token;
 
       if (response.status === 200) {
+        setToken(token);
         navigate(`/home`);
       }
     } catch (error: any) {
@@ -77,7 +79,11 @@ export default function SignIn() {
       <h2>NotiManager</h2>
       <form onSubmit={handleSignIn}>
         <Stack spacing={2}>
-          {error && <div className="error" data-testid="error">{error}</div>}
+          {error && (
+            <div className="error" data-testid="error">
+              {error}
+            </div>
+          )}
           <TextField
             data-testid="email"
             className="email"
