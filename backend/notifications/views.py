@@ -29,13 +29,13 @@ class NotificationViewSet(ModelViewSet):
 
         nmessage_id = request.data.get('message')
         nmessage = NMessage.objects.get(id=nmessage_id)
-        apiDto = ApiNotificationDto(
+        api_dto = ApiNotificationDto(
             endpoint=targetuser.endpoint,
             headers=headers,
             data=nmessage.content,
         )
 
-        task_send_api_notification.delay(apiDto)
+        task_send_api_notification.delay(api_dto)
 
         return Response(
             data=serializers.data,

@@ -20,12 +20,11 @@ def task_send_api_notification(notification: dict):
             url=notification['endpoint'],
             json=json.loads(notification['data']),
             headers=notification['headers'],
+            timeout=5,
         )
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
         raise NotificationServiceException from e
-
-    return
 
 
 class ApiNotificationDto(TypedDict):

@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from nmessages.models import NMessage
+
+admin.site.register(NMessage)

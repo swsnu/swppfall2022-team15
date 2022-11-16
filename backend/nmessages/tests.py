@@ -17,7 +17,10 @@ class NMessagesAPITestCase(APITestCase):
 
         # When
         self.client.force_authenticate(user=self.user)
-        response = self.client.post('/api/message/', data={'project': project.id, 'content': 'test'})
+        response = self.client.post(
+            '/api/message/',
+            data={'project': project.id, 'content': 'test'}
+        )
 
         # Then
         self.assertEqual(response.status_code, 201)
