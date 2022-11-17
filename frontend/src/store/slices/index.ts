@@ -8,6 +8,7 @@ import projectReducer from "./project";
 import notificationReducer from "./notifications";
 import targetReducer from "./target";
 import messageReducer from "./message";
+import authReducer from "./auth";
 import { RootState } from "../index";
 
 const rootReducer = combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   notification: notificationReducer,
   target: targetReducer,
   message: messageReducer,
+  auth: authReducer,
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {

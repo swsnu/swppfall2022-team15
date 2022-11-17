@@ -9,14 +9,19 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./store";
 import GlobalStyles from "./components/GlobalStyles";
+import { getToken, hasToken } from "./store/slices/auth";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-axios.defaults.baseURL = "http://localhost:8000/";
-axios.defaults.headers.common["Authorization"] =
-  "Token 303de56231bac7fcd7a54bdac1fa8a2f470c07ef";
+
 axios.defaults.headers.common["Content-Type"] = "application/json";
+axios.interceptors.request.use(function (config: any) {
+  if (hasToken()) {
+    config.headers["Authorization"] = `Token ${getToken()}`;
+  }
+  return config;
+});
 
 root.render(
   <React.StrictMode>

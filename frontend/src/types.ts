@@ -45,3 +45,8 @@ export interface UserType {
   password: string;
   is_active: boolean;
 }
+
+export interface AuthUser {
+  email: string;
+  username: string;
+}
