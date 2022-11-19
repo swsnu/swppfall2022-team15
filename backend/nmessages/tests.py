@@ -13,9 +13,6 @@ class NMessagesAPITestCase(APITestCase):
         cls.user = baker.make(User)
 
     def test_create(self):
-        # Given
-        project = baker.make(Project)
-
         # When
         self.client.force_authenticate(user=self.user)
         response = self.client.post(
