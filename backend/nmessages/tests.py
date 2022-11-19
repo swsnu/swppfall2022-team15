@@ -19,7 +19,7 @@ class NMessagesAPITestCase(APITestCase):
         self.client.force_authenticate(user=self.user)
         response = self.client.post(
             '/api/message/',
-            data={'project': project.id, 'content': 'test'}
+            data={'project': project.id, 'content': '{}'}
         )
 
         # Then
