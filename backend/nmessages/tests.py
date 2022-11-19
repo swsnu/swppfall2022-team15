@@ -3,7 +3,6 @@ from model_bakery import baker
 
 from account.models import User
 from notifications.models import EnumNotificationType
-from project.models import Project
 
 
 class NMessagesAPITestCase(APITestCase):
