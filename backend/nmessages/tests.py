@@ -2,6 +2,7 @@ from rest_framework.test import APITestCase
 from model_bakery import baker
 
 from account.models import User
+from notifications.models import EnumNotificationType
 from project.models import Project
 
 
@@ -12,14 +13,11 @@ class NMessagesAPITestCase(APITestCase):
         cls.user = baker.make(User)
 
     def test_create(self):
-        # Given
-        project = baker.make(Project)
-
         # When
         self.client.force_authenticate(user=self.user)
         response = self.client.post(
             '/api/message/',
-            data={'project': project.id, 'content': '{}'}
+            data={'content': '{}', 'notification_type': EnumNotificationType.HTTP}
         )
 
         # Then
