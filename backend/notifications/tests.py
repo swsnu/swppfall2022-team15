@@ -22,21 +22,21 @@ class NotificationAPITestCase(APITestCase):
     def test_create_notification(self):
         # Given
         project = baker.make(Project)
-        message = baker.make(NMessage, project=project)
-        target = baker.make(TargetUser, project=project)
+        message = baker.make(NMessage)
+        target = baker.make(TargetUser)
 
         # When
         response = self.client.post(
             '/api/notification/',
             data={
                 'message': message.id,
+                'target': target.id,
                 'project': project.id,
-                'target' : target.id,
-                'type': EnumNotificationType.API,
+                'type': EnumNotificationType.HTTP,
             }
         )
 
-        #Then
+        # Then
         self.assertEqual(response.status_code, 201)
 
 

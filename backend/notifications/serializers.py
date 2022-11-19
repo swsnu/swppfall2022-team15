@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from .models import Notification, EnumNotifcationStatus
+from .models import NotificationGroup, EnumNotificationStatus
 
 
 class NotificationSerializer(serializers.ModelSerializer):
 
     message = serializers.IntegerField(source='nmessage_id')
-    status = serializers.CharField(default=EnumNotifcationStatus.PENDING)
+    status = serializers.CharField(default=EnumNotificationStatus.PENDING)
 
     class Meta:
-        model = Notification
+        model = NotificationGroup
         fields = ('id', 'message', 'project', 'status', 'type',)
