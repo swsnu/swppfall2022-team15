@@ -29,6 +29,16 @@ class NMessagesAPITestCase(APITestCase):
                 'channel'],
             data['channel'])
 
+    def test_invalid_type_create(self):
+        self.client.force_authenticate(user=self.user)
+        data = {'channel': 'channel', 'message': 'message',
+                'notification_type': 'invalid'}
+        response = self.client.post(
+            '/api/message/',
+            data=data
+        )
+        self.assertEqual(response.status_code, 400)
+
     def test_list(self):
         # Given
 
