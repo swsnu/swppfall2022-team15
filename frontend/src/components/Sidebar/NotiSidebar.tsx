@@ -81,7 +81,7 @@ export default function NotiSidebar() {
           <MenuItem
             routerLink={<Link to="/messages" />}
             // className={page === "messages" ? "item active" : "item"}
-            onClick={() => {setPage("messages")}}
+            onClick={() => setPage("messages")}
             data-testid="messagesButton"
             icon={messageIcon}
           >

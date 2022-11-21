@@ -78,11 +78,12 @@ export default function SignUp() {
       ).then(response => {
         console.log(response);
         console.log(response.data);
-      });
 
-      //Todo: SignUp 성공 시 페이지에 아무 변화 없음
-      //1. SignUp 성공했다는 것을 유저에게 알리기
-      //2. Login 페이지로 이동
+        if(response.status === 201) {
+          window.alert("Account created successfully");
+          navigate(`/login`);
+        }
+      });
 
     } catch (error: any) {
       if (!error.response) {
