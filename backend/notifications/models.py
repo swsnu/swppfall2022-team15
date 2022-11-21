@@ -29,7 +29,6 @@ class EnumNotificationType(models.TextChoices):
 class NotificationConfig(TimeStampedModel):
     project = models.ForeignKey('project.Project', on_delete=models.CASCADE)
     nmessage = models.ForeignKey('nmessages.NMessage', on_delete=models.CASCADE)
-    status = models.CharField(max_length=20, choices=EnumNotificationStatus.choices)
     type = models.CharField(max_length=20, choices=EnumNotificationType.choices)
 
 
