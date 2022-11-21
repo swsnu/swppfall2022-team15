@@ -54,6 +54,10 @@ def task_spawn_notification_by_chunk(reservation_id: int):
     for notification_ids in notification_ids_by_chunk_size:
         task_handle_chunk_notification.delay(notification_ids)
 
+    reservation.status = EnumReservationStatus.SENDING
+    reservation.save(update_fields=['status'])
+
+
 @app.task
 def task_handle_chunk_notification(notification_ids: list[int]):
     """Send a notification to the notification service."""
