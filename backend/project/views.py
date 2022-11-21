@@ -7,7 +7,7 @@ from core.permissions import IsOwner
 from project.models import Project
 from project.serializers import ProjectSerializer
 
-from notifications.serializers import NotificationSerializer
+from notifications.serializers import NotificationConfigSerializer
 
 
 class ProjectViewSet(ModelViewSet):
@@ -23,6 +23,6 @@ class ProjectViewSet(ModelViewSet):
     def notification(self, request):
         project = self.get_object()
         notifications = project.notification_set.all()
-        serializer = NotificationSerializer(notifications, many=True)
+        serializer = NotificationConfigSerializer(notifications, many=True)
 
         return Response(serializer.data)

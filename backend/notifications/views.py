@@ -4,14 +4,14 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny
 
 from nmessages.models import NMessage
-from notifications.serializers import NotificationSerializer
+from notifications.serializers import NotificationConfigSerializer
 from notifications.services import task_send_api_notification, ApiNotificationDto
 from targetusers.models import TargetUser
 
 
 class NotificationViewSet(ModelViewSet):
     permission_classes = (AllowAny,)
-    serializer_class = NotificationSerializer
+    serializer_class = NotificationConfigSerializer
 
     def create(self, request, *args, **kwargs):
         # save notification

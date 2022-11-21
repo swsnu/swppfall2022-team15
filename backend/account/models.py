@@ -36,3 +36,11 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = ["username"]
 
     objects = UserManager()
+
+    # pylint: disable=W0613
+    def has_module_perms(self, app_label):
+        return True
+
+    # pylint: disable=W0613
+    def has_perm(self, perm, obj=None):
+        return True
