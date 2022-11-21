@@ -81,7 +81,7 @@ def cron_task_handle_reservation():
     """Handle a reservation."""
     reservations = Reservation.objects\
         .filter(status=EnumReservationStatus.PENDING)\
-        .filter(reserved_at__range=(timezone.now(), timezone.now() + timedelta(minutes=1))) # TODO: 1분 이내를 표현할 수 있는 좋은 방식으로 수정할 것
+        .filter(reserved_at__lte=timezone.now() + timedelta(minutes=1))
 
     for reservation in reservations:
         task_spawn_notification_by_chunk.delay(reservation.id)
