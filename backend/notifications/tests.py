@@ -8,9 +8,18 @@ from rest_framework.test import APITestCase
 
 from account.models import User
 from nmessages.models import NMessage
-from notifications.models import EnumNotificationType, NotificationGroup, Reservation, Notification, \
-    EnumNotificationStatus
-from notifications.services import task_send_api_notification, task_spawn_notification_by_chunk, task_handle_chunk_notification
+from notifications.models import (
+    EnumNotificationType,
+    NotificationGroup,
+    Reservation,
+    Notification,
+    EnumNotificationStatus,
+)
+from notifications.services import (
+    task_send_api_notification,
+    task_spawn_notification_by_chunk,
+    task_handle_chunk_notification,
+)
 from project.models import Project
 from targetusers.models import TargetUser
 
@@ -79,8 +88,8 @@ class TaskHandleReservationTestCase(TestCase):
 
         # Then
         calls = [
-            call([i for i in range(1, 100 + 1)]),
-            call([i for i in range(101, 150 + 1)])
+            call(list(range(1, 100 + 1))),
+            call(list(range(101, 150 + 1))),
         ]
         mocked_task_spawn_notification_by_chunk.assert_has_calls(calls)
 
@@ -104,5 +113,3 @@ class TaskHandleChunkNotificationTestCase(TestCase):
 
         # Then
         self.assertEqual(mocked_task_send_api_notification.call_count, 2)
-
-

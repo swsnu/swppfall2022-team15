@@ -10,8 +10,13 @@ from django.utils import timezone
 
 from core.exceptions import NotificationServiceException
 from noti_manager.celery import app
-from notifications.models import Notification, EnumNotificationStatus, EnumNotificationType, Reservation, \
-    EnumReservationStatus
+from notifications.models import (
+    Notification,
+    EnumNotificationStatus,
+    EnumNotificationType,
+    Reservation,
+    EnumReservationStatus,
+)
 
 logger = getLogger(__name__)
 
@@ -50,7 +55,8 @@ def task_spawn_notification_by_chunk(reservation_id: int):
         ]
 
     CHUNK_SIZE = 100
-    notification_ids_by_chunk_size = split_notification_ids_by_chunk_size(notification_ids, CHUNK_SIZE)
+    notification_ids_by_chunk_size = \
+        split_notification_ids_by_chunk_size(notification_ids, CHUNK_SIZE)
     for notification_ids in notification_ids_by_chunk_size:
         task_handle_chunk_notification.delay(notification_ids)
 
