@@ -48,4 +48,4 @@ class SignUpAPITestCase(APITestCase):
         user = baker.make(User)
 
         # When, Then
-        self.assertTrue(user.has_perm(None, None))
+        self.assertTrue(user.has_module_perms(None))
