@@ -8,7 +8,7 @@ import { fetchNotifcations, notificationListSelector } from "../../store/slices/
 import { fetchProject } from "../../store/slices/project";
 import NotificationCreateModal from "../NotificationCreateModal";
 import CollapsibleTable from "../table/CollapsibleTable";
-import {Container} from "@mui/system";
+import { Container } from "@mui/system";
 
 
 

@@ -30,10 +30,19 @@ const initialState: {
   user: null,
 };
 
+export const logout = () => {
+  removeToken();
+  return AuthSlice.actions.logout();
+};
+
 export const AuthSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.user = null;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(authenticate.fulfilled, (state, action) => {
       state.user = action.payload;
@@ -42,4 +51,5 @@ export const AuthSlice = createSlice({
 });
 
 export const authSelector = (state: RootState) => state.auth;
+export const authActions = AuthSlice.actions;
 export default AuthSlice.reducer;
