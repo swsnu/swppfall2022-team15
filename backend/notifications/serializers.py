@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import NotificationConfig, EnumNotificationStatus
+
+from .models import NotificationConfig
 
 
 class NotificationConfigSerializer(serializers.ModelSerializer):
