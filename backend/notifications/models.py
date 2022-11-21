@@ -4,6 +4,8 @@ from core.models import TimeStampedModel
 
 
 class EnumReservationStatus(models.TextChoices):
+    PENDING = 'PENDING'
+    SENDING = 'SENDING'
     SUCCESS = 'SUCCESS'
     PARTIAL_SUCCESS = 'PARTIAL_SUCCESS'
     FAILURE = 'FAILURE'
