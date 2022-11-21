@@ -10,7 +10,7 @@ from account.models import User
 from nmessages.models import NMessage
 from notifications.models import (
     EnumNotificationType,
-    NotificationGroup,
+    NotificationConfig,
     Reservation,
     Notification,
     EnumNotificationStatus, EnumReservationStatus,
@@ -75,13 +75,13 @@ class TaskHandleReservationTestCase(TestCase):
     @mock.patch('notifications.services.task_handle_chunk_notification.delay')
     def test_task_spawn_notification_by_chunk(self, mocked_task_spawn_notification_by_chunk):
         # Given
-        notification_group = baker.make(NotificationGroup)
+        notification_config = baker.make(NotificationConfig)
         baker.make(
             Notification,
-            notification_group=notification_group,
+            notification_config=notification_config,
             _quantity=150
         )
-        reservation = baker.make(Reservation, notification_group=notification_group)
+        reservation = baker.make(Reservation, notification_config=notification_config)
 
         # When
         task_spawn_notification_by_chunk(reservation.id)
@@ -98,11 +98,11 @@ class TaskHandleChunkNotificationTestCase(TestCase):
     @mock.patch('notifications.services.task_send_api_notification.delay')
     def test_task_handle_chunk_notification(self, mocked_task_send_api_notification):
         # Given
-        notification_group = baker.make(NotificationGroup, type=EnumNotificationType.HTTP)
+        notification_config = baker.make(NotificationConfig, type=EnumNotificationType.HTTP)
         target_user = baker.make(TargetUser, notification_type=EnumNotificationType.HTTP)
         notifications = baker.make(
             Notification,
-            notification_group=notification_group,
+            notification_config=notification_config,
             target_user=target_user,
             status=EnumNotificationStatus.PENDING,
             _quantity=2,

@@ -45,8 +45,8 @@ class ApiNotificationDto(TypedDict):
 
 @app.task
 def task_spawn_notification_by_chunk(reservation_id: int):
-    reservation = Reservation.objects.select_related('notification_group').get(id=reservation_id)
-    notification_ids = reservation.notification_group.notification_set.values_list('id', flat=True)
+    reservation = Reservation.objects.select_related('notification_config').get(id=reservation_id)
+    notification_ids = reservation.notification_config.notification_set.values_list('id', flat=True)
 
     def split_notification_ids_by_chunk_size(ids: list[int], chunk_size) -> list[list[int]]:
         return [
@@ -73,7 +73,7 @@ def task_handle_chunk_notification(notification_ids: list[int]):
 
     for notification in notifications:
         # TODO 하나의 클래스로 추상화 해서 바로 던지는 게 좋을 듯
-        if notification.notification_group.type == EnumNotificationType.HTTP:
+        if notification.notification_config.type == EnumNotificationType.HTTP:
             data = ApiNotificationDto(
                 endpoint=notification.target_user.endpoint,
                 headers=notification.target_user.data,

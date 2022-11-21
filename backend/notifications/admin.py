@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from notifications.models import NotificationGroup
+from notifications.models import NotificationConfig
 
-admin.site.register(NotificationGroup)
+admin.site.register(NotificationConfig)
