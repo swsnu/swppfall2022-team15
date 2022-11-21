@@ -16,6 +16,7 @@ import SignUp from "./containers/SignUp/SignUp";
 import TargetListTable from "./containers/TargetList/TargetList";
 import MessageListTable from "./containers/MessageList/MessageList";
 import AuthRoute from "./components/AuthRoute/AuthRoute";
+// import MultiStepForm from "./containers/MultiStepForm/MultiStepForm";
 
 export const SidebarLayout = () => (
   <>
@@ -35,6 +36,7 @@ function App() {
         <Route path="/" element={<Navigate replace to={"/login"} />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        {/* <Route path="/multistep" element={<MultiStepForm />} /> */}
         <Route element={<SidebarLayout />}>
           <Route
             path="/home"
