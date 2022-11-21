@@ -1,7 +1,6 @@
+import "./Home.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import "./Home.css";
 import GridLayout from "./GridView/ProjectGridView";
 import NotiPieChart from "./PieChart/PieChart";
 import RecentThree from "./RecentThree/RecentThree";
@@ -11,9 +10,7 @@ import { authSelector } from "../../store/slices/auth";
 import { fetchProjects } from "../../store/slices/project";
 import { projectListSelector } from "../../store/slices/project";
 import { AppDispatch } from "../../store";
-import { fetchNotifcations } from "../../store/slices/notifications";
 import ProjectCreateModal from "../../components/project/ProjectCreateModal";
-import { Grid } from "@mui/material";
 import List from "./ListView/ProjectListView";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
