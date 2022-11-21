@@ -1,6 +1,6 @@
 import { renderWithProviders } from "../../test-utils/mocks";
 import SignUp from "./SignUp";
-import { fireEvent } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import axios from "axios";
 
 const mockNavigate = jest.fn();
@@ -49,55 +49,55 @@ describe("SignUp", () => {
     });
 
     const { getByTestId } = renderWithProviders(<SignUp />);
-    const emailInput = getByTestId("email-input");
+    const emailInput = screen.getByTestId("email-input");
     fireEvent.change(emailInput, { target: { value: "email@email.com" } });
 
-    const usernameInput = getByTestId("username-input");
+    const usernameInput = screen.getByTestId("username-input");
     fireEvent.change(usernameInput, { target: { value: "username" } });
 
-    const passwordInput = getByTestId("password-input");
+    const passwordInput = screen.getByTestId("password-input");
     fireEvent.change(passwordInput, { target: { value: "password" } });
 
-    const passwordConfirmInput = getByTestId("password-confirm");
+    const passwordConfirmInput = screen.getByTestId("password-confirm");
     fireEvent.change(passwordConfirmInput, { target: { value: "password" } });
 
-    const signUpButton = getByTestId("signup-button");
+    const signUpButton = screen.getByTestId("signup-button");
     fireEvent.click(signUpButton);
   });
 
   it("should handle confirm button - empty field", () => {
     const { getByTestId } = renderWithProviders(<SignUp />);
-    const emailInput = getByTestId("email-input");
+    const emailInput = screen.getByTestId("email-input");
     fireEvent.change(emailInput, { target: { value: "" } });
 
-    const usernameInput = getByTestId("username-input");
+    const usernameInput = screen.getByTestId("username-input");
     fireEvent.change(usernameInput, { target: { value: "username" } });
 
-    const passwordInput = getByTestId("password-input");
+    const passwordInput = screen.getByTestId("password-input");
     fireEvent.change(passwordInput, { target: { value: "password" } });
 
-    const passwordConfirmInput = getByTestId("password-confirm");
+    const passwordConfirmInput = screen.getByTestId("password-confirm");
     fireEvent.change(passwordConfirmInput, { target: { value: "password" } });
 
-    const signUpButton = getByTestId("signup-button");
+    const signUpButton = screen.getByTestId("signup-button");
     fireEvent.click(signUpButton);
   });
 
   it("should handle confirm button - password-confirm-fail", () => {
     const { getByTestId } = renderWithProviders(<SignUp />);
-    const emailInput = getByTestId("email-input");
+    const emailInput = screen.getByTestId("email-input");
     fireEvent.change(emailInput, { target: { value: "email@email.com" } });
 
-    const usernameInput = getByTestId("username-input");
+    const usernameInput = screen.getByTestId("username-input");
     fireEvent.change(usernameInput, { target: { value: "username" } });
 
-    const passwordInput = getByTestId("password-input");
+    const passwordInput = screen.getByTestId("password-input");
     fireEvent.change(passwordInput, { target: { value: "password" } });
 
-    const passwordConfirmInput = getByTestId("password-confirm");
+    const passwordConfirmInput = screen.getByTestId("password-confirm");
     fireEvent.change(passwordConfirmInput, { target: { value: "xxxx" } });
 
-    const signUpButton = getByTestId("signup-button");
+    const signUpButton = screen.getByTestId("signup-button");
     fireEvent.click(signUpButton);
   });
 
