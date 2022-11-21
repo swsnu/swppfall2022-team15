@@ -27,19 +27,19 @@ describe("SignUp", () => {
     });
 
     const { getByTestId } = renderWithProviders(<SignUp />);
-    const emailInput = getByTestId("email-input");
+    const emailInput = screen.getByTestId("email-input");
     fireEvent.change(emailInput, { target: { value: "email@email.com" } });
 
-    const usernameInput = getByTestId("username-input");
+    const usernameInput = screen.getByTestId("username-input");
     fireEvent.change(usernameInput, { target: { value: "username" } });
 
-    const passwordInput = getByTestId("password-input");
+    const passwordInput = screen.getByTestId("password-input");
     fireEvent.change(passwordInput, { target: { value: "password" } });
 
-    const passwordConfirmInput = getByTestId("password-confirm");
+    const passwordConfirmInput = screen.getByTestId("password-confirm");
     fireEvent.change(passwordConfirmInput, { target: { value: "password" } });
 
-    const signUpButton = getByTestId("signup-button");
+    const signUpButton = screen.getByTestId("signup-button");
     fireEvent.click(signUpButton);
   });
 
