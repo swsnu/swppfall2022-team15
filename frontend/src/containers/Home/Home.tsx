@@ -26,7 +26,7 @@ export default function Home() {
     dispatch(fetchProjects());
     //Todo: fetch notifications
     //dispatch(fetchNotifcations());
-    console.log(user.user);
+    
   }, [user]);
 
   return (

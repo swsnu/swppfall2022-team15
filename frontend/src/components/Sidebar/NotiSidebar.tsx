@@ -9,6 +9,7 @@ import { HiTemplate } from "react-icons/hi";
 import { MdMessage, MdLogout } from "react-icons/md";
 //import { AiOutlineMenuUnfold } from "react-icons/ai";
 
+
 import "./NotiSidebar.css";
 import { logout } from "../../store/slices/auth";
 import { AppDispatch } from "../../store";
@@ -80,10 +81,7 @@ export default function NotiSidebar() {
           <MenuItem
             routerLink={<Link to="/messages" />}
             // className={page === "messages" ? "item active" : "item"}
-            onClick={() => {
-              console.log(page);
-              setPage("messages");
-            }}
+            onClick={() => {setPage("messages")}}
             data-testid="messagesButton"
             icon={messageIcon}
           >
