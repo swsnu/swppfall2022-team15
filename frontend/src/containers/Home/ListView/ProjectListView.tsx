@@ -72,12 +72,7 @@ export default function ListLayout(props: { projects: ProjectType[] }) {
                       const { id, name, project_type } = row;
                       return (
                         <TableRow hover key={id} tabIndex={-1}>
-                          {/* <TableCell
-                          align="left"
-                          onClick={() => handleClickRow(id)}
-                        >
-                          {id}
-                        </TableCell> */}
+
                           <TableCell
                             align="left"
                             onClick={() => handleClickRow(id)}
