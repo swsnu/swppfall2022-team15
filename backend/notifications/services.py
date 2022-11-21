@@ -88,7 +88,7 @@ def task_handle_chunk_notification(notification_ids: list[int]):
 
 @app.task
 def cron_task_handle_reservation():
-    """Handle a reservation."""
+    # TODO (Jaeyoung) 분산락
     reservations = Reservation.objects\
         .filter(status=EnumReservationStatus.PENDING)\
         .filter(reserved_at__lte=timezone.now() + timedelta(minutes=1))
