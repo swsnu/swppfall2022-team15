@@ -5,18 +5,26 @@ import { useNavigate } from "react-router-dom";
 import { Stack, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import axios from "axios";
+import { useSelector } from "react-redux";
+
 import { setToken } from "../../store/slices/auth";
+import { authSelector } from "../../store/slices/auth";
 
 export default function SignIn() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
 
+  const user = useSelector(authSelector);
   const navigate = useNavigate();
 
   useEffect(() => {
     setError("");
   }, [email, password]);
+
+  useEffect(() => {
+    console.log(user.user);
+  }, [user]);
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);

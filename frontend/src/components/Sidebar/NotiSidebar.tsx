@@ -1,6 +1,7 @@
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import { FaHome, FaHistory, FaFolderOpen } from "react-icons/fa";
 import { FiTarget } from "react-icons/fi";
@@ -8,12 +9,14 @@ import { HiTemplate } from "react-icons/hi";
 import { MdMessage, MdLogout } from "react-icons/md";
 //import { AiOutlineMenuUnfold } from "react-icons/ai";
 
-
 import "./NotiSidebar.css";
+import { logout } from "../../store/slices/auth";
+import { AppDispatch } from "../../store";
 
 export default function NotiSidebar() {
   //const { collapseSidebar } = useProSidebar();
   const [ page, setPage ] = useState("home");
+  const dispatch = useDispatch<AppDispatch>();
 
   const homeIcon = <FaHome size="48"></FaHome>;
   const projectIcon = <FaFolderOpen size="48"></FaFolderOpen>;
@@ -32,7 +35,7 @@ export default function NotiSidebar() {
   */
 
   const logoutHandler = () => {
-    // Todo  
+    dispatch(logout());
   }
 
   return (
