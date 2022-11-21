@@ -38,7 +38,6 @@ export default function SignIn() {
     }
 
     try {
-      //Todo: fix url
       const response = await axios.post(
         "/api/signin/",
         JSON.stringify({
@@ -52,7 +51,6 @@ export default function SignIn() {
           },
         }
       );
-      //Todo: token
       const token = response.data.token;
 
       if (response.status === 200) {
