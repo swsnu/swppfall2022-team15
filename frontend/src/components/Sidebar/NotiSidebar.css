@@ -104,5 +104,6 @@
 }
 
 .logout {
-    margin-top: 450px;
+    position: absolute;
+    padding-top: 100%;
 }
