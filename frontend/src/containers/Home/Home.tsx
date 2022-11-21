@@ -67,25 +67,26 @@ export default function Home() {
           <div className="flex-container">
             <div className="flex-item">
               <div className="projects">
-                <FormControl>
-                  <Stack direction="row" spacing={1} alignItems="center">
-                    <Typography>Grid</Typography>
-                    <Switch
-                      value={projectStyle}
-                      onChange={handleStyleChange}
-                    />
-                    <Typography>List</Typography>
-                  </Stack>
-                </FormControl>
-
                 <div className="sublevel">
                   <div className="title">
                     <Stack
                       direction="row"
                       justifyContent="space-between"
                       alignItems="center"
+                      spacing={3}
                     >
                       <h2>Projects</h2>
+                      <FormControl>
+                        <Stack direction="row" spacing={1} alignItems="center">
+                          <Typography>Grid</Typography>
+                          <Switch
+                            defaultChecked
+                            value={projectStyle}
+                            onChange={handleStyleChange}
+                          />
+                          <Typography>List</Typography>
+                        </Stack>
+                      </FormControl>
                       <Button
                         variant="contained"
                         endIcon={<CreateNewFolderIcon />}
