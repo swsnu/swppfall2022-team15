@@ -80,10 +80,10 @@ def task_handle_chunk_notification(notification_ids: list[int]):
                 data=notification.request,
             )
             task_send_api_notification.delay(data)
-        elif notification.notificaiton_group.type == EnumNotificationType.SMS:
-            pass
-        elif notification.notification_group.type == EnumNotificationType.SLACK:
-            pass
+        # elif notification.notificaiton_group.type == EnumNotificationType.SMS:
+        #     pass
+        # elif notification.notification_group.type == EnumNotificationType.SLACK:
+        #     pass
 
 
 @app.task
