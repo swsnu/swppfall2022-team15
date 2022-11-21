@@ -48,7 +48,7 @@ describe("SignUp", () => {
       return Promise.reject({ response: { status: 500 } });
     });
 
-    const { getByTestId } = renderWithProviders(<SignUp />);
+    renderWithProviders(<SignUp />);
     const emailInput = screen.getByTestId("email-input");
     fireEvent.change(emailInput, { target: { value: "email@email.com" } });
 
@@ -66,7 +66,7 @@ describe("SignUp", () => {
   });
 
   it("should handle confirm button - empty field", () => {
-    const { getByTestId } = renderWithProviders(<SignUp />);
+    renderWithProviders(<SignUp />);
     const emailInput = screen.getByTestId("email-input");
     fireEvent.change(emailInput, { target: { value: "" } });
 
@@ -84,7 +84,7 @@ describe("SignUp", () => {
   });
 
   it("should handle confirm button - password-confirm-fail", () => {
-    const { getByTestId } = renderWithProviders(<SignUp />);
+    renderWithProviders(<SignUp />);
     const emailInput = screen.getByTestId("email-input");
     fireEvent.change(emailInput, { target: { value: "email@email.com" } });
 
@@ -102,20 +102,20 @@ describe("SignUp", () => {
   });
 
   it("should handle cancel button", () => {
-    const { getByTestId } = renderWithProviders(<SignUp />);
-    const emailInput = getByTestId("email-input");
+    renderWithProviders(<SignUp />);
+    const emailInput = screen.getByTestId("email-input");
     fireEvent.change(emailInput, { target: { value: "email@email.com" } });
 
-    const usernameInput = getByTestId("username-input");
+    const usernameInput = screen.getByTestId("username-input");
     fireEvent.change(usernameInput, { target: { value: "username" } });
 
-    const passwordInput = getByTestId("password-input");
+    const passwordInput = screen.getByTestId("password-input");
     fireEvent.change(passwordInput, { target: { value: "password" } });
 
-    const passwordConfirmInput = getByTestId("password-confirm");
+    const passwordConfirmInput = screen.getByTestId("password-confirm");
     fireEvent.change(passwordConfirmInput, { target: { value: "password" } });
 
-    const cancelButton = getByTestId("cancel-button");
+    const cancelButton = screen.getByTestId("cancel-button");
     fireEvent.click(cancelButton);
   });
 });
