@@ -73,8 +73,8 @@ export default function ProjectListTable() {
         </Grid>
         <Card>
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
-              <Table>
+            <TableContainer sx={{ minWidth: 800, height: 700 }}>
+              <Table stickyHeader>
                 <TableHead>
                   <TableRow>
                     <TableCell>Id</TableCell>
