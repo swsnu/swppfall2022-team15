@@ -1,4 +1,5 @@
 from django.urls import reverse
+from model_bakery import baker
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -34,3 +35,17 @@ class SignUpAPITestCase(APITestCase):
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         self.assertEqual(resp.data['username'], user.username)
+
+    def test_has_perm(self):
+        # Given
+        user = baker.make(User)
+
+        # When, Then
+        self.assertTrue(user.has_perm(None, None))
+
+    def test_has_module_perm(self):
+        # Given
+        user = baker.make(User)
+
+        # When, Then
+        self.assertTrue(user.has_perm(None, None))

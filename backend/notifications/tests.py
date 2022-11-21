@@ -13,12 +13,12 @@ from notifications.models import (
     NotificationGroup,
     Reservation,
     Notification,
-    EnumNotificationStatus,
+    EnumNotificationStatus, EnumReservationStatus,
 )
 from notifications.services import (
     task_send_api_notification,
     task_spawn_notification_by_chunk,
-    task_handle_chunk_notification,
+    task_handle_chunk_notification, cron_task_handle_reservation,
 )
 from project.models import Project
 from targetusers.models import TargetUser
@@ -113,3 +113,17 @@ class TaskHandleChunkNotificationTestCase(TestCase):
 
         # Then
         self.assertEqual(mocked_task_send_api_notification.call_count, 2)
+
+
+class CronTaskHandleReservationTestCase(TestCase):
+
+    @mock.patch('notifications.services.task_spawn_notification_by_chunk.delay')
+    def test_cron_handle_reservation(self, mocked_task_spawn_notification_by_chunk):
+        # Given
+        baker.make(Reservation, status=EnumReservationStatus.PENDING)
+
+        # When
+        cron_task_handle_reservation()
+
+        # Then
+        mocked_task_spawn_notification_by_chunk.assert_called_once()
