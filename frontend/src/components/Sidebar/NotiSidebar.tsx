@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import { FaHome, FaHistory, FaFolderOpen } from "react-icons/fa";
 import { FiTarget } from "react-icons/fi";
 import { HiTemplate } from "react-icons/hi";
-import { MdMessage } from "react-icons/md";
+import { MdMessage, MdLogout } from "react-icons/md";
 //import { AiOutlineMenuUnfold } from "react-icons/ai";
+
 
 import "./NotiSidebar.css";
 
@@ -20,6 +21,7 @@ export default function NotiSidebar() {
   const messageIcon = <MdMessage size="48"></MdMessage>;
   const templateIcon = <HiTemplate size="48"></HiTemplate>;
   const historyIcon = <FaHistory size="48"></FaHistory>;
+  const logoutIcon = <MdLogout size="48"></MdLogout>;
   /*
   const toggleIcon = (
     <AiOutlineMenuUnfold
@@ -28,11 +30,16 @@ export default function NotiSidebar() {
     ></AiOutlineMenuUnfold>
   );
   */
+
+  const logoutHandler = () => {
+    // Todo  
+  }
+
   return (
     <div className="background" style={{ height: "100%" }}>
       <Sidebar className="sidebar" data-testid="sidebar" width="280px">
         <Menu className="noti">
-          <MenuItem routerLink={<Link to="/home" />} className="top">
+          <MenuItem className="top">
             NotiManager
           </MenuItem>
         </Menu>
@@ -70,7 +77,10 @@ export default function NotiSidebar() {
           <MenuItem
             routerLink={<Link to="/messages" />}
             // className={page === "messages" ? "item active" : "item"}
-            onClick={() => {console.log(page); setPage("messages")}}
+            onClick={() => {
+              console.log(page);
+              setPage("messages");
+            }}
             data-testid="messagesButton"
             icon={messageIcon}
           >
@@ -96,6 +106,15 @@ export default function NotiSidebar() {
           >
             {" "}
             History{" "}
+          </MenuItem>
+        </Menu>
+        <Menu className="logout">
+          <MenuItem 
+            icon={logoutIcon}
+            onClick={logoutHandler}
+          >
+            {" "}
+            Log Out{" "}
           </MenuItem>
         </Menu>
       </Sidebar>
