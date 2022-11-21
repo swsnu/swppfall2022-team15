@@ -26,7 +26,7 @@ describe("SignUp", () => {
       return Promise.resolve();
     });
 
-    const { getByTestId } = renderWithProviders(<SignUp />);
+    renderWithProviders(<SignUp />);
     const emailInput = screen.getByTestId("email-input");
     fireEvent.change(emailInput, { target: { value: "email@email.com" } });
 
