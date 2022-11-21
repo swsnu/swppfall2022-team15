@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import NotificationGroup, EnumNotificationStatus
+from .models import NotificationConfig, EnumNotificationStatus
 
 
 class NotificationSerializer(serializers.ModelSerializer):
@@ -8,5 +8,5 @@ class NotificationSerializer(serializers.ModelSerializer):
     status = serializers.CharField(default=EnumNotificationStatus.PENDING)
 
     class Meta:
-        model = NotificationGroup
+        model = NotificationConfig
         fields = ('id', 'message', 'project', 'status', 'type',)

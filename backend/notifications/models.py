@@ -26,7 +26,7 @@ class EnumNotificationType(models.TextChoices):
     SMS = 'SMS'
 
 
-class NotificationGroup(TimeStampedModel):
+class NotificationConfig(TimeStampedModel):
     project = models.ForeignKey('project.Project', on_delete=models.CASCADE)
     nmessage = models.ForeignKey('nmessages.NMessage', on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=EnumNotificationStatus.choices)
@@ -34,7 +34,7 @@ class NotificationGroup(TimeStampedModel):
 
 
 class Notification(TimeStampedModel):
-    notification_group = models.ForeignKey('NotificationGroup', on_delete=models.CASCADE)
+    notification_config = models.ForeignKey('notifications.NotificationConfig', on_delete=models.CASCADE)
     target_user = models.ForeignKey('targetusers.TargetUser', on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=EnumNotificationStatus.choices)
     request = models.JSONField()
@@ -42,6 +42,6 @@ class Notification(TimeStampedModel):
 
 
 class Reservation(TimeStampedModel):
-    notification_group = models.ForeignKey('NotificationGroup', on_delete=models.CASCADE)
+    notification_config = models.ForeignKey('notifications.NotificationConfig', on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=EnumReservationStatus.choices)
     reserved_at = models.DateTimeField(auto_now_add=True)
