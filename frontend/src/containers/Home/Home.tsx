@@ -27,25 +27,25 @@ export default function Home() {
             <div className="sentNotis">
               <div className="sublevel">
                 <div className="title_noti">Recently Sent Notifications</div>
-                <body>
+                <div>
                   <div className="noti">
                     <NotiPieChart notifications={preloadedState.notification.notifications} />
                   </div>
                   <div className="recentThree">
                     <RecentThree notifications={[]} />
                   </div>
-                </body>
+                </div>
               </div>
             </div>
           </div>
           <div className="flex-item">
             <div className="upcoming">
               <div className="sublevel">
-                <body>
+                <div>
                   <div className="upcomingNoti">
                     <Upcoming upcomingNotifications={[]} />
                   </div>
-                </body>
+                </div>
               </div>
             </div>
           </div>
