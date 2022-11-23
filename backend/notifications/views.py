@@ -47,5 +47,5 @@ class NotificationViewSet(ModelViewSet):
 
     @action(detail=True, methods=['get'], permission_classes=[AllowAny, IsAuthenticated, IsOwner])
     def getAll(self, request):
-        notifications = Notification.objects.filter(target=request.user)
+        notifications = Notification.objects.filter(notification_config__notification__project__user=request.user)
         return Response(data=notifications, status=status.HTTP_200_OK)
