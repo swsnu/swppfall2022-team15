@@ -61,8 +61,8 @@ export default function Home() {
       ></ProjectCreateModal>
       <div className="Home">
         <Scrollbar>
-          <div className="flex-container">
-            <div className="flex-item">
+          <div className="container">
+            <div className="grid-column">
               <div className="projects">
                 <div className="sublevel">
                   <div className="title">
@@ -80,6 +80,7 @@ export default function Home() {
                             defaultChecked
                             value={projectStyle}
                             onChange={handleStyleChange}
+                            data-testid="switch"
                           />
                           <Typography>List</Typography>
                         </Stack>
@@ -102,26 +103,26 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="grid-column">
+              <div className="upcoming">
+                <div className="sublevel">
+                  <div>
+                    <div className="upcomingNoti">
+                      <Upcoming upcomingNotifications={[]} />
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="sentNotis">
                 <div className="sublevel">
-                  <div className="title_noti">Recently Sent Notifications</div>
+                  <div className="titleNoti">Recently Sent Notifications</div>
                   <div>
                     <div className="noti">
                       <NotiPieChart notifications={[]} />
                     </div>
                     <div className="recentThree">
                       <RecentThree notifications={[]} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex-item">
-              <div className="upcoming">
-                <div className="sublevel">
-                  <div>
-                    <div className="upcomingNoti">
-                      <Upcoming upcomingNotifications={[]} />
                     </div>
                   </div>
                 </div>
