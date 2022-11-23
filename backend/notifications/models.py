@@ -33,8 +33,6 @@ class NotificationConfig(TimeStampedModel):
 
 
 class Notification(TimeStampedModel):
-    notification_config = \
-        models.ForeignKey('notifications.NotificationConfig', on_delete=models.CASCADE)
     target_user = models.ForeignKey('targetusers.TargetUser', on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=EnumNotificationStatus.choices)
     request = models.JSONField()
