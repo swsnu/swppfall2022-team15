@@ -9,11 +9,13 @@ from nmessages.models import NMessage
 from notifications.serializers import NotificationConfigSerializer
 from notifications.services import task_send_api_notification, ApiNotificationDto
 from targetusers.models import TargetUser
+from notifications.models import Notification
 
 
 class NotificationViewSet(ModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = NotificationConfigSerializer
+    queryset = Notification.objects.all()
 
     def create(self, request, *args, **kwargs):
         # save notification
@@ -46,10 +48,8 @@ class NotificationViewSet(ModelViewSet):
 
     @action(detail=True, methods=['get'], permission_classes=[AllowAny, IsAuthenticated, IsOwner])
     def getAll(self, request):
-        notifications = Notification.objects.all()
-        serializer = NotificationConfigSerializer(notifications, many=True)
-
-        return Response(serializer.data)
+        notifications = Notification.objects.filter(target=request.user)
+        return Response(data=notifications, status=status.HTTP_200_OK)
 
     
 
