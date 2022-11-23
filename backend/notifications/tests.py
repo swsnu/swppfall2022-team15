@@ -78,9 +78,10 @@ class TaskHandleReservationTestCase(TestCase):
     def test_task_spawn_notification_by_chunk(self, mocked_task_spawn_notification_by_chunk):
         # Given
         notification_config = baker.make(NotificationConfig)
+        reservation = baker.make(Reservation, notification_config=notification_config)
         baker.make(
             Notification,
-            notification_config=notification_config,
+            reservation=reservation,
             _quantity=150
         )
         reservation = baker.make(Reservation, notification_config=notification_config)
@@ -100,11 +101,12 @@ class TaskHandleChunkNotificationTestCase(TestCase):
     @mock.patch('notifications.services.task_send_api_notification.delay')
     def test_task_handle_chunk_notification(self, mocked_task_send_api_notification):
         # Given
-        notification_config = baker.make(NotificationConfig, type=EnumNotificationType.HTTP)
         target_user = baker.make(TargetUser, notification_type=EnumNotificationType.HTTP)
+        notification_config = baker.make(NotificationConfig, type=EnumNotificationType.HTTP)
+        reservation = baker.make(Reservation, notification_config=notification_config)
         notifications = baker.make(
             Notification,
-            notification_config=notification_config,
+            reservation=reservation,
             target_user=target_user,
             status=EnumNotificationStatus.PENDING,
             _quantity=2,
