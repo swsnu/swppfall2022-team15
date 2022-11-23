@@ -9,9 +9,9 @@ from project.views import ProjectViewSet
 from targetusers.views import TargetUserViewSet
 
 urlpatterns = [
-    path('api/signin/', obtain_auth_token, name='signin'),
-    path('api/signup/', SignUpView.as_view(), name='signup'),
-    path('api/user/', UserView.as_view(), name='user'),
+    path('signin/', obtain_auth_token, name='signin'),
+    path('signup/', SignUpView.as_view(), name='signup'),
+    path('user/', UserView.as_view(), name='user'),
 ]
 
 # ViewSet
