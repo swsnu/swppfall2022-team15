@@ -15,18 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.authtoken.views import obtain_auth_token
-
-from account.views import SignUpView, UserView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/signin/', obtain_auth_token, name='signin'),
-    path('api/signup/', SignUpView.as_view(), name='signup'),
-    path('api/user/', UserView.as_view(), name='user'),
-
-    path('api/project/', include('project.urls')),
-    path('api/notification/', include('notifications.urls')),
-    path('api/message/', include('nmessages.urls')),
-    path('api/targetuser/', include('targetusers.urls')),
+    path('api/', include('core.api_urls')),
 ]
