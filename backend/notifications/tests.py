@@ -18,7 +18,9 @@ from notifications.models import (
 from notifications.services import (
     task_send_api_notification,
     task_spawn_notification_by_chunk,
-    task_handle_chunk_notification, cron_task_handle_reservation,
+    task_handle_chunk_notification,
+    cron_task_handle_reservation,
+    task_bulk_create_notification,
 )
 from project.models import Project
 from targetusers.models import TargetUser
@@ -50,14 +52,6 @@ class NotificationAPITestCase(APITestCase):
         # Then
         self.assertEqual(response.status_code, 201)
 
-    def test_get_notifications(self):
-        # Given
-
-        # When
-        response = self.client.get('/api/notification/')
-
-        # Then
-        self.assertEqual(response.status_code, 200)
 
 class TaskSendApiNotificationTest(TestCase):
 
@@ -135,4 +129,17 @@ class CronTaskHandleReservationTestCase(TestCase):
 
         # Then
         mocked_task_spawn_notification_by_chunk.assert_called_once()
-        
+
+
+class TaskBulkCreateNotification(TestCase):
+    def test_create_notification(self):
+        # Given
+        reservation = baker.make(Reservation)
+        target_users = baker.make(TargetUser, _quantity=2)
+
+        # When
+        target_user_ids = [target_user.id for target_user in target_users]
+        task_bulk_create_notification(target_user_ids, reservation.id)
+
+        # Then
+        self.assertEqual(Notification.objects.count(), 2)

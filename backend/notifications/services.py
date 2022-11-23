@@ -95,3 +95,15 @@ def cron_task_handle_reservation():
 
     for reservation in reservations:
         task_spawn_notification_by_chunk.delay(reservation.id)
+
+
+@app.task
+def task_bulk_create_notification(target_user_ids, reservation_id):
+    notifications = [
+        Notification(
+            target_user_id=target_user_id,
+            reservation_id=reservation_id,
+            status=EnumNotificationStatus.PENDING,
+        ) for target_user_id in target_user_ids
+    ]
+    Notification.objects.bulk_create(notifications)
