@@ -42,7 +42,7 @@ export default function NotiSidebar() {
   return (
     <div className="background" style={{ height: "100%" }}>
       <Sidebar className="sidebar" data-testid="sidebar" width="280px">
-        <Menu className="noti">
+        <Menu className="Icon">
           <MenuItem className="top">
             NotiManager
           </MenuItem>
