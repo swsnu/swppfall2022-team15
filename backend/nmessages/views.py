@@ -18,4 +18,8 @@ class NMessageViewSet(CreateByNotificationTypeMixin, ModelViewSet):
             return SlackNMessageSerializer
 
     def get_queryset(self):
-        return self.queryset.filter(user=self.request.user)
+        queryset = self.queryset
+        if 'notification_type' in self.request.query_params:
+            notification_type = self.request.query_params['notification_type']
+            queryset = queryset.filter(notification_type=notification_type)
+        return queryset.filter(user=self.request.user)
