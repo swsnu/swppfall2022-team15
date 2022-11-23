@@ -22,14 +22,14 @@ describe("Home", () => {
   });
 
   it("should handle create project modal", () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <BrowserRouter>
         <Home />
       </BrowserRouter>,
       { preloadedState }
     );
 
-    const createProjectButton = getByText("New Project");
+    const createProjectButton = screen.getByText("New Project");
     createProjectButton.click();
   });
 
@@ -48,14 +48,14 @@ describe("Home", () => {
   });
 
   it("should handle close create project modal", () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <BrowserRouter>
         <Home />
       </BrowserRouter>,
       { preloadedState }
     );
 
-    const createProjectButton = getByText("New Project");
+    const createProjectButton = screen.getByText("New Project");
     createProjectButton.click();
 
     fireEvent.click(document);
