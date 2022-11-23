@@ -1,8 +1,10 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.decorators import action
 
+from core.permissions import IsOwner
 from nmessages.models import NMessage
 from notifications.serializers import NotificationConfigSerializer
 from notifications.services import task_send_api_notification, ApiNotificationDto
@@ -41,3 +43,13 @@ class NotificationViewSet(ModelViewSet):
             data=serializers.data,
             status=status.HTTP_201_CREATED
         )
+
+    @action(detail=True, methods=['get'], permission_classes=[AllowAny, IsAuthenticated, IsOwner])
+    def getAll(self, request):
+        notifications = Notification.objects.all()
+        serializer = NotificationConfigSerializer(notifications, many=True)
+
+        return Response(serializer.data)
+
+    
+

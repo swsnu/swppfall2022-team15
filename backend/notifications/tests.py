@@ -50,6 +50,20 @@ class NotificationAPITestCase(APITestCase):
         # Then
         self.assertEqual(response.status_code, 201)
 
+    def test_get_notifications(self):
+        # Given
+        project = baker.make(Project)
+        message = baker.make(NMessage)
+        target = baker.make(TargetUser)
+        notification = baker.make(Notification, project=project, message=message, target=target)
+
+        # When
+        response = self.client.get('/api/notification/')
+
+        # Then
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['id'], notification.id)
 
 class TaskSendApiNotificationTest(TestCase):
 
@@ -127,3 +141,5 @@ class CronTaskHandleReservationTestCase(TestCase):
 
         # Then
         mocked_task_spawn_notification_by_chunk.assert_called_once()
+
+
