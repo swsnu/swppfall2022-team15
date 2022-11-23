@@ -10,12 +10,12 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch} from "../../store";
-import {createTarget, fetchTargets} from "../../store/slices/target";
-import {EnumNotificationType} from "../../Enums";
-import {fetchProjects, projectSelect} from "../../store/slices/project";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../store";
+import { createTarget, fetchTargets } from "../../store/slices/target";
+import { EnumNotificationType } from "../../Enums";
+import { fetchProjects, projectSelect } from "../../store/slices/project";
 
 interface IProps {
   open: any;
@@ -29,13 +29,12 @@ export default function TargetCreateModal(props: IProps) {
   const [endPoint, setEndPoint] = useState("");
 
   const dispatch = useDispatch<AppDispatch>();
-    useEffect(() => {
+  useEffect(() => {
     dispatch(fetchProjects());
   }, []);
   const projectState = useSelector(projectSelect);
 
   const handleClickConfirm = async () => {
-    console.log(targetName, notificationType, endPoint)
     if (targetName && notificationType && endPoint) {
       const data = {
         name: targetName,
@@ -43,7 +42,7 @@ export default function TargetCreateModal(props: IProps) {
         endpoint: endPoint,
         data: {},
         project: Number(project),
-      }
+      };
       dispatch(createTarget(data));
       props.handleClose();
       dispatch(fetchTargets());
@@ -71,39 +70,40 @@ export default function TargetCreateModal(props: IProps) {
             fullWidth
             variant="standard"
             value={targetName}
-            inputProps={
-              {"data-testid" : "target-input"}
-            }
+            inputProps={{ "data-testid": "target-input" }}
             onChange={(event) => {
               setTargetName(event.target.value);
             }}
             required
           />
-          <br/>
-          <br/>
-          <br/>
-          <InputLabel id="demo-simple-select-label">Notification Type</InputLabel>
+          <br />
+          <br />
+          <br />
+          <InputLabel id="demo-simple-select-label">
+            Notification Type
+          </InputLabel>
           <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={notificationType}
-              label="project type"
-              onChange={(event: SelectChangeEvent) => {
-                setNotificationType(event.target.value);
-              }}
-              inputProps={{
-                "data-testid": "project-type"
-              }}
-              fullWidth
-            >
-                 {/*// TODO: change to enum*/}
-                <MenuItem value={EnumNotificationType.API.toString()}>API</MenuItem>
-                <MenuItem value={EnumNotificationType.EMAIL.toString()}>Email</MenuItem>
-                <MenuItem value={EnumNotificationType.SMS.toString()}>SMS</MenuItem>
-            </Select>
-          <br/>
-          <br/>
-          <br/>
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={notificationType}
+            label="project type"
+            onChange={(event: SelectChangeEvent) => {
+              setNotificationType(event.target.value);
+            }}
+            inputProps={{
+              "data-testid": "project-type",
+            }}
+            fullWidth
+          >
+            <MenuItem value={EnumNotificationType.API.toString()}>API</MenuItem>
+            <MenuItem value={EnumNotificationType.EMAIL.toString()}>
+              Email
+            </MenuItem>
+            <MenuItem value={EnumNotificationType.SMS.toString()}>SMS</MenuItem>
+          </Select>
+          <br />
+          <br />
+          <br />
           <InputLabel id="demo-simple-select-label">End Point</InputLabel>
           <TextField
             autoFocus
@@ -114,36 +114,42 @@ export default function TargetCreateModal(props: IProps) {
             fullWidth
             variant="standard"
             value={endPoint}
-            inputProps={{"data-testid" : "endpoint-input"}}
+            inputProps={{ "data-testid": "endpoint-input" }}
             onChange={(event) => {
               setEndPoint(event.target.value);
             }}
             required
           />
-          <br/>
-          <br/>
-          <br/>
+          <br />
+          <br />
+          <br />
           <InputLabel id="demo-simple-select-label">Project</InputLabel>
           <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={project}
-              // label="project type"
-              onChange={(event: SelectChangeEvent) => {
-                setProject(event.target.value);
-              }}
-              inputProps={{"data-testid" : "project-id"}}
-              fullWidth
-            >
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={project}
+            // label="project type"
+            onChange={(event: SelectChangeEvent) => {
+              setProject(event.target.value);
+            }}
+            inputProps={{ "data-testid": "project-id" }}
+            fullWidth
+          >
             {/*// TODO : change to enum and add conditions (filerr) */}
-            {projectState.projects.map(project => <MenuItem key={project.id} value={project.id}>{project.name}</MenuItem>)}
-            </Select>
-          <br/>
-          <br/>
-          <br/>
+            {projectState.projects.map((project) => (
+              <MenuItem key={project.id} value={project.id}>
+                {project.name}
+              </MenuItem>
+            ))}
+          </Select>
+          <br />
+          <br />
+          <br />
         </DialogContent>
         <DialogActions>
-          <Button data-testid={"create-button"} onClick={handleClickConfirm}>Confirm</Button>
+          <Button data-testid={"create-button"} onClick={handleClickConfirm}>
+            Confirm
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
