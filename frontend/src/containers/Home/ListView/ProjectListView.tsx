@@ -61,7 +61,7 @@ export default function ListLayout(props: { projects: ProjectType[] }) {
           <Card>
             <Scrollbar>
               {/* 비율로 지정하면 좋을 것 같음 */}
-              <TableContainer sx={{ height: 200 }}>
+              <TableContainer>
                 <Table
                   sx={{
                     height: "max-content",
