@@ -11,7 +11,10 @@ class CreateByNotificationTypeMixin:
                 request.data['notification_type'] in EnumNotificationType):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         serializer_class = self.get_create_serializer_class()
-        serializer = serializer_class(data=request.data)
+        serializer = serializer_class(
+            data=request.data,
+            context=self.get_serializer_context()
+        )
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
