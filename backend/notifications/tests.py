@@ -135,5 +135,4 @@ class CronTaskHandleReservationTestCase(TestCase):
 
         # Then
         mocked_task_spawn_notification_by_chunk.assert_called_once()
-
-
+        

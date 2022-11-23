@@ -8,9 +8,8 @@ from core.permissions import IsOwner
 from nmessages.models import NMessage
 from notifications.serializers import NotificationConfigSerializer
 from notifications.services import task_send_api_notification, ApiNotificationDto
-from targetusers.models import TargetUser
 from notifications.models import Notification
-
+from targetusers.models import TargetUser
 
 class NotificationViewSet(ModelViewSet):
     permission_classes = (AllowAny,)
@@ -50,6 +49,3 @@ class NotificationViewSet(ModelViewSet):
     def getAll(self, request):
         notifications = Notification.objects.filter(target=request.user)
         return Response(data=notifications, status=status.HTTP_200_OK)
-
-    
-
