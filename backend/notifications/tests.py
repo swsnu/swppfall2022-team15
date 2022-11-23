@@ -1,7 +1,9 @@
+import json
 from unittest import mock
 from unittest.mock import call
 
 from django.test import TestCase
+from django.utils import timezone
 
 from model_bakery import baker
 from rest_framework.test import APITestCase
@@ -53,6 +55,45 @@ class NotificationAPITestCase(APITestCase):
         self.assertEqual(response.status_code, 201)
 
 
+class ReservationAPITestCase(APITestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = baker.make(User)
+
+    @mock.patch('notifications.services.task_bulk_create_notification.delay')
+    def test_create(self, mocked_task_bulk_create_notification):
+        # Given
+        notification_config = baker.make(NotificationConfig, type=EnumNotificationType.HTTP)
+        target_users = baker.make(TargetUser, notification_type=EnumNotificationType.HTTP, _quantity=10)
+
+        # When
+        target_user_ids = [target_user.id for target_user in target_users]
+        reserved_at_data = [
+            timezone.now() + timezone.timedelta(minutes=minute)
+            for minute in range(10)
+        ]
+        data = [
+            {
+                'notification_config': notification_config.id,
+                'target_users': target_user_ids,
+                'reserved_at': reserved_at.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+            }
+            for reserved_at in reserved_at_data
+        ]
+        self.client.force_authenticate(user=self.user)
+        response = self.client.post(
+            '/api/reservation/',
+            data=json.dumps(data),
+            content_type='application/json',
+        )
+
+        # Then
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(Reservation.objects.count(), 10)
+        self.assertEqual(mocked_task_bulk_create_notification.call_count, 10)
+
+
 class TaskSendApiNotificationTest(TestCase):
 
     @mock.patch('requests.post', return_value=mock.Mock(status_code=200))
@@ -84,7 +125,6 @@ class TaskHandleReservationTestCase(TestCase):
             reservation=reservation,
             _quantity=150
         )
-        reservation = baker.make(Reservation, notification_config=notification_config)
 
         # When
         task_spawn_notification_by_chunk(reservation.id)

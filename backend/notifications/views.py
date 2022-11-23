@@ -6,10 +6,12 @@ from rest_framework.decorators import action
 
 from core.permissions import IsOwner
 from nmessages.models import NMessage
-from notifications.serializers import NotificationConfigSerializer
+from notifications.models import Reservation
+from notifications.serializers import NotificationConfigSerializer, ReservationSerializer
 from notifications.services import task_send_api_notification, ApiNotificationDto
 from notifications.models import Notification
 from targetusers.models import TargetUser
+
 
 class NotificationViewSet(ModelViewSet):
     permission_classes = (AllowAny,)
@@ -51,3 +53,15 @@ class NotificationViewSet(ModelViewSet):
             notification_config__notification__project__user=request.user
         )
         return Response(data=notifications, status=status.HTTP_200_OK)
+
+
+class ReservationViewSet(ModelViewSet):
+    queryset = Reservation.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        serializer = ReservationSerializer(data=data, many=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(status=status.HTTP_201_CREATED)
