@@ -13,7 +13,7 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {EnumNotificationType} from "../Enums";
 import {AppDispatch} from "../store";
-import {createNotification, fetchNotifcations} from "../store/slices/notifications";
+import {createNotification, fetchNotifications} from "../store/slices/notifications";
 import {projectSelect} from "../store/slices/project";
 import {fetchTargets, targetSelect} from "../store/slices/target";
 import {fetchMessages, messageSelect} from "../store/slices/message";
@@ -62,7 +62,7 @@ interface IProps {
         }
         dispatch(createNotification(data));
         props.handleClose();
-        dispatch(fetchNotifcations(projectId));
+        dispatch(fetchNotifications(projectId));
       }
     };
     

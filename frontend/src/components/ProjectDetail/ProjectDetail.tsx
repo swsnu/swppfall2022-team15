@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { AppDispatch } from "../../store";
-import { fetchNotifcations, notificationListSelector } from "../../store/slices/notifications";
+import { fetchNotifications, notificationListSelector } from "../../store/slices/notifications";
 import { fetchProject } from "../../store/slices/project";
 import NotificationCreateModal from "../NotificationCreateModal";
 import CollapsibleTable from "../table/CollapsibleTable";
@@ -23,7 +23,7 @@ export default function ProjectDetail() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(fetchProject(projectId));
-    dispatch(fetchNotifcations(projectId));
+    dispatch(fetchNotifications(projectId));
   }, []);
   const notifications = useSelector(notificationListSelector);
 

@@ -52,10 +52,6 @@ class NotificationAPITestCase(APITestCase):
 
     def test_get_notifications(self):
         # Given
-        project = baker.make(Project)
-        message = baker.make(NMessage)
-        target = baker.make(TargetUser)
-        notification = baker.make(Notification, project=project, message=message, target=target)
 
         # When
         response = self.client.get('/api/notification/')
