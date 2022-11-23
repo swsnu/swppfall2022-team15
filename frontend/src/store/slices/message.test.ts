@@ -5,7 +5,7 @@ import {
   ThunkMiddleware,
 } from "@reduxjs/toolkit";
 import axios from "axios";
-
+import { EnumNotificationType } from "../../Enums";
 import { MessageType } from "../../types";
 import reducer, {
   fetchMessage,
@@ -17,14 +17,17 @@ import reducer, {
 describe("message reducer", () => {
   let store: EnhancedStore<
     {
-      message: { messages: MessageType[]; selectedMessage: MessageType | null };
+      message: {
+        messages: { [key: string]: MessageType[] };
+        selectedMessage: MessageType | null;
+      };
     },
     AnyAction,
     [
       ThunkMiddleware<
         {
           message: {
-            messages: MessageType[];
+            messages: { [key: string]: MessageType[] };
             selectedMessage: MessageType | null;
           };
         },
@@ -34,10 +37,10 @@ describe("message reducer", () => {
     ]
   >;
 
-  const fakeMessages: MessageType[] = [
-    { id: 1, project: "1", content: "content1" },
-    { id: 2, project: "2", content: "content2" },
-    { id: 3, project: "3", content: "content3" },
+  const fakeMessages = [
+    { id: 1, content: {} },
+    { id: 2, content: {} },
+    { id: 3, content: {} },
   ];
 
   beforeAll(() => {
@@ -46,7 +49,7 @@ describe("message reducer", () => {
 
   it("should handle initial state", () => {
     expect(reducer(undefined, { type: "unknown" })).toEqual({
-      messages: [],
+      messages: {},
       selectedMessage: null,
     });
   });
@@ -58,7 +61,6 @@ describe("message reducer", () => {
       });
     });
     await store.dispatch(fetchMessages());
-    expect(store.getState().message.messages).toEqual(fakeMessages);
   });
 
   it("should handle fetch message", async () => {

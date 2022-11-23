@@ -1,15 +1,4 @@
-import {
-  Button, Card,
-  IconButton,
-  MenuItem,
-  Popover,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import { Button, MenuItem, Popover } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,8 +9,9 @@ import { deleteMessage } from "../../services/message";
 import { fetchMessages, messageListSelector } from "../../store/slices/message";
 
 import { AppDispatch } from "../../store";
-import {Container} from "@mui/system";
-import Scrollbar from "../../components/scrollbar/Scrollbar";
+import { Container } from "@mui/system";
+import MessageTable from "../../components/Message/MessageTable";
+import { EnumNotificationType } from "../../Enums";
 
 export default function MessageListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
@@ -59,46 +49,36 @@ export default function MessageListTable() {
         handleClose={() => setCreateModalOpen(false)}
       ></MessageCreateModal>
       <Container>
-      <Grid container justifyContent="flex-end">
-        <Button data-testid="create-button" onClick={handleClickCreateButton}>New Message</Button>
-      </Grid>
-        <Card>
-          <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Project</TableCell>
-                    <TableCell>Content</TableCell>
-                  </TableRow>
-                </TableHead>
-
-                <TableBody>
-                  {messages.map((row) => {
-                    const { id, project, content } = row;
-                    return (
-                      <TableRow hover key={id} tabIndex={-1}>
-                        <TableCell align="left">{project}</TableCell>
-                        <TableCell align="left">{content}</TableCell>
-                        <TableCell align="right">
-                          <IconButton
-                            size="large"
-                            color="inherit"
-                            data-testid="open-menu-button"
-                            onClick={handleOpenMenu}
-                            data-id={id}
-                          >
-                            <Iconify icon={"eva:more-vertical-fill"} />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Scrollbar>
-        </Card>
+        <Grid container justifyContent="flex-end">
+          <Button data-testid="create-button" onClick={handleClickCreateButton}>
+            New Message
+          </Button>
+        </Grid>
+        <h1>Slack</h1>
+        <MessageTable
+          columns={["channel", "message"]}
+          keys={["channel", "message"]}
+          rows={EnumNotificationType.SLACK in messages ? messages.SLACK : []}
+          handleOpenMenu={handleOpenMenu}
+        />
+        <br />
+        <hr />
+        <h1>HTTP</h1>
+        <MessageTable
+          columns={["channel", "message"]}
+          keys={["channel", "message"]}
+          rows={EnumNotificationType.EMAIL in messages ? messages.EMAIL : []}
+          handleOpenMenu={handleOpenMenu}
+        />
+        <br />
+        <hr />
+        <h1>SMS</h1>
+        <MessageTable
+          columns={["channel", "message"]}
+          keys={["channel", "message"]}
+          rows={EnumNotificationType.SMS in messages ? messages.SMS : []}
+          handleOpenMenu={handleOpenMenu}
+        />
       </Container>
       <Popover
         open={Boolean(open)}
@@ -122,7 +102,11 @@ export default function MessageListTable() {
           <Iconify icon={"eva:edit-fill"} sx={{ mr: 2 }} />
           Edit
         </MenuItem>
-        <MenuItem sx={{ color: "error.main" }} data-testid="delete-button" onClick={handleClickDelete}>
+        <MenuItem
+          sx={{ color: "error.main" }}
+          data-testid="delete-button"
+          onClick={handleClickDelete}
+        >
           <Iconify icon={"eva:trash-2-outline"} sx={{ mr: 2 }} />
           Delete
         </MenuItem>

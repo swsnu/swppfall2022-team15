@@ -1,46 +1,68 @@
 import MessageCreateModal from "./MessageCreateModal";
-import {renderWithProviders} from "../../test-utils/mocks";
-import {fireEvent, screen} from "@testing-library/react";
+import { renderWithProviders } from "../../test-utils/mocks";
+import { fireEvent, screen } from "@testing-library/react";
 import preloadedState from "../../test-utils/mock_state";
+import { EnumNotificationType } from "../../Enums";
+import axios from "axios";
 
 describe("MessageCreateModal", () => {
-    it("should render", () => {
-        renderWithProviders(<MessageCreateModal open={true} handleClose={() => {
-        }}/>)
+  it("should render", () => {
+    renderWithProviders(
+      <MessageCreateModal open={true} handleClose={() => {}} />
+    );
+  });
+
+  it("should handle create button correctly", () => {
+    jest.spyOn(axios, "post").mockResolvedValue(
+      Promise.resolve({
+        data: {},
+      })
+    );
+
+    const { getByTestId } = renderWithProviders(
+      <MessageCreateModal open={true} handleClose={() => {}} />,
+      { preloadedState }
+    );
+
+    const contentInput = screen.getByTestId("type-input");
+    fireEvent.change(contentInput, {
+      target: { value: EnumNotificationType.SLACK },
+    });
+    const button = getByTestId("create-button");
+    fireEvent.click(button);
+
+    const slackChannelInput = screen.getByTestId("slack-channel-input");
+    fireEvent.change(slackChannelInput, {
+      target: { value: "channel" },
     });
 
-    it("should handle create button correctly", () => {
-        const {getByTestId} = renderWithProviders(
-            <MessageCreateModal open={true} handleClose={() => {
-            }}/>,
-            {preloadedState}
-        )
-
-        const projectId = screen.getByTestId("project-id");
-        fireEvent.change(projectId, {target: {value: "name"}});
-
-        const contentInput = screen.getByTestId("content-input");
-        fireEvent.change(contentInput, {target: {value: "content"}});
-
-        const button = getByTestId("create-button");
-        fireEvent.click(button);
+    const slackMessageInput = screen.getByTestId("slack-message-input");
+    fireEvent.change(slackMessageInput, {
+      target: { value: "message" },
     });
 
-    it("should handle create button correctly - disable button", () => {
-        const {getByTestId} = renderWithProviders(
-            <MessageCreateModal open={true} handleClose={() => {
-            }}/>,
-            {preloadedState}
-        )
+    fireEvent.click(button);
 
-        const projectId = screen.getByTestId("project-id");
-        fireEvent.change(projectId, {target: {value: ""}});
-
-        const contentInput = screen.getByTestId("content-input");
-        fireEvent.change(contentInput, {target: {value: ""}});
-
-        const button = getByTestId("create-button");
-        fireEvent.click(button);
+    fireEvent.change(contentInput, {
+      target: { value: EnumNotificationType.API },
     });
 
-})
+    fireEvent.change(contentInput, {
+      target: { value: EnumNotificationType.EMAIL },
+    });
+
+    fireEvent.change(contentInput, {
+      target: { value: EnumNotificationType.SMS },
+    });
+  });
+
+  it("should handle create button correctly - disable button", () => {
+    const { getByTestId } = renderWithProviders(
+      <MessageCreateModal open={true} handleClose={() => {}} />,
+      { preloadedState }
+    );
+
+    const button = getByTestId("create-button");
+    fireEvent.click(button);
+  });
+});
