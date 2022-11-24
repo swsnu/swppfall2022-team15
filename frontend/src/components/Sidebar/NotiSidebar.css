@@ -1,46 +1,30 @@
 .background {
-    color: rgb(33, 43, 54);
-    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    box-shadow: none;
-    background-image: none;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    flex: 1 0 auto;
-    z-index: 1200;
-    top: 0px;
-    outline: 0px;
-    left: 0px;
-    border-right: 1px dashed rgba(145, 158, 171, 0.24);
-    width: 280px;
     background-color: rgb(249, 250, 251);
+    color: rgb(33, 43, 54);
+    display: grid;
+    height: 100%;
+    width: 280px;
+    border-right: 1px dashed rgba(145, 158, 171, 0.24);
 }
 
 .sidebar {
-    overflow-x: auto;
     height: 100%;
 }
 
-.noti {
-    padding: 0px 16px;
-    margin-bottom: 16px;
-    display: flex;
-    flex-direction: column;
-    flex: 1 0 auto;
+.Icon {
+    width: auto;
+    height: auto;
+    margin-right: 10px;
 }
 
 .top {
     color: rgb(32, 101, 209);
-    text-decoration: none;
-    align-items: center;
-    padding: 16px 20px;
-    border-radius: 9px;
     background-color: rgba(145, 158, 171, 0.12);
     font-weight: 600;
     line-height: 1.57143;
-    font-size: 0.875rem;
+    font-size: 1rem;
     font-family: "Public Sans", sans-serif;
+    text-align: center;
     color: rgb(33, 43, 54);
 }
 

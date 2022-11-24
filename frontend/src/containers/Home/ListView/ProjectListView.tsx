@@ -6,6 +6,7 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  Paper,
 } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +21,6 @@ import Scrollbar from "../../../components/scrollbar/Scrollbar";
 import { Container } from "@mui/system";
 import NotificationAddIcon from "@mui/icons-material/NotificationAdd";
 import { ProjectType } from "../../../types";
-import { Paper } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
 export default function ListLayout(props: { projects: ProjectType[] }) {
@@ -72,7 +72,6 @@ export default function ListLayout(props: { projects: ProjectType[] }) {
                       const { id, name, project_type } = row;
                       return (
                         <TableRow hover key={id} tabIndex={-1}>
-
                           <TableCell
                             align="left"
                             onClick={() => handleClickRow(id)}
