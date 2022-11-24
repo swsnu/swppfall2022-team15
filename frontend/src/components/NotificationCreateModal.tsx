@@ -38,7 +38,6 @@ export default function NotificationCreateModal(props: IProps) {
 
   const projectState = useSelector(projectSelect);
   const targetState = useSelector(targetSelect);
-  const messageState = useSelector(messageSelect);
 
   useEffect(() => {
     dispatch(fetchTargets());

@@ -19,7 +19,7 @@ describe("MessageCreateModal", () => {
       })
     );
 
-    const { getByTestId } = renderWithProviders(
+    renderWithProviders(
       <MessageCreateModal open={true} handleClose={() => {}} />,
       { preloadedState }
     );
@@ -57,7 +57,7 @@ describe("MessageCreateModal", () => {
   });
 
   it("should handle create button correctly - disable button", () => {
-    const { getByTestId } = renderWithProviders(
+    renderWithProviders(
       <MessageCreateModal open={true} handleClose={() => {}} />,
       { preloadedState }
     );

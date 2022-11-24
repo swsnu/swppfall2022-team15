@@ -31,7 +31,6 @@ export default function MessageTable(props: {
             </TableHead>
             <TableBody>
               {props.rows.map((row: any) => {
-                const { id, content } = row;
                 return (
                   <TableRow hover key={row.id} tabIndex={-1}>
                     {props.keys.map((key: string) => {
@@ -45,7 +44,7 @@ export default function MessageTable(props: {
                         color="inherit"
                         data-testid="open-menu-button"
                         onClick={props.handleOpenMenu}
-                        data-id={id}
+                        data-id={row.id}
                       >
                         <Iconify icon={"eva:more-vertical-fill"} />
                       </IconButton>
