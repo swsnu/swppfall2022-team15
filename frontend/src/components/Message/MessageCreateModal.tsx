@@ -12,12 +12,11 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createMessage, fetchMessages } from "../../store/slices/message";
+import { fetchMessages } from "../../store/slices/message";
 import { AppDispatch } from "../../store";
 import { fetchProjects, projectSelect } from "../../store/slices/project";
 import { EnumNotificationType } from "../../Enums";
 import { createMessage2 } from "../../services/message";
-import { channel } from "diagnostics_channel";
 
 interface IProps {
   open: any;

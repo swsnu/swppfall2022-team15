@@ -28,7 +28,7 @@ describe("MessageCreateModal", () => {
     fireEvent.change(contentInput, {
       target: { value: EnumNotificationType.SLACK },
     });
-    const button = getByTestId("create-button");
+    const button = screen.getByTestId("create-button");
     fireEvent.click(button);
 
     const slackChannelInput = screen.getByTestId("slack-channel-input");
@@ -62,7 +62,7 @@ describe("MessageCreateModal", () => {
       { preloadedState }
     );
 
-    const button = getByTestId("create-button");
+    const button = screen.getByTestId("create-button");
     fireEvent.click(button);
   });
 });
