@@ -19,7 +19,7 @@ import {
 } from "../store/slices/notifications";
 import { projectSelect } from "../store/slices/project";
 import { fetchTargets, targetSelect } from "../store/slices/target";
-import { fetchMessages, messageSelect } from "../store/slices/message";
+import { fetchMessages } from "../store/slices/message";
 
 interface IProps {
   open: any;

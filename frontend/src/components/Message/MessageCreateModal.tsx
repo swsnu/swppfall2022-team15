@@ -11,10 +11,10 @@ import {
   TextField,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchMessages } from "../../store/slices/message";
 import { AppDispatch } from "../../store";
-import { fetchProjects, projectSelect } from "../../store/slices/project";
+import { fetchProjects } from "../../store/slices/project";
 import { EnumNotificationType } from "../../Enums";
 import { createMessage2 } from "../../services/message";
 
@@ -24,7 +24,6 @@ interface IProps {
 }
 
 export default function MessageCreateModal(props: IProps) {
-  const [project, setProject] = useState("1");
   const [notificationType, setNotificationtype] = useState("");
   const [content, setContent]: [any, any] = useState({});
 
@@ -32,8 +31,6 @@ export default function MessageCreateModal(props: IProps) {
   useEffect(() => {
     dispatch(fetchProjects());
   }, []);
-
-  const projectState = useSelector(projectSelect);
 
   const handleClickConfirm = async () => {
     if (notificationType) {

@@ -5,7 +5,6 @@ import {
   ThunkMiddleware,
 } from "@reduxjs/toolkit";
 import axios from "axios";
-import { EnumNotificationType } from "../../Enums";
 import { MessageType } from "../../types";
 import reducer, {
   fetchMessage,
