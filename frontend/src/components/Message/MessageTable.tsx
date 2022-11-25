@@ -21,7 +21,7 @@ export default function MessageTable(props: {
     <Card>
       <Scrollbar>
         <TableContainer sx={{ minWidth: 800 }}>
-          <Table>
+          <Table stickyHeader>
             <TableHead>
               <TableRow>
                 {props.columns.map((col) => {
