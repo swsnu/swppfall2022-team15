@@ -93,7 +93,6 @@ export default function MultiStepForm() {
         ) : (
           <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-            {/* TODO */}
             {activeStep === 0 ? <MessageForm /> : null}
             {activeStep === 1 ? <TargetForm /> : null}
             {activeStep === 2 ? <NotificationForm /> : null}
