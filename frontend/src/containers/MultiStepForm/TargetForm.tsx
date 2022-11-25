@@ -14,7 +14,7 @@ import { createTarget, fetchTargets } from "../../store/slices/target";
 import { EnumNotificationType } from "../../Enums";
 import { fetchProjects, projectSelect } from "../../store/slices/project";
 
-export function TargetForm() {
+export default function TargetForm() {
   const [targetName, setTargetName] = useState("");
   const [notificationType, setNotificationType] = useState("");
   const [project, setProject] = useState("");

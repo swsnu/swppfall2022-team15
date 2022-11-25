@@ -13,7 +13,9 @@ import { createMessage, fetchMessages } from "../../store/slices/message";
 import { AppDispatch } from "../../store";
 import { fetchProjects, projectSelect } from "../../store/slices/project";
 
-export function MessageForm() {
+
+
+export default function MessageForm() {
   const [project, setProject] = useState("1");
   const [content, setContent] = useState("");
 
@@ -65,7 +67,7 @@ export function MessageForm() {
         rows={4}
         defaultValue=""
       />
-      <Button data-testid="create-button" onClick={handleClickConfirm}>
+      <Button data-testid="confirm-button" onClick={handleClickConfirm}>
         Confirm
       </Button>
     </FormWrapper>
