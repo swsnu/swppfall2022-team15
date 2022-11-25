@@ -18,7 +18,7 @@ export default function NotiSidebar() {
   const location = useLocation();
 
   const userState = useSelector(authSelector);
-  const [username, setUsername] = useState(userState.user?.username);
+  const [ username, setUsername ] = useState("");
 
   const homeClass = location.pathname === "/home" ? "active" : "item";
   const projectsClass = location.pathname === "/projects" ? "active" : "item";
@@ -42,24 +42,17 @@ export default function NotiSidebar() {
     dispatch(logout());
   }
   
-  const Capitalize = () => {
-    if(username) {
-      setUsername(username.charAt(0).toUpperCase() + username.slice(1));
-    }
-    else {
-      setUsername("");
-    }
-  }
-
   useEffect(() => {
-    Capitalize();
-  }, [userState]);
+    if(userState.user) {
+      setUsername(userState.user.username.charAt(0).toUpperCase() + userState.user.username.slice(1));
+    }
+  }, [userState.user]);
 
   return (
     <div className="background" style={{ height: "100%" }}>
       <Sidebar className="sidebar" data-testid="sidebar" width="288px">
         <div className="titleBox">
-          <img className="Icon" src={logo} />
+          <img className="Icon" src={logo} alt="" />
         </div>
         <Menu>
           <MenuItem className="userInfo" icon={userIcon}>
