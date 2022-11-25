@@ -5,12 +5,13 @@
 .sidebar {
   float: left;
   width: 280px;
+  height: 100vh;
 }
 
 .contents {
   display: flex;
-  height: 100%;
-  overflow: hidden;
+  /* height: 100%; */
+  /* overflow: hidden; */
   width: auto;
 }
 
