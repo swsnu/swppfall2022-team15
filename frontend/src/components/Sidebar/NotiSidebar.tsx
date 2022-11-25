@@ -1,24 +1,35 @@
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 
-import { FaHome, FaHistory, FaFolderOpen } from "react-icons/fa";
+import { FaHome, FaHistory, FaFolderOpen, FaUser } from "react-icons/fa";
 import { FiTarget } from "react-icons/fi";
 import { HiTemplate } from "react-icons/hi";
 import { MdMessage, MdLogout } from "react-icons/md";
-//import { AiOutlineMenuUnfold } from "react-icons/ai";
-
 
 import "./NotiSidebar.css";
-import { logout } from "../../store/slices/auth";
+import logo from "../../assets/NotiLogo.png";
+import { authSelector, logout } from "../../store/slices/auth";
 import { AppDispatch } from "../../store";
 
+
 export default function NotiSidebar() {
-  //const { collapseSidebar } = useProSidebar();
-  const [ page, setPage ] = useState("home");
+  const location = useLocation();
+
+  const userState = useSelector(authSelector);
+  const [username, setUsername] = useState(userState.user?.username);
+
+  const homeClass = location.pathname === "/home" ? "active" : "item";
+  const projectsClass = location.pathname === "/projects" ? "active" : "item";
+  const targetsClass = location.pathname === "/targets" ? "active" : "item";
+  const messagesClass = location.pathname === "/messages" ? "active" : "item";
+  const templatesClass = location.pathname === "/template" ? "active" : "item";
+  const historyClass = location.pathname === "/history" ? "active" : "item";
+
   const dispatch = useDispatch<AppDispatch>();
 
+  const userIcon = <FaUser size="48"></FaUser>;
   const homeIcon = <FaHome size="48"></FaHome>;
   const projectIcon = <FaFolderOpen size="48"></FaFolderOpen>;
   const targetIcon = <FiTarget size="48"></FiTarget>;
@@ -26,32 +37,39 @@ export default function NotiSidebar() {
   const templateIcon = <HiTemplate size="48"></HiTemplate>;
   const historyIcon = <FaHistory size="48"></FaHistory>;
   const logoutIcon = <MdLogout size="48"></MdLogout>;
-  /*
-  const toggleIcon = (
-    <AiOutlineMenuUnfold
-      size="24"
-      data-testid={"collapseIcon"}
-    ></AiOutlineMenuUnfold>
-  );
-  */
 
   const logoutHandler = () => {
     dispatch(logout());
   }
+  
+  const Capitalize = () => {
+    if(username) {
+      setUsername(username.charAt(0).toUpperCase() + username.slice(1));
+    }
+    else {
+      setUsername("");
+    }
+  }
+
+  useEffect(() => {
+    Capitalize();
+  }, [userState]);
 
   return (
     <div className="background" style={{ height: "100%" }}>
-      <Sidebar className="sidebar" data-testid="sidebar" width="280px">
-        <Menu className="Icon">
-          <MenuItem className="top">
-            NotiManager
+      <Sidebar className="sidebar" data-testid="sidebar" width="288px">
+        <div className="titleBox">
+          <img className="Icon" src={logo} />
+        </div>
+        <Menu>
+          <MenuItem className="userInfo" icon={userIcon}>
+            {username}
           </MenuItem>
         </Menu>
         <Menu className="menu">
           <MenuItem
             routerLink={<Link to="/home" />}
-            // className={page === "home" ? "item active" : "item"}
-            onClick={() => setPage("home")}
+            className={homeClass}
             data-testid="homeButton"
             icon={homeIcon}
           >
@@ -60,8 +78,7 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/projects" />}
-            // className={page === "projects" ? "item active" : "item"}
-            onClick={() => setPage("projects")}
+            className={projectsClass}
             data-testid="projectsButton"
             icon={projectIcon}
           >
@@ -70,8 +87,7 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/targets" />}
-            // className={page === "targets" ? "item active" : "item"}
-            onClick={() => setPage("targets")}
+            className={targetsClass}
             data-testid="targetsButton"
             icon={targetIcon}
           >
@@ -80,8 +96,7 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/messages" />}
-            // className={page === "messages" ? "item active" : "item"}
-            onClick={() => setPage("messages")}
+            className={messagesClass}
             data-testid="messagesButton"
             icon={messageIcon}
           >
@@ -90,8 +105,7 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/templates" />}
-            // className={page === "templates" ? "item active" : "item"}
-            onClick={() => setPage("templates")}
+            className={templatesClass}
             data-testid="templatesButton"
             icon={templateIcon}
           >
@@ -100,8 +114,7 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/history" />}
-            // className={page === "history" ? "item active" : "item"}
-            onClick={() => setPage("history")}
+            className={historyClass}
             data-testid="historyButton"
             icon={historyIcon}
           >
@@ -110,10 +123,7 @@ export default function NotiSidebar() {
           </MenuItem>
         </Menu>
         <Menu className="logout">
-          <MenuItem 
-            icon={logoutIcon}
-            onClick={logoutHandler}
-          >
+          <MenuItem className="item" icon={logoutIcon} onClick={logoutHandler}>
             {" "}
             Log Out{" "}
           </MenuItem>

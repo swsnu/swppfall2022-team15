@@ -24,7 +24,7 @@ describe("<GridLayout />", () => {
   });
 
   it("should render empty projects correctly", () => {
-    renderWithProviders(<GridLayout projects={[]} />);
+    renderWithProviders(<GridLayout/>);
 
     expect(
       screen.getByText("No projects! Start by creating your first project!")
@@ -32,7 +32,7 @@ describe("<GridLayout />", () => {
   });
 
   it("should render projects correctly", () => {
-    renderWithProviders(<GridLayout projects={projects} />);
+    renderWithProviders(<GridLayout/>);
 
     expect(screen.getByText("Project 1")).toBeInTheDocument();
     expect(screen.getByText("Project 2")).toBeInTheDocument();
