@@ -26,11 +26,16 @@ interface IProps {
 export default function MessageCreateModal(props: IProps) {
   const [notificationType, setNotificationtype] = useState("");
   const [content, setContent]: [any, any] = useState({});
+  const [fieldErrors, setFieldErrors]: [any, any] = useState({});
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(fetchProjects());
   }, []);
+
+  const clearForm = () => {
+    setContent({});
+  };
 
   const handleClickConfirm = async () => {
     if (notificationType) {
@@ -39,17 +44,35 @@ export default function MessageCreateModal(props: IProps) {
           if (
             "channel" in content &&
             "message" in content &&
-            content.channel &&
-            content.message
+            Boolean(content.channel) &&
+            Boolean(content.message)
           )
             await createMessage2(notificationType, {
               channel: content.channel,
               message: content.message,
             });
+          else {
+            let newFieldErrors = fieldErrors;
+            if (!Boolean(content.channel)) {
+              newFieldErrors = {
+                ...newFieldErrors,
+                channel: "This field is required.",
+              };
+            }
+            if (!Boolean(content.message)) {
+              newFieldErrors = {
+                ...newFieldErrors,
+                message: "This field is required.",
+              };
+            }
+            setFieldErrors(newFieldErrors);
+            return;
+          }
           break;
         // case EnumNotificationType.EMAIL:
       }
       props.handleClose();
+      clearForm();
       dispatch(fetchMessages());
     }
   };
@@ -79,10 +102,12 @@ export default function MessageCreateModal(props: IProps) {
             inputProps={{ "data-testid": "slack-channel-input" }}
             onChange={(event: any) => {
               setContent({ ...content, channel: event.target.value });
+              setFieldErrors({ ...fieldErrors, channel: undefined });
             }}
             value={"channel" in content ? content.channel : ""}
+            helperText={fieldErrors?.channel}
+            error={Boolean(fieldErrors?.channel)}
             rows={1}
-            defaultValue=""
           />
           <br />
           <br />
@@ -97,10 +122,12 @@ export default function MessageCreateModal(props: IProps) {
             inputProps={{ "data-testid": "slack-message-input" }}
             onChange={(event: any) => {
               setContent({ ...content, message: event.target.value });
+              setFieldErrors({ ...fieldErrors, message: undefined });
             }}
             value={"message" in content ? content.message : ""}
+            helperText={fieldErrors?.message}
+            error={Boolean(fieldErrors?.message)}
             rows={4}
-            defaultValue=""
           />
         </>
       );
@@ -118,27 +145,6 @@ export default function MessageCreateModal(props: IProps) {
       >
         <DialogTitle>New Message</DialogTitle>
         <DialogContent>
-          {/* <InputLabel id="demo-simple-select-label"> Project </InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            inputProps={{ "data-testid": "project-id" }}
-            value={project}
-            // label="project type"
-            onChange={(event: SelectChangeEvent) => {
-              setProject(event.target.value);
-            }}
-            fullWidth
-          >
-            {projectState.projects.map((project) => (
-              <MenuItem key={project.id} value={project.name}>
-                {project.name}
-              </MenuItem>
-            ))}
-          </Select> */}
-          {/* <br /> */}
-          {/* <br /> */}
-          {/* <br /> */}
           <InputLabel id="demo-simple-select-label">Project Type</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -159,18 +165,6 @@ export default function MessageCreateModal(props: IProps) {
             <MenuItem value={EnumNotificationType.SMS}>Sms</MenuItem>
           </Select>
           {form}
-          {/* <InputLabel id="demo-simple-select-label">Content</InputLabel> */}
-          {/* <TextField
-            id="outlined-multiline-static"
-            fullWidth
-            multiline
-            inputProps={{ "data-testid": "content-input" }}
-            onChange={(event: any) => {
-              setContent(event.target.value);
-            }}
-            rows={4}
-            defaultValue=""
-          /> */}
         </DialogContent>
         <DialogActions>
           <Button data-testid="create-button" onClick={handleClickConfirm}>

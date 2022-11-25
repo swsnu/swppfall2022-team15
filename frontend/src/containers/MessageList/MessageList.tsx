@@ -1,4 +1,4 @@
-import { Button, MenuItem, Popover } from "@mui/material";
+import { Box, Button, MenuItem, Popover, Tab, Tabs } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +16,7 @@ import { EnumNotificationType } from "../../Enums";
 export default function MessageListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
   const [createModalopen, setCreateModalOpen] = useState(false);
+  const [selectedTab, setSelectedTab] = React.useState(0);
 
   const handleOpenMenu = (event: any) => {
     setOpen(event.currentTarget);
@@ -42,6 +43,42 @@ export default function MessageListTable() {
   }, []);
   const messages = useSelector(messageListSelector);
 
+  function a11yProps(index: number) {
+    return {
+      id: `simple-tab-${index}`,
+      "data-testid": `tab-${index}`,
+      "aria-controls": `simple-tabpanel-${index}`,
+    };
+  }
+
+  function renderTable() {
+    switch (selectedTab) {
+      case 0:
+        return (
+          <Box sx={{ "margin-bottom": "20px" }}>
+            <h1>Slack</h1>
+            <MessageTable
+              columns={["channel", "message"]}
+              keys={["channel", "message"]}
+              rows={
+                EnumNotificationType.SLACK in messages ? messages.SLACK : []
+              }
+              handleOpenMenu={handleOpenMenu}
+            />
+          </Box>
+        );
+      default:
+        return (
+          <MessageTable
+            columns={["channel", "message"]}
+            keys={["channel", "message"]}
+            rows={EnumNotificationType.SMS in messages ? messages.SMS : []}
+            handleOpenMenu={handleOpenMenu}
+          />
+        );
+    }
+  }
+
   return (
     <>
       <MessageCreateModal
@@ -54,31 +91,42 @@ export default function MessageListTable() {
             New Message
           </Button>
         </Grid>
-        <h1>Slack</h1>
-        <MessageTable
-          columns={["channel", "message"]}
-          keys={["channel", "message"]}
-          rows={EnumNotificationType.SLACK in messages ? messages.SLACK : []}
-          handleOpenMenu={handleOpenMenu}
-        />
-        <br />
-        <hr />
-        <h1>HTTP</h1>
-        <MessageTable
-          columns={["channel", "message"]}
-          keys={["channel", "message"]}
-          rows={EnumNotificationType.EMAIL in messages ? messages.EMAIL : []}
-          handleOpenMenu={handleOpenMenu}
-        />
-        <br />
-        <hr />
-        <h1>SMS</h1>
-        <MessageTable
-          columns={["channel", "message"]}
-          keys={["channel", "message"]}
-          rows={EnumNotificationType.SMS in messages ? messages.SMS : []}
-          handleOpenMenu={handleOpenMenu}
-        />
+
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={selectedTab}
+            onChange={(e, newValue) => {
+              setSelectedTab(newValue);
+            }}
+            aria-label="basic tabs example"
+          >
+            <Tab
+              icon={<Iconify icon={"la:slack"} />}
+              label="Slack"
+              iconPosition="start"
+              {...a11yProps(0)}
+            />
+            <Tab
+              icon={<Iconify icon={"ic:outline-email"} />}
+              iconPosition="start"
+              label="Email"
+              {...a11yProps(1)}
+            />
+            <Tab
+              icon={<Iconify icon={"material-symbols:webhook"} />}
+              iconPosition="start"
+              label="Http"
+              {...a11yProps(2)}
+            />
+            <Tab
+              icon={<Iconify icon={"material-symbols:sms-outline"} />}
+              iconPosition="start"
+              label="Sms"
+              {...a11yProps(3)}
+            />
+          </Tabs>
+        </Box>
+        {renderTable()}
       </Container>
       <Popover
         open={Boolean(open)}
