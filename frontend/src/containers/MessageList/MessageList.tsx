@@ -76,7 +76,6 @@ export default function MessageListTable() {
             handleOpenMenu={handleOpenMenu}
           />
         );
-        break;
     }
   }
 
