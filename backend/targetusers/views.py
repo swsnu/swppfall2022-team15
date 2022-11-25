@@ -1,3 +1,4 @@
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from core.views import CreateByNotificationTypeMixin
@@ -9,6 +10,7 @@ from targetusers.serializers import TargetUserSerializer, SlackTargetUserSeriali
 class TargetUserViewSet(CreateByNotificationTypeMixin, ModelViewSet):
     queryset = TargetUser.objects.all()
     serializer_class = TargetUserSerializer
+    permission_classes = (IsAuthenticated,)
 
     def list(self, request, *args, **kwargs):
         if project_id := request.query_params.get('projectId'):
@@ -19,3 +21,6 @@ class TargetUserViewSet(CreateByNotificationTypeMixin, ModelViewSet):
     def get_create_serializer_class(self):
         if self.request.data['notification_type'] == EnumNotificationType.SLACK:
             return SlackTargetUserSerializer
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)

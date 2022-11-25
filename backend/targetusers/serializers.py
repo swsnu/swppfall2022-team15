@@ -10,11 +10,12 @@ class TargetUserSerializer(serializers.ModelSerializer):
 
 
 class SlackTargetUserSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     api_key = serializers.CharField(write_only=True)
 
     class Meta:
         model = TargetUser
-        fields = ['api_key', 'name', 'data', 'notification_type']
+        fields = ('user', 'api_key', 'name', 'data', 'notification_type')
         extra_kwargs = {
             'data': {'read_only': True},
         }

@@ -42,13 +42,14 @@ const preloadedState: RootState = {
     selectedTarget: null,
   },
   message: {
-    messages: [
-      {
-        id: 1,
-        project: "1",
-        content: "test message",
-      },
-    ],
+    messages: {
+      SLACK: [
+        {
+          id: 1,
+          content: "test message",
+        },
+      ],
+    },
     selectedMessage: null,
   },
   auth: {
