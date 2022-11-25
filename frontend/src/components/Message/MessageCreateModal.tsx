@@ -52,18 +52,20 @@ export default function MessageCreateModal(props: IProps) {
               message: content.message,
             });
           else {
+            let newFieldErrors = fieldErrors;
             if (!Boolean(content.channel)) {
-              setFieldErrors({
-                ...fieldErrors,
+              newFieldErrors = {
+                ...newFieldErrors,
                 channel: "This field is required.",
-              });
+              };
             }
             if (!Boolean(content.message)) {
-              setFieldErrors({
-                ...fieldErrors,
+              newFieldErrors = {
+                ...newFieldErrors,
                 message: "This field is required.",
-              });
+              };
             }
+            setFieldErrors(newFieldErrors);
             return;
           }
           break;
