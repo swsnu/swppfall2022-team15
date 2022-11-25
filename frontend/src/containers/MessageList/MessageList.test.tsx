@@ -17,17 +17,17 @@ describe("MessageList", () => {
   });
 
   it("should handle click create button", () => {
-    const { getByTestId } = renderWithProviders(<MessageListTable />);
-    const createButton = getByTestId("create-button");
+    renderWithProviders(<MessageListTable />);
+    const createButton = screen.getByTestId("create-button");
     fireEvent.click(createButton);
     userEvent.keyboard("{esc}");
   });
 
   it("should handle click open menu", () => {
-    const { getByTestId } = renderWithProviders(<MessageListTable />, {
+    renderWithProviders(<MessageListTable />, {
       preloadedState,
     });
-    const openMenuButton = getByTestId("open-menu-button");
+    const openMenuButton = screen.getByTestId("open-menu-button");
     fireEvent.click(openMenuButton);
   });
 
@@ -36,12 +36,12 @@ describe("MessageList", () => {
       return Promise.resolve();
     });
 
-    const { getByTestId } = renderWithProviders(<MessageListTable />, {
+    renderWithProviders(<MessageListTable />, {
       preloadedState,
     });
-    const openMenuButton = getByTestId("open-menu-button");
+    const openMenuButton = screen.getByTestId("open-menu-button");
     fireEvent.click(openMenuButton);
-    const deleteButton = getByTestId("delete-button");
+    const deleteButton = screen.getByTestId("delete-button");
     fireEvent.click(deleteButton);
   });
 });
