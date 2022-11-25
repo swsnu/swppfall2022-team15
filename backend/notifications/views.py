@@ -1,17 +1,20 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.decorators import action
 
+from core.permissions import IsOwner
 from nmessages.models import NMessage
 from notifications.serializers import NotificationConfigSerializer
 from notifications.services import task_send_api_notification, ApiNotificationDto
+from notifications.models import Notification
 from targetusers.models import TargetUser
-
 
 class NotificationViewSet(ModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = NotificationConfigSerializer
+    queryset = Notification.objects.all()
 
     def create(self, request, *args, **kwargs):
         # save notification
@@ -41,3 +44,10 @@ class NotificationViewSet(ModelViewSet):
             data=serializers.data,
             status=status.HTTP_201_CREATED
         )
+
+    @action(detail=True, methods=['get'], permission_classes=[AllowAny, IsAuthenticated, IsOwner])
+    def getAll(self, request):
+        notifications = Notification.objects.filter(
+            notification_config__notification__project__user=request.user
+        )
+        return Response(data=notifications, status=status.HTTP_200_OK)

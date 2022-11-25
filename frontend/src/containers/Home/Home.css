@@ -6,8 +6,8 @@
 
 .container {
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  grid-template-rows: auto;
+  grid-template-columns: 1.25fr 1fr;
+  grid-template-rows: 1fr;
 }
 
 .grid-column {
@@ -17,8 +17,35 @@
 }
 
 .projects {
+  height: 100vh;
   padding-left: 24px;
   padding-top: 24px;
+  padding-bottom: 24px;
+  max-width: 100%;
+  color: rgb(33, 43, 54);
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-family: "Public-Sans", sans-serif;
+}
+
+.upcoming {
+  height: 62vh;
+  padding-left: 24px;
+  padding-top: 24px;
+  padding-right: 24px;
+  max-width: 100%;
+  color: rgb(33, 43, 54);
+  line-height: 1.5;
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-family: "Public-Sans", sans-serif;
+}
+
+.sentNotis {
+  height: 35vh;
+  padding-left: 24px;
+  padding-top: 24px;
+  padding-right: 24px;
   max-width: 100%;
   color: rgb(33, 43, 54);
   line-height: 1.5;
@@ -49,7 +76,9 @@
 .project {
   padding-top: 10px;
   padding-left: 24px;
+  padding-right: 24px;
   font-size: 16px;
+  height: 100vh;
 }
 
 .title {
@@ -68,17 +97,6 @@
   padding-top: 24px;
 }
 
-.sentNotis {
-  padding-left: 24px;
-  padding-top: 24px;
-  padding-right: 24px;
-  max-width: 100%;
-  color: rgb(33, 43, 54);
-  line-height: 1.5;
-  font-size: 1.5rem;
-  font-weight: 400;
-  font-family: "Public-Sans", sans-serif;
-}
 
 .noti {
   float: left;
@@ -90,17 +108,7 @@
   padding: 30px
 }
 
-.upcoming {
-  padding-left: 24px;
-  padding-top: 24px;
-  padding-right: 24px;
-  max-width: 100%;
-  color: rgb(33, 43, 54);
-  line-height: 1.5;
-  font-size: 1.5rem;
-  font-weight: 400;
-  font-family: "Public-Sans", sans-serif;
-}
+
 
 .upcomingNoti {
   padding: 30px;

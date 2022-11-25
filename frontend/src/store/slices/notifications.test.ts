@@ -2,7 +2,7 @@ import { AnyAction, configureStore, EnhancedStore } from "@reduxjs/toolkit";
 import axios from "axios";
 import { ThunkMiddleware } from "redux-thunk";
 
-import reducer, { fetchNotifcations, } from "./notifications";
+import reducer, { fetchNotifications, } from "./notifications";
 import {NotificationType} from "../../types";
 import preloadedState from "../../test-utils/mock_state";
 
@@ -42,7 +42,7 @@ describe("notification reducer", () => {
   it("should handle create notification", async () => {
     axios.post = jest.fn().mockResolvedValue({ data: fakeNotifications[0] });
     await store.dispatch(
-      fetchNotifcations(1)
+      fetchNotifications(1)
     );
   });
 
@@ -52,7 +52,7 @@ describe("notification reducer", () => {
         data: fakeNotifications,
       });
     });
-    await store.dispatch(fetchNotifcations(1));
+    await store.dispatch(fetchNotifications(1));
     expect(store.getState().notification.notifications).toEqual(fakeNotifications);
   });
 

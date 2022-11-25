@@ -15,7 +15,7 @@ import { EnumNotificationType } from "../Enums";
 import { AppDispatch } from "../store";
 import {
   createNotification,
-  fetchNotifcations,
+  fetchNotifications,
 } from "../store/slices/notifications";
 import { projectSelect } from "../store/slices/project";
 import { fetchTargets, targetSelect } from "../store/slices/target";
@@ -62,7 +62,7 @@ export default function NotificationCreateModal(props: IProps) {
       };
       dispatch(createNotification(data));
       props.handleClose();
-      dispatch(fetchNotifcations(projectId));
+      dispatch(fetchNotifications(projectId));
     }
   };
 
