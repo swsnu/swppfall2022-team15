@@ -4,6 +4,7 @@ import preloadedState from "../../test-utils/mock_state";
 
 import { BrowserRouter } from "react-router-dom";
 import { fireEvent, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 jest.mock("react-apexcharts", () => ({
   __esModule: true,
@@ -42,9 +43,7 @@ describe("Home", () => {
     );
 
     const projectStyleSwitch = screen.getByTestId("switch");
-    projectStyleSwitch.click();
-
-
+    fireEvent.click(projectStyleSwitch);
   });
 
   it("should handle close create project modal", () => {
@@ -59,6 +58,7 @@ describe("Home", () => {
     createProjectButton.click();
 
     fireEvent.click(document);
-    
+
+    userEvent.keyboard("{esc}");
   });
 });

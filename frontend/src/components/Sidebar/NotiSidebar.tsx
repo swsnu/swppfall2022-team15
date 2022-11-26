@@ -20,12 +20,12 @@ export default function NotiSidebar() {
   const userState = useSelector(authSelector);
   const [ username, setUsername ] = useState("");
 
-  const homeClass = location.pathname === "/home" ? "active" : "item";
-  const projectsClass = location.pathname === "/projects" ? "active" : "item";
-  const targetsClass = location.pathname === "/targets" ? "active" : "item";
-  const messagesClass = location.pathname === "/messages" ? "active" : "item";
-  const templatesClass = location.pathname === "/template" ? "active" : "item";
-  const historyClass = location.pathname === "/history" ? "active" : "item";
+  // const homeClass = location.pathname === "/home" ? "active" : "item";
+  // const projectsClass = location.pathname === "/projects" ? "active" : "item";
+  // const targetsClass = location.pathname === "/targets" ? "active" : "item";
+  // const messagesClass = location.pathname === "/messages" ? "active" : "item";
+  // const templatesClass = location.pathname === "/template" ? "active" : "item";
+  // const historyClass = location.pathname === "/history" ? "active" : "item";
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -62,7 +62,7 @@ export default function NotiSidebar() {
         <Menu className="menu">
           <MenuItem
             routerLink={<Link to="/home" />}
-            className={homeClass}
+            // className={homeClass}
             data-testid="homeButton"
             icon={homeIcon}
           >
@@ -71,7 +71,7 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/projects" />}
-            className={projectsClass}
+            // className={projectsClass}
             data-testid="projectsButton"
             icon={projectIcon}
           >
@@ -80,7 +80,7 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/targets" />}
-            className={targetsClass}
+            // className={targetsClass}
             data-testid="targetsButton"
             icon={targetIcon}
           >
@@ -89,7 +89,7 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/messages" />}
-            className={messagesClass}
+            // className={messagesClass}
             data-testid="messagesButton"
             icon={messageIcon}
           >
@@ -98,7 +98,7 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/templates" />}
-            className={templatesClass}
+            // className={templatesClass}
             data-testid="templatesButton"
             icon={templateIcon}
           >
@@ -107,7 +107,7 @@ export default function NotiSidebar() {
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/history" />}
-            className={historyClass}
+            // className={historyClass}
             data-testid="historyButton"
             icon={historyIcon}
           >
@@ -116,7 +116,7 @@ export default function NotiSidebar() {
           </MenuItem>
         </Menu>
         <Menu className="logout">
-          <MenuItem className="item" icon={logoutIcon} onClick={logoutHandler}>
+          <MenuItem className="item" icon={logoutIcon} data-testid={"logout-button"} onClick={logoutHandler}>
             {" "}
             Log Out{" "}
           </MenuItem>

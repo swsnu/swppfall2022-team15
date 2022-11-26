@@ -37,12 +37,16 @@ export default function ListLayout() {
           <TableBody>
             {projects.map((project) => (
               <TableRow key={project.id}>
-                <TableCell align="left" onClick={() => handleClickRow(project.id)}>
+                <TableCell
+                  align="left"
+                  data-testid="project-item-button"
+                  onClick={() => handleClickRow(project.id)}>
                   {project.name}
                 </TableCell>
                 <TableCell align="left">
                   <Label
                     color={project.project_type === "ORGANIZATION" ? "primary" : "secondary"}
+                    data-testid="project-row-label"
                     onClick={() => handleClickRow(project.id)}
                   >
                     {project.project_type}
@@ -52,6 +56,7 @@ export default function ListLayout() {
                   <Button
                     endIcon={<NotificationAddIcon />}
                     onClick={handleNewNotificationClick}
+                    data-testid="new-notification-button"
                   >
                     New Notification
                   </Button>
