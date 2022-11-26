@@ -2,13 +2,27 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 import { RootState } from "..";
+import { EnumNotificationType } from "../../Enums";
+import { fetchMessagesWithNotificationType } from "../../services/message";
 import { MessageType } from "../../types";
 
 export const fetchMessages = createAsyncThunk(
   "message/fetchMessages",
   async () => {
-    const response = await axios.get<MessageType[]>("/api/message/");
-    return response.data;
+    const result: any = {};
+    await Promise.all(
+      Object.keys(EnumNotificationType).map(async (nt) => {
+        result[nt] = await fetchMessagesWithNotificationType(nt);
+      })
+    );
+    return result;
+  }
+);
+
+export const fetchSlackMessages = createAsyncThunk(
+  "message/fetchSlackMessages",
+  async () => {
+    return await fetchMessagesWithNotificationType(EnumNotificationType.SLACK);
   }
 );
 
@@ -39,11 +53,11 @@ export const createMessage = createAsyncThunk(
 );
 
 const initialState: {
-  messages: MessageType[];
+  messages: { [key: string]: MessageType[] };
   selectedMessage: MessageType | null;
 } = {
   selectedMessage: null,
-  messages: [],
+  messages: {},
 };
 
 export const MessageSlice = createSlice({

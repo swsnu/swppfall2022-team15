@@ -8,7 +8,6 @@ import Upcoming from "./Upcoming/Upcoming";
 import Scrollbar from "../../components/scrollbar/Scrollbar";
 import { authSelector } from "../../store/slices/auth";
 import { fetchProjects } from "../../store/slices/project";
-import { projectListSelector } from "../../store/slices/project";
 import { AppDispatch } from "../../store";
 import ProjectCreateModal from "../../components/project/ProjectCreateModal";
 import List from "./ListView/ProjectListView";
@@ -19,13 +18,8 @@ import FormControl from "@mui/material/FormControl";
 import Typography from "@mui/material/Typography";
 import Switch from "@mui/material/Switch";
 
-//Todo: create mock data for notifications
-//Todo: implement recently sent notifications list
-//Todo: implement upcoming notifications list
-
 export default function Home() {
   const user = useSelector(authSelector);
-  const projectsState = useSelector(projectListSelector);
   const dispatch = useDispatch<AppDispatch>();
 
   // Grid 아니면 List 형태로 Project List를 보여줌
@@ -86,7 +80,6 @@ export default function Home() {
                         </Stack>
                       </FormControl>
                       <Button
-                        variant="contained"
                         endIcon={<CreateNewFolderIcon />}
                         onClick={handleNewProjectClick}
                       >
@@ -96,9 +89,9 @@ export default function Home() {
                   </div>
                   <div className="project">
                     {isGridStyle ? (
-                      <GridLayout projects={projectsState} />
+                      <GridLayout/>
                     ) : (
-                      <List projects={projectsState} />
+                      <List/>
                     )}
                   </div>
                 </div>

@@ -1,30 +1,29 @@
-import GridLayout from "./ProjectGridView";
+import ListLayout from "./ProjectListView";
 
 import { renderWithProviders } from "../../../test-utils/mocks";
 import { ProjectType } from "../../../types";
 import { screen } from "@testing-library/react";
 
 const projects: ProjectType[] = [
-    {
-        id: 1,
-        name: "Project 1",
-        project_type: "ORGANIZATION",
-    },
-    {
-        id: 2,
-        name: "Project 2",
-        project_type: "INDIVIDUAL",
-    },
-        
+  {
+    id: 1,
+    name: "Project 1",
+    project_type: "ORGANIZATION",
+  },
+  {
+    id: 2,
+    name: "Project 2",
+    project_type: "INDIVIDUAL",
+  },
 ];
 
-describe("<GridLayout />", () => {
+describe("<ListLayout />", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it("should render empty projects correctly", () => {
-    renderWithProviders(<GridLayout/>);
+    renderWithProviders(<ListLayout />);
 
     expect(
       screen.getByText("No projects! Start by creating your first project!")
@@ -32,7 +31,7 @@ describe("<GridLayout />", () => {
   });
 
   it("should render projects correctly", () => {
-    renderWithProviders(<GridLayout/>);
+    renderWithProviders(<ListLayout />);
 
     expect(screen.getByText("Project 1")).toBeInTheDocument();
     expect(screen.getByText("Project 2")).toBeInTheDocument();

@@ -4,10 +4,18 @@ import axios from "axios";
 import { RootState } from "..";
 import { NotificationType } from "../../types";
 
-export const fetchNotifcations = createAsyncThunk(
+export const fetchNotifications = createAsyncThunk(
   "notifications/fetchNotifications",
   async (projectId: number) => {
     const response = await axios.get<NotificationType[]>(`/api/project/${projectId}/notification/`);
+    return response.data;
+  }
+);
+
+export const fetchAllNotifications = createAsyncThunk(
+  "notifications/fetchAllNotifications",
+  async () => {
+    const response = await axios.get<NotificationType[]>(`/api/notification/`);
     return response.data;
   }
 );
@@ -34,7 +42,7 @@ export const notificationSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(fetchNotifcations.fulfilled, (state, action) => {
+        builder.addCase(fetchNotifications.fulfilled, (state, action) => {
             state.notifications = action.payload;
         });
     }

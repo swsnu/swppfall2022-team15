@@ -1,15 +1,4 @@
-import {
-  Button, Card,
-  IconButton,
-  MenuItem,
-  Popover,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import { Box, Button, MenuItem, Popover, Tab, Tabs } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,12 +9,14 @@ import { deleteMessage } from "../../services/message";
 import { fetchMessages, messageListSelector } from "../../store/slices/message";
 
 import { AppDispatch } from "../../store";
-import {Container} from "@mui/system";
-import Scrollbar from "../../components/scrollbar/Scrollbar";
+import { Container } from "@mui/system";
+import MessageTable from "../../components/Message/MessageTable";
+import { EnumNotificationType } from "../../Enums";
 
 export default function MessageListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
   const [createModalopen, setCreateModalOpen] = useState(false);
+  const [selectedTab, setSelectedTab] = React.useState(0);
 
   const handleOpenMenu = (event: any) => {
     setOpen(event.currentTarget);
@@ -52,6 +43,42 @@ export default function MessageListTable() {
   }, []);
   const messages = useSelector(messageListSelector);
 
+  function a11yProps(index: number) {
+    return {
+      id: `simple-tab-${index}`,
+      "data-testid": `tab-${index}`,
+      "aria-controls": `simple-tabpanel-${index}`,
+    };
+  }
+
+  function renderTable() {
+    switch (selectedTab) {
+      case 0:
+        return (
+          <Box sx={{ "margin-bottom": "20px" }}>
+            <h1>Slack</h1>
+            <MessageTable
+              columns={["channel", "message"]}
+              keys={["channel", "message"]}
+              rows={
+                EnumNotificationType.SLACK in messages ? messages.SLACK : []
+              }
+              handleOpenMenu={handleOpenMenu}
+            />
+          </Box>
+        );
+      default:
+        return (
+          <MessageTable
+            columns={["channel", "message"]}
+            keys={["channel", "message"]}
+            rows={EnumNotificationType.SMS in messages ? messages.SMS : []}
+            handleOpenMenu={handleOpenMenu}
+          />
+        );
+    }
+  }
+
   return (
     <>
       <MessageCreateModal
@@ -59,46 +86,47 @@ export default function MessageListTable() {
         handleClose={() => setCreateModalOpen(false)}
       ></MessageCreateModal>
       <Container>
-      <Grid container justifyContent="flex-end">
-        <Button data-testid="create-button" onClick={handleClickCreateButton}>New Message</Button>
-      </Grid>
-        <Card>
-          <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Project</TableCell>
-                    <TableCell>Content</TableCell>
-                  </TableRow>
-                </TableHead>
+        <Grid container justifyContent="flex-end">
+          <Button data-testid="create-button" onClick={handleClickCreateButton}>
+            New Message
+          </Button>
+        </Grid>
 
-                <TableBody>
-                  {messages.map((row) => {
-                    const { id, project, content } = row;
-                    return (
-                      <TableRow hover key={id} tabIndex={-1}>
-                        <TableCell align="left">{project}</TableCell>
-                        <TableCell align="left">{content}</TableCell>
-                        <TableCell align="right">
-                          <IconButton
-                            size="large"
-                            color="inherit"
-                            data-testid="open-menu-button"
-                            onClick={handleOpenMenu}
-                            data-id={id}
-                          >
-                            <Iconify icon={"eva:more-vertical-fill"} />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Scrollbar>
-        </Card>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={selectedTab}
+            onChange={(e, newValue) => {
+              setSelectedTab(newValue);
+            }}
+            aria-label="basic tabs example"
+          >
+            <Tab
+              icon={<Iconify icon={"la:slack"} />}
+              label="Slack"
+              iconPosition="start"
+              {...a11yProps(0)}
+            />
+            <Tab
+              icon={<Iconify icon={"ic:outline-email"} />}
+              iconPosition="start"
+              label="Email"
+              {...a11yProps(1)}
+            />
+            <Tab
+              icon={<Iconify icon={"material-symbols:webhook"} />}
+              iconPosition="start"
+              label="Http"
+              {...a11yProps(2)}
+            />
+            <Tab
+              icon={<Iconify icon={"material-symbols:sms-outline"} />}
+              iconPosition="start"
+              label="Sms"
+              {...a11yProps(3)}
+            />
+          </Tabs>
+        </Box>
+        {renderTable()}
       </Container>
       <Popover
         open={Boolean(open)}
@@ -122,7 +150,11 @@ export default function MessageListTable() {
           <Iconify icon={"eva:edit-fill"} sx={{ mr: 2 }} />
           Edit
         </MenuItem>
-        <MenuItem sx={{ color: "error.main" }} data-testid="delete-button" onClick={handleClickDelete}>
+        <MenuItem
+          sx={{ color: "error.main" }}
+          data-testid="delete-button"
+          onClick={handleClickDelete}
+        >
           <Iconify icon={"eva:trash-2-outline"} sx={{ mr: 2 }} />
           Delete
         </MenuItem>

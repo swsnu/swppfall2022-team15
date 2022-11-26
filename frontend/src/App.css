@@ -4,13 +4,13 @@
 
 .sidebar {
   float: left;
-  width: 280px;
+  width: 288px;
 }
 
 .contents {
   display: flex;
-  height: 100%;
-  overflow: hidden;
+  /* height: 100%; */
+  /* overflow: hidden; */
   width: auto;
 }
 
