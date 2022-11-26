@@ -29,16 +29,16 @@ export default function Home() {
 
   const [createModalopen, setCreateModalOpen] = useState(false);
 
-  const handleNewProjectClick = (event: React.MouseEvent) => {
-    setCreateModalOpen(true);
-  };
+  // const handleNewProjectClick = (event: React.MouseEvent) => {
+  //   setCreateModalOpen(true);
+  // };
 
   // Grid 아니면 List 형태로 Project List를 보여주는데 이에 대한 처리
-  const handleStyleChange = (event: React.SyntheticEvent) => {
-    setProjectStyle(
-      (event.target as HTMLInputElement).checked ? "List" : "Grid"
-    );
-  };
+  // const handleStyleChange = (event: React.SyntheticEvent) => {
+  //   setProjectStyle(
+  //     (event.target as HTMLInputElement).checked ? "List" : "Grid"
+  //   );
+  // };
 
   useEffect(() => {
     dispatch(fetchProjects());
@@ -51,7 +51,7 @@ export default function Home() {
       {/* Project 생성 Modal (만약 New Project를 클릭하는 경우) */}
       <ProjectCreateModal
         open={createModalopen}
-        handleClose={() => setCreateModalOpen(false)}
+        // handleClose={() => setCreateModalOpen(false)}
       ></ProjectCreateModal>
       <div className="Home">
         <Scrollbar>
@@ -73,7 +73,7 @@ export default function Home() {
                           <Switch
                             defaultChecked
                             value={projectStyle}
-                            onChange={handleStyleChange}
+                            // onChange={handleStyleChange}
                             data-testid="switch"
                           />
                           <Typography>List</Typography>
@@ -81,18 +81,18 @@ export default function Home() {
                       </FormControl>
                       <Button
                         endIcon={<CreateNewFolderIcon />}
-                        onClick={handleNewProjectClick}
+                        // onClick={handleNewProjectClick}
                       >
                         New Project
                       </Button>
                     </Stack>
                   </div>
                   <div className="project">
-                    {isGridStyle ? (
-                      <GridLayout/>
-                    ) : (
+                    {/*{isGridStyle ? (*/}
+                    {/*  <GridLayout/>*/}
+                    {/*) : (*/}
                       <List/>
-                    )}
+                    {/*)}*/}
                   </div>
                 </div>
               </div>
