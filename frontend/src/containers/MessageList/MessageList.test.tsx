@@ -4,6 +4,7 @@ import { fireEvent, screen } from "@testing-library/react";
 import preloadedState from "../../test-utils/mock_state";
 import axios from "axios";
 import userEvent from "@testing-library/user-event";
+import { act } from "react-dom/test-utils";
 
 describe("MessageList", () => {
   it("should  render correct", () => {
@@ -19,7 +20,9 @@ describe("MessageList", () => {
   it("should handle click create button", () => {
     renderWithProviders(<MessageListTable />);
     const createButton = screen.getByTestId("create-button");
-    fireEvent.click(createButton);
+    act(() => {
+      fireEvent.click(createButton);
+    });
     userEvent.keyboard("{esc}");
   });
 

@@ -1,6 +1,5 @@
 import {createMessage, deleteMessage} from "./message";
 import axios from "axios";
-import {createProject, deleteProject} from "./project";
 
 describe('message', () => {
     it('should create message - success', () => {

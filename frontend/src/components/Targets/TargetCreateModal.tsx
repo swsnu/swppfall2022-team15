@@ -35,7 +35,6 @@ export default function TargetCreateModal(props: IProps) {
   const projectState = useSelector(projectSelect);
 
   const handleClickConfirm = async () => {
-    console.log(targetName, notificationType, endPoint)
     if (targetName && notificationType && endPoint) {
       const data = {
         name: targetName,

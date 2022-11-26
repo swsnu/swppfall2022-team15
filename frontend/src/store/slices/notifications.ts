@@ -2,7 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 import { RootState } from "..";
-import { NotificationType } from "../../types";
+import { EnumNotificationStatus } from "../../Enums";
+import { NotificationHistoryType, NotificationType } from "../../types";
 
 export const fetchNotifications = createAsyncThunk(
   "notifications/fetchNotifications",
@@ -22,8 +23,8 @@ export const fetchAllNotifications = createAsyncThunk(
 
 export const createNotification = createAsyncThunk(
   "notifications/createNotification",
-  async(data: {project: number, type: string, message: string, target: string}) => {
-    const response = await axios.post<NotificationType>("/api/notification/", data);
+  async(notification: {id: number, status: EnumNotificationStatus, message: string, reservedAt: string, type: string, history?: NotificationHistoryType[]}) => {
+    const response = await axios.post<NotificationType>("/api/notification/", notification);
     return response.data;
   }
 )
@@ -42,13 +43,15 @@ export const notificationSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(fetchNotifications.fulfilled, (state, action) => {
-            state.notifications = action.payload;
-        });
+      builder.addCase(fetchNotifications.fulfilled, (state, action) => {
+        state.notifications = action.payload;
+      });
+      builder.addCase(fetchAllNotifications.fulfilled, (state, action) => {
+        state.notifications = action.payload;
+      });
     }
 });
 
 export const notificationListSelector = (state: RootState) => state.notification.notifications;
-export const notificationActions = notificationSlice.actions;
-
+export const notificationSelect = (state: RootState) => state.notification;
 export default notificationSlice.reducer;

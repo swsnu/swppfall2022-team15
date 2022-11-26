@@ -2,9 +2,9 @@ import { AnyAction, configureStore, EnhancedStore } from "@reduxjs/toolkit";
 import axios from "axios";
 import { ThunkMiddleware } from "redux-thunk";
 
-import reducer, { fetchNotifications, } from "./notifications";
-import {NotificationType} from "../../types";
-import preloadedState from "../../test-utils/mock_state";
+import { EnumNotificationStatus } from "../../Enums";
+import { NotificationType } from "../../types";
+import reducer, { fetchNotifications, fetchAllNotifications, createNotification } from "./notifications";
 
 describe("notification reducer", () => {
   let store: EnhancedStore<
@@ -26,7 +26,11 @@ describe("notification reducer", () => {
     ]
   >;
 
-  const fakeNotifications: NotificationType[] = preloadedState.notification.notifications;
+  const fakeNotifications: NotificationType[] = [
+    { id: 1, status: EnumNotificationStatus.SUCCESS, message: "test", reservedAt: "2021-01-01", type: "API", history: [] },
+    { id: 2, status: EnumNotificationStatus.FAILURE, message: "test", reservedAt: "2021-01-01", type: "API", history: [] },
+    { id: 3, status: EnumNotificationStatus.PARTIAL_SUCCESS, message: "test", reservedAt: "2021-01-01", type: "API", history: [] },
+  ];
 
   beforeAll(() => {
     store = configureStore({ reducer: { notification: reducer } });
@@ -39,12 +43,6 @@ describe("notification reducer", () => {
     });
   });
 
-  it("should handle create notification", async () => {
-    axios.post = jest.fn().mockResolvedValue({ data: fakeNotifications[0] });
-    await store.dispatch(
-      fetchNotifications(1)
-    );
-  });
 
   it("should handle fetch notifications", async () => {
     jest.spyOn(axios, "get").mockImplementation((url: string) => {
@@ -56,4 +54,30 @@ describe("notification reducer", () => {
     expect(store.getState().notification.notifications).toEqual(fakeNotifications);
   });
 
+  it("should handle fetch all notifications", async () => {
+    jest.spyOn(axios, "get").mockImplementation((url: string) => {
+      return Promise.resolve({
+        data: fakeNotifications,
+      });
+    });
+    await store.dispatch(fetchAllNotifications());
+  });
+
+  it("should handle create notification", async () => {
+    jest.spyOn(axios, "post").mockResolvedValue({ data: fakeNotifications[0] });
+
+    await store.dispatch(
+      createNotification({
+        id: 1,
+        status: EnumNotificationStatus.SUCCESS,
+        message: "test",
+        reservedAt: "2021-01-01",
+        type: "API",
+        history: [],
+      })
+    );
+    expect(store.getState().notification.notifications[0]).toEqual(
+      fakeNotifications[0]
+    );
+  });
 });

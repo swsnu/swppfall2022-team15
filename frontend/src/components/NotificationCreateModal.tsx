@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { EnumNotificationType } from "../Enums";
+import { EnumNotificationStatus, EnumNotificationType } from "../Enums";
 import { AppDispatch } from "../store";
 import {
   createNotification,
@@ -54,11 +54,13 @@ export default function NotificationCreateModal(props: IProps) {
       setTarget("target");
       setMessage("message");
       const data = {
-        project: projectId,
+        //TODO - should be changed to template
+        status: EnumNotificationStatus.SUCCESS,
+        id: 0,
         type: notificationType,
-        // FIXME (change to id)
-        target: target,
-        message: message,
+        message: "",
+        reservedAt: "2021-12-12",
+        history: [],
       };
       dispatch(createNotification(data));
       props.handleClose();
