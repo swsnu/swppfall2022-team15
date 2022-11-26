@@ -18,7 +18,7 @@ import { fetchProjects } from "../../store/slices/project";
 
 interface IProps {
   open: any;
-  handleClose: any;
+  handleClose?: any;
 }
 
 export default function ProjectCreateModal(props: IProps) {
