@@ -7,7 +7,7 @@ from rest_framework.decorators import action
 from core.permissions import IsOwner
 from nmessages.models import NMessage
 from notifications.models import Reservation
-from notifications.serializers import NotificationConfigSerializer, ReservationSerializer
+from notifications.serializers import NotificationConfigSerializer, ReservationCreateSerializer
 from notifications.services import task_send_api_notification, ApiNotificationDto
 from notifications.models import Notification
 from targetusers.models import TargetUser
@@ -60,7 +60,7 @@ class ReservationViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         data = request.data
-        serializer = ReservationSerializer(data=data, many=True)
+        serializer = ReservationCreateSerializer(data=data, many=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 

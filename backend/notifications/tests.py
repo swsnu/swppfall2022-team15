@@ -65,7 +65,9 @@ class ReservationAPITestCase(APITestCase):
     def test_create(self, mocked_task_bulk_create_notification):
         # Given
         notification_config = baker.make(NotificationConfig, type=EnumNotificationType.HTTP)
-        target_users = baker.make(TargetUser, notification_type=EnumNotificationType.HTTP, _quantity=10)
+        target_users = baker.make(
+            TargetUser, notification_type=EnumNotificationType.HTTP, _quantity=10
+        )
 
         # When
         target_user_ids = [target_user.id for target_user in target_users]

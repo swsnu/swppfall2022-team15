@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import NotificationConfig, Reservation, Notification, EnumNotificationStatus
+from .models import NotificationConfig, Reservation
 from .services import task_bulk_create_notification
 
 
@@ -13,7 +13,7 @@ class NotificationConfigSerializer(serializers.ModelSerializer):
         fields = ('id', 'message', 'project', 'type',)
 
 
-class ReservationSerializer(serializers.Serializer):
+class ReservationCreateSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     notification_config = serializers.IntegerField()
     reserved_at = serializers.DateTimeField()
@@ -38,3 +38,6 @@ class ReservationSerializer(serializers.Serializer):
             task_bulk_create_notification.delay(target_users, reservation.id)
 
         return reservations
+
+    def update(self, instance, validated_data):
+        pass
