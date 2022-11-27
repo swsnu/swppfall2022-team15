@@ -8,7 +8,7 @@ import { FunctionComponent, useContext } from 'react'
 const StartDateSelector: FunctionComponent<WithStyles<typeof styles>> = () => {
   const { recurrence, onFieldChange } = useContext(RecurrenceContext)
 
-  const handleStartDateChange = (date: Date) => {
+  const handleStartDateChange = (date: Date | null ) => {
     onFieldChange('startDate', date)
   }
 

@@ -29,7 +29,7 @@ const EndingConditionSelector: FunctionComponent<WithStyles<typeof styles>> = ({
   ) => {
     onFieldChange('endingOccurrencesNumber', endingOccurrencesNumber)
   }
-  const handleEndDateChange = (date: Date) => {
+  const handleEndDateChange = (date: Date | null) => {
     onFieldChange('endDate', date)
   }
   useEffect(() => {

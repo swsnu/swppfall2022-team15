@@ -15,10 +15,10 @@ const TimeSelector = () => {
   const handleAllDayChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onFieldChange('isAllDay', event.target.checked)
   }
-  const handleStartTimeChange = (startTime?: Date) => {
+  const handleStartTimeChange = (startTime?: Date | null) => {
     onFieldChange('startTime', startTime)
   }
-  const handleEndTimeChange = (endTime?: Date) => {
+  const handleEndTimeChange = (endTime?: Date | null) => {
     onFieldChange('endTime', endTime)
   }
   useEffect(() => {

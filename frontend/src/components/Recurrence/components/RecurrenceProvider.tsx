@@ -6,6 +6,7 @@ export interface RecurrenceProviderProps {
   recurrence: RecurrenceType
   onFieldChange: (key: string, value: any) => void
   onFieldsChange: (object: any) => void
+  children: React.ReactNode
 }
 
 const RecurrenceProvider: FC<RecurrenceProviderProps> = ({
