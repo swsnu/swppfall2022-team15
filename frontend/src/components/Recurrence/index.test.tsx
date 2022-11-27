@@ -12,11 +12,11 @@ const defaultRecurrence: RecurrenceType = {
   numberOfRepetitions: undefined,
   weekDaysRepetition: [],
   endingCondition: EndingConditionType.None,
-  endDate: null,
+  endDate: undefined,
   endingOccurrencesNumber: undefined,
-  isAllDay: null,
-  startTime: null,
-  endTime: null
+  isAllDay: false,
+  startTime: undefined,
+  endTime: undefined
 }
 
 const renderWithContext = (recurrence: RecurrenceType) => {
