@@ -98,11 +98,16 @@ def cron_task_handle_reservation():
 
 
 @app.task
-def task_bulk_create_notification(target_user_ids, reservation_id):
+def task_bulk_create_notification(reserved_at, target_user_ids, notification_config_id):
+    reservation = Reservation.objects.create(
+        notification_config_id=notification_config_id,
+        reserved_at=reserved_at,
+    )
+
     notifications = [
         Notification(
             target_user_id=target_user_id,
-            reservation_id=reservation_id,
+            reservation_id=reservation.id,
             status=EnumNotificationStatus.PENDING,
         ) for target_user_id in target_user_ids
     ]

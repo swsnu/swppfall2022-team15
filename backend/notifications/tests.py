@@ -92,7 +92,6 @@ class ReservationAPITestCase(APITestCase):
 
         # Then
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(Reservation.objects.count(), 10)
         self.assertEqual(mocked_task_bulk_create_notification.call_count, 10)
 
 
@@ -178,12 +177,14 @@ class CronTaskHandleReservationTestCase(TestCase):
 class TaskBulkCreateNotification(TestCase):
     def test_create_notification(self):
         # Given
-        reservation = baker.make(Reservation)
+        notification_config = baker.make(NotificationConfig)
         target_users = baker.make(TargetUser, _quantity=2)
 
         # When
+        reserved_at = timezone.now()
         target_user_ids = [target_user.id for target_user in target_users]
-        task_bulk_create_notification(target_user_ids, reservation.id)
+        task_bulk_create_notification(reserved_at, target_user_ids, notification_config.id)
 
         # Then
+        self.assertTrue(Reservation.objects.exists())
         self.assertEqual(Notification.objects.count(), 2)
