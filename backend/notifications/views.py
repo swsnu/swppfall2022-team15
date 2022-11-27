@@ -62,5 +62,6 @@ class ReservationViewSet(ModelViewSet):
         data = request.data
         serializer = ReservationCreateSerializer(data=data, many=True)
         serializer.is_valid(raise_exception=True)
+        serializer.save()  # FIXME ; abuse of serializer
 
         return Response(status=status.HTTP_201_CREATED)
