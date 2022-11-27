@@ -51,7 +51,7 @@ const DEFAULT_WEEK_DAYS: RecurrenceDay[] = [
 
 const WeekDaysSelector = ({
   classes,
-  weekDaysRepetition = [],
+  weekDaysRepetition,
   onDayClicked
 }: WeekDaysSelectorProps & WithStyles<typeof styles>) => {
   const handleDayClicked = (day: RecurrenceDay) => {
