@@ -30,7 +30,5 @@ class ReservationCreateSerializer(serializers.Serializer):
 
         task_bulk_create_notification.delay(reserved_at, target_users, notification_config_id)
 
-        return None
-
     def update(self, instance, validated_data):
         pass
