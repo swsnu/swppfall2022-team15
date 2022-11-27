@@ -5,6 +5,8 @@ import DateFnsUtils from '@date-io/date-fns'
 import {fireEvent, render} from '@testing-library/react'
 import { EndingConditionType, FrequencyType, RecurrenceType } from './types'
 import '@testing-library/jest-dom/extend-expect'
+import NumberInput from "./components/general/NumberInput";
+import RecurrenceContext, {contextInitValue} from "./components/RecurrenceContext";
 
 const defaultRecurrence: RecurrenceType = {
   startDate: new Date(),
@@ -274,4 +276,11 @@ describe('TimeSelector', () => {
 
     fireEvent.change(keyBoardTimePicker, {target: { value: '12:00' }});
   });
+})
+
+describe('RecurrenceContext', ()=> {
+  it('should handle recurrence change', () => {
+    contextInitValue.onFieldChange('frequency', FrequencyType.Weekly)
+    contextInitValue.onFieldsChange({ frequency: FrequencyType.Weekly })
+  })
 })

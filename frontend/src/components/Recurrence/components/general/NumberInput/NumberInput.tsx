@@ -19,9 +19,9 @@ const NumberInput = ({
   name,
   label = '',
   value = 0,
-  onChange = () => {},
+  onChange ,
   disabled = false,
-  adornmentLabel = '',
+  adornmentLabel,
   min = 1,
   max = 1000,
   ...others

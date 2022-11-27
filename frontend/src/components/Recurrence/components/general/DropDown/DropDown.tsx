@@ -10,8 +10,8 @@ const DropDown = ({
   name,
   label,
   value,
-  onChange = () => {},
-  options = [],
+  onChange,
+  options,
   ...others
 }: DropDownProps) => {
   return (

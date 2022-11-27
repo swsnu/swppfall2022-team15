@@ -12,7 +12,7 @@ const DatePicker = ({
   name,
   label,
   value,
-  onChange = () => {},
+  onChange,
   disabled = false,
   disablePast = true,
   variant = 'inline',

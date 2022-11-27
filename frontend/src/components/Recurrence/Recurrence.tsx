@@ -65,7 +65,7 @@ const Recurrence = ({
       onFieldsChange={handleFieldsChange}
     >
       <div className={classes.root}>
-        {children !== undefined ? children : defaultChildren}
+        {defaultChildren}
       </div>
     </RecurrenceProvider>
   )

@@ -11,8 +11,8 @@ export interface RecurrenceProviderProps {
 
 const RecurrenceProvider: FC<RecurrenceProviderProps> = ({
   recurrence,
-  onFieldChange = () => {},
-  onFieldsChange = () => {},
+  onFieldChange,
+  onFieldsChange,
   children
 }) => {
   return (

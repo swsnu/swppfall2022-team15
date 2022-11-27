@@ -7,7 +7,7 @@ interface RecurrenceContextType {
   onFieldsChange: (object: any) => void
 }
 const today = new Date()
-const contextInitValue: RecurrenceContextType = {
+export const contextInitValue: RecurrenceContextType = {
   recurrence: {
     startDate: today,
     endDate: today,
