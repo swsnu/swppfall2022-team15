@@ -1,13 +1,13 @@
 import * as React from 'react'
-import { FrequencyType, Option } from '../../types'
+import {FunctionComponent, useContext, useEffect} from 'react'
+import {FrequencyType, Option} from '../../types'
 import Grid from '@material-ui/core/Grid'
 import Fade from '@material-ui/core/Fade'
 import DropDown from '../general/DropDown'
 import NumberInput from '../general/NumberInput'
 import WeekDaysSelector from '../WeekDaysSelector'
-import { WithStyles, withStyles } from '@material-ui/core'
+import {WithStyles, withStyles} from '@material-ui/core'
 import styles from './styles'
-import { FunctionComponent, useContext, useEffect } from 'react'
 import RecurrenceContext from '../RecurrenceContext'
 
 const FREQUENCY_OPTIONS: Option[] = [
@@ -15,6 +15,11 @@ const FREQUENCY_OPTIONS: Option[] = [
     key: FrequencyType.None,
     title: 'Does not repeat'
   },
+  {
+    key: FrequencyType.Minutely,
+    title: 'Minutely'
+  },
+
   {
     key: FrequencyType.Hourly,
     title: 'Hourly'
@@ -57,6 +62,8 @@ const FrequencySelector: FunctionComponent<WithStyles<typeof styles>> = ({
 
   const getFrequencyLabel = () => {
     switch (recurrence.frequency) {
+      case FrequencyType.Minutely:
+        return 'minute'
       case FrequencyType.Hourly:
         return 'hour'
       case FrequencyType.Daily:

@@ -6,6 +6,7 @@ export enum EndingConditionType {
 
 export enum FrequencyType {
   None = 'none',
+  Minutely = 'minutely',
   Hourly = 'hourly',
   Daily = 'daily',
   Weekly = 'weekly',
