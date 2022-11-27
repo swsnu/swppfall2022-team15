@@ -1,11 +1,10 @@
-import { Recurrence } from './index'
+import {Recurrence} from './index'
 import React from 'react'
-import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import {MuiPickersUtilsProvider} from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import {fireEvent, render} from '@testing-library/react'
-import { EndingConditionType, FrequencyType, RecurrenceType } from './types'
+import {EndingConditionType, FrequencyType, RecurrenceType} from './types'
 import '@testing-library/jest-dom/extend-expect'
-import NumberInput from "./components/general/NumberInput";
 import RecurrenceContext, {contextInitValue} from "./components/RecurrenceContext";
 
 const defaultRecurrence: RecurrenceType = {
