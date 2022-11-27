@@ -17,6 +17,8 @@ import TargetListTable from "./containers/TargetList/TargetList";
 import MessageListTable from "./containers/MessageList/MessageList";
 import AuthRoute from "./components/AuthRoute/AuthRoute";
 // import MultiStepForm from "./containers/MultiStepForm/MultiStepForm";
+import {Recurrence} from "./components/Recurrence";
+import Demo from "./components/Reservation";
 
 export const SidebarLayout = () => (
   <>
@@ -79,6 +81,8 @@ function App() {
             }
           />
         </Route>
+        <Route path="/demo"
+               element={<Demo/>} />
         <Route path="*" element={<Navigate replace to={"/home"} />} />
       </Routes>
     </BrowserRouter>
