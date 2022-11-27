@@ -59,6 +59,7 @@ const EndingConditionSelector: FunctionComponent<WithStyles<typeof styles>> = ({
           value={recurrence.endingCondition}
           onChange={handleEndingConditionChange}
           className={classes.radioGroup}
+          data-testid='recurrence-ending-condition-selector'
         >
           <Grid
             container

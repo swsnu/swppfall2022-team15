@@ -183,6 +183,40 @@ describe('EndingConditionSelector', () => {
       getByTestId('recurrence-ending-condition-occurrences-number')
     ).toBeEnabled()
   })
+
+  it('should handle ending condition change', () => {
+    const { container, getByTestId, debug } = renderWithContext(defaultRecurrence)
+    expect(container).toBeInTheDocument();
+    const endingConditionSelector = getByTestId('recurrence-ending-condition-selector').querySelector('input')!;
+    debug(endingConditionSelector);
+    fireEvent.change(endingConditionSelector, {target: {value : EndingConditionType.EndDate }}) ;
+    fireEvent.change(endingConditionSelector, {target: {value : EndingConditionType.OccurrencesNumber }}) ;
+
+    const endingConditionEndDate = getByTestId('recurrence-ending-condition-end-date')
+    fireEvent.click(endingConditionEndDate) ;
+  });
+
+  it('should handle ending occurrence number change', () => {
+    const recurrence = {
+      ...defaultRecurrence,
+      endingCondition: EndingConditionType.OccurrencesNumber
+    }
+    const { container, getByTestId, debug } = renderWithContext(recurrence)
+    expect(container).toBeInTheDocument();
+    const endingConditionOccurencesNumber = getByTestId('recurrence-ending-condition-occurrences-number')
+    fireEvent.change(endingConditionOccurencesNumber, {target: {value : 10 }}) ;
+  });
+
+  it('should handle ending occurrence number change', () => {
+    const recurrence = {
+      ...defaultRecurrence,
+      endingCondition: EndingConditionType.OccurrencesNumber
+    }
+    const { container, getByTestId, debug } = renderWithContext(recurrence)
+    expect(container).toBeInTheDocument();
+    const endingConditionOccurencesNumber = getByTestId('recurrence-ending-condition-end-date')
+    fireEvent.change(endingConditionOccurencesNumber, {target: {value : Date() }}) ;
+  });
 })
 
 describe('TimeSelector', () => {
