@@ -81,7 +81,7 @@ export default function MultiStepForm() {
         </Stepper>
         <React.Fragment>
           <br />
-          {activeStep === 0 && <NotificationTypeForm notificationType={notificationType} onChange={setNotificationType} />}
+          {activeStep === 0 && <NotificationTypeForm notificationType={notificationType} setNotificationType={setNotificationType} />}
           {activeStep === 1 ? <MessageForm /> : null}
           {activeStep === 2 ? <TargetForm /> : null}
           {activeStep === 3 ? <NotificationForm /> : null}
