@@ -82,7 +82,7 @@ export default function MultiStepForm() {
         <React.Fragment>
           <br />
           {activeStep === 0 && <NotificationTypeForm notificationType={notificationType} setNotificationType={setNotificationType} />}
-          {activeStep === 1 ? <MessageForm /> : null}
+          {activeStep === 1 ? <MessageForm notificationType={notificationType} /> : null}
           {activeStep === 2 ? <TargetForm /> : null}
           {activeStep === 3 ? <NotificationForm /> : null}
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
