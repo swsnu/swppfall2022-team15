@@ -9,6 +9,7 @@ import { fetchProject } from "../../store/slices/project";
 import NotificationCreateModal from "../NotificationCreateModal";
 import CollapsibleTable from "../table/CollapsibleTable";
 import { Container } from "@mui/system";
+import MultiStepFormDialog from "../../containers/MultiStepFormDialog/MultiStepFormDialog";
 
 
 
@@ -34,10 +35,14 @@ export default function ProjectDetail() {
 
   return (
     <>
-      <NotificationCreateModal
+      {/*<NotificationCreateModal*/}
+      {/*  open={open}*/}
+      {/*  handleClose={() => setOpen(false)}*/}
+      {/*  />*/}
+      <MultiStepFormDialog
         open={open}
-        handleClose={() => setOpen(false)}
-      ></NotificationCreateModal>
+        onClose={()=> setOpen(false)} />
+
       <Container>
         <Grid container justifyContent="flex-end">
           <Button data-testid="createNotificationButton" variant="contained" onClick={handleCreateNotification}>Create Notification</Button>
