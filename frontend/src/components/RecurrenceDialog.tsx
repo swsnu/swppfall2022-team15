@@ -1,9 +1,13 @@
 import {EndingConditionType, FrequencyType, Recurrence, RecurrenceType} from "./Recurrence";
 import {useState} from "react";
-import {MuiPickersUtilsProvider} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
+import {Dialog} from "@mui/material";
 
-const Demo = () => {
+interface IProps {
+    open: boolean;
+    onClose: () => void;
+}
+
+const RecurrenceDialog = (props: IProps) => {
 
     const today = new Date()
     const defaultRecurrence = {
@@ -26,13 +30,13 @@ const Demo = () => {
     }
 
     return (
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <Dialog open={props.open} onClose={props.onClose}>
             <Recurrence
                 recurrence={recurrence}
                 onChange={handleRecurrenceChange}
             />
-        </MuiPickersUtilsProvider>
+        </Dialog>
     )
 }
 
-export default Demo;
+export default RecurrenceDialog;
