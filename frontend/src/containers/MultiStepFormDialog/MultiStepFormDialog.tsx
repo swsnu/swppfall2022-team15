@@ -9,7 +9,11 @@ interface IProps {
 export default function MultiStepFormDialog(props: IProps) {
     return (
         <>
-            <Dialog open={props.open} onClose={props.onClose}>
+            <Dialog
+                open={props.open}
+                onClose={props.onClose}
+                maxWidth="lg" // TODO responsive
+                fullWidth={true}>
                 <MultiStepForm />
             </Dialog>
         </>

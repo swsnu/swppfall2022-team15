@@ -39,6 +39,7 @@ export default function ProjectDetail() {
       {/*  open={open}*/}
       {/*  handleClose={() => setOpen(false)}*/}
       {/*  />*/}
+      {/*responsive, size*/}
       <MultiStepFormDialog
         open={open}
         onClose={()=> setOpen(false)} />
