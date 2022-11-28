@@ -19,7 +19,7 @@ export const enum EnumNotificationStatus {
 export enum EnumNotificationType {
   EMAIL = "EMAIL",
   SMS = "SMS",
-  API = "API",
+  API = "API", // TODO: WEBHOOK 으로 이름 변경해야 함
   SLACK = "SLACK",
 }
 
