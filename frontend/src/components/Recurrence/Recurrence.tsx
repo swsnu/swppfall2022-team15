@@ -1,12 +1,14 @@
 import * as React from 'react'
 import styles from './styles'
-import { Grid, WithStyles, withStyles } from '@material-ui/core'
-import { RecurrenceType } from './types'
+import {Grid, WithStyles, withStyles} from '@material-ui/core'
+import {RecurrenceType} from './types'
 import RecurrenceProvider from './components/RecurrenceProvider'
 import StartDateSelector from './components/StartDateSelector/StartDateSelector'
 import FrequencySelector from './components/FrequencySelector'
 import EndingConditionSelector from './components/EndingConditionSelector'
 import TimeSelector from './components/TimeSelector'
+import DateFnsUtils from "@date-io/date-fns";
+import {MuiPickersUtilsProvider} from "@material-ui/pickers";
 
 export interface RecurrenceProps {
   recurrence: RecurrenceType
@@ -59,17 +61,20 @@ const Recurrence = ({
   )
 
   return (
-    <RecurrenceProvider
-      recurrence={recurrence}
-      onFieldChange={handleFieldChange}
-      onFieldsChange={handleFieldsChange}
-    >
-      <div className={classes.root}>
-        {defaultChildren}
-      </div>
-    </RecurrenceProvider>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <RecurrenceProvider
+        recurrence={recurrence}
+        onFieldChange={handleFieldChange}
+        onFieldsChange={handleFieldsChange}
+        >
+        <div className={classes.root}>
+          {defaultChildren}
+        </div>
+      </RecurrenceProvider>
+    </MuiPickersUtilsProvider>
   )
 }
+
 export default Object.assign(withStyles(styles)(Recurrence), {
   StartDateSelector: StartDateSelector,
   FrequencySelector: FrequencySelector,
