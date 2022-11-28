@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import MessageForm from "./MessageForm";
 import TargetForm from "./TargetForm";
 import NotificationForm from "./NotificationForm";
@@ -9,12 +9,13 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
-import { TextField, Typography } from "@mui/material";
+import NotificationTypeForm from "./NotificaitonTypeForm";
 
 const steps = [
-  "Create Your Message",
-  "Create Your Target",
-  "Create Your Notification",
+  "Notification Type",
+  "Message",
+  "Target",
+  "Notification Configuration",
 ];
 
 export default function MultiStepForm() {
@@ -22,6 +23,7 @@ export default function MultiStepForm() {
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
+  const [notificationType, setNotificationType] = React.useState("");
 
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
@@ -79,9 +81,10 @@ export default function MultiStepForm() {
         </Stepper>
         <React.Fragment>
           <br />
-          {activeStep === 0 ? <MessageForm /> : null}
-          {activeStep === 1 ? <TargetForm /> : null}
-          {activeStep === 2 ? <NotificationForm /> : null}
+          {activeStep === 0 && <NotificationTypeForm notificationType={notificationType} onChange={setNotificationType} />}
+          {activeStep === 1 ? <MessageForm /> : null}
+          {activeStep === 2 ? <TargetForm /> : null}
+          {activeStep === 3 ? <NotificationForm /> : null}
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Button
               color="inherit"
