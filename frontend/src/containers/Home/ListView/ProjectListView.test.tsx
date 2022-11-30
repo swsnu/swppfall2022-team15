@@ -4,6 +4,7 @@ import preloadedState from "../../../test-utils/mock_state";
 import { RootState } from "../../../store";
 import { EnumNotificationStatus } from "../../../Enums";
 import { act } from "react-dom/test-utils";
+import { screen } from "@testing-library/react";
 
 const mockNavigate = jest.fn();
 jest.mock("react-router", () => ({
@@ -87,8 +88,8 @@ describe("ProjectListView", () => {
   });
 
   it("should handle click row", () => {
-    const view = renderWithProviders(<ListLayout />, { preloadedState });
-    const row = view.getByTestId("project-row-label");
+    renderWithProviders(<ListLayout />, { preloadedState });
+    const row = screen.getByTestId("project-row-label");
 
     act(() => {
       row.click();
@@ -97,8 +98,8 @@ describe("ProjectListView", () => {
   });
 
   it("should handle click project item button", () => {
-    const view = renderWithProviders(<ListLayout />, { preloadedState });
-    const row = view.getByTestId("project-item-button");
+    renderWithProviders(<ListLayout />, { preloadedState });
+    const row = screen.getByTestId("project-item-button");
 
     act(() => {
       row.click();
@@ -107,8 +108,8 @@ describe("ProjectListView", () => {
   });
 
   it("should handle click new notification button", () => {
-    const view = renderWithProviders(<ListLayout />, { preloadedState });
-    const row = view.getByTestId("new-notification-button");
+    renderWithProviders(<ListLayout />, { preloadedState });
+    const row = screen.getByTestId("new-notification-button");
 
     act(() => {
       row.click();

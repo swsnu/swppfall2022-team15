@@ -26,12 +26,11 @@ describe("ProjectDetail", () => {
     );
     expect(createNotificationButton).toBeInTheDocument();
 
-    act(() => {
-      fireEvent.click(createNotificationButton);
-    });
+    fireEvent.click(createNotificationButton);
+
   });
 
-  it("should handle modal ", () => {
+  it("should handle modal", () => {
     render(
       <Provider store={store}>
         <ProjectDetail />
@@ -43,10 +42,8 @@ describe("ProjectDetail", () => {
     );
     expect(createNotificationButton).toBeInTheDocument();
 
-    act(() => {
-      fireEvent.click(createNotificationButton);
+    fireEvent.click(createNotificationButton);
 
-      userEvent.keyboard("{esc}");
-    });
+    userEvent.keyboard("{esc}");
   });
 });
