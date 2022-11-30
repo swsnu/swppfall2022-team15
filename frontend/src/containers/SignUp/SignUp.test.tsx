@@ -1,9 +1,8 @@
 import { renderWithProviders } from "../../test-utils/mocks";
 import SignUp from "./SignUp";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import axios from "axios";
 import { act } from "react-dom/test-utils";
-import React from "react";
 
 const mockNavigate = jest.fn();
 jest.mock("react-router-dom", () => {

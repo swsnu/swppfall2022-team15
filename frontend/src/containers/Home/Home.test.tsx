@@ -3,10 +3,8 @@ import { renderWithProviders } from "../../test-utils/mocks";
 import preloadedState from "../../test-utils/mock_state";
 
 import { BrowserRouter } from "react-router-dom";
-import { fireEvent, screen, act, renderHook } from "@testing-library/react";
+import { screen, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-
-import { Switch } from "@mui/material";
 
 jest.mock("react-apexcharts", () => ({
   __esModule: true,

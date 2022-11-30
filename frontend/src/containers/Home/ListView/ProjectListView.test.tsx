@@ -83,7 +83,7 @@ describe("ProjectListView", () => {
         },
       },
     };
-    const view = renderWithProviders(<ListLayout />, { preloadedState });
+    renderWithProviders(<ListLayout />, { preloadedState });
   });
 
   it("should handle click row", () => {
