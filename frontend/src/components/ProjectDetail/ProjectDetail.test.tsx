@@ -3,7 +3,6 @@ import { Provider } from "react-redux";
 import ProjectDetail from "./ProjectDetail";
 import { store } from "../../store";
 import userEvent from "@testing-library/user-event";
-import { act } from "react-dom/test-utils";
 
 describe("ProjectDetail", () => {
   it("should render correctly", () => {
