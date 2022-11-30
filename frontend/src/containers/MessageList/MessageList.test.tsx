@@ -20,9 +20,7 @@ describe("MessageList", () => {
   it("should handle click create button", () => {
     renderWithProviders(<MessageListTable />);
     const createButton = screen.getByTestId("create-button");
-    act(() => {
-      fireEvent.click(createButton);
-    });
+    fireEvent.click(createButton);
     userEvent.keyboard("{esc}");
   });
 
@@ -47,4 +45,5 @@ describe("MessageList", () => {
     const deleteButton = screen.getByTestId("delete-button");
     fireEvent.click(deleteButton);
   });
+  
 });
