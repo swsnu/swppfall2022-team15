@@ -33,12 +33,19 @@ class NotificationConfig(TimeStampedModel):
 
 
 class Notification(TimeStampedModel):
-    notification_config = \
-        models.ForeignKey('notifications.NotificationConfig', on_delete=models.CASCADE)
+    reservation = models.ForeignKey(
+        'Reservation',
+        on_delete=models.CASCADE,
+        null=True  # should not be nullable
+    )
     target_user = models.ForeignKey('targetusers.TargetUser', on_delete=models.CASCADE)
-    status = models.CharField(max_length=20, choices=EnumNotificationStatus.choices)
-    request = models.JSONField()
-    response = models.JSONField()
+    status = models.CharField(
+        max_length=20,
+        choices=EnumNotificationStatus.choices,
+        default=EnumNotificationStatus.PENDING
+    )
+    request = models.JSONField(null=True)
+    response = models.JSONField(null=True)
 
 
 class Reservation(TimeStampedModel):

@@ -31,7 +31,7 @@ export default function MessageCreateModal(props: IProps) {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(fetchProjects());
-  }, []);
+  }, [dispatch]);
 
   const clearForm = () => {
     setContent({});

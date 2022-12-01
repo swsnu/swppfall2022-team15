@@ -24,7 +24,7 @@ export default function ProjectDetail() {
   useEffect(() => {
     dispatch(fetchProject(projectId));
     dispatch(fetchNotifications(projectId));
-  }, []);
+  }, [dispatch, projectId]);
   const notifications = useSelector(notificationListSelector);
 
   // event handlers

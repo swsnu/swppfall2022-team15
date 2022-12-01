@@ -46,7 +46,7 @@ class ApiNotificationDto(TypedDict):
 @app.task
 def task_spawn_notification_by_chunk(reservation_id: int):
     reservation = Reservation.objects.select_related('notification_config').get(id=reservation_id)
-    notification_ids = reservation.notification_config.notification_set.values_list('id', flat=True)
+    notification_ids = reservation.notification_set.values_list('id', flat=True)
 
     def split_notification_ids_by_chunk_size(ids: list[int], chunk_size) -> list[list[int]]:
         return [
@@ -69,11 +69,11 @@ def task_handle_chunk_notification(notification_ids: list[int]):
     """Send a notification to the notification service."""
     notifications = Notification.objects\
         .filter(id__in=notification_ids, status=EnumNotificationStatus.PENDING)\
-        .select_related('target_user')
+        .select_related('target_user', 'reservation')
 
     for notification in notifications:
         # TODO 하나의 클래스로 추상화 해서 바로 던지는 게 좋을 듯
-        if notification.notification_config.type == EnumNotificationType.HTTP:
+        if notification.reservation.notification_config.type == EnumNotificationType.HTTP:
             data = ApiNotificationDto(
                 endpoint=notification.target_user.endpoint,
                 headers=notification.target_user.data,
@@ -95,3 +95,20 @@ def cron_task_handle_reservation():
 
     for reservation in reservations:
         task_spawn_notification_by_chunk.delay(reservation.id)
+
+
+@app.task
+def task_bulk_create_notification(reserved_at, target_user_ids, notification_config_id):
+    reservation = Reservation.objects.create(
+        notification_config_id=notification_config_id,
+        reserved_at=reserved_at,
+    )
+
+    notifications = [
+        Notification(
+            target_user_id=target_user_id,
+            reservation_id=reservation.id,
+            status=EnumNotificationStatus.PENDING,
+        ) for target_user_id in target_user_ids
+    ]
+    Notification.objects.bulk_create(notifications)

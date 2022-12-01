@@ -1,6 +1,6 @@
 import { Box, Button, MenuItem, Popover, Tab, Tabs } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Iconify from "../../components/iconify/Iconify";
 
@@ -16,7 +16,7 @@ import { EnumNotificationType } from "../../Enums";
 export default function MessageListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
   const [createModalopen, setCreateModalOpen] = useState(false);
-  const [selectedTab, setSelectedTab] = React.useState(0);
+  const [selectedTab, setSelectedTab] = useState(0);
 
   const handleOpenMenu = (event: any) => {
     setOpen(event.currentTarget);
@@ -40,7 +40,7 @@ export default function MessageListTable() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(fetchMessages());
-  }, []);
+  }, [dispatch]);
   const messages = useSelector(messageListSelector);
 
   function a11yProps(index: number) {
