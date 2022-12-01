@@ -23,22 +23,13 @@ export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
 
   // Grid 아니면 List 형태로 Project List를 보여줌
-  const [projectStyle, setProjectStyle] = useState("");
-  // ProjectStyle이 Grid인 경우
-  const isGridStyle = projectStyle === "Grid";
+  const [isGridStyle, setIsGridStyle] = useState(true);
 
   const [createModalopen, setCreateModalOpen] = useState(false);
 
-  // const handleNewProjectClick = (event: React.MouseEvent) => {
-  //   setCreateModalOpen(true);
-  // };
-
-  // Grid 아니면 List 형태로 Project List를 보여주는데 이에 대한 처리
-  // const handleStyleChange = (event: React.SyntheticEvent) => {
-  //   setProjectStyle(
-  //     (event.target as HTMLInputElement).checked ? "List" : "Grid"
-  //   );
-  // };
+  const handleNewProjectClick = (event: React.MouseEvent) => {
+    setCreateModalOpen(true);
+  };
 
   useEffect(() => {
     dispatch(fetchProjects());
@@ -51,7 +42,7 @@ export default function Home() {
       {/* Project 생성 Modal (만약 New Project를 클릭하는 경우) */}
       <ProjectCreateModal
         open={createModalopen}
-        // handleClose={() => setCreateModalOpen(false)}
+        handleClose={() => setCreateModalOpen(false)}
       ></ProjectCreateModal>
       <div className="Home">
         <Scrollbar>
@@ -72,8 +63,7 @@ export default function Home() {
                           <Typography>Grid</Typography>
                           <Switch
                             defaultChecked
-                            value={projectStyle}
-                            // onChange={handleStyleChange}
+                            onChange={() => setIsGridStyle(!isGridStyle)}
                             data-testid="switch"
                           />
                           <Typography>List</Typography>
@@ -81,18 +71,19 @@ export default function Home() {
                       </FormControl>
                       <Button
                         endIcon={<CreateNewFolderIcon />}
-                        // onClick={handleNewProjectClick}
+                        data-testid="new-project-button"
+                        onClick={handleNewProjectClick}
                       >
                         New Project
                       </Button>
                     </Stack>
                   </div>
                   <div className="project">
-                    {/*{isGridStyle ? (*/}
-                    {/*  <GridLayout/>*/}
-                    {/*) : (*/}
-                      <List/>
-                    {/*)}*/}
+                    {isGridStyle ? (
+                      <GridLayout data-testid="grid" />
+                    ) : (
+                      <List data-testid="list" />
+                    )}
                   </div>
                 </div>
               </div>

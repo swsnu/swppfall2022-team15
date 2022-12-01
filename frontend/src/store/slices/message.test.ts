@@ -11,6 +11,7 @@ import reducer, {
   fetchMessages,
   createMessage,
   fetchMessagesByProjectId,
+  fetchSlackMessages,
 } from "./message";
 
 describe("message reducer", () => {
@@ -91,6 +92,17 @@ describe("message reducer", () => {
       });
     });
     await store.dispatch(fetchMessagesByProjectId(1));
+    expect(store.getState().message.messages).toEqual([fakeMessages[0]]);
+  });
+
+  it("should handle fetchSlackMessages", async () => {
+    jest.spyOn(axios, "get").mockImplementation((url: string) => {
+      return Promise.resolve({
+        data: [fakeMessages[0]],
+      });
+    }
+    );
+    await store.dispatch(fetchSlackMessages());
     expect(store.getState().message.messages).toEqual([fakeMessages[0]]);
   });
 });
