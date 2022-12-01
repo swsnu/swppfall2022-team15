@@ -138,3 +138,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ]
 }
+
+
+SLACK_HOST = 'https://slack.com'
