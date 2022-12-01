@@ -3,14 +3,12 @@ import Button from '@mui/material/Button';
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { AppDispatch } from "../../store";
-import { fetchNotifications, notificationListSelector } from "../../store/slices/notifications";
-import { fetchProject } from "../../store/slices/project";
-import NotificationCreateModal from "../NotificationCreateModal";
-import CollapsibleTable from "../table/CollapsibleTable";
+import { AppDispatch } from "../../../store";
+import { fetchNotifications, notificationListSelector } from "../../../store/slices/notifications";
+import { fetchProject } from "../../../store/slices/project";
+import NotificationCreateModal from "../../Notification/NotificationCreateModal";
+import CollapsibleTable from "../../Table/CollapsibleTable";
 import { Container } from "@mui/system";
-
-
 
 export default function ProjectDetail() {
   const [open, setOpen] = useState(false);

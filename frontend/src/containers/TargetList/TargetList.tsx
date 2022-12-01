@@ -13,12 +13,12 @@ import {
 import Grid from "@mui/material/Unstable_Grid2";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Iconify from "../../components/iconify/Iconify";
+import Iconify from "../../components/Iconify/Iconify";
 import TargetCreateModal from "../../components/Targets/TargetCreateModal";
 import { deleteTarget } from "../../services/target";
 import { AppDispatch } from "../../store";
 import { fetchTargets, targetListSelector } from "../../store/slices/target";
-import Scrollbar from "../../components/scrollbar/Scrollbar";
+import Scrollbar from "../../components/Scrollbar/Scrollbar";
 import {Container} from "@mui/system";
 
 export default function TargetListTable() {

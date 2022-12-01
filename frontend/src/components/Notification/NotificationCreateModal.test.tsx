@@ -1,11 +1,11 @@
 import { fireEvent, render } from "@testing-library/react";
 import NotificationCreateModal from "./NotificationCreateModal";
 import { Provider } from "react-redux";
-import { store } from "../store";
+import { store } from "../../store";
 import { screen } from "@testing-library/react";
-import { renderWithProviders } from "../test-utils/mocks";
-import { EnumNotificationType } from "../Enums";
-import preloadedState from "../test-utils/mock_state";
+import { renderWithProviders } from "../../test-utils/mocks";
+import { EnumNotificationType } from "../../Enums";
+import preloadedState from "../../test-utils/mock_state";
 import { act } from "react-dom/test-utils";
 
 describe("NotificationCreateModal", () => {
