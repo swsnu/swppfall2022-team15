@@ -1,8 +1,4 @@
-import Scrollbar from "../../../components/scrollbar/Scrollbar";
 import GridLayout from "../GridView/ProjectGridView";
-import NotiPieChart from "../PieChart/PieChart";
-import RecentThree from "../RecentThree/RecentThree";
-import Upcoming from "../Upcoming/Upcoming";
 import List from "../ListView/ProjectListView";
 import ProjectCreateModal from "../../../components/project/ProjectCreateModal";
 

@@ -1,4 +1,4 @@
-import { alpha, createTheme } from "@material-ui/core/styles";
+import { alpha } from "@material-ui/core/styles";
 import { Box, Card, Icon, Typography, useTheme } from "@mui/material";
 
 import Iconify from "../../components/iconify/Iconify";
@@ -17,7 +17,6 @@ interface IProps {
 }
 
 export default function Widget(props: IProps) {
-  const theme = useTheme();
   function shortenNumber(value: number) {
     if (props.value > 1000000) {
       return (props.value / 1000000).toFixed(1) + "M";

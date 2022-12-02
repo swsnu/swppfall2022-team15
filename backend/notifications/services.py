@@ -17,6 +17,8 @@ from notifications.models import (
     Reservation,
     EnumReservationStatus,
 )
+from notifications.slack.serializers import SlackNotificationSerializer
+from notifications.slack.services import task_send_slack_notification
 
 logger = getLogger(__name__)
 
@@ -67,8 +69,8 @@ def task_spawn_notification_by_chunk(reservation_id: int):
 @app.task
 def task_handle_chunk_notification(notification_ids: list[int]):
     """Send a notification to the notification service."""
-    notifications = Notification.objects\
-        .filter(id__in=notification_ids, status=EnumNotificationStatus.PENDING)\
+    notifications = Notification.objects \
+        .filter(id__in=notification_ids, status=EnumNotificationStatus.PENDING) \
         .select_related('target_user', 'reservation')
 
     for notification in notifications:
@@ -80,17 +82,19 @@ def task_handle_chunk_notification(notification_ids: list[int]):
                 data=notification.request,
             )
             task_send_api_notification.delay(data)
+        elif notification.reservation.notification_config.type == EnumNotificationType.SLACK:
+            task_send_slack_notification.delay(
+                SlackNotificationSerializer(notification).data
+            )
         # elif notification.notificaiton_group.type == EnumNotificationType.SMS:
-        #     pass
-        # elif notification.notification_group.type == EnumNotificationType.SLACK:
         #     pass
 
 
 @app.task
 def cron_task_handle_reservation():
     # TODO (Jaeyoung) 분산락
-    reservations = Reservation.objects\
-        .filter(status=EnumReservationStatus.PENDING)\
+    reservations = Reservation.objects \
+        .filter(status=EnumReservationStatus.PENDING) \
         .filter(reserved_at__lte=timezone.now() + timedelta(minutes=1))
 
     for reservation in reservations:
