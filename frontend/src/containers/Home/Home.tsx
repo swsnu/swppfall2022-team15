@@ -1,14 +1,14 @@
 import "./Home.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Container, Tabs, Tab } from "@mui/material";
+
 import { authSelector } from "../../store/slices/auth";
 import { fetchProjects } from "../../store/slices/project";
 import { AppDispatch } from "../../store";
-
-import { Container, Tabs, Tab } from "@mui/material";
-import Iconify from "../../components/iconify/Iconify";
 import Summary from "./Summary/Summary";
 import Analytics from "./Analytics/Analytics";
+import Iconify from "../../components/Iconify/Iconify";
 
 export default function Home() {
   const [selectedTab, setSelectedTab] = useState(0);

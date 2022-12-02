@@ -8,7 +8,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./store";
-import GlobalStyles from "./components/GlobalStyles";
+import GlobalStyles from "./components/Styles/GlobalStyles";
 import { getToken, hasToken } from "./store/slices/auth";
 
 const root = ReactDOM.createRoot(

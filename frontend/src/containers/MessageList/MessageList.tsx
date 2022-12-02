@@ -2,7 +2,7 @@ import { Box, Button, MenuItem, Popover, Tab, Tabs } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Iconify from "../../components/iconify/Iconify";
+import Iconify from "../../components/Iconify/Iconify";
 
 import MessageCreateModal from "../../components/Message/MessageCreateModal";
 import { deleteMessage } from "../../services/message";

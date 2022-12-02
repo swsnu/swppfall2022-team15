@@ -8,8 +8,8 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import Iconify from "../iconify/Iconify";
-import Scrollbar from "../scrollbar/Scrollbar";
+import Iconify from "../Iconify/Iconify";
+import Scrollbar from "../Scrollbar/Scrollbar";
 
 export default function MessageTable(props: {
   columns: string[];

@@ -14,14 +14,14 @@ import {
 import Grid from "@mui/material/Unstable_Grid2";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Iconify from "../../components/iconify/Iconify";
-import Label from "../../components/label/Label";
-import ProjectCreateModal from "../../components/project/ProjectCreateModal";
+import Iconify from "../../components/Iconify/Iconify";
+import Label from "../../components/Label/Label";
+import ProjectCreateModal from "../../components/Project/ProjectCreateModal";
 import { deleteProject } from "../../services/project";
 import { AppDispatch } from "../../store";
 import { fetchProjects, projectListSelector } from "../../store/slices/project";
 import { useNavigate } from "react-router-dom";
-import Scrollbar from "../../components/scrollbar/Scrollbar";
+import Scrollbar from "../../components/Scrollbar/Scrollbar";
 import { Container } from "@mui/system";
 
 export default function ProjectListTable() {

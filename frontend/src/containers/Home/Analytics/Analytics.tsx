@@ -2,7 +2,7 @@ import { Tabs, Tab } from "@mui/material";
 import { useState } from "react";
 
 
-import Iconify from "../../../components/iconify/Iconify";
+import Iconify from "../../../components/Iconify/Iconify";
 
 
 export default function Analytics() {

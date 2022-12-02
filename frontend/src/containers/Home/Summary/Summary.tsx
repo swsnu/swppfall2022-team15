@@ -1,6 +1,6 @@
 import GridLayout from "../GridView/ProjectGridView";
 import List from "../ListView/ProjectListView";
-import ProjectCreateModal from "../../../components/project/ProjectCreateModal";
+import ProjectCreateModal from "../../../components/Project/ProjectCreateModal";
 
 import { Grid } from "@mui/material";
 import { Stack, FormControl, Typography, Switch, Button } from "@mui/material";
