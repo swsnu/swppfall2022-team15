@@ -11,15 +11,15 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { EnumNotificationStatus, EnumNotificationType } from "../Enums";
-import { AppDispatch } from "../store";
+import { EnumNotificationStatus, EnumNotificationType } from "../../Enums";
+import { AppDispatch } from "../../store";
 import {
   createNotification,
   fetchNotifications,
-} from "../store/slices/notifications";
-import { projectSelect } from "../store/slices/project";
-import { fetchTargets, targetSelect } from "../store/slices/target";
-import { fetchMessages } from "../store/slices/message";
+} from "../../store/slices/notifications";
+import { projectSelect } from "../../store/slices/project";
+import { fetchTargets, targetSelect } from "../../store/slices/target";
+import { fetchMessages } from "../../store/slices/message";
 
 interface IProps {
   open: any;
