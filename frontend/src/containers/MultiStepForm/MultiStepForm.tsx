@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import NotificationTypeForm from "./NotificaitonTypeForm";
 import {MessageType, TargetType} from "../../types";
 import {RecurrenceType} from "../../components/Recurrence";
+import {useState} from "react";
 
 const steps = [
   "Notification Type",
@@ -23,10 +24,17 @@ const steps = [
 export default function MultiStepForm() {
   const navigate = useNavigate();
 
+  // State
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
+
+  // Notification
   const [notificationType, setNotificationType] = React.useState("");
-  const [message, setMessage] = React.useState<MessageType>();
+
+  // Message
+  const [content, setContent] = useState<any>({});
+  const [fieldErrors, setFieldErrors] = useState<any>({});
+
   const [target, setTarget] = React.useState<TargetType>();
   const [recurrence, setRecurrence] = React.useState<RecurrenceType>();
 
@@ -87,7 +95,10 @@ export default function MultiStepForm() {
         <React.Fragment>
           <br />
           {activeStep === 0 && <NotificationTypeForm notificationType={notificationType} setNotificationType={setNotificationType} />}
-          {activeStep === 1 ? <MessageForm notificationType={notificationType} /> : null}
+          {activeStep === 1 ?
+              <MessageForm notificationType={notificationType} setContent={setContent} content={content} fieldErrors={fieldErrors} setFieldErrors={setFieldErrors} />
+              : null
+          }
           {activeStep === 2 ? <TargetForm notificationType={notificationType} /> : null}
           {activeStep === 3 ? <ReservationForm message={message!} target={target!} notificationType={notificationType} handleRecurrenceChange={setRecurrence}  /> : null}
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
