@@ -11,15 +11,15 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { EnumNotificationType } from "../Enums";
-import { AppDispatch } from "../store";
+import { EnumNotificationStatus, EnumNotificationType } from "../../Enums";
+import { AppDispatch } from "../../store";
 import {
   createNotification,
   fetchNotifications,
-} from "../store/slices/notifications";
-import { projectSelect } from "../store/slices/project";
-import { fetchTargets, targetSelect } from "../store/slices/target";
-import { fetchMessages } from "../store/slices/message";
+} from "../../store/slices/notifications";
+import { projectSelect } from "../../store/slices/project";
+import { fetchTargets, targetSelect } from "../../store/slices/target";
+import { fetchMessages } from "../../store/slices/message";
 
 interface IProps {
   open: any;
@@ -54,11 +54,13 @@ export default function NotificationCreateModal(props: IProps) {
       setTarget("target");
       setMessage("message");
       const data = {
-        project: projectId,
+        //TODO - should be changed to template
+        status: EnumNotificationStatus.SUCCESS,
+        id: 0,
         type: notificationType,
-        // FIXME (change to id)
-        target: target,
-        message: message,
+        message: "",
+        reservedAt: "2021-12-12",
+        history: [],
       };
       dispatch(createNotification(data));
       props.handleClose();

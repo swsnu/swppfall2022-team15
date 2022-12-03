@@ -10,7 +10,6 @@ function GridLayout() {
   const projects = useSelector(projectListSelector);
 
   function icon(project: ProjectType) {
-    console.log(project)
     switch (project.project_type) {
       case "ORGANIZATION":
         return organizationFolder;

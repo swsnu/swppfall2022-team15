@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import NotificationAddIcon from "@mui/icons-material/NotificationAdd";
 
-import Label from "../../../components/label/Label";
+import Label from "../../../components/Label/Label";
 import {
   projectListSelector,
 } from "../../../store/slices/project";

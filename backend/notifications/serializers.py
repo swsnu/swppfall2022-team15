@@ -1,11 +1,10 @@
 from rest_framework import serializers
 
-from .models import NotificationConfig, Reservation
-from .services import task_bulk_create_notification
+from notifications.models import NotificationConfig, Reservation
+from notifications.services import task_bulk_create_notification
 
 
 class NotificationConfigSerializer(serializers.ModelSerializer):
-
     message = serializers.IntegerField(source='nmessage_id')
 
     class Meta:

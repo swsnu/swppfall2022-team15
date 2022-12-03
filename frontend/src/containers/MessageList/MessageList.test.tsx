@@ -44,4 +44,5 @@ describe("MessageList", () => {
     const deleteButton = screen.getByTestId("delete-button");
     fireEvent.click(deleteButton);
   });
+  
 });

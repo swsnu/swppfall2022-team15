@@ -76,11 +76,8 @@ export default function SignUp() {
           },
         }
       ).then(response => {
-        console.log(response);
-        console.log(response.data);
-
         if(response.status === 201) {
-          window.alert("Account created successfully");
+          alert("Account created successfully");
           navigate(`/login`);
         }
       });
@@ -88,11 +85,12 @@ export default function SignUp() {
     } catch (error: any) {
       if (!error.response) {
         setError("Error connecting to server");
-      } else if (error.response.status === 400) {
+      } else /*if (error.response.status === 400)*/ {
         setError("Email already exists");
-      } else {
-        setError("Error signing up");
-      }
+      } 
+      // else {
+      //   setError("Error signing up");
+      // }
     }
   };
 
