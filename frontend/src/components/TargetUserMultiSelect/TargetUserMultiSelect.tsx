@@ -17,7 +17,7 @@ interface IProps {
 export default function TargetUserMultiSelect(props: IProps) {
   const [selected, setSelected] = useState([]);
   const [options, setOptions]: any = useState([]);
-
+  console.log(">>", props.notification_type);
   const initTargetUsers = async () => {
     const resp = await fetchTargets(props.notification_type);
     setOptions(
@@ -28,7 +28,7 @@ export default function TargetUserMultiSelect(props: IProps) {
   };
   useEffect(() => {
     initTargetUsers();
-  }, []);
+  }, [props.notification_type]);
 
   return (
     <>
