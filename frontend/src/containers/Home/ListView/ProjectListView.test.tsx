@@ -89,7 +89,7 @@ describe("ProjectListView", () => {
 
   it("should handle click row", () => {
     renderWithProviders(<ListLayout />, { preloadedState });
-    const row = screen.getByTestId("project-row-label");
+    const row = screen.getByTestId("project-row-Label");
 
     act(() => {
       row.click();

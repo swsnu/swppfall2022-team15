@@ -1,4 +1,5 @@
 import { EnumNotificationStatus } from "./Enums";
+import {RecurrenceType} from "./components/Recurrence";
 
 export type ProjectType = {
   id: number;
@@ -14,6 +15,11 @@ export type NotificationType = {
   type: string;
   history?: NotificationHistoryType[];
 };
+
+export type ReservationType = {
+  id: number;
+  reservation: string
+}
 
 export type NotificationHistoryType = {
   id: number;
@@ -37,12 +43,9 @@ export interface MessageType {
   content: any;
 }
 
-export interface UserType {
-  id: number;
-  username: string;
-  email: string;
-  password: string;
-  is_active: boolean;
+export interface RecurrentReservationType {
+  recurrence: RecurrenceType
+  target: TargetType[]
 }
 
 export interface AuthUser {

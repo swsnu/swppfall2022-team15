@@ -65,7 +65,7 @@ export default function TargetCreateModal(props: IProps) {
             autoFocus
             margin="dense"
             id="target_name"
-            // label="target name"
+            // Label="target name"
             type="text"
             fullWidth
             variant="standard"
@@ -109,7 +109,7 @@ export default function TargetCreateModal(props: IProps) {
             autoFocus
             margin="dense"
             id="end_point"
-            // label="end point"
+            // Label="end point"
             type="text"
             fullWidth
             variant="standard"
@@ -128,7 +128,7 @@ export default function TargetCreateModal(props: IProps) {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={project}
-            // label="project type"
+            // Label="project type"
             onChange={(event: SelectChangeEvent) => {
               setProject(event.target.value);
             }}

@@ -150,7 +150,7 @@ export default function MessageCreateModal(props: IProps) {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={notificationType}
-            // label="project type"
+            // Label="project type"
             inputProps={{
               "data-testid": "type-input",
             }}

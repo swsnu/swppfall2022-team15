@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {createMessage, fetchMessages} from "../../store/slices/message";
 import {AppDispatch} from "../../store";
-import {fetchProjects, projectSelect} from "../../store/slices/project";
+import {projectSelect} from "../../store/slices/project";
 import {EnumNotificationType} from "../../Enums";
 
 
@@ -17,7 +17,7 @@ export default function MessageForm(props: IProps) {
   const [isCreate, setIsCreate] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(fetchProjects());
+    dispatch(fetchMessages());
   }, []);
 
   const projectState = useSelector(projectSelect);

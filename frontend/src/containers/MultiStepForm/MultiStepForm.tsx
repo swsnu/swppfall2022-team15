@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import MessageForm from "./MessageForm";
 import TargetForm from "./TargetForm";
-import NotificationForm from "./NotificationForm";
+import ReservationForm from "./ReservationForm";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -10,12 +10,14 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import NotificationTypeForm from "./NotificaitonTypeForm";
+import {MessageType, TargetType} from "../../types";
+import {RecurrenceType} from "../../components/Recurrence";
 
 const steps = [
   "Notification Type",
   "Message",
   "Target",
-  "Notification Configuration",
+  "Reservaton",
 ];
 
 export default function MultiStepForm() {
@@ -24,6 +26,9 @@ export default function MultiStepForm() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const [notificationType, setNotificationType] = React.useState("");
+  const [message, setMessage] = React.useState<MessageType>();
+  const [target, setTarget] = React.useState<TargetType>();
+  const [recurrence, setRecurrence] = React.useState<RecurrenceType>();
 
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
@@ -84,7 +89,7 @@ export default function MultiStepForm() {
           {activeStep === 0 && <NotificationTypeForm notificationType={notificationType} setNotificationType={setNotificationType} />}
           {activeStep === 1 ? <MessageForm notificationType={notificationType} /> : null}
           {activeStep === 2 ? <TargetForm notificationType={notificationType} /> : null}
-          {activeStep === 3 ? <NotificationForm /> : null}
+          {activeStep === 3 ? <ReservationForm message={message!} target={target!} notificationType={notificationType} handleRecurrenceChange={setRecurrence}  /> : null}
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Button
               color="inherit"
