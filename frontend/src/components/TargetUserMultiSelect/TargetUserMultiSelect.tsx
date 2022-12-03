@@ -7,7 +7,6 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
-import { EnumNotificationType } from "../../Enums";
 import { fetchTargets } from "../../services/target";
 import Iconify from "../Iconify/Iconify";
 

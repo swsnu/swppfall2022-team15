@@ -13,7 +13,7 @@ describe("TargetUserMultiSelect", () => {
         ],
       })
     );
-    const { container } = render(
+    render(
       <TargetUserMultiSelect notification_type={EnumNotificationType.SLACK} />
     );
   });
