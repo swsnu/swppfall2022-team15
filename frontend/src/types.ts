@@ -43,6 +43,10 @@ export interface MessageType {
   content: any;
 }
 
+export interface MessageListType {
+  [key: string]: MessageType[]
+}
+
 export interface RecurrentReservationType {
   recurrence: RecurrenceType
   target: TargetType[]
