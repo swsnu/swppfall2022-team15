@@ -28,7 +28,7 @@ export const reducer = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(postRecurrentReservation.fulfilled, (state, action) => {
-            state.reservations.push(action.payload.reservation);
+            // state.reservations.push(action.payload.reservation);
         })
     }
 });
