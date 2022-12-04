@@ -10,12 +10,12 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../store";
-import { createTarget, fetchTargets } from "../../store/slices/target";
-import { EnumNotificationType } from "../../Enums";
-import { fetchProjects, projectSelect } from "../../store/slices/project";
+import {useEffect, useState} from "react";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "../../store";
+import {createTarget, fetchTargets} from "../../store/slices/target";
+import {EnumNotificationType} from "../../Enums";
+import {fetchProjects} from "../../store/slices/project";
 
 interface IProps {
   open: any;
@@ -25,14 +25,12 @@ interface IProps {
 export default function TargetCreateModal(props: IProps) {
   const [targetName, setTargetName] = useState("");
   const [notificationType, setNotificationType] = useState("");
-  const [project, setProject] = useState("");
   const [endPoint, setEndPoint] = useState("");
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(fetchProjects());
   }, []);
-  const projectState = useSelector(projectSelect);
 
   const handleClickConfirm = async () => {
     if (targetName && notificationType && endPoint) {
@@ -41,7 +39,6 @@ export default function TargetCreateModal(props: IProps) {
         notification_type: notificationType,
         endpoint: endPoint,
         data: {},
-        project: Number(project),
       };
       dispatch(createTarget(data));
       props.handleClose();

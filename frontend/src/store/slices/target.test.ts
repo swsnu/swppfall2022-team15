@@ -63,7 +63,7 @@ describe("target reducer", () => {
   it("should handle create target", async () => {
     jest.spyOn(axios, "post").mockResolvedValue({ data: fakeTargets[0] });
 
-    await store.dispatch(createTarget({ name: "test", notification_type: EnumNotificationType.API, endpoint: "/", project: 1 }));
+    await store.dispatch(createTarget({ name: "test", notification_type: EnumNotificationType.API, endpoint: "/"}));
     expect(store.getState().target.selectedTarget).toEqual(fakeTargets[0]);
   });
 
