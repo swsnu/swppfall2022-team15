@@ -24,7 +24,7 @@ interface IProps {
 }
 
 export default function MessageCreateModal(props: IProps) {
-  const [notificationType, setNotificationtype] = useState("");
+  const [notificationType, setNotificationType] = useState("");
   const [content, setContent]: [any, any] = useState({});
   const [fieldErrors, setFieldErrors]: [any, any] = useState({});
 
@@ -64,7 +64,7 @@ export default function MessageCreateModal(props: IProps) {
       >
         <DialogTitle>New Message</DialogTitle>
         <DialogContent>
-          <InputLabel id="demo-simple-select-label">Project Type</InputLabel>
+          <InputLabel id="demo-simple-select-label">Notification Type</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -74,7 +74,7 @@ export default function MessageCreateModal(props: IProps) {
               "data-testid": "type-input",
             }}
             onChange={(event: SelectChangeEvent) => {
-              setNotificationtype(event.target.value as string);
+              setNotificationType(event.target.value as string);
             }}
             fullWidth
           >
