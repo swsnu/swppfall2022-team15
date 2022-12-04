@@ -12,7 +12,7 @@ interface IProps {
     notificationType: string;
 }
 
-export default function TargetForm(props: IProps) {
+export default function TargetUserForm(props: IProps) {
   const [mode, setMode] = useState(''); // import , create
 
   const [targetName, setTargetName] = useState("");

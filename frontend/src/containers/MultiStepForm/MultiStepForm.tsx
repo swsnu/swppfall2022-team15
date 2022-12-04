@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import MessageForm from "./MessageForm";
-import TargetForm from "./TargetForm";
+import TargetUserForm from "./TargetUserForm";
 import ReservationForm from "./ReservationForm";
 import * as React from "react";
 import {useState} from "react";
@@ -101,7 +101,7 @@ export default function MultiStepForm() {
               <MessageForm message={message} setMessage={setMessage} notificationType={notificationType} setContent={setContent} content={content} fieldErrors={fieldErrors} setFieldErrors={setFieldErrors} />
               : null
           }
-          {activeStep === 2 ? <TargetForm notificationType={notificationType} /> : null}
+          {activeStep === 2 ? <TargetUserForm notificationType={notificationType} /> : null}
           {activeStep === 3 ? <ReservationForm message={message!} target={target!} notificationType={notificationType} handleRecurrenceChange={setRecurrence}  /> : null}
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Button
