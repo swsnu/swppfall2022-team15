@@ -12,7 +12,7 @@ interface IProps {
 }
 
 
-export default function MessageCreateForm(props: IProps) {
+export default function MessageCreateForm(props: IProps, disabled: boolean = false) {
   let form;
   const {notificationType, content, setContent, fieldErrors, setFieldErrors} = props;
 
@@ -46,6 +46,7 @@ export default function MessageCreateForm(props: IProps) {
             helperText={fieldErrors?.channel}
             error={Boolean(fieldErrors?.channel)}
             rows={1}
+            disabled={disabled}
           />
           <br />
           <br />
@@ -66,6 +67,7 @@ export default function MessageCreateForm(props: IProps) {
             helperText={fieldErrors?.message}
             error={Boolean(fieldErrors?.message)}
             rows={4}
+            disabled={disabled}
           />
         </>
       );
