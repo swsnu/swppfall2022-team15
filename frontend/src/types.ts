@@ -40,8 +40,20 @@ export interface TargetType {
 // (https://github.com/swsnu/swppfall2022-team15/issues/48)
 export interface MessageType {
   id: number;
-  content: any;
+  content: SlackContent | EmailContent;
 }
+
+export interface SlackContent {
+    channel: string;
+    message: string;
+}
+
+export interface EmailContent {
+    title: string;
+    content: string;
+}
+
+export type Content = SlackContent | EmailContent;
 
 export interface MessageListType {
   [key: string]: MessageType[]
