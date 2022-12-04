@@ -19,7 +19,7 @@ export const enum EnumNotificationStatus {
 export enum EnumNotificationType {
   EMAIL = "EMAIL",
   SMS = "SMS",
-  API = "API",
+  WEBHOOK = "WEBHOOK",
   SLACK = "SLACK",
 }
 
@@ -57,7 +57,7 @@ export namespace EnumTemplateType {
       ];
     } else if (notificationType === EnumNotificationType.SMS) {
       templates = [EnumTemplateType.JOIN_COMPLETE, EnumTemplateType.PLAIN_TEXT];
-    } else if (notificationType === EnumNotificationType.API) {
+    } else if (notificationType === EnumNotificationType.WEBHOOK) {
       templates = [
         EnumTemplateType.ADVERTISEMENT,
         EnumTemplateType.FIND_PASSWORD,

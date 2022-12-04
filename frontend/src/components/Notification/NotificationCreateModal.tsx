@@ -95,8 +95,8 @@ export default function NotificationCreateModal(props: IProps) {
             }}
             fullWidth
           >
-            <MenuItem value={EnumNotificationType.API}>
-              {EnumNotificationType.API}
+            <MenuItem value={EnumNotificationType.WEBHOOK}>
+              {EnumNotificationType.WEBHOOK}
             </MenuItem>
             <MenuItem value={EnumNotificationType.SMS}>
               {EnumNotificationType.SMS}

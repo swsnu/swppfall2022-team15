@@ -4,7 +4,12 @@ import axios from "axios";
 
 import { EnumNotificationType } from "../../Enums";
 import { TargetType } from "../../types";
-import reducer, { fetchTargets, fetchTarget, createTarget, fetchTargetsByProjectId } from "./target";
+import reducer, {
+  fetchTargets,
+  fetchTarget,
+  createTarget,
+  fetchTargetsByProjectId,
+} from "./target";
 
 describe("target reducer", () => {
   let store: EnhancedStore<
@@ -24,9 +29,27 @@ describe("target reducer", () => {
   >;
 
   const fakeTargets: TargetType[] = [
-    { id: 1, name: "testAPI", notification_type: EnumNotificationType.API, endpoint: "/", project: 1 },
-    { id: 2, name: "testEMAIL", notification_type: EnumNotificationType.EMAIL, endpoint: "email@email.com", project: 2 },
-    { id: 3, name: "testSMS", notification_type: EnumNotificationType.SMS, endpoint: "+82-10-0000-1111", project: 3 },
+    {
+      id: 1,
+      name: "testAPI",
+      notification_type: EnumNotificationType.WEBHOOK,
+      endpoint: "/",
+      project: 1,
+    },
+    {
+      id: 2,
+      name: "testEMAIL",
+      notification_type: EnumNotificationType.EMAIL,
+      endpoint: "email@email.com",
+      project: 2,
+    },
+    {
+      id: 3,
+      name: "testSMS",
+      notification_type: EnumNotificationType.SMS,
+      endpoint: "+82-10-0000-1111",
+      project: 3,
+    },
   ];
 
   beforeAll(() => {
@@ -63,7 +86,14 @@ describe("target reducer", () => {
   it("should handle create target", async () => {
     jest.spyOn(axios, "post").mockResolvedValue({ data: fakeTargets[0] });
 
-    await store.dispatch(createTarget({ name: "test", notification_type: EnumNotificationType.API, endpoint: "/", project: 1 }));
+    await store.dispatch(
+      createTarget({
+        name: "test",
+        notification_type: EnumNotificationType.WEBHOOK,
+        endpoint: "/",
+        project: 1,
+      })
+    );
     expect(store.getState().target.selectedTarget).toEqual(fakeTargets[0]);
   });
 
@@ -74,7 +104,6 @@ describe("target reducer", () => {
       });
     });
     await store.dispatch(fetchTargetsByProjectId(1));
-    expect(store.getState().target.targets).toEqual( [fakeTargets[0]] );
+    expect(store.getState().target.targets).toEqual([fakeTargets[0]]);
   });
-
 });

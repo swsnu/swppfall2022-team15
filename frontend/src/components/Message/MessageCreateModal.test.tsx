@@ -44,7 +44,7 @@ describe("MessageCreateModal", () => {
     fireEvent.click(button);
 
     fireEvent.change(contentInput, {
-      target: { value: EnumNotificationType.API },
+      target: { value: EnumNotificationType.WEBHOOK },
     });
 
     fireEvent.change(contentInput, {
