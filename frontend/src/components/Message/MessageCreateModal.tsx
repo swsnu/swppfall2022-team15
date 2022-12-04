@@ -24,7 +24,8 @@ interface IProps {
 }
 
 export default function MessageCreateModal(props: IProps) {
-  const [notificationType, setNotificationType] = useState("");
+  const [notificationType, setNotificationType] = useState("")
+  const [name, setName] = useState("")
   const [content, setContent]: [any, any] = useState({});
   const [fieldErrors, setFieldErrors]: [any, any] = useState({});
 
@@ -49,9 +50,7 @@ export default function MessageCreateModal(props: IProps) {
     }
   };
 
-  const form = MessageCreateForm({
-    notificationType, content, setContent, fieldErrors, setFieldErrors
-  });
+  const form = MessageCreateForm({notificationType, name, setName, content, setContent, fieldErrors, setFieldErrors});
 
   return (
     <div>
@@ -78,10 +77,10 @@ export default function MessageCreateModal(props: IProps) {
             }}
             fullWidth
           >
-            <MenuItem value={EnumNotificationType.SLACK}>Slack</MenuItem>
-            <MenuItem value={EnumNotificationType.EMAIL}>Email</MenuItem>
-            <MenuItem value={EnumNotificationType.API}>Api</MenuItem>
-            <MenuItem value={EnumNotificationType.SMS}>Sms</MenuItem>
+            <MenuItem value={EnumNotificationType.SLACK}>SLACK</MenuItem>
+            <MenuItem value={EnumNotificationType.EMAIL}>EMAIL</MenuItem>
+            <MenuItem value={EnumNotificationType.API}>API</MenuItem>
+            <MenuItem value={EnumNotificationType.SMS}>SMS</MenuItem>
           </Select>
           {form}
         </DialogContent>

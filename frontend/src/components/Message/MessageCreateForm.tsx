@@ -4,6 +4,9 @@ import {InputLabel, TextField} from "@mui/material";
 interface IProps {
   notificationType: string;
 
+  name: string;
+  setName: (name: string) => void;
+
   content: any;
   setContent: (content: any) => void;
 
@@ -14,7 +17,7 @@ interface IProps {
 
 export default function MessageCreateForm(props: IProps, disabled: boolean = false) {
   let form;
-  const {notificationType, content, setContent, fieldErrors, setFieldErrors} = props;
+  const {name, setName, notificationType, content, setContent, fieldErrors, setFieldErrors} = props;
 
   switch (notificationType) {
     case EnumNotificationType.API:
@@ -29,6 +32,20 @@ export default function MessageCreateForm(props: IProps, disabled: boolean = fal
     case EnumNotificationType.SLACK:
       form = (
         <>
+          <InputLabel id="demo-simple-select-label">Name</InputLabel>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="message_name"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={name}
+            inputProps={{ "data-testid": "message-input" }}
+            onChange={(event) => {
+              setName(event.target.value);
+            }}
+            required/>
           <br />
           <br />
           <br />
