@@ -123,28 +123,6 @@ export default function TargetCreateModal(props: IProps) {
           <br />
           <br />
           <br />
-          <InputLabel id="demo-simple-select-label">Project</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={project}
-            // Label="project type"
-            onChange={(event: SelectChangeEvent) => {
-              setProject(event.target.value);
-            }}
-            inputProps={{ "data-testid": "project-id" }}
-            fullWidth
-          >
-            {/*// TODO : change to enum and add conditions (filerr) */}
-            {projectState.projects.map((project) => (
-              <MenuItem key={project.id} value={project.id}>
-                {project.name}
-              </MenuItem>
-            ))}
-          </Select>
-          <br />
-          <br />
-          <br />
         </DialogContent>
         <DialogActions>
           <Button data-testid={"create-button"} onClick={handleClickConfirm}>
