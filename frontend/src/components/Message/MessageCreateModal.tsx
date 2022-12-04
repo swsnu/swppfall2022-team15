@@ -15,8 +15,8 @@ import {fetchMessages} from "../../store/slices/message";
 import {AppDispatch} from "../../store";
 import {fetchProjects} from "../../store/slices/project";
 import {EnumNotificationType} from "../../Enums";
-import {createMessage2} from "../../services/message";
 import MessageCreateForm from "./MessageCreateForm";
+import {messageCreateService} from "./utils/NotificationRequestSerivce";
 
 interface IProps {
   open: any;
@@ -39,37 +39,9 @@ export default function MessageCreateModal(props: IProps) {
 
   const handleClickConfirm = async () => {
     if (notificationType) {
-      switch (notificationType) {
-        case EnumNotificationType.SLACK:
-          if (
-            "channel" in content &&
-            "message" in content &&
-            Boolean(content.channel) &&
-            Boolean(content.message)
-          )
-            await createMessage2(notificationType, {
-              channel: content.channel,
-              message: content.message,
-            });
-          else {
-            let newFieldErrors = fieldErrors;
-            if (!Boolean(content.channel)) {
-              newFieldErrors = {
-                ...newFieldErrors,
-                channel: "This field is required.",
-              };
-            }
-            if (!Boolean(content.message)) {
-              newFieldErrors = {
-                ...newFieldErrors,
-                message: "This field is required.",
-              };
-            }
-            setFieldErrors(newFieldErrors);
-            return;
-          }
-          break;
-        // case EnumNotificationType.EMAIL:
+      const errorField =  await messageCreateService(notificationType, content, fieldErrors);
+      if (errorField) {
+        setFieldErrors(errorField);
       }
       props.handleClose();
       clearForm();

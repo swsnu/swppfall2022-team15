@@ -11,6 +11,7 @@ import MessageTable from "../../components/Message/MessageTable";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
 import {EnumNotificationType} from "../../Enums";
 import {createMessage2} from "../../services/message";
+import {messageCreateService} from "../../components/Message/utils/NotificationRequestSerivce";
 
 
 interface IProps {
@@ -51,38 +52,7 @@ export default function MessageForm(props: IProps) {
 
   const handleClickConfirm = async () => {
     if (project && content) {
-      switch (notificationType) {
-        case EnumNotificationType.SLACK:
-          if (
-            "channel" in content &&
-            "message" in content &&
-            Boolean(content.channel) &&
-            Boolean(content.message)
-          )
-            await createMessage2(notificationType, {
-              channel: content.channel,
-              message: content.message,
-            });
-          else {
-            let newFieldErrors = fieldErrors;
-            if (!Boolean(content.channel)) {
-              newFieldErrors = {
-                ...newFieldErrors,
-                channel: "This field is required.",
-              };
-            }
-            if (!Boolean(content.message)) {
-              newFieldErrors = {
-                ...newFieldErrors,
-                message: "This field is required.",
-              };
-            }
-            setFieldErrors(newFieldErrors);
-            return;
-          }
-          break;
-        // case EnumNotificationType.EMAIL:
-      }
+      const errorField = await messageCreateService(notificationType, content, fieldErrors);
       dispatch(fetchMessages());
     }
   };
