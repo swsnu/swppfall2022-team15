@@ -3,6 +3,7 @@ import MessageForm from "./MessageForm";
 import TargetForm from "./TargetForm";
 import ReservationForm from "./ReservationForm";
 import * as React from "react";
+import {useState} from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stepper from "@mui/material/Stepper";
@@ -12,7 +13,6 @@ import Button from "@mui/material/Button";
 import NotificationTypeForm from "./NotificaitonTypeForm";
 import {MessageType, TargetType} from "../../types";
 import {RecurrenceType} from "../../components/Recurrence";
-import {useState} from "react";
 
 const steps = [
   "Notification Type",
@@ -32,6 +32,8 @@ export default function MultiStepForm() {
   const [notificationType, setNotificationType] = React.useState("");
 
   // Message
+  const [message, setMessage] = useState<MessageType | null>(null);
+  // for create
   const [content, setContent] = useState<any>({});
   const [fieldErrors, setFieldErrors] = useState<any>({});
 
@@ -96,7 +98,7 @@ export default function MultiStepForm() {
           <br />
           {activeStep === 0 && <NotificationTypeForm notificationType={notificationType} setNotificationType={setNotificationType} />}
           {activeStep === 1 ?
-              <MessageForm notificationType={notificationType} setContent={setContent} content={content} fieldErrors={fieldErrors} setFieldErrors={setFieldErrors} />
+              <MessageForm message={message} setMessage={setMessage} notificationType={notificationType} setContent={setContent} content={content} fieldErrors={fieldErrors} setFieldErrors={setFieldErrors} />
               : null
           }
           {activeStep === 2 ? <TargetForm notificationType={notificationType} /> : null}
