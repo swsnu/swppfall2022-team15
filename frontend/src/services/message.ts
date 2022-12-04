@@ -2,17 +2,6 @@ import axios from "axios";
 import { EnumNotificationType } from "../Enums";
 import { MessageType } from "../types";
 
-export async function createMessage(title: string, content: string) {
-  try {
-    const resp = await axios.post("/api/message/", {
-      title: title,
-      content: content,
-    });
-    return resp.data.id;
-  } catch (e: any) {
-    return null;
-  }
-}
 
 export async function createMessage2(
   notification_type: EnumNotificationType,
