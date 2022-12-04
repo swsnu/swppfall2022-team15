@@ -2,13 +2,15 @@ import {FormWrapper} from "./FormWrapper";
 import {Button, Dialog, FormControl, FormControlLabel, Radio, RadioGroup, TableContainer,} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {createMessage, fetchMessages, messageSelect} from "../../store/slices/message";
+import {fetchMessages, messageSelect} from "../../store/slices/message";
 import {AppDispatch} from "../../store";
 import {projectSelect} from "../../store/slices/project";
 import MessageCreateForm from "../../components/Message/MessageCreateForm";
 import {MessageType} from "../../types";
 import MessageTable from "../../components/Message/MessageTable";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
+import {EnumNotificationType} from "../../Enums";
+import {createMessage2} from "../../services/message";
 
 
 interface IProps {
@@ -49,14 +51,38 @@ export default function MessageForm(props: IProps) {
 
   const handleClickConfirm = async () => {
     if (project && content) {
-      if (message?.content === content) {
-
+      switch (notificationType) {
+        case EnumNotificationType.SLACK:
+          if (
+            "channel" in content &&
+            "message" in content &&
+            Boolean(content.channel) &&
+            Boolean(content.message)
+          )
+            await createMessage2(notificationType, {
+              channel: content.channel,
+              message: content.message,
+            });
+          else {
+            let newFieldErrors = fieldErrors;
+            if (!Boolean(content.channel)) {
+              newFieldErrors = {
+                ...newFieldErrors,
+                channel: "This field is required.",
+              };
+            }
+            if (!Boolean(content.message)) {
+              newFieldErrors = {
+                ...newFieldErrors,
+                message: "This field is required.",
+              };
+            }
+            setFieldErrors(newFieldErrors);
+            return;
+          }
+          break;
+        // case EnumNotificationType.EMAIL:
       }
-      const data = {
-        project: Number(project),
-        content: content,
-      };
-      dispatch(createMessage(data));
       dispatch(fetchMessages());
     }
   };
