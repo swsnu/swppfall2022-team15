@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "../../store";
 import {createTarget, fetchTargets} from "../../store/slices/target";
 import {fetchProjects, projectSelect} from "../../store/slices/project";
+import TargetUserMultiSelect from "../../components/TargetUserMultiSelect/TargetUserMultiSelect";
 
 
 interface IProps {
@@ -12,7 +13,7 @@ interface IProps {
 }
 
 export default function TargetForm(props: IProps) {
-  const [isCreate, setIsCreate] = useState(false);
+  const [mode, setMode] = useState(''); // import , create
 
   const [targetName, setTargetName] = useState("");
   const [endPoint, setEndPoint] = useState("");
@@ -45,7 +46,7 @@ export default function TargetForm(props: IProps) {
         <RadioGroup
           aria-label="notificationType"
           onChange={(e) => {
-              setIsCreate(e.target.value === "create");
+             setMode(e.target.value);
           }}
           defaultValue="Import"
           name="radio-buttons-group">
@@ -54,13 +55,14 @@ export default function TargetForm(props: IProps) {
         </RadioGroup>
       </FormControl>
 
-    {!isCreate && (// import
+    {mode === 'import' && (// import
         <>
+          <TargetUserMultiSelect notification_type={props.notificationType}/>
         </>
         )
     }
 
-    {isCreate && ( // create
+    {mode==='create' && ( // create
         <>
       <InputLabel>Target Name</InputLabel>
       <TextField
