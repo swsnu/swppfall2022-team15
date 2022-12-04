@@ -8,7 +8,6 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  TextField,
 } from "@mui/material";
 import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
@@ -16,6 +15,7 @@ import {AppDispatch} from "../../store";
 import {createTarget, fetchTargets} from "../../store/slices/target";
 import {EnumNotificationType} from "../../Enums";
 import {fetchProjects} from "../../store/slices/project";
+import {TargetCreateForm} from "./TargetCreateForm";
 
 interface IProps {
   open: any;
@@ -25,7 +25,7 @@ interface IProps {
 export default function TargetCreateModal(props: IProps) {
   const [targetName, setTargetName] = useState("");
   const [notificationType, setNotificationType] = useState("");
-  const [endPoint, setEndPoint] = useState("");
+  const [endpoint, setEndpoint] = useState("");
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
@@ -33,11 +33,11 @@ export default function TargetCreateModal(props: IProps) {
   }, []);
 
   const handleClickConfirm = async () => {
-    if (targetName && notificationType && endPoint) {
+    if (targetName && notificationType && endpoint) {
       const data = {
         name: targetName,
         notification_type: notificationType,
-        endpoint: endPoint,
+        endpoint: endpoint,
         data: {},
       };
       dispatch(createTarget(data));
@@ -46,6 +46,8 @@ export default function TargetCreateModal(props: IProps) {
     }
   };
 
+  let form = TargetCreateForm({notificationType, targetName, setTargetName, endpoint, setEndpoint})
+
   return (
     <div>
       <Dialog
@@ -53,73 +55,32 @@ export default function TargetCreateModal(props: IProps) {
         onClose={props.handleClose}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
-        fullWidth
-      >
+        fullWidth>
         <DialogTitle>New Target</DialogTitle>
         <DialogContent>
-          <InputLabel id="demo-simple-select-label">Target Name</InputLabel>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="target_name"
-            // Label="target name"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={targetName}
-            inputProps={{ "data-testid": "target-input" }}
-            onChange={(event) => {
-              setTargetName(event.target.value);
-            }}
-            required
-          />
-          <br />
-          <br />
-          <br />
-          <InputLabel id="demo-simple-select-label">
-            Notification Type
-          </InputLabel>
+          <InputLabel id="demo-simple-select-label">Notification Type</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={notificationType}
-            label="project type"
-            onChange={(event: SelectChangeEvent) => {
-              setNotificationType(event.target.value);
-            }}
+            // Label="project type"
             inputProps={{
-              "data-testid": "project-type",
+              "data-testid": "type-input",
+            }}
+            onChange={(event: SelectChangeEvent) => {
+              setNotificationType(event.target.value as string);
             }}
             fullWidth
           >
-            <MenuItem value={EnumNotificationType.API.toString()}>API</MenuItem>
-            <MenuItem value={EnumNotificationType.EMAIL.toString()}>
-              Email
-            </MenuItem>
-            <MenuItem value={EnumNotificationType.SMS.toString()}>SMS</MenuItem>
+            <MenuItem value={EnumNotificationType.SLACK}>SLACK</MenuItem>
+            <MenuItem value={EnumNotificationType.EMAIL}>EMAIL</MenuItem>
+            <MenuItem value={EnumNotificationType.API}>API</MenuItem>
+            <MenuItem value={EnumNotificationType.SMS}>SMS</MenuItem>
           </Select>
-          <br />
-          <br />
-          <br />
-          <InputLabel id="demo-simple-select-label">End Point</InputLabel>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="end_point"
-            // Label="end point"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={endPoint}
-            inputProps={{ "data-testid": "endpoint-input" }}
-            onChange={(event) => {
-              setEndPoint(event.target.value);
-            }}
-            required
-          />
-          <br />
-          <br />
-          <br />
+          <br/>
+          <br/>
+          <br/>
+          {form}
         </DialogContent>
         <DialogActions>
           <Button data-testid={"create-button"} onClick={handleClickConfirm}>
