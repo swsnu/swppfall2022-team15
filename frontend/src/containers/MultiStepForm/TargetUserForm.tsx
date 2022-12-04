@@ -63,44 +63,47 @@ export default function TargetUserForm(props: IProps) {
     }
 
     {mode==='create' && ( // create
-        <>
-      <InputLabel>Target Name</InputLabel>
-      <TextField
-        autoFocus
-        margin="dense"
-        type="text"
-        fullWidth
-        variant="standard"
-        value={targetName}
-        inputProps={{ "data-testid": "target-input" }}
-        onChange={(event) => {
-          setTargetName(event.target.value);
-        }}
-        required
-      />
-      <br />
-      <br />
-      <br />
-      <InputLabel id="demo-simple-select-label">End Point</InputLabel>
-      <TextField
-        autoFocus
-        margin="dense"
-        id="end_point"
-        type="text"
-        fullWidth
-        variant="standard"
-        value={endPoint}
-        inputProps={{ "data-testid": "endpoint-input" }}
-        onChange={(event) => {
-          setEndPoint(event.target.value);
-        }}
-        required
-      />
-      <br />
-      <br />
-      <br />
-        <Button data-testid={"create-button"} onClick={handleClickConfirm}>Confirm</Button>
-    </> )}
+      /*<>
+        <InputLabel>Target Name</InputLabel>
+        <TextField
+          autoFocus
+          margin="dense"
+          type="text"
+          fullWidth
+          variant="standard"
+          value={targetName}
+          inputProps={{ "data-testid": "target-input" }}
+          onChange={(event) => {
+            setTargetName(event.target.value);
+          }}
+          required/>
+        <br />
+        <br />
+        <br />
+        <InputLabel id="demo-simple-select-label">End Point</InputLabel>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="end_point"
+          type="text"
+          fullWidth
+          variant="standard"
+          value={endPoint}
+          inputProps={{ "data-testid": "endpoint-input" }}
+          onChange={(event) => {
+            setEndPoint(event.target.value);
+          }}
+          required
+        />
+        <br />
+        <br />
+        <br />
+          <Button data-testid={"create-button"} onClick={handleClickConfirm}>Confirm</Button>
+      </> */
+      <>
+
+      </>
+    )}
     </FormWrapper>
   );
 }
