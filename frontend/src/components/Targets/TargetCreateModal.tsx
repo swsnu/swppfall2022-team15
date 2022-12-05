@@ -26,6 +26,7 @@ export default function TargetCreateModal(props: IProps) {
   const [targetName, setTargetName] = useState("");
   const [notificationType, setNotificationType] = useState("");
   const [endpoint, setEndpoint] = useState("");
+  const [data, setData] = useState({});
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
@@ -34,19 +35,19 @@ export default function TargetCreateModal(props: IProps) {
 
   const handleClickConfirm = async () => {
     if (targetName && notificationType && endpoint) {
-      const data = {
+      const requestData = {
         name: targetName,
         notification_type: notificationType,
         endpoint: endpoint,
-        data: {},
+        data: data,
       };
-      dispatch(createTarget(data));
+      dispatch(createTarget(requestData));
       props.handleClose();
       dispatch(fetchTargets());
     }
   };
 
-  let form = TargetCreateForm({notificationType, targetName, setTargetName, endpoint, setEndpoint})
+  let form = TargetCreateForm({notificationType, targetName, setTargetName, endpoint, setEndpoint, data, setData})
 
   return (
     <div>
@@ -68,7 +69,8 @@ export default function TargetCreateModal(props: IProps) {
               "data-testid": "type-input",
             }}
             onChange={(event: SelectChangeEvent) => {
-              setNotificationType(event.target.value as string);
+              setNotificationType(event.target.value);
+              setData({});
             }}
             fullWidth
           >
