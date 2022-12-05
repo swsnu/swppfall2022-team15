@@ -1,7 +1,7 @@
-import { fireEvent, screen, act, waitFor } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import axios from "axios";
-import { debug } from "console";
+
 import { EnumProjectType } from "../../Enums";
 import { renderWithProviders } from "../../test-utils/mocks";
 import ProjectList from "./ProjectList";

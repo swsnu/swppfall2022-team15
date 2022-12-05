@@ -1,9 +1,8 @@
-import {fireEvent, render, screen, waitFor} from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 
 import NotiSidebar from "./NotiSidebar";
 import { renderWithProviders } from "../../test-utils/mocks";
 import { MemoryRouter } from "react-router";
-import React from "react";
 import preloadedState from "../../test-utils/mock_state";
 
 describe("Sidebar Testing", () => {

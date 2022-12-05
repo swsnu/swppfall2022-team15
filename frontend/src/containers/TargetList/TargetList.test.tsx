@@ -13,12 +13,6 @@ describe("TargetList", () => {
         renderWithProviders(<TargetListTable/>);
         const createButton = screen.getByTestId("create-button");
         fireEvent.click(createButton);
-    });
-
-    it("should handle click create button", () => {
-        renderWithProviders(<TargetListTable/>);
-        const createButton = screen.getByTestId("create-button");
-        fireEvent.click(createButton);
         fireEvent.click(createButton);
 
     });

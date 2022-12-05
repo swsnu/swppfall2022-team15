@@ -16,7 +16,6 @@ import SignUp from "./containers/SignUp/SignUp";
 import TargetListTable from "./containers/TargetList/TargetList";
 import MessageListTable from "./containers/MessageList/MessageList";
 import AuthRoute from "./components/AuthRoute/AuthRoute";
-import {Recurrence} from "./components/Recurrence";
 import Demo from "./components/Reservation";
 
 export const SidebarLayout = () => (
