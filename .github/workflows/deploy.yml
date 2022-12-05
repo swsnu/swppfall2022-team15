@@ -51,14 +51,13 @@ jobs:
         uses: appleboy/ssh-action@master
         id: deploy
         env:
-        env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         with:
-            host: 43.201.145.62
-            username: ec2-user
-            key: ${{ secrets.SSH_KEY }}
-            script: |
-              docker stop backend frontend
-              docker run -d --rm -p 8000:8000 --name backend  $ECR_REGISTRY/$BACKEND_ECR_REPOSITORY:$IMAGE_TAG
-              docker run -d --rm -p 80:80 --name frontend  $ECR_REGISTRY/$FRONTEND_ECR_REPOSITORY:$IMAGE_TAG
+          host: 43.201.145.62
+          username: ec2-user
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            docker stop backend frontend
+            docker run -d --rm -p 8000:8000 --name backend  $ECR_REGISTRY/$BACKEND_ECR_REPOSITORY:$IMAGE_TAG
+            docker run -d --rm -p 80:80 --name frontend  $ECR_REGISTRY/$FRONTEND_ECR_REPOSITORY:$IMAGE_TAG
