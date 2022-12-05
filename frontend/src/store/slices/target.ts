@@ -31,6 +31,9 @@ export const fetchTarget = createAsyncThunk(
 export const createTarget = createAsyncThunk(
     "target/createTarget",
     async ( requestData: {name: string, data: object, endpoint: string, notification_type: string }) => {
+      if (requestData.notification_type === 'API') {
+          requestData = {...requestData, notification_type: 'WEBHOOK'}
+      }
       const response = await axios.post<TargetType>(`/api/targetuser/`, requestData);
       return response.data;
     }
@@ -55,6 +58,9 @@ export const TargetSlice = createSlice({
     });
     builder.addCase(fetchTarget.fulfilled, (state, action) => {
       state.selectedTarget = action.payload;
+    });
+    builder.addCase(createTarget.fulfilled, (state, action) => {
+        state.targets.push(action.payload);
     });
   },
 });

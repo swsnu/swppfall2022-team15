@@ -5,12 +5,6 @@ from targetusers.models import TargetUser
 
 
 class TargetUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TargetUser
-        fields = '__all__'
-
-
-class SlackTargetUserSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
@@ -19,11 +13,18 @@ class SlackTargetUserSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         notification_type = attrs.get('notification_type')
+        data = attrs['data']
         if notification_type == EnumNotificationType.SLACK:
-            if 'api_key' not in attrs['data']:
+            if 'api_key' not in data:
                 raise serializers.ValidationError('No API key provided')
-        elif notification_type in (EnumNotificationType.HTTP, 'WEBHOOK', 'API' ):
-            if 'email' not in attrs['data']:
-                raise serializers.ValidationError('No email provided')
+        elif notification_type == EnumNotificationType.WEBHOOK:
+            if 'auth' == 'Bearer' and 'token' not in data:
+                raise serializers.ValidationError('No token provided')
+            elif 'auth' == 'Basic' and ('username' not in data or 'password' not in data):
+                raise serializers.ValidationError('No username or password provided')
+            elif 'auth' == 'API_KEY' and ('key' not in data or 'value' not in data):
+                raise serializers.ValidationError('No key or value provided')
+        elif notification_type == EnumNotificationType.EMAIL:
+            raise serializers.ValidationError('No email provided')
 
         return super().validate(attrs)

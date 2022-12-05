@@ -2,10 +2,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from core.views import CreateByNotificationTypeMixin
-from notifications.models import EnumNotificationType
 from targetusers.models import TargetUser
-from targetusers.serializers import TargetUserSerializer, SlackTargetUserSerializer
-
+from targetusers.serializers import TargetUserSerializer
 
 class TargetUserViewSet(CreateByNotificationTypeMixin, ModelViewSet):
     queryset = TargetUser.objects.all()
@@ -14,7 +12,7 @@ class TargetUserViewSet(CreateByNotificationTypeMixin, ModelViewSet):
 
     # pylint: disable=inconsistent-return-statements
     def get_create_serializer_class(self):
-       return SlackTargetUserSerializer
+       return TargetUserSerializer
 
     # pylint: disable=R0801
     def get_queryset(self):
