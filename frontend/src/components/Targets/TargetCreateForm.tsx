@@ -44,7 +44,7 @@ export const TargetCreateForm = (props: IProps) => {
 
   let apiAuthForm;
   switch (apiAuth) {
-      case "Basic Auth":
+      case "basic":
         apiAuthForm = (
           <>
             <InputLabel id="demo-simple-select-label">Username</InputLabel>
@@ -58,7 +58,7 @@ export const TargetCreateForm = (props: IProps) => {
               value={"username" in data ? data.username : ""}
               inputProps={{ "data-testid": "username-input" }}
               onChange={(event) => {
-                setData({username: event.target.value, ...data, });
+                setData({...data, ["username"]: event.target.value});
               }}
               required/>
             <br />
@@ -72,10 +72,10 @@ export const TargetCreateForm = (props: IProps) => {
               type="text"
               fullWidth
               variant="standard"
-              value={"password" in data? data.password : ""}
+              value={"password" in data ? data.password : ""}
               inputProps={{ "data-testid": "password-input" }}
               onChange={(event) => {
-                setData({password: event.target.value, ...data, });
+                setData({ ...data, ["password"]: event.target.value, });
               }}
               required/>
             <br />
@@ -83,7 +83,7 @@ export const TargetCreateForm = (props: IProps) => {
             <br />
           </>)
           break;
-        case "Bearer Token":
+        case "bearer":
           apiAuthForm = (
             <>
             <InputLabel id="demo-simple-select-label">Token</InputLabel>
@@ -94,10 +94,10 @@ export const TargetCreateForm = (props: IProps) => {
               type="text"
               fullWidth
               variant="standard"
-              value={"b" in data ? data["username"] : ""}
+              value={"token" in data ? data["token"] : ""}
               inputProps={{ "data-testid": "username-input" }}
               onChange={(event) => {
-                setData({username: event.target.value, ...data, });
+                setData({...data, ['token']: event.target.value, });
               }}
               required/>
             <br />
@@ -106,7 +106,7 @@ export const TargetCreateForm = (props: IProps) => {
             </>
           )
           break;
-        case "API Key":
+        case "api_key":
           apiAuthForm = (
             <>
             <InputLabel id="demo-simple-select-label">Key</InputLabel>
@@ -144,7 +144,6 @@ export const TargetCreateForm = (props: IProps) => {
             <br />
             <br />
             </>
-
           )
           break;
   }
@@ -182,14 +181,14 @@ export const TargetCreateForm = (props: IProps) => {
             }}
             onChange={(event: SelectChangeEvent) => {
               setApiAuth(event.target.value);
-              setData({auth: event.target.value, ...data, });
+              setData({['auth']: event.target.value});
             }}
             fullWidth
           >
-            <MenuItem value={"No Auth"}>No Auth</MenuItem>
-            <MenuItem value={"API Key"}>API Key</MenuItem>
-            <MenuItem value={"Bearer Token"}>Bearer Token</MenuItem>
-            <MenuItem value={"Basic Auth"}>Basic Auth</MenuItem>
+            <MenuItem value={"no_auth"}>No Auth</MenuItem>
+            <MenuItem value={"api_key"}>API Key</MenuItem>
+            <MenuItem value={"bearer"}>Bearer Token</MenuItem>
+            <MenuItem value={"basic"}>Basic Auth</MenuItem>
           </Select>
           <br />
           <br />
