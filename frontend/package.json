@@ -72,7 +72,6 @@
       "!src/**/*.d.ts",
       "!src/test-utils/*",
       "!src/reportWebVitals.ts",
-      "!src/**/*/index.ts",
       "!src/**/*/index.tsx",
       "!src/**/*/types.ts",
       "!src/**/*/styles.ts",
