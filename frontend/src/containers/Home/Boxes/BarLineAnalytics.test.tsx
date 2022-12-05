@@ -16,9 +16,6 @@ describe("BarLineAnalytics", () => {
     renderWithProviders(
       <BarLineAnalytics title="test" subtitle="test_subtitle" />
     );
-
-    screen.findByText("test");
-    screen.findByText("test_subtitle");
   });
 
   it("should handle button click", () => {

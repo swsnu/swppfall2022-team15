@@ -69,12 +69,14 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/Enums.ts",
-      "!src/types.ts",
       "!src/**/*.d.ts",
       "!src/test-utils/*",
-      "!src/index.tsx",
       "!src/reportWebVitals.ts",
-      "!src/Enums.ts",
+      "!src/**/*/index.ts",
+      "!src/**/*/index.tsx",
+      "!src/**/*/types.ts",
+      "!src/**/*/styles.ts",
+      "!src/index.tsx",
       "!src/types.ts"
     ]
   }
