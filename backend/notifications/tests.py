@@ -45,7 +45,7 @@ class NotificationAPITestCase(APITestCase):
                 'message': message.id,
                 'target': target.id,
                 'project': project.id,
-                'type': EnumNotificationType.WEBHOOK,
+                'type': EnumNotificationType.HTTP,
             }
         )
 
@@ -62,9 +62,9 @@ class ReservationAPITestCase(APITestCase):
     @mock.patch('notifications.services.task_bulk_create_notification.delay')
     def test_create(self, mocked_task_bulk_create_notification):
         # Given
-        notification_config = baker.make(NotificationConfig, type=EnumNotificationType.WEBHOOK)
+        notification_config = baker.make(NotificationConfig, type=EnumNotificationType.HTTP)
         target_users = baker.make(
-            TargetUser, notification_type=EnumNotificationType.WEBHOOK, _quantity=10
+            TargetUser, notification_type=EnumNotificationType.HTTP, _quantity=10
         )
 
         # When
@@ -162,8 +162,8 @@ class TaskHandleChunkNotificationTestCase(TestCase):
     @mock.patch('notifications.services.task_send_api_notification.delay')
     def test_task_handle_chunk_notification(self, mocked_task_send_api_notification):
         # Given
-        target_user = baker.make(TargetUser, notification_type=EnumNotificationType.WEBHOOK)
-        notification_config = baker.make(NotificationConfig, type=EnumNotificationType.WEBHOOK)
+        target_user = baker.make(TargetUser, notification_type=EnumNotificationType.HTTP)
+        notification_config = baker.make(NotificationConfig, type=EnumNotificationType.HTTP)
         reservation = baker.make(Reservation, notification_config=notification_config)
         notifications = baker.make(
             Notification,
