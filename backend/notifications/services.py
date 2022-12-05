@@ -75,7 +75,7 @@ def task_handle_chunk_notification(notification_ids: list[int]):
 
     for notification in notifications:
         # TODO 하나의 클래스로 추상화 해서 바로 던지는 게 좋을 듯
-        if notification.reservation.notification_config.type == EnumNotificationType.HTTP:
+        if notification.reservation.notification_config.type == EnumNotificationType.WEBHOOK:
             data = ApiNotificationDto(
                 endpoint=notification.target_user.endpoint,
                 headers=notification.target_user.data,
