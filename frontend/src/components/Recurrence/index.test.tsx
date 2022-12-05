@@ -31,7 +31,7 @@ describe('StartDateSelector', () => {
     const { container } = renderWithContext(defaultRecurrence)
     expect(container).toBeInTheDocument()
 
-    fireEvent.change(container.querySelector('input[name="start-date"]')!, {
+    fireEvent.change(document.querySelector('input[name="start-date"]')!, {
         target: { value: '2021-01-01' }
     });
   })

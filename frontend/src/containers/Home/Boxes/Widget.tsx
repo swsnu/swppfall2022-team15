@@ -1,7 +1,7 @@
 import { alpha } from "@material-ui/core/styles";
 import { Box, Card, Icon, Typography } from "@mui/material";
 
-import Iconify from "../../components/Iconify/Iconify";
+import Iconify from "../../../components/Iconify/Iconify";
 import "./Widget.css";
 
 interface IProps {

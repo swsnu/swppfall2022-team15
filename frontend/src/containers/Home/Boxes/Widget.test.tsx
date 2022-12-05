@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react";
-import { renderWithProviders } from "../../test-utils/mocks";
+import { renderWithProviders } from "../../../test-utils/mocks";
 import Widget from "./Widget";
 
 const props = {

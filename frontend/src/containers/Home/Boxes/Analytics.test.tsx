@@ -1,6 +1,6 @@
 import Analytics from "./Analytics";
-import { renderWithProviders } from "../../test-utils/mocks";
-import preloadedState from "../../test-utils/mock_state";
+import { renderWithProviders } from "../../../test-utils/mocks";
+import preloadedState from "../../../test-utils/mock_state";
 import { BrowserRouter } from "react-router-dom";
 import { fireEvent, screen } from "@testing-library/react";
 
