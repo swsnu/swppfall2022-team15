@@ -20,7 +20,7 @@ class EnumNotificationStatus(models.TextChoices):
 
 
 class EnumNotificationType(models.TextChoices):
-    HTTP = 'HTTP'
+    WEBHOOK = 'WEBHOOK'
     SLACK = 'SLACK'
     EMAIL = 'EMAIL'
     SMS = 'SMS'
