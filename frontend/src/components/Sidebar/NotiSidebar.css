@@ -89,8 +89,8 @@
     background-color: transparent;
     vertical-align: middle;
     height: 54px;
-    position: relative;
-    margin-top: 130%;
+    position: fixed;
+    bottom: 0%;
 }
 
 @font-face {

@@ -1,5 +1,5 @@
 import { alpha } from "@material-ui/core/styles";
-import { Box, Card, Icon, Typography, useTheme } from "@mui/material";
+import { Box, Card, Icon, Typography } from "@mui/material";
 
 import Iconify from "../../components/Iconify/Iconify";
 import "./Widget.css";
@@ -29,13 +29,14 @@ export default function Widget(props: IProps) {
 
   return (
     <Card
-      className="widget"
+      className="widgetBox"
       sx={{
         py: 5,
         boxShadow: 0,
         textAlign: "center",
         backgroundColor: props.color_lighter,
         color: props.color_darker,
+        borderRadius: "24px"
       }}
     >
       <Icon
@@ -44,6 +45,7 @@ export default function Widget(props: IProps) {
           height: (theme) => theme.spacing(8),
           width: (theme) => theme.spacing(8),
           color: props.color_darker,
+          padding: (theme) => theme.spacing(2.5),
           backgroundImage: `linear-gradient(135deg, ${alpha(
             props.color_dark,
             0

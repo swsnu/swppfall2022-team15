@@ -29,23 +29,10 @@ describe("Home", () => {
       { preloadedState }
     );
 
-    const createProjectButton = screen.getByTestId("new-project-button");
+    const createProjectButton = screen.getByTestId("create-button");
     act(() => {
       createProjectButton.click();
     });
     userEvent.keyboard("{esc}");
-  });
-
-  it("should handle style change", async () => {
-    renderWithProviders(
-      <BrowserRouter>
-        <Home />
-      </BrowserRouter>,
-      { preloadedState }
-    );
-        
-    const switchButton = screen.getByTestId("switch");
-    switchButton.click();
-    switchButton.click();
   });
 });

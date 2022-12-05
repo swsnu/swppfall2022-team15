@@ -4,12 +4,10 @@
     border-radius: 50%;
     align-items: center;
     justify-content: center;
-
 }
 
-.widget {
+.widgetBox {
     margin-top: 20px;
-    border-radius: 24px 24px 24px 24px;
 }
 
 .box {
