@@ -2,23 +2,21 @@ import "./Home.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Button } from "@mui/material";
-import { authSelector } from "../../store/slices/auth";
-import { fetchProjects } from "../../store/slices/project";
-import { AppDispatch } from "../../store";
-import Scrollbar from "../../components/Scrollbar/Scrollbar";
 import { Grid } from "@material-ui/core";
-import Widget from "./Widget";
 import { green, grey, red, indigo } from "@mui/material/colors";
-import { projectListSelector } from "../../store/slices/project";
-import { targetListSelector } from "../../store/slices/target";
+
+import Widget from "./Widget";
 import Analytics from "./Analytics";
 import Today from "./Boxes/Today";
-//import { messageListSelector } from "../../store/slices/message";
+import { AppDispatch } from "../../store";
+import { authSelector } from "../../store/slices/auth";
+import { targetListSelector } from "../../store/slices/target";
+import { fetchProjects, projectListSelector } from "../../store/slices/project";
+import Scrollbar from "../../components/Scrollbar/Scrollbar";
 
 export default function Home() {
   const projects = useSelector(projectListSelector);
   const targets = useSelector(targetListSelector);
-  //const messages = useSelector(messageListSelector);
 
   const user = useSelector(authSelector);
   const dispatch = useDispatch<AppDispatch>();

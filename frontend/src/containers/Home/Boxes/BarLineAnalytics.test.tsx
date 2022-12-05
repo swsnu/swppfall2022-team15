@@ -1,6 +1,6 @@
 import { renderWithProviders } from "../../../test-utils/mocks";
 import BarLineAnalytics from "./BarLineAnalytics";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 
 jest.mock("react-apexcharts", () => {
   return {

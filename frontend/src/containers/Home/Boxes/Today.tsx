@@ -10,7 +10,7 @@ export default function Today() {
   }
 
   function getToday() {
-    var today = new Date();
+    let today = new Date();
     today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     return today.toLocaleDateString();
   }

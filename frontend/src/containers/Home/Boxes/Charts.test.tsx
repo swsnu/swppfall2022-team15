@@ -1,7 +1,6 @@
 import { renderWithProviders } from "../../../test-utils/mocks";
 import Charts from "./Charts";
 import { screen } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
 
 jest.mock("react-apexcharts", () => {
   return {
@@ -31,8 +30,6 @@ describe("Charts", () => {
     renderWithProviders(
       <Charts selectedTab={1} selectedProject={0} selectedType={0} />
     );
-
-    //screen.getByText("Notification status (Project 1)");
   });
 
   it("should handle tabs correctly: 2", () => {
