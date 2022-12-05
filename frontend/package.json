@@ -76,7 +76,8 @@
       "!src/**/*/types.ts",
       "!src/**/*/styles.ts",
       "!src/index.tsx",
-      "!src/types.ts"
+      "!src/types.ts",
+      "!src/components/Reservation.tsx"
     ]
   }
 }

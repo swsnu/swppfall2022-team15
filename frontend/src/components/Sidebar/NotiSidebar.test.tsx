@@ -25,7 +25,6 @@ describe("Sidebar Testing", () => {
     screen.getByText("Projects");
     screen.getByText("Targets");
     screen.getByText("Messages");
-    screen.getByText("Templates");
     screen.getByText("History");
   });
 
@@ -40,14 +39,12 @@ describe("Sidebar Testing", () => {
     const projectsButton = screen.getByTestId("projectsButton");
     const targetsButton = screen.getByTestId("targetsButton");
     const messagesButton = screen.getByTestId("messagesButton");
-    const templatesButton = screen.getByTestId("templatesButton");
     const historyButton = screen.getByTestId("historyButton");
 
     fireEvent.click(homeButton);
     fireEvent.click(projectsButton);
     fireEvent.click(targetsButton);
     fireEvent.click(messagesButton);
-    fireEvent.click(templatesButton);
     fireEvent.click(historyButton);
 
   });
