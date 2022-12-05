@@ -1,4 +1,4 @@
-import {fireEvent, render} from "@testing-library/react";
+import {fireEvent, screen} from "@testing-library/react";
 import TargetListTable from "./TargetList";
 import {renderWithProviders} from "../../test-utils/mocks";
 import preloadedState from "../../test-utils/mock_state";
@@ -10,22 +10,22 @@ describe("TargetList", () => {
     });
 
     it("should handle click create button", () => {
-        const {getByTestId} = renderWithProviders(<TargetListTable/>);
-        const createButton = getByTestId("create-button");
+        renderWithProviders(<TargetListTable/>);
+        const createButton = screen.getByTestId("create-button");
         fireEvent.click(createButton);
     });
 
     it("should handle click create button", () => {
-        const {getByTestId} = renderWithProviders(<TargetListTable/>);
-        const createButton = getByTestId("create-button");
+        renderWithProviders(<TargetListTable/>);
+        const createButton = screen.getByTestId("create-button");
         fireEvent.click(createButton);
         fireEvent.click(createButton);
 
     });
 
     it("should handle click open menu", () => {
-        const {getByTestId} = renderWithProviders(<TargetListTable/>, {preloadedState});
-        const openMenuButton = getByTestId("open-menu");
+        renderWithProviders(<TargetListTable/>, {preloadedState});
+        const openMenuButton = screen.getByTestId("open-menu");
         fireEvent.click(openMenuButton);
     });
 
@@ -33,18 +33,18 @@ describe("TargetList", () => {
         jest.spyOn(axios, "delete").mockImplementation((url: string) => {
           return Promise.resolve();
         });
-        const {getByTestId} = renderWithProviders(<TargetListTable/>, {preloadedState});
+        renderWithProviders(<TargetListTable/>, {preloadedState});
 
-        const openMenuButton = getByTestId("open-menu");
+        const openMenuButton = screen.getByTestId("open-menu");
         fireEvent.click(openMenuButton);
 
-        const deleteButton = getByTestId("delete-button");
+        const deleteButton = screen.getByTestId("delete-button");
         fireEvent.click(deleteButton);
     });
 
     it("should handle click close menu", () => {
-        const {getByTestId} = renderWithProviders(<TargetListTable/>, {preloadedState});
-        const openMenuButton = getByTestId("open-menu");
+        renderWithProviders(<TargetListTable/>, {preloadedState});
+        const openMenuButton = screen.getByTestId("open-menu");
         fireEvent.click(openMenuButton);
 
         fireEvent.click(openMenuButton);

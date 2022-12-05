@@ -1,6 +1,6 @@
 import {renderWithProviders} from "../../test-utils/mocks";
 import TargetCreateModal from "./TargetCreateModal";
-import {fireEvent} from "@testing-library/react";
+import {fireEvent, screen} from "@testing-library/react";
 import preloadedState from "../../test-utils/mock_state";
 import {EnumNotificationType} from "../../Enums";
 
@@ -10,24 +10,24 @@ describe("TargetCreateModal", () => {
     })
 
     it("should handle confirm create", () => {
-        const {getByTestId} =  renderWithProviders(
+        renderWithProviders(
             <TargetCreateModal open={true} handleClose={()=> {}} />,
             {preloadedState}
         )
 
-        const targetInput = getByTestId("target-input");
+        const targetInput = screen.getByTestId("target-input");
         fireEvent.change(targetInput, {target: {value: "target"}});
 
-        const projectType = getByTestId("project-type");
+        const projectType = screen.getByTestId("project-type");
         fireEvent.change(projectType, {target: {value: EnumNotificationType.API}});
 
-        const endpointInput = getByTestId("endpoint-input");
+        const endpointInput = screen.getByTestId("endpoint-input");
         fireEvent.change(endpointInput, {target : {value: "https://end.point"}})
 
-        const projectId = getByTestId("project-id");
+        const projectId = screen.getByTestId("project-id");
         fireEvent.change(projectId, {target: { value: 1}})
 
-        const createButton = getByTestId("create-button")
+        const createButton = screen.getByTestId("create-button");
         fireEvent.click(createButton);
     })
 })
