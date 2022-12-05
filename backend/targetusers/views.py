@@ -14,8 +14,7 @@ class TargetUserViewSet(CreateByNotificationTypeMixin, ModelViewSet):
 
     # pylint: disable=inconsistent-return-statements
     def get_create_serializer_class(self):
-        if self.request.data['notification_type'] == EnumNotificationType.SLACK:
-            return SlackTargetUserSerializer
+       return SlackTargetUserSerializer
 
     # pylint: disable=R0801
     def get_queryset(self):
