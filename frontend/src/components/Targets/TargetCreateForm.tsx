@@ -215,10 +215,10 @@ export const TargetCreateForm = (props: IProps) => {
               type="text"
               fullWidth
               variant="standard"
-              value={'api-key' in data ? data["api-key"] : ""}
+              value={'api_key' in data ? data["api_key"] : ""}
               inputProps={{ "data-testid": "api-token-input" }}
               onChange={(event) => {
-                setData({['api-key']: event.target.value});
+                setData({['api_key']: event.target.value});
               }}
               required/>
         <br />

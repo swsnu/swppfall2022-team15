@@ -34,7 +34,10 @@ export default function TargetCreateModal(props: IProps) {
   }, []);
 
   const handleClickConfirm = async () => {
-    if (targetName && notificationType && endpoint) {
+    if (
+        (targetName && notificationType && endpoint) || // NON SLACK
+        (notificationType==EnumNotificationType.SLACK.toString() && targetName && 'api_key' in data) // SLACK
+    ) {
       const requestData = {
         name: targetName,
         notification_type: notificationType,
