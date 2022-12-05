@@ -5,8 +5,8 @@ import { Container, Button } from "@mui/material";
 import { Grid } from "@material-ui/core";
 import { green, grey, red, indigo } from "@mui/material/colors";
 
-import Widget from "./Widget";
-import Analytics from "./Analytics";
+import Widget from "./Boxes/Widget";
+import Analytics from "./Boxes/Analytics";
 import Today from "./Boxes/Today";
 import { AppDispatch } from "../../store";
 import { authSelector } from "../../store/slices/auth";

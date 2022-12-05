@@ -3,9 +3,9 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Grid } from "@material-ui/core";
 
-import Iconify from "../../components/Iconify/Iconify";
-import { projectListSelector } from "../../store/slices/project";
-import Charts from "./Boxes/Charts";
+import Iconify from "../../../components/Iconify/Iconify";
+import { projectListSelector } from "../../../store/slices/project";
+import Charts from "./Charts";
 
 const types = ["Slack", "Email", "HTTP", "SMS"];
 
