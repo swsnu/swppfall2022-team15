@@ -26,4 +26,4 @@ class SlackTargetUserSerializer(serializers.ModelSerializer):
             if 'email' not in attrs['data']:
                 raise serializers.ValidationError('No email provided')
 
-        return attrs
+        return super().validate(attrs)
