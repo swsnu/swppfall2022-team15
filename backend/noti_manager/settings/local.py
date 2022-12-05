@@ -6,13 +6,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
-MIDDLEWARE = ['corsheaders.middleware.CorsMiddleware'] + MIDDLEWARE
-
-INSTALLED_APPS += [
-    'corsheaders',
-]
-
 # CORS
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True

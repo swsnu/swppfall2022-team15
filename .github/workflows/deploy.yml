@@ -9,8 +9,8 @@ on:
 env:
   AWS_REGION: ap-northeast-2
   ECR_REGISTRY: 532649915990.dkr.ecr.ap-northeast-2.amazonaws.com
-  ECR_REPOSITORY: noti-manager
-  IMAGE_TAG: latest
+  BACKEND_ECR_REPOSITORY: noti-manager
+  FRONTEND_ECR_REPOSITORY: noti-manager-front
 jobs:
   deploy:
     name: Deploy
@@ -39,6 +39,26 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           cd backend
-          docker build --platform linux/amd64 -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          docker build --platform linux/amd64 -t $ECR_REGISTRY/$BACKEND_ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$BACKEND_ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$BACKEND_ECR_REPOSITORY:$IMAGE_TAG"
+
+          cd ../frontend
+          docker build --platform linux/amd64 -t $ECR_REGISTRY/$FRONTEND_ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$FRONTEND_ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$FRONTEND_ECR_REPOSITORY:$IMAGE_TAG"
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        id: deploy
+        env:
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        with:
+            host: 43.201.145.62
+            username: ec2-user
+            key: ${{ secrets.SSH_KEY }}
+            script: |
+              docker stop backend frontend
+              docker run -d --rm -p 8000:8000 --name backend  $ECR_REGISTRY/$BACKEND_ECR_REPOSITORY:$IMAGE_TAG
+              docker run -d --rm -p 80:80 --name frontend  $ECR_REGISTRY/$FRONTEND_ECR_REPOSITORY:$IMAGE_TAG
