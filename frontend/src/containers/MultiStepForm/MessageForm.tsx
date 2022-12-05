@@ -9,13 +9,14 @@ import MessageCreateForm from "../../components/Message/MessageCreateForm";
 import {MessageType} from "../../types";
 import MessageTable from "../../components/Message/MessageTable";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
-import {EnumNotificationType} from "../../Enums";
-import {createMessage2} from "../../services/message";
 import {messageCreateService} from "../../components/Message/utils/NotificationRequestSerivce";
 
 
 interface IProps {
   notificationType: string;
+
+  name: any;
+  setName: (name: any) => void;
 
   content: any;
   setContent: (content: any) => void;
@@ -28,7 +29,7 @@ interface IProps {
 }
 
 export default function MessageForm(props: IProps) {
-  const { notificationType, content, setContent, fieldErrors, setFieldErrors, message, setMessage }= props;
+  const { notificationType, name, setName, content, setContent, fieldErrors, setFieldErrors, message, setMessage }= props;
 
   // ui
   const [mode, setMode] = useState(''); // import , create
@@ -79,6 +80,7 @@ export default function MessageForm(props: IProps) {
           aria-label="notificationType"
           onChange={(e) => {
             if (e.target.value === 'import' && message) {
+              setName(message?.name);
               setContent(message?.content)
             }
               setMode(e.target.value);
@@ -92,25 +94,25 @@ export default function MessageForm(props: IProps) {
       <Dialog
         open={dialogOpen}
         onClose={()=> setDialogOpen(false)}
-        maxWidth="md" // TODO responsive
+        maxWidth="lg"
         fullWidth={true}>
         <Scrollbar>
           <TableContainer>
-        <MessageTable
-          columns={contentFieldList} // todo: refactor
-          keys={contentFieldList}
-          rows={messages[notificationType]}
-          handleOpenMenu={null}
-          onClickRow={(id: number) => {
-            const message = messages[notificationType].find((message: any) => message.id === id);
-            setMessage(message);
-            setContent(message?.content)
-
-            setDialogOpen(false);
-          }}
-      /></TableContainer>
-          </Scrollbar>
-    </Dialog>
+            <MessageTable
+              columns={contentFieldList} // todo: refactor
+              keys={contentFieldList}
+              rows={messages[notificationType]}
+              handleOpenMenu={null}
+              onClickRow={(id: number) => {
+                const message = messages[notificationType].find((message: any) => message.id === id);
+                setName(message?.name);
+                setContent(message?.content)
+                setMessage(message);
+                setDialogOpen(false);
+              }}/>
+          </TableContainer>
+        </Scrollbar>
+      </Dialog>
       <Button data-testid="importMessageButton" variant="contained" onClick={handleImportButton}>Import</Button>
       {form}
       <Button data-testid="confirm-button" onClick={handleClickConfirm}>Confirm</Button>

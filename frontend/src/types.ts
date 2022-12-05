@@ -40,7 +40,7 @@ export interface TargetType {
 // (https://github.com/swsnu/swppfall2022-team15/issues/48)
 export interface MessageType {
   id: number;
-  // name: string;
+  name: string;
   content: SlackContent | EmailContent;
 }
 

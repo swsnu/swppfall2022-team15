@@ -18,6 +18,7 @@ interface IProps {
 export default function MessageCreateForm(props: IProps, disabled: boolean = false) {
   let form;
   const {name, setName, notificationType, content, setContent, fieldErrors, setFieldErrors} = props;
+  console.log(name)
 
   switch (notificationType) {
     case EnumNotificationType.API:
@@ -45,6 +46,7 @@ export default function MessageCreateForm(props: IProps, disabled: boolean = fal
             onChange={(event) => {
               setName(event.target.value);
             }}
+            disabled={disabled}
             required/>
           <br />
           <br />
