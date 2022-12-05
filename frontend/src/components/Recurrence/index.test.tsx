@@ -58,7 +58,7 @@ describe('FrequencySelector', () => {
       frequency: FrequencyType.Hourly
     }
     renderWithContext(recurrence)
-    expect(screen.queryByTestId('recurrence-number-of-repetitions')).toBeTruthy()
+    expect(screen.getByTestId('recurrence-number-of-repetitions')).toBeTruthy()
   })
 
   it('Hourly recurrence should have weekdays selector invisible', () => {
@@ -76,7 +76,7 @@ describe('FrequencySelector', () => {
       frequency: FrequencyType.Weekly
     }
     renderWithContext(recurrence)
-    expect(screen.queryByTestId("recurrence-week-days-selector")).toBeTruthy();
+    expect(screen.getByTestId("recurrence-week-days-selector")).toBeTruthy();
   })
 
   it('should render monthly recurrence', () => {
@@ -124,11 +124,10 @@ describe('FrequencySelector', () => {
       ...defaultRecurrence,
       frequency: FrequencyType.Weekly
     }
-    const { container, debug } = renderWithContext(recurrence)
+    const { container } = renderWithContext(recurrence)
     expect(container).toBeInTheDocument()
     // FIXME
     const weekDaysSelector = screen.getByTestId("weekdays-0");
-    debug(weekDaysSelector);
     fireEvent.click(weekDaysSelector);
     // fireEvent.click(weekDaysSelector) ;
   });
@@ -156,11 +155,10 @@ describe('EndingConditionSelector', () => {
       ...defaultRecurrence,
       frequency: FrequencyType.Weekly
     }
-    const { container, debug } = renderWithContext(recurrence)
+    const { container } = renderWithContext(recurrence)
     expect(container).toBeInTheDocument()
     // FIXME
     const weekDaysSelector = screen.getByTestId("weekdays-1");
-    debug(weekDaysSelector);
     fireEvent.click(weekDaysSelector);
     fireEvent.click(weekDaysSelector) ;
   });
@@ -194,12 +192,11 @@ describe('EndingConditionSelector', () => {
   })
 
   it('should handle ending condition change', () => {
-    const { container, debug } = renderWithContext(defaultRecurrence)
+    const { container } = renderWithContext(defaultRecurrence)
     expect(container).toBeInTheDocument();
     const endingConditionSelector = screen
       .getByTestId("recurrence-ending-condition-selector")
       .querySelector("input")!;
-    debug(endingConditionSelector);
     fireEvent.change(endingConditionSelector, {target: {value : EndingConditionType.EndDate }}) ;
     fireEvent.change(endingConditionSelector, {target: {value : EndingConditionType.OccurrencesNumber }}) ;
 
@@ -222,7 +219,7 @@ describe('EndingConditionSelector', () => {
     fireEvent.change(endingConditionOccurencesNumber, {target: {value : 10 }}) ;
   });
 
-  it('should handle ending occurrence number change', () => {
+  it('should handle ending occurrence number change2', () => {
     const recurrence = {
       ...defaultRecurrence,
       endingCondition: EndingConditionType.OccurrencesNumber
