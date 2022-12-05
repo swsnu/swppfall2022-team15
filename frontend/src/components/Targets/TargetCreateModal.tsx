@@ -31,7 +31,7 @@ export default function TargetCreateModal(props: IProps) {
   const dispatch = useDispatch<AppDispatch>();
     useEffect(() => {
     dispatch(fetchProjects());
-  }, []);
+  }, [dispatch]);
   const projectState = useSelector(projectSelect);
 
   const handleClickConfirm = async () => {

@@ -62,7 +62,7 @@ export default function SignUp() {
     }
 
     try {
-      const response = await axios.post(
+      await axios.post(
         "/api/signup/",
         JSON.stringify({
           email: email,

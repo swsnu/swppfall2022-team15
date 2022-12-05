@@ -21,7 +21,9 @@ export async function deleteProject(projectId: number) {
   }
 }
 
-export default {
+const projectService = {
   createProject,
   deleteProject,
 };
+
+export default projectService;
