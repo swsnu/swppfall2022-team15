@@ -58,8 +58,8 @@ export default function MessageListTable() {
         return (
           <Box sx={{ "margin-bottom": "20px" }}>
             <MessageTable
-              columns={["Channel", "Message"]}
-              keys={["channel", "message"]}
+              columns={["Id", "Name", "Channel", "Message"]}
+              keys={["id", "name", "data.channel", "data.message"]}
               rows={
                 EnumNotificationType.SLACK in messages ? messages.SLACK : []
               }
@@ -72,8 +72,8 @@ export default function MessageListTable() {
         return (
           <Box sx={{ "margin-bottom": "20px" }}>
             <MessageTable
-              columns={["Title", "Message"]}
-              keys={["title", "message"]}
+              columns={["Id", "Name", "Title", "Message"]}
+              keys={["id", "name", "title", "message"]}
               // TODO: Slack 내용 말고 Email Data 보여줄 것
               rows={
                 EnumNotificationType.EMAIL in messages ? messages.EMAIL : []
@@ -87,8 +87,8 @@ export default function MessageListTable() {
         return (
           <Box sx={{ "margin-bottom": "20px" }}>
             <MessageTable
-              columns={["JSON Message"]}
-              keys={["message"]}
+              columns={["Id", "Name", "JSON Message"]}
+              keys={["id", "name", "message"]}
               // TODO: slack 내용 말고 JSON Data 보여줄 것
               rows={
                 EnumNotificationType.WEBHOOK in messages ? messages.WEBHOOK : []
@@ -102,8 +102,8 @@ export default function MessageListTable() {
         return (
           <Box sx={{ "margin-bottom": "20px" }}>
             <MessageTable
-              columns={["Message"]}
-              keys={["message"]}
+              columns={["Id", "Name", "Message"]}
+              keys={["id", "name", "message"]}
               // TODO: Slack 내용 말고 SMS Data 보여줄 것
               rows={EnumNotificationType.SMS in messages ? messages.SMS : []}
               handleOpenMenu={handleOpenMenu}

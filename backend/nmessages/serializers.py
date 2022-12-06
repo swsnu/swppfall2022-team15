@@ -9,7 +9,7 @@ class NMessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NMessage
-        fields = ('user', 'name', 'notification_type', 'data',)
+        fields = ('id', 'user', 'name', 'notification_type', 'data',)
 
     def validate(self, attrs):
         notification_type = attrs['notification_type']
