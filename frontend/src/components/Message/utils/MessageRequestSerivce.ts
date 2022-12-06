@@ -1,30 +1,38 @@
-import {EnumNotificationType} from "../../../Enums";
-import {createMessage} from "../../../services/message";
-import {Content, SlackContent} from "../../../types";
+import { EnumNotificationType } from "../../../Enums";
+import { createMessage } from "../../../services/message";
+import {
+  Data,
+  SlackData,
+  EmailData,
+  WebhookData,
+  SMSData,
+} from "../../../types";
 
-export const messageCreateService = async (notificationType: string, name: string, content: Content, oldFieldErrors: any) => {
+export const messageCreateService = async (
+  notificationType: string,
+  name: string,
+  data: Data,
+  oldFieldErrors: any
+) => {
   switch (notificationType) {
     case EnumNotificationType.SLACK:
-      content = content as SlackContent;
+      data = data as SlackData;
       if (
-        "channel" in content &&
-        "message" in content &&
-        Boolean(content.channel) &&
-        Boolean(content.message)
-      )
-        await createMessage(notificationType, {
-          channel: content.channel,
-          message: content.message,
-        });
-      else {
+        "channel" in data &&
+        "message" in data &&
+        Boolean(data.channel) &&
+        Boolean(data.message)
+      ) {
+        await createMessage(notificationType, name, data);
+      } else {
         let newFieldErrors = oldFieldErrors;
-        if (!Boolean(content.channel)) {
+        if (!Boolean(data.channel)) {
           newFieldErrors = {
             ...newFieldErrors,
             channel: "This field is required.",
           };
         }
-        if (!Boolean(content.message)) {
+        if (!Boolean(data.message)) {
           newFieldErrors = {
             ...newFieldErrors,
             message: "This field is required.",
@@ -33,6 +41,61 @@ export const messageCreateService = async (notificationType: string, name: strin
         return newFieldErrors;
       }
       break;
-    // case EnumNotificationType.EMAIL:
+    case EnumNotificationType.EMAIL:
+      data = data as EmailData;
+      if (
+        "title" in data &&
+        "message" in data &&
+        Boolean(data.title) &&
+        Boolean(data.message)
+      ) {
+        await createMessage(notificationType, name, data);
+      } else {
+        let newFieldErrors = oldFieldErrors;
+        if (!Boolean(data.title)) {
+          newFieldErrors = {
+            ...newFieldErrors,
+            channel: "This field is required.",
+          };
+        }
+        if (!Boolean(data.message)) {
+          newFieldErrors = {
+            ...newFieldErrors,
+            message: "This field is required.",
+          };
+        }
+        return newFieldErrors;
+      }
+      break;
+    // case EnumNotificationType.WEBHOOK:
+    //   data = data as WebhookData;
+    //   if ("message" in data && Boolean(data.message)) {
+    //     await createMessage(notificationType, name, data);
+    //   } else {
+    //     let newFieldErrors = oldFieldErrors;
+    //     if (!Boolean(data.message)) {
+    //       newFieldErrors = {
+    //         ...newFieldErrors,
+    //         message: "This field is required.",
+    //       };
+    //     }
+    //     return newFieldErrors;
+    //   }
+    //   break;
+    // case EnumNotificationType.SMS:
+    //   data = data as SMSData;
+    //   if ("message" in data && Boolean(data.message)) {
+    //     await createMessage(notificationType, name, data);
+    //   } else {
+    //     let newFieldErrors = oldFieldErrors;
+    //     if (!Boolean(data.message)) {
+    //       newFieldErrors = {
+    //         ...newFieldErrors,
+    //         message: "This field is required.",
+    //       };
+    //     }
+    //     return newFieldErrors;
+    //   }
+    //   break;
   }
-}
+};

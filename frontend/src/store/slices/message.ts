@@ -15,9 +15,6 @@ export const fetchMessages = createAsyncThunk(
         result[nt] = await fetchMessagesWithNotificationType(nt);
       })
     );
-
-    console.log("fetchMessages @ slices/message.ts");
-
     return result;
   }
 );
@@ -29,7 +26,7 @@ export const fetchSlackMessages = createAsyncThunk(
   }
 );
 
-// TODO
+// // TODO
 // export const fetchEmailMessages = createAsyncThunk(
 //   "message/fetchEmailMessages",
 //   async () => {
@@ -40,7 +37,9 @@ export const fetchSlackMessages = createAsyncThunk(
 // export const fetchWebhookMessages = createAsyncThunk(
 //   "message/fetchWebhookMessages",
 //   async () => {
-//     return await fetchMessagesWithNotificationType(EnumNotificationType.API);
+//     return await fetchMessagesWithNotificationType(
+//       EnumNotificationType.WEBHOOK
+//     );
 //   }
 // );
 

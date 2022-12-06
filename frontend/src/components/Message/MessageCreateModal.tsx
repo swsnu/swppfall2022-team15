@@ -16,8 +16,6 @@ import { fetchMessages } from "../../store/slices/message";
 import { AppDispatch } from "../../store";
 import { fetchProjects } from "../../store/slices/project";
 import { EnumNotificationType } from "../../Enums";
-import MessageCreateForm from "./MessageCreateForm";
-import { messageCreateService } from "./utils/MessageRequestSerivce";
 import { createMessage } from "../../services/message";
 
 interface IProps {
@@ -51,7 +49,7 @@ export default function MessageCreateModal(props: IProps) {
             Boolean(content.channel) &&
             Boolean(content.message)
           )
-            await createMessage(notificationType, {
+            await createMessage(notificationType, name, {
               channel: content.channel,
               message: content.message,
             });
@@ -80,7 +78,7 @@ export default function MessageCreateModal(props: IProps) {
             Boolean(content.title) &&
             Boolean(content.message)
           )
-            await createMessage(notificationType, {
+            await createMessage(notificationType, name, {
               title: content.title,
               message: content.message,
             });
@@ -104,7 +102,7 @@ export default function MessageCreateModal(props: IProps) {
           break;
         case EnumNotificationType.WEBHOOK:
           if ("message" in content && Boolean(content.message))
-            await createMessage(notificationType, {
+            await createMessage(notificationType, name, {
               message: content.message,
             });
           else {
@@ -121,7 +119,7 @@ export default function MessageCreateModal(props: IProps) {
           break;
         case EnumNotificationType.SMS:
           if ("message" in content && Boolean(content.message))
-            await createMessage(notificationType, {
+            await createMessage(notificationType, name, {
               message: content.message,
             });
           else {

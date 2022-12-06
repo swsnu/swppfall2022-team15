@@ -41,8 +41,14 @@ export default function MessageTable(props: {
                 return (
                   <TableRow hover key={row.id} tabIndex={-1} onClick={()=>handleClickRow(row.id)}>
                     {props.keys.map((key: string) => {
+                      const fields = key.split('.')
+                      let value = row;
+
+                      fields.forEach((field) => {
+                        value = value[field];
+                      });
                       return (
-                        <TableCell align="left">{row.data[key]}</TableCell>
+                        <TableCell align="left">{value}</TableCell>
                       );
                     })}
                     {props.handleOpenMenu && (
