@@ -16,7 +16,7 @@ class SlackNMessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NMessage
-        fields = ('user', 'channel', 'message', 'notification_type', 'content')
+        fields = ('user', 'channel', 'message', 'notification_type', 'data',)
         extra_kwargs = {
             'content': {'read_only': True},
         }
