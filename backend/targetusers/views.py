@@ -12,7 +12,7 @@ class TargetUserViewSet(CreateByNotificationTypeMixin, ModelViewSet):
 
     # pylint: disable=inconsistent-return-statements
     def get_create_serializer_class(self):
-       return TargetUserSerializer
+        return TargetUserSerializer
 
     # pylint: disable=R0801
     def get_queryset(self):

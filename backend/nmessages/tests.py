@@ -24,9 +24,11 @@ class NMessagesAPITestCase(APITestCase):
 
         # Then
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(
-            NMessage.objects.filter(notification_type=EnumNotificationType.SLACK).last().data['channel'],
-            request_data['data']['channel'])
+        responded_channel = NMessage.objects.filter(
+            notification_type=EnumNotificationType.SLACK
+        ).last().data['channel']
+        expected = request_data['data']['channel']
+        self.assertEqual(responded_channel, expected)
 
     def test_invalid_type_create(self):
         self.client.force_authenticate(user=self.user)
