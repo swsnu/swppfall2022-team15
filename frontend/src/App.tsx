@@ -16,6 +16,7 @@ import SignUp from "./containers/SignUp/SignUp";
 import TargetListTable from "./containers/TargetList/TargetList";
 import MessageListTable from "./containers/MessageList/MessageList";
 import AuthRoute from "./components/AuthRoute/AuthRoute";
+import HistoryTable from "./containers/History/HistoryTable";
 
 export const SidebarLayout = () => (
   <>
@@ -73,6 +74,14 @@ function App() {
             element={
               <AuthRoute>
                 <MessageListTable />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="/history"
+            element={
+              <AuthRoute>
+                <HistoryTable />
               </AuthRoute>
             }
           />

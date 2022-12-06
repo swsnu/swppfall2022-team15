@@ -1,25 +1,20 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MessageStep from "./MessageStep";
 import TargetUserStep from "./TargetUserStep";
 import ReservationStep from "./ReservationStep";
 import * as React from "react";
-import {useState} from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
-import NotificationTypeForm from "./NotificaitonTypeStep";
-import {MessageType, TargetType, TargetUserIdNameDto} from "../../types";
-import {RecurrenceType} from "../../components/Recurrence";
+import NotificationTypeForm from "./NotificationTypeStep";
+import { MessageType, TargetType, TargetUserIdNameDto } from "../../types";
+import { RecurrenceType } from "../../components/Recurrence";
 
-const steps = [
-  "Notification Type",
-  "Message",
-  "Target",
-  "Reservaton",
-];
+const steps = ["Notification Type", "Message", "Target", "Reservaton"];
 
 export default function MultiStepForm() {
   const navigate = useNavigate();
@@ -39,12 +34,13 @@ export default function MultiStepForm() {
   const [fieldErrors, setFieldErrors] = useState<any>({});
 
   // Target
-  const [targetUsers, setTargetUsers] = React.useState<TargetUserIdNameDto[]>([]);
+  const [targetUsers, setTargetUsers] = React.useState<TargetUserIdNameDto[]>(
+    []
+  );
   // for create
   const [targetName, setTargetName] = useState("");
   const [endpoint, setEndpoint] = useState("");
   const [data, setData] = useState<any>({});
-
 
   // Reservation
   const [recurrence, setRecurrence] = React.useState<RecurrenceType>();
@@ -105,15 +101,46 @@ export default function MultiStepForm() {
         </Stepper>
         <React.Fragment>
           <br />
-          {activeStep === 0 && <NotificationTypeForm notificationType={notificationType} setNotificationType={setNotificationType} />}
-          {activeStep === 1 ?
-              <MessageStep
-                  name={messageName} setName={setMessageName} message={message} setMessage={setMessage} notificationType={notificationType} setData={setContent} data={content} fieldErrors={fieldErrors} setFieldErrors={setFieldErrors}
-              />
-              : null
-          }
-          {activeStep === 2 ? <TargetUserStep notificationType={notificationType} targetName={targetName} setTargetName={setTargetName} endpoint={endpoint} setEndpoint={setEndpoint} data={data} setData={setData} targetUserIdNameList={targetUsers} setTargetUserIdNameList={setTargetUsers} /> : null}
-          {activeStep === 3 ? <ReservationStep message={message!} targetUserIds={targetUsers} notificationType={notificationType} handleRecurrenceChange={setRecurrence}  /> : null}
+          {activeStep === 0 && (
+            <NotificationTypeForm
+              notificationType={notificationType}
+              setNotificationType={setNotificationType}
+            />
+          )}
+          {activeStep === 1 ? (
+            <MessageStep
+              name={messageName}
+              setName={setMessageName}
+              message={message}
+              setMessage={setMessage}
+              notificationType={notificationType}
+              setData={setContent}
+              data={content}
+              fieldErrors={fieldErrors}
+              setFieldErrors={setFieldErrors}
+            />
+          ) : null}
+          {activeStep === 2 ? (
+            <TargetUserStep
+              notificationType={notificationType}
+              targetName={targetName}
+              setTargetName={setTargetName}
+              endpoint={endpoint}
+              setEndpoint={setEndpoint}
+              data={data}
+              setData={setData}
+              targetUserIdNameList={targetUsers}
+              setTargetUserIdNameList={setTargetUsers}
+            />
+          ) : null}
+          {activeStep === 3 ? (
+            <ReservationStep
+              message={message!}
+              targetUserIds={targetUsers}
+              notificationType={notificationType}
+              handleRecurrenceChange={setRecurrence}
+            />
+          ) : null}
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Button
               color="inherit"

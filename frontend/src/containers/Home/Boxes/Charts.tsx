@@ -74,10 +74,10 @@ export default function Charts(props: IProps) {
 
   return (
     <>
-      <Grid item xs={12} sm={6} md={7}>
+      <Grid item xs={12} sm={7} md={7}>
         <BarLineChart title="Notification requests" subtitle={getSubtitle()} />
       </Grid>
-      <Grid item xs={12} sm={6} md={5}>
+      <Grid item xs={12} sm={7} md={5}>
         <PieChart
           title={getTitle()}
           subheader={getSubheader()}

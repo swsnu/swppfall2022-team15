@@ -3,6 +3,8 @@ import { Provider } from "react-redux";
 import ProjectDetail from "./ProjectDetail";
 import { store } from "../../../store";
 import userEvent from "@testing-library/user-event";
+import { renderWithProviders } from "../../../test-utils/mocks";
+import { MemoryRouter } from "react-router";
 
 describe("ProjectDetail", () => {
   it("should render correctly", () => {
@@ -13,36 +15,26 @@ describe("ProjectDetail", () => {
     );
   });
 
-  it("should handle create notification button", () => {
-    render(
-      <Provider store={store}>
+  it("should handle create notification button click", () => {
+    renderWithProviders(
+      <MemoryRouter>
         <ProjectDetail />
-      </Provider>
+      </MemoryRouter>
     );
 
-    const createNotificationButton = screen.getByTestId(
-      "createNotificationButton"
-    );
-    expect(createNotificationButton).toBeInTheDocument();
-
-    fireEvent.click(createNotificationButton);
-
+    userEvent.click(screen.getByTestId("createNotificationButton"));
+    
   });
 
-  it("should handle modal", () => {
-    render(
-      <Provider store={store}>
+  it("should handle close multi step form button click", () => {
+    renderWithProviders(
+      <MemoryRouter>
         <ProjectDetail />
-      </Provider>
+      </MemoryRouter>
     );
 
-    const createNotificationButton = screen.getByTestId(
-      "createNotificationButton"
-    );
-    expect(createNotificationButton).toBeInTheDocument();
-
-    fireEvent.click(createNotificationButton);
-
+    userEvent.click(screen.getByTestId("createNotificationButton"));
     userEvent.keyboard("{esc}");
   });
+
 });

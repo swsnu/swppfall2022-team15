@@ -12,6 +12,7 @@ import { AppDispatch } from "../../store";
 import { Container } from "@mui/system";
 import MessageTable from "../../components/Message/MessageTable";
 import { EnumNotificationType } from "../../Enums";
+import preloadedState from "../../test-utils/mock_state";
 
 export default function MessageListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
@@ -111,14 +112,8 @@ export default function MessageListTable() {
           </Box>
         );
       default:
-        return (
-          <MessageTable
-            columns={["channel", "message"]}
-            keys={["channel", "message"]}
-            rows={EnumNotificationType.SLACK in messages ? messages.SLACK : []}
-            handleOpenMenu={handleOpenMenu}
-          />
-        );
+        setSelectedTab(0);
+        return <></>;
     }
   }
 

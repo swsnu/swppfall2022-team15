@@ -1,5 +1,6 @@
 import {
-  Button, Card,
+  Button,
+  Card,
   IconButton,
   MenuItem,
   Popover,
@@ -19,7 +20,7 @@ import { deleteTarget } from "../../services/target";
 import { AppDispatch } from "../../store";
 import { fetchTargets, targetListSelector } from "../../store/slices/target";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
-import {Container} from "@mui/system";
+import { Container } from "@mui/system";
 
 export default function TargetListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
@@ -58,7 +59,9 @@ export default function TargetListTable() {
       ></TargetCreateModal>
       <Container>
         <Grid container justifyContent="flex-end">
-          <Button  data-testid="create-button" onClick={handleClickCreateButton}>New Target</Button>
+          <Button data-testid="create-button" onClick={handleClickCreateButton}>
+            New Target
+          </Button>
         </Grid>
         <Card>
           <Scrollbar>
@@ -75,13 +78,12 @@ export default function TargetListTable() {
                 </TableHead>
                 <TableBody>
                   {targets.map((row) => {
-                    const { id, name, notification_type, endpoint, project } = row;
+                    const { id, name, notification_type, endpoint, data } = row;
                     return (
                       <TableRow hover key={id} tabIndex={-1}>
                         <TableCell align="left">{name}</TableCell>
                         <TableCell align="left">{notification_type}</TableCell>
                         <TableCell align="left">{endpoint}</TableCell>
-                        <TableCell align="left">{project}</TableCell>
                         <TableCell align="right">
                           <IconButton
                             size="large"
@@ -124,7 +126,11 @@ export default function TargetListTable() {
           <Iconify icon={"eva:edit-fill"} sx={{ mr: 2 }} />
           Edit
         </MenuItem>
-        <MenuItem sx={{ color: "error.main" }}  data-testid="delete-button" onClick={handleClickDelete}>
+        <MenuItem
+          sx={{ color: "error.main" }}
+          data-testid="delete-button"
+          onClick={handleClickDelete}
+        >
           <Iconify icon={"eva:trash-2-outline"} sx={{ mr: 2 }} />
           Delete
         </MenuItem>

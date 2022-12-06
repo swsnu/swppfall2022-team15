@@ -1,5 +1,5 @@
 import { EnumNotificationStatus } from "./Enums";
-import {RecurrenceType} from "./components/Recurrence";
+import { RecurrenceType } from "./components/Recurrence";
 
 export type ProjectType = {
   id: number;
@@ -18,8 +18,8 @@ export type NotificationType = {
 
 export type ReservationType = {
   id: number;
-  reservation: string
-}
+  reservation: string;
+};
 
 export type NotificationHistoryType = {
   id: number;
@@ -33,7 +33,7 @@ export interface TargetType {
   name: string;
   notification_type: string;
   endpoint: string;
-  project: number;
+  data: object;
 }
 
 export interface TargetUserIdNameDto {
@@ -46,28 +46,29 @@ export interface TargetUserIdNameDto {
 export interface MessageType {
   id: number;
   name: string;
+  notification_type: string;
   data: any;
 }
 
 export interface SlackData {
-    channel: string;
-    message: string;
+  channel: string;
+  message: string;
 }
 
 export interface EmailData {
-    title: string;
-    content: string;
+  title: string;
+  content: string;
 }
 
 export type Data = SlackData | EmailData;
 
 export interface MessageListType {
-  [key: string]: MessageType[]
+  [key: string]: MessageType[];
 }
 
 export interface RecurrentReservationType {
-  recurrence: RecurrenceType
-  target: TargetType[]
+  recurrence: RecurrenceType;
+  target: TargetType[];
 }
 
 export interface AuthUser {

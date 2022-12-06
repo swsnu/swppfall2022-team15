@@ -1,33 +1,49 @@
-import {renderWithProviders} from "../../test-utils/mocks";
+import { renderWithProviders } from "../../test-utils/mocks";
 import TargetCreateModal from "./TargetCreateModal";
-import {fireEvent} from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import preloadedState from "../../test-utils/mock_state";
-import {EnumNotificationType} from "../../Enums";
+import { EnumNotificationType } from "../../Enums";
+import axios from "axios";
 
 describe("TargetCreateModal", () => {
-    it("should render", () => {
-        renderWithProviders(<TargetCreateModal open={true} handleClose={()=> {}} />)
-    })
+  it("should render", () => {
+    renderWithProviders(
+      <TargetCreateModal open={true} handleClose={() => {}} />
+    );
+  });
 
-    it("should handle confirm create", () => {
-        const {getByTestId} =  renderWithProviders(
-            <TargetCreateModal open={true} handleClose={()=> {}} />,
-            {preloadedState}
-        )
+  it("should select notification type", () => {
+    renderWithProviders(
+      <TargetCreateModal open={true} handleClose={() => {}} />
+    );
+    const select = screen.getByTestId("type-input");
+    fireEvent.change(select, { target: { value: "EMAIL" } });
+  });
 
-        const targetInput = getByTestId("target-input");
-        fireEvent.change(targetInput, {target: {value: "target"}});
+  it("should handle click: confirm", () => {
+    const handleClick = jest.fn();
+    renderWithProviders(
+      <TargetCreateModal open={true} handleClose={handleClick} />
+    );
+    const confirmButton = screen.getByText("Confirm");
+    confirmButton.click();
+  });
 
-        const projectType = getByTestId("project-type");
-        fireEvent.change(projectType, {target: {value: EnumNotificationType.WEBHOOK}});
+  it("should handle click: with slack data", () => {
+    const handleClick = jest.fn();
+    renderWithProviders(
+      <TargetCreateModal open={true} handleClose={handleClick} />
+    );
+    const select = screen.getByTestId("type-input");
+    fireEvent.change(select, { target: { value: "SLACK" } });
 
-        const endpointInput = getByTestId("endpoint-input");
-        fireEvent.change(endpointInput, {target : {value: "https://end.point"}})
+    const targetNameInput = screen.getByTestId("target-input");
+    fireEvent.change(targetNameInput, { target: { value: "test" } });
 
-        const projectId = getByTestId("project-id");
-        fireEvent.change(projectId, {target: { value: 1}})
+    const apiKeyInput = screen.getByTestId("api-token-input");
+    fireEvent.change(apiKeyInput, { target: { value: "test" } });
 
-        const createButton = getByTestId("create-button")
-        fireEvent.click(createButton);
-    })
-})
+    const confirmButton = screen.getByText("Confirm");
+    confirmButton.click();
+  });
+});

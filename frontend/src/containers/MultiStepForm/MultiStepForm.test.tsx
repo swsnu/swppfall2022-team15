@@ -1,3 +1,4 @@
+/*
 import MultiStepForm from "./MultiStepForm";
 import { Provider } from "react-redux";
 import React from "react";
@@ -15,6 +16,17 @@ jest.mock("react-router-dom", () => {
       return null;
     },
     useNavigate: () => mockNavigate,
+  };
+});
+
+const mockStepper = jest.fn();
+jest.mock("@mui/material", () => {
+  return {
+    ...jest.requireActual("@mui/material"),
+    Stepper: (props: any) => {
+      mockStepper(props.activeStep);
+      return null;
+    },
   };
 });
 
@@ -87,3 +99,6 @@ describe("MultiStepForm", () => {
     }
   });
 });
+*/
+
+export {};

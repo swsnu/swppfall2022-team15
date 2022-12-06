@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 
 import { FaHome, FaHistory, FaFolderOpen, FaUser } from "react-icons/fa";
 import { FiTarget } from "react-icons/fi";
-import { HiTemplate } from "react-icons/hi";
 import { MdMessage, MdLogout } from "react-icons/md";
 
 import "./NotiSidebar.css";
@@ -33,7 +32,6 @@ export default function NotiSidebar() {
   const projectIcon = <FaFolderOpen size="48"></FaFolderOpen>;
   const targetIcon = <FiTarget size="48"></FiTarget>;
   const messageIcon = <MdMessage size="48"></MdMessage>;
-  const templateIcon = <HiTemplate size="48"></HiTemplate>;
   const historyIcon = <FaHistory size="48"></FaHistory>;
   const logoutIcon = <MdLogout size="48"></MdLogout>;
 
