@@ -36,7 +36,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }}
+          IMAGE_TAG: latest
         run: |
           cd backend
           docker build --platform linux/amd64 -t $ECR_REGISTRY/$BACKEND_ECR_REPOSITORY:$IMAGE_TAG .
@@ -47,3 +47,16 @@ jobs:
           docker build --platform linux/amd64 -t $ECR_REGISTRY/$FRONTEND_ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$FRONTEND_ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$FRONTEND_ECR_REPOSITORY:$IMAGE_TAG"
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        id: deploy
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: latest
+        with:
+          host: 43.201.145.62
+          username: ec2-user
+          key: ${{ secrets.SSH_KEY }}
+          env: ECR_REGISTRY,BACKEND_ECR_REPOSITORY,FRONTEND_ECR_REPOSITORY
+          script: |
+            sh deploy.sh
