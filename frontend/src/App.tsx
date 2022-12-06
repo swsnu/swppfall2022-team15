@@ -15,8 +15,10 @@ import SignIn from "./containers/SignIn/SignIn";
 import SignUp from "./containers/SignUp/SignUp";
 import TargetListTable from "./containers/TargetList/TargetList";
 import MessageListTable from "./containers/MessageList/MessageList";
+// import HistoryListTable from "./containers/History/HistoryList";
 import AuthRoute from "./components/AuthRoute/AuthRoute";
 import Demo from "./components/Reservation";
+import { Recurrence } from "./components/Recurrence";
 
 export const SidebarLayout = () => (
   <>
@@ -77,9 +79,16 @@ function App() {
               </AuthRoute>
             }
           />
+          {/* <Route
+            path="/history"
+            element={
+              <AuthRoute>
+                <HistoryListTable />
+              </AuthRoute>
+            }
+          /> */}
         </Route>
-        <Route path="/demo"
-               element={<Demo/>} />
+        <Route path="/demo" element={<Demo />} />
         <Route path="*" element={<Navigate replace to={"/home"} />} />
       </Routes>
     </BrowserRouter>

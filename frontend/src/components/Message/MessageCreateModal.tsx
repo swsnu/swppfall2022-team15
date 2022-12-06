@@ -69,7 +69,69 @@ export default function MessageCreateModal(props: IProps) {
             return;
           }
           break;
-        // case EnumNotificationType.EMAIL:
+        case EnumNotificationType.EMAIL:
+          if (
+            "title" in content &&
+            "message" in content &&
+            Boolean(content.title) &&
+            Boolean(content.message)
+          )
+            await createMessage2(notificationType, {
+              title: content.title,
+              message: content.message,
+            });
+          else {
+            let newFieldErrors = fieldErrors;
+            if (!Boolean(content.title)) {
+              newFieldErrors = {
+                ...newFieldErrors,
+                title: "This field is required.",
+              };
+            }
+            if (!Boolean(content.message)) {
+              newFieldErrors = {
+                ...newFieldErrors,
+                message: "This field is required.",
+              };
+            }
+            setFieldErrors(newFieldErrors);
+            return;
+          }
+          break;
+        case EnumNotificationType.WEBHOOK:
+          if ("message" in content && Boolean(content.message))
+            await createMessage2(notificationType, {
+              message: content.message,
+            });
+          else {
+            let newFieldErrors = fieldErrors;
+            if (!Boolean(content.message)) {
+              newFieldErrors = {
+                ...newFieldErrors,
+                message: "This field is required.",
+              };
+            }
+            setFieldErrors(newFieldErrors);
+            return;
+          }
+          break;
+        case EnumNotificationType.SMS:
+          if ("message" in content && Boolean(content.message))
+            await createMessage2(notificationType, {
+              message: content.message,
+            });
+          else {
+            let newFieldErrors = fieldErrors;
+            if (!Boolean(content.message)) {
+              newFieldErrors = {
+                ...newFieldErrors,
+                message: "This field is required.",
+              };
+            }
+            setFieldErrors(newFieldErrors);
+            return;
+          }
+          break;
       }
       props.handleClose();
       clearForm();
@@ -79,15 +141,6 @@ export default function MessageCreateModal(props: IProps) {
 
   let form;
   switch (notificationType) {
-    case EnumNotificationType.API:
-      form = <></>;
-      break;
-    case EnumNotificationType.EMAIL:
-      form = <></>;
-      break;
-    case EnumNotificationType.SMS:
-      form = <></>;
-      break;
     case EnumNotificationType.SLACK:
       form = (
         <>
@@ -132,6 +185,98 @@ export default function MessageCreateModal(props: IProps) {
         </>
       );
       break;
+    case EnumNotificationType.EMAIL:
+      form = (
+        <>
+          <br />
+          <br />
+          <InputLabel id="demo-simple-select-label">Title</InputLabel>
+          <TextField
+            id="outlined-multiline-static"
+            fullWidth
+            multiline
+            inputProps={{ "data-testid": "email-title-input" }}
+            onChange={(event: any) => {
+              setContent({ ...content, title: event.target.value });
+              setFieldErrors({ ...fieldErrors, title: undefined });
+            }}
+            value={"title" in content ? content.title : ""}
+            helperText={fieldErrors?.title}
+            error={Boolean(fieldErrors?.title)}
+            rows={1}
+          />
+          <br />
+          <br />
+          <InputLabel id="demo-simple-select-label" margin="dense">
+            Message
+          </InputLabel>
+          <TextField
+            id="outlined-multiline-static"
+            fullWidth
+            multiline
+            inputProps={{ "data-testid": "email-message-input" }}
+            onChange={(event: any) => {
+              setContent({ ...content, message: event.target.value });
+              setFieldErrors({ ...fieldErrors, message: undefined });
+            }}
+            value={"message" in content ? content.message : ""}
+            helperText={fieldErrors?.message}
+            error={Boolean(fieldErrors?.message)}
+            rows={8}
+          />
+        </>
+      );
+      break;
+    case EnumNotificationType.WEBHOOK:
+      form = (
+        <>
+          <br />
+          <br />
+          <InputLabel id="demo-simple-select-label" margin="dense">
+            JSON Message
+          </InputLabel>
+          <TextField
+            id="outlined-multiline-static"
+            fullWidth
+            multiline
+            inputProps={{ "data-testid": "webhook-message-input" }}
+            onChange={(event: any) => {
+              setContent({ ...content, message: event.target.value });
+              setFieldErrors({ ...fieldErrors, message: undefined });
+            }}
+            value={"message" in content ? content.message : ""}
+            helperText={fieldErrors?.message}
+            error={Boolean(fieldErrors?.message)}
+            rows={9}
+          />
+        </>
+      );
+      break;
+    case EnumNotificationType.SMS:
+      form = (
+        <>
+          <br />
+          <br />
+          <InputLabel id="demo-simple-select-label" margin="dense">
+            Message
+          </InputLabel>
+          <TextField
+            id="outlined-multiline-static"
+            fullWidth
+            multiline
+            inputProps={{ "data-testid": "sms-message-input" }}
+            onChange={(event: any) => {
+              setContent({ ...content, message: event.target.value });
+              setFieldErrors({ ...fieldErrors, message: undefined });
+            }}
+            value={"message" in content ? content.message : ""}
+            helperText={fieldErrors?.message}
+            error={Boolean(fieldErrors?.message)}
+            rows={9}
+          />
+        </>
+      );
+      break;
   }
 
   return (
@@ -150,7 +295,6 @@ export default function MessageCreateModal(props: IProps) {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={notificationType}
-            // label="project type"
             inputProps={{
               "data-testid": "type-input",
             }}
@@ -161,8 +305,8 @@ export default function MessageCreateModal(props: IProps) {
           >
             <MenuItem value={EnumNotificationType.SLACK}>Slack</MenuItem>
             <MenuItem value={EnumNotificationType.EMAIL}>Email</MenuItem>
-            <MenuItem value={EnumNotificationType.API}>Api</MenuItem>
-            <MenuItem value={EnumNotificationType.SMS}>Sms</MenuItem>
+            <MenuItem value={EnumNotificationType.WEBHOOK}>Webhook</MenuItem>
+            <MenuItem value={EnumNotificationType.SMS}>SMS</MenuItem>
           </Select>
           {form}
         </DialogContent>

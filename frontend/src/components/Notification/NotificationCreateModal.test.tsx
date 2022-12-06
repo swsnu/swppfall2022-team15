@@ -35,7 +35,7 @@ describe("NotificationCreateModal", () => {
 
     const notificationTypeInput = screen.getByTestId("notification-type-input");
     fireEvent.change(notificationTypeInput, {
-      target: { value: EnumNotificationType.API },
+      target: { value: EnumNotificationType.WEBHOOK },
     });
     const targetuserInput = screen.getByTestId("target-user-input");
     fireEvent.change(targetuserInput, {
