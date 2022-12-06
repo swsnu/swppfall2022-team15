@@ -18,7 +18,6 @@ interface IProps {
 export default function MessageCreateForm(props: IProps, disabled: boolean = false) {
   let form;
   const {name, setName, notificationType, content, setContent, fieldErrors, setFieldErrors} = props;
-  console.log(name)
 
   switch (notificationType) {
     case EnumNotificationType.API:
@@ -35,17 +34,15 @@ export default function MessageCreateForm(props: IProps, disabled: boolean = fal
         <>
           <InputLabel id="demo-simple-select-label">Name</InputLabel>
           <TextField
-            autoFocus
-            margin="dense"
-            id="message_name"
-            type="text"
+            id="outlined-multiline-static"
             fullWidth
-            variant="standard"
-            value={name}
+            multiline
             inputProps={{ "data-testid": "message-input" }}
             onChange={(event) => {
-              setName(event.target.value);
+                setName(event.target.value);
             }}
+            value={name}
+            rows={1}
             disabled={disabled}
             required/>
           <br />
