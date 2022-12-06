@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react";
-import ReservationForm from "./ReservationForm";
+import ReservationStep from "./ReservationStep";
 import { Provider } from "react-redux";
 import { store } from "../../store";
 import { screen } from "@testing-library/react";
@@ -7,11 +7,11 @@ import { renderWithProviders } from "../../test-utils/mocks";
 import { EnumNotificationType } from "../../Enums";
 import preloadedState from "../../test-utils/mock_state";
 
-describe("ReservationForm", () => {
+describe("ReservationStep", () => {
   it("should render correctly", () => {
     render(
       <Provider store={store}>
-        <ReservationForm />
+        <ReservationStep />
       </Provider>
     );
   });
@@ -19,7 +19,7 @@ describe("ReservationForm", () => {
   it("should handle click confirm - no project selected", () => {
     render(
       <Provider store={store}>
-        <ReservationForm />
+        <ReservationStep />
       </Provider>
     );
     const button = screen.getByText("Confirm");
@@ -27,7 +27,7 @@ describe("ReservationForm", () => {
   });
 
   it("should handle click confirm - project selected", () => {
-    renderWithProviders(<ReservationForm />, { preloadedState });
+    renderWithProviders(<ReservationStep />, { preloadedState });
 
     const notificationTypeInput = screen.getByTestId("notification-type-input");
     fireEvent.change(notificationTypeInput, {

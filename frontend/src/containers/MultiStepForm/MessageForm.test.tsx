@@ -1,15 +1,15 @@
-import MessageForm from "./MessageForm";
+import MessageStep from "./MessageStep";
 import { renderWithProviders } from "../../test-utils/mocks";
 import { fireEvent, screen } from "@testing-library/react";
 import preloadedState from "../../test-utils/mock_state";
 
-describe("MessageForm", () => {
+describe("MessageStep", () => {
   it("should render", () => {
-    renderWithProviders(<MessageForm />);
+    renderWithProviders(<MessageStep />);
   });
 
   it("should handle confirm button correctly", () => {
-    const { getByTestId } = renderWithProviders(<MessageForm />, {
+    const { getByTestId } = renderWithProviders(<MessageStep />, {
       preloadedState,
     });
 

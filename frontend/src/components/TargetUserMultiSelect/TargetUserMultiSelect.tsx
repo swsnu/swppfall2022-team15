@@ -12,12 +12,13 @@ import Iconify from "../Iconify/Iconify";
 
 interface IProps {
   notification_type: string;
+  selected: any;
+  setSelected: (selected: any) => void;
 }
 
 export default function TargetUserMultiSelect(props: IProps) {
-  const [selected, setSelected] = useState([]);
+  const {selected, setSelected} = props;
   const [options, setOptions]: any = useState([]);
-  console.log(">>", props.notification_type);
   const initTargetUsers = async () => {
     const resp = await fetchTargets(props.notification_type);
     setOptions(

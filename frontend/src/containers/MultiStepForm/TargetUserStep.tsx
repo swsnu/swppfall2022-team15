@@ -26,7 +26,7 @@ interface IProps {
     setTargetUser: (targetUser: TargetType) => void;
 }
 
-export default function TargetUserForm(props: IProps) {
+export default function TargetUserStep(props: IProps) {
   const {notificationType, targetName, setTargetName, endpoint, setEndpoint, data, setData, targetUser, setTargetUser} = props;
 
   const [selected, setSelected] = useState([]);

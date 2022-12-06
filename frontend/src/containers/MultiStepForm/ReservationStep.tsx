@@ -12,7 +12,7 @@ interface IProps {
   handleRecurrenceChange: (recurrence: RecurrenceType) => void;
 }
 
-export default function ReservationForm(props: IProps) {
+export default function ReservationStep(props: IProps) {
    const {notificationType, message, target, handleRecurrenceChange} = props;
    const [open, setOpen] = useState(false);
 

@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
-import MessageForm from "./MessageForm";
-import TargetUserForm from "./TargetUserForm";
-import ReservationForm from "./ReservationForm";
+import MessageStep from "./MessageStep";
+import TargetUserStep from "./TargetUserStep";
+import ReservationStep from "./ReservationStep";
 import * as React from "react";
 import {useState} from "react";
 import Box from "@mui/material/Box";
@@ -10,7 +10,7 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
-import NotificationTypeForm from "./NotificaitonTypeForm";
+import NotificationTypeForm from "./NotificaitonTypeStep";
 import {MessageType, TargetType} from "../../types";
 import {RecurrenceType} from "../../components/Recurrence";
 
@@ -107,13 +107,13 @@ export default function MultiStepForm() {
           <br />
           {activeStep === 0 && <NotificationTypeForm notificationType={notificationType} setNotificationType={setNotificationType} />}
           {activeStep === 1 ?
-              <MessageForm
+              <MessageStep
               name={messageName} setName={setMessageName} message={message} setMessage={setMessage} notificationType={notificationType} setContent={setContent} content={content} fieldErrors={fieldErrors} setFieldErrors={setFieldErrors}
               />
               : null
           }
-          {activeStep === 2 ? <TargetUserForm notificationType={notificationType} targetName={targetName} setTargetName={setTargetName} endpoint={endpoint} setEndpoint={setEndpoint} data={data} setData={setData} targetUser={targetUser} setTargetUser={setTargetUser} /> : null}
-          {activeStep === 3 ? <ReservationForm message={message!} target={targetUser!} notificationType={notificationType} handleRecurrenceChange={setRecurrence}  /> : null}
+          {activeStep === 2 ? <TargetUserStep notificationType={notificationType} targetName={targetName} setTargetName={setTargetName} endpoint={endpoint} setEndpoint={setEndpoint} data={data} setData={setData} targetUser={targetUser} setTargetUser={setTargetUser} /> : null}
+          {activeStep === 3 ? <ReservationStep message={message!} target={targetUser!} notificationType={notificationType} handleRecurrenceChange={setRecurrence}  /> : null}
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Button
               color="inherit"

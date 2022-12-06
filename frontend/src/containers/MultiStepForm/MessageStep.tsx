@@ -28,7 +28,7 @@ interface IProps {
   setMessage: (message: any) => void;
 }
 
-export default function MessageForm(props: IProps) {
+export default function MessageStep(props: IProps) {
   const { notificationType, name, setName, content, setContent, fieldErrors, setFieldErrors, message, setMessage }= props;
 
   // ui

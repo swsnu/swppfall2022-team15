@@ -1,16 +1,16 @@
 import { renderWithProviders } from "../../test-utils/mocks";
-import TargetUserForm from "./TargetUserForm";
+import TargetUserStep from "./TargetUserStep";
 import { fireEvent } from "@testing-library/react";
 import preloadedState from "../../test-utils/mock_state";
 import { EnumNotificationType } from "../../Enums";
 
-describe("TargetUserForm", () => {
+describe("TargetUserStep", () => {
   it("should render", () => {
-    renderWithProviders(<TargetUserForm />);
+    renderWithProviders(<TargetUserStep />);
   });
 
   it("should handle confirm create", () => {
-    const { getByTestId } = renderWithProviders(<TargetUserForm />, {
+    const { getByTestId } = renderWithProviders(<TargetUserStep />, {
       preloadedState,
     });
 
