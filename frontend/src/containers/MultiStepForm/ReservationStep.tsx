@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {MessageType} from "../../types";
+import {MessageType, TargetUserIdNameDto} from "../../types";
 import SplitButton from "../../components/SplitButton/SplitButton";
 import RecurrenceDialog from "../../components/Recurrence/RecurrenceDialog";
 import {RecurrenceType} from "../../components/Recurrence";
@@ -11,7 +11,7 @@ import {targetSelect} from "../../store/slices/target";
 interface IProps {
   notificationType: string;
   message: MessageType;
-  targetUserIds: {value: number, key: number}[];
+  targetUserIds: TargetUserIdNameDto[];
   handleRecurrenceChange: (recurrence: RecurrenceType) => void;
 }
 
