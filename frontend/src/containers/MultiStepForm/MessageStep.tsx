@@ -55,7 +55,6 @@ export default function MessageStep(props: IProps) {
       }
       dispatch(fetchMessages());
     }
-
   };
 
   const form = MessageCreateForm(props, mode !=='create');

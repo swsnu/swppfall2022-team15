@@ -8,7 +8,7 @@ import FrequencySelector from './components/FrequencySelector'
 import EndingConditionSelector from './components/EndingConditionSelector'
 import TimeSelector from './components/TimeSelector'
 import DateFnsUtils from "@date-io/date-fns";
-import {MuiPickersUtilsProvider} from "@material-ui/pickers
+import {MuiPickersUtilsProvider} from "@material-ui/pickers"
 
 export interface RecurrenceProps {
   recurrence: RecurrenceType;
