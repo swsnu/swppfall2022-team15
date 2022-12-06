@@ -150,7 +150,7 @@ export const TargetCreateForm = (props: IProps) => {
 
 
   switch (notificationType) {
-    case EnumNotificationType.API:
+    case EnumNotificationType.WEBHOOK:
       form = (
         <>
           <InputLabel id="demo-simple-select-label">ENDPOINT</InputLabel>

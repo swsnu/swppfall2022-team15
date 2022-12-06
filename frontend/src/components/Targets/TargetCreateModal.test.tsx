@@ -19,7 +19,7 @@ describe("TargetCreateModal", () => {
         fireEvent.change(targetInput, {target: {value: "target"}});
 
         const projectType = getByTestId("project-type");
-        fireEvent.change(projectType, {target: {value: EnumNotificationType.API}});
+        fireEvent.change(projectType, {target: {value: EnumNotificationType.WEBHOOK}});
 
         const endpointInput = getByTestId("endpoint-input");
         fireEvent.change(endpointInput, {target : {value: "https://end.point"}})

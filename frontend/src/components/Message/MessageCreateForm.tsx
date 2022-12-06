@@ -20,7 +20,7 @@ export default function MessageCreateForm(props: IProps, disabled: boolean = fal
   const {name, setName, notificationType, content, setContent, fieldErrors, setFieldErrors} = props;
 
   switch (notificationType) {
-    case EnumNotificationType.API:
+    case EnumNotificationType.WEBHOOK:
       form = <></>;
       break;
     case EnumNotificationType.EMAIL:

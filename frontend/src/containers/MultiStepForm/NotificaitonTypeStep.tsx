@@ -31,7 +31,7 @@ export default function NotificationTypeForm(props: IProps) {
                 value={props.notificationType}
                 onChange={event => props.setNotificationType(event.target.value as string)}
             >
-                <MenuItem value={EnumNotificationType.API}>API</MenuItem>
+                <MenuItem value={EnumNotificationType.WEBHOOK}>API</MenuItem>
             </Select>
         )
     }
