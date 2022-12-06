@@ -19,7 +19,5 @@ COPY Pipfile.lock /app
 RUN pip install pipenv && \
     pipenv install --deploy --system
 
-RUN python manage.py migrate
-
 COPY . /app
 CMD ["uwsgi", "--http", ":8000", "--ini", "uwsgi.ini"]
