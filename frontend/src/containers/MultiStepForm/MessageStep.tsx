@@ -39,9 +39,6 @@ export default function MessageStep(props: IProps) {
     dispatch(fetchMessages());
   }, []);
 
-  const projectState = useSelector(projectSelect);
-  const project = projectState.selectedProject;
-
   const messageState = useSelector(messageSelect);
   const messages = messageState.messages;
 
@@ -51,10 +48,14 @@ export default function MessageStep(props: IProps) {
   }
 
   const handleClickConfirm = async () => {
-    if (project && content) {
-      const errorField = await messageCreateService(notificationType, content, fieldErrors);
+    if (notificationType && name && content) {
+      const errorField = await messageCreateService(notificationType, name, content, fieldErrors);
+      if (errorField) {
+        setFieldErrors(errorField);
+      }
       dispatch(fetchMessages());
     }
+
   };
 
   const form = MessageCreateForm(props, mode !=='create');

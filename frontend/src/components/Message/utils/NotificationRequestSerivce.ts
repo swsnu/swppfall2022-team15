@@ -2,7 +2,7 @@ import {EnumNotificationType} from "../../../Enums";
 import {createMessage} from "../../../services/message";
 import {Content, SlackContent} from "../../../types";
 
-export const messageCreateService = async (notificationType: string, content: Content, oldFieldErrors: any) => {
+export const messageCreateService = async (notificationType: string, name: string, content: Content, oldFieldErrors: any) => {
   switch (notificationType) {
     case EnumNotificationType.SLACK:
       content = content as SlackContent;

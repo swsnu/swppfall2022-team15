@@ -39,8 +39,8 @@ export default function MessageCreateModal(props: IProps) {
   };
 
   const handleClickConfirm = async () => {
-    if (notificationType) {
-      const errorField =  await messageCreateService(notificationType, content, fieldErrors);
+    if (notificationType && name && content) {
+      const errorField =  await messageCreateService(notificationType, name, content, fieldErrors);
       if (errorField) {
         setFieldErrors(errorField);
       }
@@ -82,6 +82,9 @@ export default function MessageCreateModal(props: IProps) {
             <MenuItem value={EnumNotificationType.API}>API</MenuItem>
             <MenuItem value={EnumNotificationType.SMS}>SMS</MenuItem>
           </Select>
+          <br/>
+          <br/>
+          <br/>
           {form}
         </DialogContent>
         <DialogActions>
