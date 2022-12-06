@@ -1,5 +1,5 @@
 import {Button, Dialog,} from "@mui/material";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "../../store";
 import {createTarget, fetchTargets, targetSelect} from "../../store/slices/target";
@@ -51,6 +51,7 @@ export default function TargetUserForm(props: IProps) {
       };
       dispatch(createTarget(requestData));
       dispatch(fetchTargets());
+      setDialogOpen(false)
     }
   };
 
@@ -64,11 +65,10 @@ export default function TargetUserForm(props: IProps) {
           open={dialogOpen}
           onClose={() => setDialogOpen(false)}>
           {form}
+          <Button data-testid="confirm-button" onClick={handleClickConfirm}>Confirm</Button>
         </Dialog>
         <Button variant="contained" onClick={() => setDialogOpen(true)}>Add now</Button>
         <TargetUserMultiSelect notification_type={props.notificationType} selected={selected} setSelected={setSelected} />
-
-        <Button data-testid={"create-button"} onClick={handleClickConfirm}>Confirm</Button>
     </FormWrapper>
   );
 }
