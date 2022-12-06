@@ -18,7 +18,7 @@
     "@mui/x-data-grid-generator": "^5.17.14",
     "@reduxjs/toolkit": "^1.8.6",
     "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
+    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.2.1",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
@@ -38,6 +38,7 @@
     "react-apexcharts": "^1.4.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
+    "react-multi-select-component": "^4.3.4",
     "react-pro-sidebar": "^1.0.0-alpha.7",
     "react-redux": "^8.0.5",
     "react-router": "^6.4.3",
@@ -77,13 +78,15 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/Enums.ts",
-      "!src/types.ts",
       "!src/**/*.d.ts",
       "!src/test-utils/*",
-      "!src/index.tsx",
       "!src/reportWebVitals.ts",
-      "!src/Enums.ts",
-      "!src/types.ts"
+      "!src/**/*/index.tsx",
+      "!src/**/*/types.ts",
+      "!src/**/*/styles.ts",
+      "!src/index.tsx",
+      "!src/types.ts",
+      "!src/components/Reservation.tsx"
     ]
   }
 }

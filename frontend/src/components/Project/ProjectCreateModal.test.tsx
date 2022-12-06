@@ -1,6 +1,6 @@
 import { fireEvent, screen } from "@testing-library/react";
 import { EnumProjectType } from "../../Enums";
-import projectService from "../../services/project";
+import axios from "axios";
 import { renderWithProviders } from "../../test-utils/mocks";
 import ProjectCreateModal from "./ProjectCreateModal";
 
@@ -12,11 +12,12 @@ describe("<ProjectCreateModal />", () => {
   });
 
   it("shoud handle click confirm", async () => {
-    jest
-      .spyOn(projectService, "createProject")
-      .mockImplementation((projectName: string, projectType: string) => {
-        return Promise.resolve();
-      });
+    jest.spyOn(axios, "post").mockResolvedValue(
+      Promise.resolve({
+        data: {},
+      })
+    );
+
     renderWithProviders(
       <ProjectCreateModal open={true} handleClose={() => {}} />
     );
@@ -24,7 +25,6 @@ describe("<ProjectCreateModal />", () => {
     const typeInput = screen.getByTestId("type-input");
     const confirmButton = screen.getByTestId("confirm-button");
     fireEvent.click(confirmButton);
-    expect(projectService.createProject).toHaveBeenCalledTimes(0);
     fireEvent.change(nameInput, {
       target: { value: "proejct name" },
     });
@@ -33,6 +33,5 @@ describe("<ProjectCreateModal />", () => {
     });
 
     fireEvent.click(confirmButton);
-    expect(projectService.createProject).toHaveBeenCalled();
   });
 });

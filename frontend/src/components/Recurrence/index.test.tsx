@@ -1,11 +1,9 @@
 import {Recurrence} from './index'
-import React from 'react'
 import {MuiPickersUtilsProvider} from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
-import {fireEvent, render} from '@testing-library/react'
+import {fireEvent, render, screen} from '@testing-library/react'
 import {EndingConditionType, FrequencyType, RecurrenceType} from './types'
-import '@testing-library/jest-dom/extend-expect'
-import RecurrenceContext, {contextInitValue} from "./components/RecurrenceContext";
+import {contextInitValue} from "./components/RecurrenceContext";
 
 const defaultRecurrence: RecurrenceType = {
   startDate: new Date(),
@@ -33,7 +31,7 @@ describe('StartDateSelector', () => {
     const { container } = renderWithContext(defaultRecurrence)
     expect(container).toBeInTheDocument()
 
-    fireEvent.change(container.querySelector('input[name="start-date"]')!, {
+    fireEvent.change(document.querySelector('input[name="start-date"]')!, {
         target: { value: '2021-01-01' }
     });
   })
@@ -41,14 +39,14 @@ describe('StartDateSelector', () => {
 
 describe('FrequencySelector', () => {
   it('should render no recurrence', () => {
-    const { container } = renderWithContext({
+    renderWithContext({
       ...defaultRecurrence,
       frequency: FrequencyType.None
     })
   });
 
   it('should render minutely recurrence', () => {
-    const { container } = renderWithContext({
+    renderWithContext({
       ...defaultRecurrence,
       frequency: FrequencyType.Minutely
     })
@@ -59,8 +57,8 @@ describe('FrequencySelector', () => {
       ...defaultRecurrence,
       frequency: FrequencyType.Hourly
     }
-    const { queryByTestId } = renderWithContext(recurrence)
-    expect(queryByTestId('recurrence-number-of-repetitions')).toBeTruthy()
+    renderWithContext(recurrence)
+    expect(screen.getByTestId('recurrence-number-of-repetitions')).toBeTruthy()
   })
 
   it('Hourly recurrence should have weekdays selector invisible', () => {
@@ -68,8 +66,8 @@ describe('FrequencySelector', () => {
       ...defaultRecurrence,
       frequency: FrequencyType.Hourly
     }
-    const { queryByTestId } = renderWithContext(recurrence)
-    expect(queryByTestId('recurrence-week-days-selector')).toBeFalsy()
+    renderWithContext(recurrence)
+    expect(screen.queryByTestId("recurrence-week-days-selector")).toBeFalsy();
   })
 
   it('Weekly recurrence should have weekdays selector visible', () => {
@@ -77,8 +75,8 @@ describe('FrequencySelector', () => {
       ...defaultRecurrence,
       frequency: FrequencyType.Weekly
     }
-    const { queryByTestId } = renderWithContext(recurrence)
-    expect(queryByTestId('recurrence-week-days-selector')).toBeTruthy()
+    renderWithContext(recurrence)
+    expect(screen.getByTestId("recurrence-week-days-selector")).toBeTruthy();
   })
 
   it('should render monthly recurrence', () => {
@@ -86,7 +84,7 @@ describe('FrequencySelector', () => {
       ...defaultRecurrence,
       frequency: FrequencyType.Monthly
     }
-    const { queryByTestId } = renderWithContext(recurrence)
+    renderWithContext(recurrence)
   })
 
   it('should render annual recurrence', () => {
@@ -94,13 +92,15 @@ describe('FrequencySelector', () => {
       ...defaultRecurrence,
       frequency: FrequencyType.Annually
     }
-    const { queryByTestId } = renderWithContext(recurrence)
+    renderWithContext(recurrence)
   })
 
   it('should handle frequency change', () => {
-    const { container, getByTestId, debug } = renderWithContext(defaultRecurrence)
+    const { container } = renderWithContext(defaultRecurrence)
     expect(container).toBeInTheDocument()
-    const frequencySelector = getByTestId('recurrence-frequency').querySelector('input')!;
+    const frequencySelector = screen
+      .getByTestId("recurrence-frequency")
+      .querySelector("input")!;
 
     fireEvent.change(frequencySelector, {target: {value : FrequencyType.Minutely }}) ;
   });
@@ -110,9 +110,11 @@ describe('FrequencySelector', () => {
       ...defaultRecurrence,
       frequency: FrequencyType.Hourly
     }
-    const { container, getByTestId, debug } = renderWithContext(recurrence)
+    const { container } = renderWithContext(recurrence)
     expect(container).toBeInTheDocument()
-    const numberOfRepetitionsSelector = getByTestId('recurrence-number-of-repetitions').querySelector('input')!;
+    const numberOfRepetitionsSelector = screen
+      .getByTestId("recurrence-number-of-repetitions")
+      .querySelector("input")!;
 
     fireEvent.change(numberOfRepetitionsSelector, {target: {value : 10 }}) ;
   });
@@ -122,11 +124,10 @@ describe('FrequencySelector', () => {
       ...defaultRecurrence,
       frequency: FrequencyType.Weekly
     }
-    const { container, getByTestId, debug } = renderWithContext(recurrence)
+    const { container } = renderWithContext(recurrence)
     expect(container).toBeInTheDocument()
     // FIXME
-    const weekDaysSelector = getByTestId('weekdays-0')
-    debug(weekDaysSelector);
+    const weekDaysSelector = screen.getByTestId("weekdays-0");
     fireEvent.click(weekDaysSelector);
     // fireEvent.click(weekDaysSelector) ;
   });
@@ -140,11 +141,13 @@ describe('EndingConditionSelector', () => {
       ...defaultRecurrence,
       endingCondition: EndingConditionType.None
     }
-    const { getByTestId } = renderWithContext(recurrence)
-    expect(getByTestId('recurrence-ending-condition-end-date')).toBeDisabled()
+    renderWithContext(recurrence)
     expect(
-      getByTestId('recurrence-ending-condition-occurrences-number')
-    ).toBeDisabled()
+      screen.getByTestId("recurrence-ending-condition-end-date")
+    ).toBeDisabled();
+    expect(
+      screen.getByTestId("recurrence-ending-condition-occurrences-number")
+    ).toBeDisabled();
   })
 
     it ('should handle week days change - unselect', () => {
@@ -152,11 +155,10 @@ describe('EndingConditionSelector', () => {
       ...defaultRecurrence,
       frequency: FrequencyType.Weekly
     }
-    const { container, getByTestId, debug } = renderWithContext(recurrence)
+    const { container } = renderWithContext(recurrence)
     expect(container).toBeInTheDocument()
     // FIXME
-    const weekDaysSelector = getByTestId('weekdays-1')
-    debug(weekDaysSelector);
+    const weekDaysSelector = screen.getByTestId("weekdays-1");
     fireEvent.click(weekDaysSelector);
     fireEvent.click(weekDaysSelector) ;
   });
@@ -166,11 +168,13 @@ describe('EndingConditionSelector', () => {
       ...defaultRecurrence,
       endingCondition: EndingConditionType.EndDate
     }
-    const { getByTestId } = renderWithContext(recurrence)
-    expect(getByTestId('recurrence-ending-condition-end-date')).toBeEnabled()
+    renderWithContext(recurrence)
     expect(
-      getByTestId('recurrence-ending-condition-occurrences-number')
-    ).toBeDisabled()
+      screen.getByTestId("recurrence-ending-condition-end-date")
+    ).toBeEnabled();
+    expect(
+      screen.getByTestId("recurrence-ending-condition-occurrences-number")
+    ).toBeDisabled();
   })
 
   it('Number of occurrences ending condition should disable end date and enable occurrences number input', () => {
@@ -178,22 +182,27 @@ describe('EndingConditionSelector', () => {
       ...defaultRecurrence,
       endingCondition: EndingConditionType.OccurrencesNumber
     }
-    const { getByTestId } = renderWithContext(recurrence)
-    expect(getByTestId('recurrence-ending-condition-end-date')).toBeDisabled()
+    renderWithContext(recurrence)
     expect(
-      getByTestId('recurrence-ending-condition-occurrences-number')
-    ).toBeEnabled()
+      screen.getByTestId("recurrence-ending-condition-end-date")
+    ).toBeDisabled();
+    expect(
+      screen.getByTestId("recurrence-ending-condition-occurrences-number")
+    ).toBeEnabled();
   })
 
   it('should handle ending condition change', () => {
-    const { container, getByTestId, debug } = renderWithContext(defaultRecurrence)
+    const { container } = renderWithContext(defaultRecurrence)
     expect(container).toBeInTheDocument();
-    const endingConditionSelector = getByTestId('recurrence-ending-condition-selector').querySelector('input')!;
-    debug(endingConditionSelector);
+    const endingConditionSelector = screen
+      .getByTestId("recurrence-ending-condition-selector")
+      .querySelector("input")!;
     fireEvent.change(endingConditionSelector, {target: {value : EndingConditionType.EndDate }}) ;
     fireEvent.change(endingConditionSelector, {target: {value : EndingConditionType.OccurrencesNumber }}) ;
 
-    const endingConditionEndDate = getByTestId('recurrence-ending-condition-end-date')
+    const endingConditionEndDate = screen.getByTestId(
+      "recurrence-ending-condition-end-date"
+    );
     fireEvent.click(endingConditionEndDate) ;
   });
 
@@ -202,20 +211,24 @@ describe('EndingConditionSelector', () => {
       ...defaultRecurrence,
       endingCondition: EndingConditionType.OccurrencesNumber
     }
-    const { container, getByTestId, debug } = renderWithContext(recurrence)
+    const { container } = renderWithContext(recurrence)
     expect(container).toBeInTheDocument();
-    const endingConditionOccurencesNumber = getByTestId('recurrence-ending-condition-occurrences-number')
+    const endingConditionOccurencesNumber = screen.getByTestId(
+      "recurrence-ending-condition-occurrences-number"
+    );
     fireEvent.change(endingConditionOccurencesNumber, {target: {value : 10 }}) ;
   });
 
-  it('should handle ending occurrence number change', () => {
+  it('should handle ending occurrence number change2', () => {
     const recurrence = {
       ...defaultRecurrence,
       endingCondition: EndingConditionType.OccurrencesNumber
     }
-    const { container, getByTestId, debug } = renderWithContext(recurrence)
+    const { container } = renderWithContext(recurrence)
     expect(container).toBeInTheDocument();
-    const endingConditionOccurencesNumber = getByTestId('recurrence-ending-condition-end-date')
+    const endingConditionOccurencesNumber = screen.getByTestId(
+      "recurrence-ending-condition-end-date"
+    );
     fireEvent.change(endingConditionOccurencesNumber, {target: {value : Date() }}) ;
   });
 })
@@ -226,9 +239,9 @@ describe('TimeSelector', () => {
       ...defaultRecurrence,
       isAllDay: true
     }
-    const { getByTestId } = renderWithContext(recurrence)
-    expect(getByTestId('recurrence-start-time')).toBeDisabled()
-    expect(getByTestId('recurrence-end-time')).toBeDisabled()
+    renderWithContext(recurrence)
+    expect(screen.getByTestId("recurrence-start-time")).toBeDisabled();
+    expect(screen.getByTestId("recurrence-end-time")).toBeDisabled();
   })
 
   it('Start and End time should be enabled when all day is unchecked', () => {
@@ -236,9 +249,9 @@ describe('TimeSelector', () => {
       ...defaultRecurrence,
       isAllDay: false
     }
-    const { getByTestId } = renderWithContext(recurrence)
-    expect(getByTestId('recurrence-start-time')).toBeEnabled()
-    expect(getByTestId('recurrence-end-time')).toBeEnabled()
+    renderWithContext(recurrence)
+    expect(screen.getByTestId("recurrence-start-time")).toBeEnabled();
+    expect(screen.getByTestId("recurrence-end-time")).toBeEnabled();
   })
 
   it("should handle all day change", () => {
@@ -246,8 +259,8 @@ describe('TimeSelector', () => {
       ...defaultRecurrence,
       isAllDay: false
     }
-    const { getByTestId } = renderWithContext(recurrence)
-    fireEvent.click(getByTestId('recurrence-all-day'))
+    renderWithContext(recurrence)
+    fireEvent.click(screen.getByTestId("recurrence-all-day"));
   });
 
   it("should handle start time change", () => {
@@ -255,10 +268,10 @@ describe('TimeSelector', () => {
       ...defaultRecurrence,
       isAllDay: false
     }
-    const { container, getByTestId } = renderWithContext(recurrence)
+    const { container } = renderWithContext(recurrence)
     expect(container).toBeInTheDocument()
 
-    const keyBoardTimePicker = getByTestId('recurrence-start-time')
+    const keyBoardTimePicker = screen.getByTestId("recurrence-start-time");
 
     fireEvent.change(keyBoardTimePicker, {target: { value: '12:00' }});
   });
@@ -268,10 +281,10 @@ describe('TimeSelector', () => {
       ...defaultRecurrence,
       isAllDay: false
     }
-    const { container, getByTestId } = renderWithContext(recurrence)
+    const { container } = renderWithContext(recurrence)
     expect(container).toBeInTheDocument()
 
-    const keyBoardTimePicker = getByTestId('recurrence-end-time')
+    const keyBoardTimePicker = screen.getByTestId("recurrence-end-time");
 
     fireEvent.change(keyBoardTimePicker, {target: { value: '12:00' }});
   });

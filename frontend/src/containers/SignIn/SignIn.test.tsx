@@ -48,7 +48,7 @@ describe("<SignIn />", () => {
     expect((await error).textContent).toBe("Please fill in all fields");
   });
 
-  it("it should change email and pw input value", () => {
+  it("should change email and pw input value", () => {
     renderWithProviders(<SignIn />);
     const emailInput = screen.getByLabelText("Email address");
 
