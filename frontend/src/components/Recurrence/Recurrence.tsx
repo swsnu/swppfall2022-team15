@@ -8,41 +8,41 @@ import FrequencySelector from './components/FrequencySelector'
 import EndingConditionSelector from './components/EndingConditionSelector'
 import TimeSelector from './components/TimeSelector'
 import DateFnsUtils from "@date-io/date-fns";
-import {MuiPickersUtilsProvider} from "@material-ui/pickers";
+import {MuiPickersUtilsProvider} from "@material-ui/pickers
 
 export interface RecurrenceProps {
-  recurrence: RecurrenceType
-  onChange: (recurrence: RecurrenceType) => void
-  children?: React.ReactNode
+  recurrence: RecurrenceType;
+  onChange: (recurrence: RecurrenceType) => void;
+  children?: React.ReactNode;
 }
 
 const Recurrence = ({
   recurrence,
   onChange,
   classes,
-  children
+  children,
 }: RecurrenceProps & WithStyles<typeof styles>) => {
   const handleFieldChange = (key: string, value: any) => {
     const newRecurrence = {
       ...recurrence,
-      [key]: value
-    }
-    onChange(newRecurrence)
-  }
+      [key]: value,
+    };
+    onChange(newRecurrence);
+  };
 
   const handleFieldsChange = (object: any) => {
     const newRecurrence = {
       ...recurrence,
-      ...object
-    }
-    onChange(newRecurrence)
-  }
+      ...object,
+    };
+    onChange(newRecurrence);
+  };
   const defaultChildren = (
     <Grid
       container
-      direction='column'
-      justify='center'
-      alignItems='center'
+      direction="column"
+      justify="center"
+      alignItems="center"
       spacing={3}
     >
       <Grid item xs={12}>
@@ -58,7 +58,7 @@ const Recurrence = ({
         <TimeSelector />
       </Grid>
     </Grid>
-  )
+  );
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>

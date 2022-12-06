@@ -26,6 +26,28 @@ export const fetchSlackMessages = createAsyncThunk(
   }
 );
 
+// TODO
+// export const fetchEmailMessages = createAsyncThunk(
+//   "message/fetchEmailMessages",
+//   async () => {
+//     return await fetchMessagesWithNotificationType(EnumNotificationType.EMAIL);
+//   }
+// );
+
+// export const fetchWebhookMessages = createAsyncThunk(
+//   "message/fetchWebhookMessages",
+//   async () => {
+//     return await fetchMessagesWithNotificationType(EnumNotificationType.API);
+//   }
+// );
+
+// export const fetchSmsMessages = createAsyncThunk(
+//   "message/fetchSmsMessages",
+//   async () => {
+//     return await fetchMessagesWithNotificationType(EnumNotificationType.SMS);
+//   }
+// );
+
 export const fetchMessagesByProjectId = createAsyncThunk(
   "message/fetchMessages",
   async (projectId: number) => {

@@ -24,7 +24,6 @@ export default function NotiSidebar() {
   const projectsClass = location.pathname === "/projects" ? "active" : "item";
   const targetsClass = location.pathname === "/targets" ? "active" : "item";
   const messagesClass = location.pathname === "/messages" ? "active" : "item";
-  const templatesClass = location.pathname === "/templates" ? "active" : "item";
   const historyClass = location.pathname === "/history" ? "active" : "item";
 
   const dispatch = useDispatch<AppDispatch>();
@@ -95,15 +94,6 @@ export default function NotiSidebar() {
           >
             {" "}
             Messages{" "}
-          </MenuItem>
-          <MenuItem
-            routerLink={<Link to="/templates" />}
-            className={templatesClass}
-            data-testid="templatesButton"
-            icon={templateIcon}
-          >
-            {" "}
-            Templates{" "}
           </MenuItem>
           <MenuItem
             routerLink={<Link to="/history" />}

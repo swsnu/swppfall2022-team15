@@ -47,7 +47,7 @@ export default function TargetListTable() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(fetchTargets());
-  }, []);
+  }, [dispatch]);
   const targets = useSelector(targetListSelector);
 
   return (

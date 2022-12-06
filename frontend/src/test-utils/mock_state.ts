@@ -13,7 +13,7 @@ const preloadedState: RootState = {
         id: 1,
         project_type: "ORGANIZATION",
         name: "test",
-      },
+      }
     ],
   },
   notification: {

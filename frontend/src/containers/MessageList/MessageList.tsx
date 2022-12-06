@@ -1,6 +1,6 @@
 import { Box, Button, MenuItem, Popover, Tab, Tabs } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Iconify from "../../components/Iconify/Iconify";
 
@@ -16,7 +16,7 @@ import { EnumNotificationType } from "../../Enums";
 export default function MessageListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
   const [createModalopen, setCreateModalOpen] = useState(false);
-  const [selectedTab, setSelectedTab] = React.useState(0);
+  const [selectedTab, setSelectedTab] = useState(0);
 
   const handleOpenMenu = (event: any) => {
     setOpen(event.currentTarget);
@@ -40,7 +40,7 @@ export default function MessageListTable() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(fetchMessages());
-  }, []);
+  }, [dispatch]);
   const messages = useSelector(messageListSelector);
 
   function a11yProps(index: number) {
@@ -53,16 +53,59 @@ export default function MessageListTable() {
 
   function renderTable() {
     switch (selectedTab) {
+      // Slack
       case 0:
         return (
           <Box sx={{ "margin-bottom": "20px" }}>
-            <h1>Slack</h1>
             <MessageTable
-              columns={["channel", "message"]}
+              columns={["Channel", "Message"]}
               keys={["channel", "message"]}
               rows={
                 EnumNotificationType.SLACK in messages ? messages.SLACK : []
               }
+              handleOpenMenu={handleOpenMenu}
+            />
+          </Box>
+        );
+      // Email
+      case 1:
+        return (
+          <Box sx={{ "margin-bottom": "20px" }}>
+            <MessageTable
+              columns={["Title", "Message"]}
+              keys={["title", "message"]}
+              // TODO: Slack 내용 말고 Email Data 보여줄 것
+              rows={
+                EnumNotificationType.EMAIL in messages ? messages.EMAIL : []
+              }
+              handleOpenMenu={handleOpenMenu}
+            />
+          </Box>
+        );
+      // Webhook
+      case 2:
+        return (
+          <Box sx={{ "margin-bottom": "20px" }}>
+            <MessageTable
+              columns={["JSON Message"]}
+              keys={["message"]}
+              // TODO: slack 내용 말고 JSON Data 보여줄 것
+              rows={
+                EnumNotificationType.WEBHOOK in messages ? messages.WEBHOOK : []
+              }
+              handleOpenMenu={handleOpenMenu}
+            />
+          </Box>
+        );
+      // SMS
+      case 3:
+        return (
+          <Box sx={{ "margin-bottom": "20px" }}>
+            <MessageTable
+              columns={["Message"]}
+              keys={["message"]}
+              // TODO: Slack 내용 말고 SMS Data 보여줄 것
+              rows={EnumNotificationType.SMS in messages ? messages.SMS : []}
               handleOpenMenu={handleOpenMenu}
             />
           </Box>
@@ -72,7 +115,7 @@ export default function MessageListTable() {
           <MessageTable
             columns={["channel", "message"]}
             keys={["channel", "message"]}
-            rows={EnumNotificationType.SMS in messages ? messages.SMS : []}
+            rows={EnumNotificationType.SLACK in messages ? messages.SLACK : []}
             handleOpenMenu={handleOpenMenu}
           />
         );
@@ -91,7 +134,6 @@ export default function MessageListTable() {
             New Message
           </Button>
         </Grid>
-
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={selectedTab}
@@ -115,13 +157,13 @@ export default function MessageListTable() {
             <Tab
               icon={<Iconify icon={"material-symbols:webhook"} />}
               iconPosition="start"
-              label="Http"
+              label="Webhook"
               {...a11yProps(2)}
             />
             <Tab
               icon={<Iconify icon={"material-symbols:sms-outline"} />}
               iconPosition="start"
-              label="Sms"
+              label="SMS"
               {...a11yProps(3)}
             />
           </Tabs>

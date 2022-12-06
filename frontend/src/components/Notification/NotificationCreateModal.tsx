@@ -42,7 +42,7 @@ export default function NotificationCreateModal(props: IProps) {
   useEffect(() => {
     dispatch(fetchTargets());
     dispatch(fetchMessages());
-  }, []);
+  }, [dispatch]);
 
   const handleClickConfirm = async () => {
     //FIXME

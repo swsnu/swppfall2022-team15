@@ -56,7 +56,7 @@ export default function ProjectListTable() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(fetchProjects());
-  }, []);
+  }, [dispatch]);
   const projects = useSelector(projectListSelector);
 
   return (

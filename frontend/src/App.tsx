@@ -1,4 +1,10 @@
-import {BrowserRouter, Navigate, Outlet, Route, Routes,} from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
 
 import "./App.css";
 import NotiSidebar from "./components/Sidebar/NotiSidebar";
@@ -29,7 +35,6 @@ function App() {
         <Route path="/" element={<Navigate replace to={"/login"} />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        {/* <Route path="/multistep" element={<MultiStepForm />} /> */}
         <Route element={<SidebarLayout />}>
           <Route
             path="/home"

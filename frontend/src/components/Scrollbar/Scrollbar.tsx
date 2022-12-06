@@ -11,7 +11,7 @@ Scrollbar.propTypes = {
 
 function Scrollbar({ children, sx, ...other }: any) {
     const navigatorType = getNavigatorType();
-    const userAgent = navigatorType== "undefined" ? "SSR" : navigator.userAgent;
+    const userAgent = navigatorType=== "undefined" ? "SSR" : navigator.userAgent;
 
     const isMobile =
         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
