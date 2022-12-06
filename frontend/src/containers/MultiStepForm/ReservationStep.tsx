@@ -1,23 +1,26 @@
 import { useState } from "react";
-import { MessageType, TargetType } from "../../types";
+import { MessageType, TargetUserIdNameDto } from "../../types";
 import SplitButton from "../../components/SplitButton/SplitButton";
 import RecurrenceDialog from "../../components/Recurrence/RecurrenceDialog";
 import { RecurrenceType } from "../../components/Recurrence";
-import MessageCreateForm from "../../components/Message/MessageCreateForm";
+import MessageForm from "../../components/Message/MessageForm";
 import { TextField } from "@mui/material";
+import { useSelector } from "react-redux";
+import { targetSelect } from "../../store/slices/target";
 
 interface IProps {
   notificationType: string;
   message: MessageType;
-  target: TargetType;
+  targetUserIds: TargetUserIdNameDto[];
   handleRecurrenceChange: (recurrence: RecurrenceType) => void;
 }
 
 export default function ReservationStep(props: IProps) {
-  const { notificationType, message, target, handleRecurrenceChange } = props;
+  const { notificationType, message, targetUserIds, handleRecurrenceChange } =
+    props;
   const [open, setOpen] = useState(false);
 
-  const messageForm = MessageCreateForm(
+  const messageForm = MessageForm(
     {
       notificationType,
       name: message.name,
@@ -29,7 +32,12 @@ export default function ReservationStep(props: IProps) {
     },
     true
   );
-  // const targetUserForm = TargetCreateForm({target: target, setTarget: (_: TargetType) => {}}, true);
+
+  const targetState = useSelector(targetSelect);
+  // runtime 에 데이터가 바뀜. mutable.
+  const targetUsers = targetState.targets.filter((target) =>
+    targetUserIds.map((targetUser) => targetUser.value).includes(target.id)
+  );
 
   return (
     <>
@@ -58,7 +66,10 @@ export default function ReservationStep(props: IProps) {
       <br />
       <br />
       <h1>TargetUser</h1>
-      {/*{targetUserForm}*/}
+      {targetUsers.map((targetUser) => {
+        const data = `${targetUser.id}::${targetUser.name}`;
+        return <h1>{data}</h1>;
+      })}
       <br />
       <br />
       <br />

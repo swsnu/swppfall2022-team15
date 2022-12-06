@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMessages, messageSelect } from "../../store/slices/message";
 import { AppDispatch } from "../../store";
-import MessageCreateForm from "../../components/Message/MessageCreateForm";
+import MessageCreateForm from "../../components/Message/MessageForm";
 import { MessageType } from "../../types";
 import MessageTable from "../../components/Message/MessageTable";
 import { messageCreateService } from "../../components/Message/utils/MessageRequestService";
@@ -151,7 +151,9 @@ export default function MessageStep(props: IProps) {
               }}
             />
           </Grid>
+          <Button onClick={()=> setDialogOpen(false)}>Close</Button>
           <Grid lg></Grid>
+
         </Grid>
       </Dialog>
       <Button

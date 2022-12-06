@@ -16,7 +16,7 @@ import { AppDispatch } from "../../store";
 import { fetchProjects } from "../../store/slices/project";
 import { EnumNotificationType } from "../../Enums";
 import { messageCreateService } from "./utils/MessageRequestService";
-import MessageCreateForm from "./MessageCreateForm";
+import MessageCreateForm from "./MessageForm";
 
 interface IProps {
   open: any;

@@ -58,7 +58,8 @@ describe("MessageStep", () => {
           },
         }}
         setMessage={() => {}}
-      />, { preloadedState }
+      />,
+      { preloadedState }
     );
     fireEvent.click(screen.getByTestId("importMessageButton"));
   });
@@ -85,11 +86,9 @@ describe("MessageStep", () => {
           },
         }}
         setMessage={() => {}}
-      />, { preloadedState }
+      />,
+      { preloadedState }
     );
     fireEvent.click(screen.getByTestId("confirm-button"));
   });
-
-  
-
 });

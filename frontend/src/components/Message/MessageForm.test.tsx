@@ -1,5 +1,5 @@
 import { renderWithProviders } from '../../test-utils/mocks';
-import MessageCreateForm from './MessageCreateForm';
+import MessageForm from './MessageForm';
 import { EnumNotificationType } from '../../Enums';
 import { fireEvent, screen } from '@testing-library/react';
 import { clear } from 'console';
@@ -8,7 +8,7 @@ import { clear } from 'console';
 describe("MessageCreateForm", () => {
   it("should render", () => {
     renderWithProviders(
-      <MessageCreateForm
+      <MessageForm
         notificationType={EnumNotificationType.SLACK}
         name=""
         setName={() => {}}
@@ -26,7 +26,7 @@ describe("MessageCreateForm", () => {
     const setFieldErrors = jest.fn();
 
     renderWithProviders(
-      <MessageCreateForm
+      <MessageForm
         notificationType={EnumNotificationType.SLACK}
         name=""
         setName={setName}

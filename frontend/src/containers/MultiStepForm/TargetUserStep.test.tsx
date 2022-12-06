@@ -4,7 +4,7 @@ import { fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 describe("TargetUserStep", () => {
-  it("should render", () => {
+  it("should render correctly", () => {
     renderWithProviders(
       <TargetUserStep
         notificationType="test"
@@ -14,29 +14,12 @@ describe("TargetUserStep", () => {
         setEndpoint={() => {}}
         data={{}}
         setData={() => {}}
-        targetUser={null}
-        setTargetUser={() => {}}
+        targetUserIdNameList={[]}
+        setTargetUserIdNameList={() => {}}
       />
     );
   });
 
-  it("should handle click add now and close", () => {
-    renderWithProviders(
-      <TargetUserStep
-        notificationType="test"
-        targetName="test"
-        setTargetName={() => {}}
-        endpoint="test"
-        setEndpoint={() => {}}
-        data={{}}
-        setData={() => {}}
-        targetUser={null}
-        setTargetUser={() => {}}
-      />
-    );
-    fireEvent.click(screen.getByText("Add now"));
-    userEvent.keyboard("{esc}");
-  });
 
   /*
 it("should handle select", () => {

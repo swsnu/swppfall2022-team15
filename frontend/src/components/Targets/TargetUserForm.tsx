@@ -21,7 +21,7 @@ interface IProps {
   setData: (data: any) => void;
 }
 
-export const TargetCreateForm = (props: IProps) => {
+export const TargetUserForm = (props: IProps) => {
   let form;
   const {
     notificationType,

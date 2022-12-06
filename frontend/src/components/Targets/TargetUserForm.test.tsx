@@ -1,12 +1,12 @@
 import { EnumNotificationType } from "../../Enums";
 import { renderWithProviders } from "../../test-utils/mocks";
-import { TargetCreateForm } from "./TargetCreateForm";
+import { TargetUserForm } from "./TargetUserForm";
 import { fireEvent, screen } from "@testing-library/react";
 
 describe("TargetCreateForm", () => {
   it("should render email", () => {
     renderWithProviders(
-      <TargetCreateForm
+      <TargetUserForm
         notificationType={EnumNotificationType.EMAIL}
         targetName={"test"}
         setTargetName={() => {}}
@@ -20,7 +20,7 @@ describe("TargetCreateForm", () => {
 
   it("should render slack", () => {
     renderWithProviders(
-      <TargetCreateForm
+      <TargetUserForm
         notificationType={EnumNotificationType.SLACK}
         targetName={"test"}
         setTargetName={() => {}}
@@ -34,7 +34,7 @@ describe("TargetCreateForm", () => {
 
   it("should render webhook", () => {
     renderWithProviders(
-      <TargetCreateForm
+      <TargetUserForm
         notificationType={EnumNotificationType.WEBHOOK}
         targetName={"test"}
         setTargetName={() => {}}
@@ -48,7 +48,7 @@ describe("TargetCreateForm", () => {
 
   it("should render sms", () => {
     renderWithProviders(
-      <TargetCreateForm
+      <TargetUserForm
         notificationType={EnumNotificationType.SMS}
         targetName={"test"}
         setTargetName={() => {}}
@@ -62,7 +62,7 @@ describe("TargetCreateForm", () => {
 
   it("should handle change: slack api-key", () => {
     renderWithProviders(
-      <TargetCreateForm
+      <TargetUserForm
         notificationType={EnumNotificationType.SLACK}
         targetName={"test"}
         setTargetName={() => {}}
@@ -78,7 +78,7 @@ describe("TargetCreateForm", () => {
 
   it("should handle change: webhook endpoint", () => {
     renderWithProviders(
-      <TargetCreateForm
+      <TargetUserForm
         notificationType={EnumNotificationType.WEBHOOK}
         targetName={"test"}
         setTargetName={() => {}}
@@ -94,7 +94,7 @@ describe("TargetCreateForm", () => {
 
   it("should handle change: webhook api auth", () => {
     renderWithProviders(
-      <TargetCreateForm
+      <TargetUserForm
         notificationType={EnumNotificationType.WEBHOOK}
         targetName={"test"}
         setTargetName={() => {}}
@@ -110,7 +110,7 @@ describe("TargetCreateForm", () => {
 
   it("should handle apiAuth: basic", () => {
     renderWithProviders(
-      <TargetCreateForm
+      <TargetUserForm
         notificationType={EnumNotificationType.WEBHOOK}
         targetName={"test"}
         setTargetName={() => {}}
@@ -126,7 +126,7 @@ describe("TargetCreateForm", () => {
 
   it("should handle apiAuth: basic, data change", () => {
     renderWithProviders(
-      <TargetCreateForm
+      <TargetUserForm
         notificationType={EnumNotificationType.WEBHOOK}
         targetName={"test"}
         setTargetName={() => {}}
@@ -149,7 +149,7 @@ describe("TargetCreateForm", () => {
 
   it("should handle apiAuth: bearer", () => {
     renderWithProviders(
-      <TargetCreateForm
+      <TargetUserForm
         notificationType={EnumNotificationType.WEBHOOK}
         targetName={"test"}
         setTargetName={() => {}}
@@ -166,7 +166,7 @@ describe("TargetCreateForm", () => {
 
   it("should handle apiAuth: bearer, data change", () => {
     renderWithProviders(
-      <TargetCreateForm
+      <TargetUserForm
         notificationType={EnumNotificationType.WEBHOOK}
         targetName={"test"}
         setTargetName={() => {}}
@@ -185,7 +185,7 @@ describe("TargetCreateForm", () => {
 
   it("should handle apiAuth: api_key", () => {
     renderWithProviders(
-      <TargetCreateForm
+      <TargetUserForm
         notificationType={EnumNotificationType.WEBHOOK}
         targetName={"test"}
         setTargetName={() => {}}
@@ -201,7 +201,7 @@ describe("TargetCreateForm", () => {
 
   it("should handle apiAuth: api_key, data change", async () => {
     renderWithProviders(
-      <TargetCreateForm
+      <TargetUserForm
         notificationType={EnumNotificationType.WEBHOOK}
         targetName={"test"}
         setTargetName={() => {}}
@@ -224,7 +224,7 @@ describe("TargetCreateForm", () => {
 
   it("should handle targetName change", () => {
     renderWithProviders(
-      <TargetCreateForm
+      <TargetUserForm
         notificationType={EnumNotificationType.WEBHOOK}
         targetName={"test"}
         setTargetName={() => {}}

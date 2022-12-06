@@ -9,6 +9,7 @@ describe("<TargetUserMultiSelect />", () => {
         notification_type="webhook"
         selected={[]}
         setSelected={() => {}}
+        targetUsers={[]}
       />
     );
   });
@@ -20,6 +21,7 @@ describe("<TargetUserMultiSelect />", () => {
         notification_type="webhook"
         selected={[{ label: "test", value: 1 }]}
         setSelected={setSelected}
+        targetUsers={[]}
       />
     );
   });
