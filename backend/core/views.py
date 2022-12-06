@@ -9,7 +9,7 @@ class CreateByNotificationTypeMixin:
     def create(self, request, *args, **kwargs):
         if not ('notification_type' in request.data and
                 request.data['notification_type'] in EnumNotificationType):
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response('Invalid Notification Type', status=status.HTTP_400_BAD_REQUEST)
         serializer_class = self.get_create_serializer_class()
         serializer = serializer_class(
             data=request.data,

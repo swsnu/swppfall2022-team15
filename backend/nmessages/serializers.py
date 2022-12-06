@@ -16,13 +16,13 @@ class SlackNMessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NMessage
-        fields = ('user', 'channel', 'message', 'notification_type', 'content')
+        fields = ('user', 'channel', 'message', 'notification_type', 'data',)
         extra_kwargs = {
-            'content': {'read_only': True},
+            'data': {'read_only': True},
         }
 
     def create(self, validated_data):
-        validated_data['content'] = {
+        validated_data['data'] = {
             'channel': validated_data.pop('channel'),
             'message': validated_data.pop('message')
         }

@@ -4,17 +4,20 @@ import axios from "axios";
 import { RootState } from "..";
 import { EnumNotificationType } from "../../Enums";
 import { fetchMessagesWithNotificationType } from "../../services/message";
-import { MessageType } from "../../types";
+import { MessageListType, MessageType } from "../../types";
 
 export const fetchMessages = createAsyncThunk(
   "message/fetchMessages",
   async () => {
-    const result: any = {};
+    const result: MessageListType = {};
     await Promise.all(
       Object.keys(EnumNotificationType).map(async (nt) => {
         result[nt] = await fetchMessagesWithNotificationType(nt);
       })
     );
+
+    console.log("fetchMessages @ slices/message.ts");
+
     return result;
   }
 );

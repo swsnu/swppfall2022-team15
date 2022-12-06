@@ -6,7 +6,7 @@ describe("MessageTable", () => {
     renderWithProviders(
       <MessageTable
         columns={["col1"]}
-        rows={[{ content: { col1: "" } }]}
+        rows={[{ data: { col1: "" } }]}
         keys={["col1"]}
         handleOpenMenu={() => {}}
       />

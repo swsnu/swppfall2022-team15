@@ -184,7 +184,7 @@ class TaskHandleChunkNotificationTestCase(TestCase):
         target_user = baker.make(TargetUser, notification_type=EnumNotificationType.SLACK,
                                  data={'api_key': 'key'})
         nmessage = baker.make(NMessage, notification_type=EnumNotificationType.SLACK,
-                              content={'message': 'm', 'channel': 'ch'})
+                              data={'message': 'm', 'channel': 'ch'})
         notification_config = baker.make(NotificationConfig, type=EnumNotificationType.SLACK,
                                          nmessage=nmessage)
         reservation = baker.make(Reservation, notification_config=notification_config)

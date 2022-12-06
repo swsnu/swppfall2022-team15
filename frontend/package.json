@@ -88,5 +88,8 @@
       "!src/types.ts",
       "!src/components/Reservation.tsx"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/react-hooks": "^8.0.1"
   }
 }

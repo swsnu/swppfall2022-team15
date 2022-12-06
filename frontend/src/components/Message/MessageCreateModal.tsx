@@ -5,10 +5,10 @@ import {
   DialogContent,
   DialogTitle,
   InputLabel,
+  TextField,
   MenuItem,
   Select,
   SelectChangeEvent,
-  TextField,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -16,7 +16,9 @@ import { fetchMessages } from "../../store/slices/message";
 import { AppDispatch } from "../../store";
 import { fetchProjects } from "../../store/slices/project";
 import { EnumNotificationType } from "../../Enums";
-import { createMessage2 } from "../../services/message";
+import MessageCreateForm from "./MessageCreateForm";
+import { messageCreateService } from "./utils/MessageRequestSerivce";
+import { createMessage } from "../../services/message";
 
 interface IProps {
   open: any;
@@ -24,16 +26,18 @@ interface IProps {
 }
 
 export default function MessageCreateModal(props: IProps) {
-  const [notificationType, setNotificationtype] = useState("");
+  const [notificationType, setNotificationType] = useState("");
+  const [name, setName] = useState("");
   const [content, setContent]: [any, any] = useState({});
   const [fieldErrors, setFieldErrors]: [any, any] = useState({});
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(fetchProjects());
-  }, [dispatch]);
+  }, []);
 
   const clearForm = () => {
+    setName("");
     setContent({});
   };
 
@@ -47,7 +51,7 @@ export default function MessageCreateModal(props: IProps) {
             Boolean(content.channel) &&
             Boolean(content.message)
           )
-            await createMessage2(notificationType, {
+            await createMessage(notificationType, {
               channel: content.channel,
               message: content.message,
             });
@@ -76,7 +80,7 @@ export default function MessageCreateModal(props: IProps) {
             Boolean(content.title) &&
             Boolean(content.message)
           )
-            await createMessage2(notificationType, {
+            await createMessage(notificationType, {
               title: content.title,
               message: content.message,
             });
@@ -100,7 +104,7 @@ export default function MessageCreateModal(props: IProps) {
           break;
         case EnumNotificationType.WEBHOOK:
           if ("message" in content && Boolean(content.message))
-            await createMessage2(notificationType, {
+            await createMessage(notificationType, {
               message: content.message,
             });
           else {
@@ -117,7 +121,7 @@ export default function MessageCreateModal(props: IProps) {
           break;
         case EnumNotificationType.SMS:
           if ("message" in content && Boolean(content.message))
-            await createMessage2(notificationType, {
+            await createMessage(notificationType, {
               message: content.message,
             });
           else {
@@ -290,7 +294,9 @@ export default function MessageCreateModal(props: IProps) {
       >
         <DialogTitle>New Message</DialogTitle>
         <DialogContent>
-          <InputLabel id="demo-simple-select-label">Project Type</InputLabel>
+          <InputLabel id="demo-simple-select-label">
+            Notification Type
+          </InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -299,13 +305,13 @@ export default function MessageCreateModal(props: IProps) {
               "data-testid": "type-input",
             }}
             onChange={(event: SelectChangeEvent) => {
-              setNotificationtype(event.target.value as string);
+              setNotificationType(event.target.value as string);
             }}
             fullWidth
           >
-            <MenuItem value={EnumNotificationType.SLACK}>Slack</MenuItem>
-            <MenuItem value={EnumNotificationType.EMAIL}>Email</MenuItem>
-            <MenuItem value={EnumNotificationType.WEBHOOK}>Webhook</MenuItem>
+            <MenuItem value={EnumNotificationType.SLACK}>SLACK</MenuItem>
+            <MenuItem value={EnumNotificationType.EMAIL}>EMAIL</MenuItem>
+            <MenuItem value={EnumNotificationType.WEBHOOK}>WEBHOOK</MenuItem>
             <MenuItem value={EnumNotificationType.SMS}>SMS</MenuItem>
           </Select>
           {form}
