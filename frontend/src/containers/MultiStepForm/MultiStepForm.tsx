@@ -11,7 +11,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import NotificationTypeForm from "./NotificaitonTypeStep";
-import {MessageType, TargetType} from "../../types";
+import {MessageType, TargetType, TargetUserIdNameDto} from "../../types";
 import {RecurrenceType} from "../../components/Recurrence";
 
 const steps = [
@@ -39,7 +39,7 @@ export default function MultiStepForm() {
   const [fieldErrors, setFieldErrors] = useState<any>({});
 
   // Target
-  const [targetUser, setTargetUser] = React.useState<TargetType | null>(null);
+  const [targetUsers, setTargetUsers] = React.useState<TargetUserIdNameDto[]>([]);
   // for create
   const [targetName, setTargetName] = useState("");
   const [endpoint, setEndpoint] = useState("");
@@ -112,8 +112,8 @@ export default function MultiStepForm() {
               />
               : null
           }
-          {activeStep === 2 ? <TargetUserStep notificationType={notificationType} targetName={targetName} setTargetName={setTargetName} endpoint={endpoint} setEndpoint={setEndpoint} data={data} setData={setData} targetUser={targetUser} setTargetUser={setTargetUser} /> : null}
-          {activeStep === 3 ? <ReservationStep message={message!} target={targetUser!} notificationType={notificationType} handleRecurrenceChange={setRecurrence}  /> : null}
+          {activeStep === 2 ? <TargetUserStep notificationType={notificationType} targetName={targetName} setTargetName={setTargetName} endpoint={endpoint} setEndpoint={setEndpoint} data={data} setData={setData} targetUserIdNameList={targetUsers} setTargetUserIdNameList={setTargetUsers} /> : null}
+          {activeStep === 3 ? <ReservationStep message={message!} targetUserIds={targetUsers} notificationType={notificationType} handleRecurrenceChange={setRecurrence}  /> : null}
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Button
               color="inherit"

@@ -4,8 +4,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchMessages, messageSelect} from "../../store/slices/message";
 import {AppDispatch} from "../../store";
-import {projectSelect} from "../../store/slices/project";
-import MessageCreateForm from "../../components/Message/MessageCreateForm";
+import MessageForm from "../../components/Message/MessageForm";
 import {MessageType} from "../../types";
 import MessageTable from "../../components/Message/MessageTable";
 import {messageCreateService} from "../../components/Message/utils/MessageRequestSerivce";
@@ -57,7 +56,7 @@ export default function MessageStep(props: IProps) {
     }
   };
 
-  const form = MessageCreateForm(props, mode !=='create');
+  const form = MessageForm(props, mode !=='create');
   const getContentFieldName = (notificationType: string): string[] => {
     switch (notificationType) {
       case 'EMAIL':
@@ -65,7 +64,7 @@ export default function MessageStep(props: IProps) {
       case 'SMS':
         return ['content']
       case 'SLACK':
-        return ['channel', 'message']
+        return ['id', 'name', 'data.channel', 'data.message']
     }
     return [""];
   }
@@ -117,7 +116,8 @@ export default function MessageStep(props: IProps) {
             setDialogOpen(false);
           }}/>
           </Grid>
-            <Grid lg></Grid>
+          <Button onClick={()=> setDialogOpen(false)}>Close</Button>
+          <Grid lg></Grid>
 
         </Grid>
       </Dialog>

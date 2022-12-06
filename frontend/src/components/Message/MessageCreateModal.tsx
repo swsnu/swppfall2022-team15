@@ -16,7 +16,7 @@ import {AppDispatch} from "../../store";
 import {fetchProjects} from "../../store/slices/project";
 import {EnumNotificationType} from "../../Enums";
 import {messageCreateService} from "./utils/MessageRequestSerivce";
-import MessageCreateForm from "./MessageCreateForm";
+import MessageForm from "./MessageForm";
 
 interface IProps {
   open: any;
@@ -51,7 +51,7 @@ export default function MessageCreateModal(props: IProps) {
     }
   };
 
-  const form = MessageCreateForm({notificationType, name, setName, data: content, setData: setContent, fieldErrors, setFieldErrors});
+  const form = MessageForm({notificationType, name, setName, data: content, setData: setContent, fieldErrors, setFieldErrors});
 
   return (
     <div>

@@ -1,35 +1,28 @@
-import {
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  ListSubheader,
-} from "@mui/material";
-import { useEffect, useState } from "react";
-import { MultiSelect } from "react-multi-select-component";
-import { fetchTargets } from "../../services/target";
+import {List, ListItem, ListItemButton, ListItemText, ListSubheader,} from "@mui/material";
+import {useEffect, useState} from "react";
+import {MultiSelect} from "react-multi-select-component";
 import Iconify from "../Iconify/Iconify";
+import {TargetType, TargetUserIdNameDto} from "../../types";
 
 interface IProps {
   notification_type: string;
-  selected: any;
-  setSelected: (selected: any) => void;
+  selected: TargetUserIdNameDto[];
+  setSelected: (selected: TargetUserIdNameDto[]) => void;
+  targetUsers: TargetType[];
 }
 
 export default function TargetUserMultiSelect(props: IProps) {
-  const {selected, setSelected} = props;
+  const {targetUsers, selected, setSelected, notification_type} = props;
   const [options, setOptions]: any = useState([]);
-  const initTargetUsers = async () => {
-    const resp = await fetchTargets(props.notification_type);
-    setOptions(
-      resp?.data.map((target) => {
-        return { label: target.name, value: target.id };
-      })
-    );
-  };
+
   useEffect(() => {
-    initTargetUsers();
-  }, [props.notification_type]);
+    setOptions(
+        targetUsers.map((target) => {
+          return { label: target.name, value: target.id };
+        }
+      )
+    );
+  }, [targetUsers]);
 
   return (
     <>
