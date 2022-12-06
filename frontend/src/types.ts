@@ -41,7 +41,7 @@ export interface TargetType {
 export interface MessageType {
   id: number;
   name: string;
-  content: SlackContent | EmailContent;
+  data: any;
 }
 
 export interface SlackContent {

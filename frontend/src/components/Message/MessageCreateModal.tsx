@@ -80,7 +80,7 @@ export default function MessageCreateModal(props: IProps) {
           >
             <MenuItem value={EnumNotificationType.SLACK}>SLACK</MenuItem>
             <MenuItem value={EnumNotificationType.EMAIL}>EMAIL</MenuItem>
-            <MenuItem value={EnumNotificationType.WEBHOOK}>API</MenuItem>
+            <MenuItem value={EnumNotificationType.WEBHOOK}>WEBHOOK</MenuItem>
             <MenuItem value={EnumNotificationType.SMS}>SMS</MenuItem>
           </Select>
           <br/>

@@ -42,7 +42,7 @@ export default function MessageTable(props: {
                   <TableRow hover key={row.id} tabIndex={-1} onClick={()=>handleClickRow(row.id)}>
                     {props.keys.map((key: string) => {
                       return (
-                        <TableCell align="left">{row.content[key]}</TableCell>
+                        <TableCell align="left">{row.data[key]}</TableCell>
                       );
                     })}
                     {props.handleOpenMenu && (

@@ -25,7 +25,7 @@ class NMessagesAPITestCase(APITestCase):
         # Then
         self.assertEqual(response.status_code, 201)
         self.assertEqual(
-            NMessage.objects.filter(notification_type=EnumNotificationType.SLACK).last().content[
+            NMessage.objects.filter(notification_type=EnumNotificationType.SLACK).last().data[
                 'channel'],
             data['channel'])
 
