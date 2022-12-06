@@ -14,6 +14,9 @@ class TargetUserSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         notification_type = attrs.get('notification_type')
         data = attrs['data']
+
+        if 'auth' not in data:
+            raise serializers.ValidationError('No auth provided')
         if notification_type == EnumNotificationType.SLACK:
             if 'api_key' not in data:
                 raise serializers.ValidationError('No API key provided')
