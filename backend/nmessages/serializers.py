@@ -13,7 +13,6 @@ class NMessageSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         notification_type = attrs['notification_type']
-        print(attrs)
         data = attrs['data']
         if notification_type == EnumNotificationType.SLACK:
             if not ('channel' in data and 'message' in data):
