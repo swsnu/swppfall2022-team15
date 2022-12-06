@@ -38,8 +38,11 @@ export default function TargetUserStep(props: IProps) {
     dispatch(fetchTargets());
   }, []);
 
-  const targetuserState = useSelector(targetSelect);
-  const targetusers = targetuserState.targets;
+  const clearForm = () => {
+    setTargetName("");
+    setEndpoint("");
+    setData({});
+  }
 
   const handleClickConfirm = async () => {
     if (
@@ -55,6 +58,7 @@ export default function TargetUserStep(props: IProps) {
       dispatch(createTarget(requestData));
       dispatch(fetchTargets());
       setDialogOpen(false);
+      clearForm()
     }
   };
 

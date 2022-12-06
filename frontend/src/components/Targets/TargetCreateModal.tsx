@@ -33,6 +33,13 @@ export default function TargetCreateModal(props: IProps) {
     dispatch(fetchProjects());
   }, []);
 
+  const clearForm = () => {
+    setTargetName("");
+    setNotificationType("");
+    setEndpoint("");
+    setData({});
+  }
+
   const handleClickConfirm = async () => {
     if (
         (targetName && notificationType && endpoint) || // NON SLACK
@@ -44,6 +51,7 @@ export default function TargetCreateModal(props: IProps) {
         endpoint: endpoint,
         data: data,
       };
+      clearForm()
       dispatch(createTarget(requestData));
       props.handleClose();
       dispatch(fetchTargets());

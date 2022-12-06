@@ -35,6 +35,7 @@ export default function MessageCreateModal(props: IProps) {
   }, []);
 
   const clearForm = () => {
+    setName("");
     setContent({});
   };
 
