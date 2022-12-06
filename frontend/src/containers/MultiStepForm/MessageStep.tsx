@@ -1,5 +1,5 @@
 import {FormWrapper} from "./FormWrapper";
-import {Button, Dialog, FormControl, FormControlLabel, Radio, RadioGroup, TableContainer,} from "@mui/material";
+import {Button, Dialog, FormControl, FormControlLabel, Grid, Radio, RadioGroup,} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchMessages, messageSelect} from "../../store/slices/message";
@@ -8,7 +8,6 @@ import {projectSelect} from "../../store/slices/project";
 import MessageCreateForm from "../../components/Message/MessageCreateForm";
 import {MessageType} from "../../types";
 import MessageTable from "../../components/Message/MessageTable";
-import Scrollbar from "../../components/Scrollbar/Scrollbar";
 import {messageCreateService} from "../../components/Message/utils/NotificationRequestSerivce";
 
 
@@ -96,22 +95,32 @@ export default function MessageStep(props: IProps) {
         onClose={()=> setDialogOpen(false)}
         maxWidth="lg"
         fullWidth={true}>
-        <Scrollbar>
-          <TableContainer>
-            <MessageTable
-              columns={contentFieldList} // todo: refactor
-              keys={contentFieldList}
-              rows={messages[notificationType]}
-              handleOpenMenu={null}
-              onClickRow={(id: number) => {
-                const message = messages[notificationType].find((message: any) => message.id === id);
-                setName(message?.name);
-                setContent(message?.content)
-                setMessage(message);
-                setDialogOpen(false);
-              }}/>
-          </TableContainer>
-        </Scrollbar>
+        <Grid
+          container
+          style={{ minHeight: "100vh" }}
+          alignItems="top"
+          justifyContent="top"
+
+          marginTop={4}>
+          <Grid lg></Grid>
+          <Grid lg={10}>
+
+        <MessageTable
+          columns={contentFieldList} // todo: refactor
+          keys={contentFieldList}
+          rows={messages[notificationType]}
+          handleOpenMenu={null}
+          onClickRow={(id: number) => {
+            const message = messages[notificationType].find((message: any) => message.id === id);
+            setName(message?.name);
+            setContent(message?.content)
+            setMessage(message);
+            setDialogOpen(false);
+          }}/>
+          </Grid>
+            <Grid lg></Grid>
+
+        </Grid>
       </Dialog>
       <Button data-testid="importMessageButton" variant="contained" onClick={handleImportButton}>Import</Button>
       {form}
