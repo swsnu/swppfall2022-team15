@@ -8,7 +8,7 @@ import {projectSelect} from "../../store/slices/project";
 import MessageCreateForm from "../../components/Message/MessageCreateForm";
 import {MessageType} from "../../types";
 import MessageTable from "../../components/Message/MessageTable";
-import {messageCreateService} from "../../components/Message/utils/NotificationRequestSerivce";
+import {messageCreateService} from "../../components/Message/utils/MessageRequestSerivce";
 
 
 interface IProps {
