@@ -24,7 +24,8 @@ class TargetUserAPITestCase(APITestCase):
             'notification_type': EnumNotificationType.SLACK,
             'name': 'name',
             'data': {
-                'api_key': 'api-key'
+                'auth': 'api_key',
+                'api_key': 'api-key',
             }
         }
         response = self.client.post(reverse('targetuser-list'), data=request_data, format='json')
