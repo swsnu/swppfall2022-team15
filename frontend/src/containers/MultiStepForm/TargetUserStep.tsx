@@ -1,13 +1,13 @@
-import {Button, Dialog,} from "@mui/material";
+import {Button, Dialog, Grid,} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "../../store";
 import {createTarget, fetchTargets, targetSelect} from "../../store/slices/target";
-import {fetchProjects} from "../../store/slices/project";
 import TargetUserMultiSelect from "../../components/TargetUserMultiSelect/TargetUserMultiSelect";
 import {TargetCreateForm} from "../../components/Targets/TargetCreateForm";
 import {FormWrapper} from "./FormWrapper";
 import {TargetType} from "../../types";
+import {EnumNotificationType} from "../../Enums";
 
 
 interface IProps {
@@ -35,23 +35,26 @@ export default function TargetUserStep(props: IProps) {
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(fetchProjects());
+    dispatch(fetchTargets());
   }, []);
 
   const targetuserState = useSelector(targetSelect);
   const targetusers = targetuserState.targets;
 
   const handleClickConfirm = async () => {
-    if (targetName && props.notificationType && endpoint) {
+    if (
+        (targetName && notificationType && endpoint) || // NON SLACK
+        (notificationType==EnumNotificationType.SLACK.toString() && targetName && 'api_key' in data) // SLACK
+    ) {
       const requestData = {
         name: targetName,
-        notification_type: props.notificationType,
+        notification_type: notificationType,
         endpoint: endpoint,
-        data: props.data,
+        data: data,
       };
       dispatch(createTarget(requestData));
       dispatch(fetchTargets());
-      setDialogOpen(false)
+      setDialogOpen(false);
     }
   };
 
@@ -64,8 +67,19 @@ export default function TargetUserStep(props: IProps) {
           fullWidth
           open={dialogOpen}
           onClose={() => setDialogOpen(false)}>
-          {form}
-          <Button data-testid="confirm-button" onClick={handleClickConfirm}>Confirm</Button>
+          <Grid
+            container
+            style={{ minHeight: "50vh" }}
+            alignItems="top"
+            justifyContent="top"
+            marginTop={4}>
+            <Grid lg/>
+            <Grid lg={10}>
+              {form}
+              <Button data-testid="confirm-button" onClick={handleClickConfirm}>Confirm</Button>
+             </Grid>
+            <Grid lg/>
+          </Grid>
         </Dialog>
         <Button variant="contained" onClick={() => setDialogOpen(true)}>Add now</Button>
         <TargetUserMultiSelect notification_type={props.notificationType} selected={selected} setSelected={setSelected} />

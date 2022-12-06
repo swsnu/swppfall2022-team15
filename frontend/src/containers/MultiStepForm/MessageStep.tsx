@@ -100,7 +100,6 @@ export default function MessageStep(props: IProps) {
           style={{ minHeight: "100vh" }}
           alignItems="top"
           justifyContent="top"
-
           marginTop={4}>
           <Grid lg></Grid>
           <Grid lg={10}>
