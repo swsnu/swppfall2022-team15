@@ -95,8 +95,8 @@ export default function NotificationCreateModal(props: IProps) {
             }}
             fullWidth
           >
-            <MenuItem value={EnumNotificationType.API}>
-              {EnumNotificationType.API}
+            <MenuItem value={EnumNotificationType.WEBHOOK}>
+              {EnumNotificationType.WEBHOOK}
             </MenuItem>
             <MenuItem value={EnumNotificationType.SMS}>
               {EnumNotificationType.SMS}
@@ -112,12 +112,12 @@ export default function NotificationCreateModal(props: IProps) {
           <br />
           <br />
           <br />
-          {/*<InputLabel id="demo-simple-select-label">Template</InputLabel>*/}
+          {/*<InputLabel id="demo-simple-select-Label">Template</InputLabel>*/}
           {/*<Select*/}
-          {/*  labelId="demo-simple-select-label"*/}
+          {/*  labelId="demo-simple-select-Label"*/}
           {/*  id="demo-simple-select"*/}
           {/*  value={template}*/}
-          {/*  label="notification type"*/}
+          {/*  Label="notification type"*/}
           {/*  onChange={(event: SelectChangeEvent) => {*/}
           {/*    setTemplate(event.target.value);*/}
           {/*  }}*/}

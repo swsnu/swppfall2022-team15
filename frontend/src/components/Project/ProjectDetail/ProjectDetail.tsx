@@ -1,14 +1,14 @@
-import { Grid } from "@mui/material";
+import {Grid} from "@mui/material";
 import Button from '@mui/material/Button';
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
-import { AppDispatch } from "../../../store";
-import { fetchNotifications, notificationListSelector } from "../../../store/slices/notifications";
-import { fetchProject } from "../../../store/slices/project";
-import NotificationCreateModal from "../../Notification/NotificationCreateModal";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router";
+import {AppDispatch} from "../../../store";
+import {fetchNotifications, notificationListSelector} from "../../../store/slices/notifications";
+import {fetchProject} from "../../../store/slices/project";
 import CollapsibleTable from "../../Table/CollapsibleTable";
-import { Container } from "@mui/system";
+import {Container} from "@mui/system";
+import MultiStepFormDialog from "../../../containers/MultiStepFormDialog/MultiStepFormDialog";
 
 export default function ProjectDetail() {
   const [open, setOpen] = useState(false);
@@ -32,10 +32,15 @@ export default function ProjectDetail() {
 
   return (
     <>
-      <NotificationCreateModal
+      {/*<NotificationCreateModal*/}
+      {/*  open={open}*/}
+      {/*  handleClose={() => setOpen(false)}*/}
+      {/*  />*/}
+      {/*responsive, size*/}
+      <MultiStepFormDialog
         open={open}
-        handleClose={() => setOpen(false)}
-      ></NotificationCreateModal>
+        onClose={()=> setOpen(false)} />
+
       <Container>
         <Grid container justifyContent="flex-end">
           <Button data-testid="createNotificationButton" variant="contained" onClick={handleCreateNotification}>Create Notification</Button>

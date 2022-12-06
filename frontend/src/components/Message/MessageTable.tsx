@@ -16,7 +16,14 @@ export default function MessageTable(props: {
   keys: any;
   rows: any;
   handleOpenMenu: any;
+  onClickRow?: (e:any) => void;
 }) {
+  const handleClickRow = (id: number) => {
+    if (props.onClickRow) {
+      props.onClickRow(id);
+    }
+  }
+
   return (
     <Card>
       <Scrollbar>
@@ -32,13 +39,20 @@ export default function MessageTable(props: {
             <TableBody>
               {props.rows.map((row: any) => {
                 return (
-                  <TableRow hover key={row.id} tabIndex={-1}>
+                  <TableRow hover key={row.id} tabIndex={-1} onClick={()=>handleClickRow(row.id)}>
                     {props.keys.map((key: string) => {
+                      const fields = key.split('.')
+                      let value = row;
+
+                      fields.forEach((field) => {
+                        value = value[field];
+                      });
                       return (
-                        <TableCell align="left">{row.content[key]}</TableCell>
+                        <TableCell align="left">{value}</TableCell>
                       );
                     })}
-                    <TableCell align="right">
+                    {props.handleOpenMenu && (
+                      <TableCell align="right">
                       <IconButton
                         size="large"
                         color="inherit"
@@ -48,7 +62,7 @@ export default function MessageTable(props: {
                       >
                         <Iconify icon={"eva:more-vertical-fill"} />
                       </IconButton>
-                    </TableCell>
+                    </TableCell>)}
                   </TableRow>
                 );
               })}

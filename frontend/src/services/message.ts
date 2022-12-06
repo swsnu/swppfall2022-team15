@@ -1,27 +1,18 @@
 import axios from "axios";
-import { EnumNotificationType } from "../Enums";
-import { MessageType } from "../types";
+import {EnumNotificationType} from "../Enums";
+import {MessageType} from "../types";
 
-export async function createMessage(title: string, content: string) {
-  try {
-    const resp = await axios.post("/api/message/", {
-      title: title,
-      content: content,
-    });
-    return resp.data.id;
-  } catch (e: any) {
-    return null;
-  }
-}
 
-export async function createMessage2(
+export async function createMessage(
   notification_type: EnumNotificationType,
-  content: any
+  name: string,
+  data: any,
 ) {
   try {
     const resp = await axios.post("/api/message/", {
       notification_type: EnumNotificationType.SLACK,
-      ...content,
+      name: name,
+      data: data,
     });
     return resp.data.id;
   } catch (e: any) {

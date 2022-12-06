@@ -4,12 +4,12 @@ import axios from "axios";
 import { RootState } from "..";
 import { EnumNotificationType } from "../../Enums";
 import { fetchMessagesWithNotificationType } from "../../services/message";
-import { MessageType } from "../../types";
+import {MessageListType, MessageType} from "../../types";
 
 export const fetchMessages = createAsyncThunk(
   "message/fetchMessages",
   async () => {
-    const result: any = {};
+    const result: MessageListType= {};
     await Promise.all(
       Object.keys(EnumNotificationType).map(async (nt) => {
         result[nt] = await fetchMessagesWithNotificationType(nt);
@@ -25,6 +25,28 @@ export const fetchSlackMessages = createAsyncThunk(
     return await fetchMessagesWithNotificationType(EnumNotificationType.SLACK);
   }
 );
+
+// TODO
+// export const fetchEmailMessages = createAsyncThunk(
+//   "message/fetchEmailMessages",
+//   async () => {
+//     return await fetchMessagesWithNotificationType(EnumNotificationType.EMAIL);
+//   }
+// );
+
+// export const fetchWebhookMessages = createAsyncThunk(
+//   "message/fetchWebhookMessages",
+//   async () => {
+//     return await fetchMessagesWithNotificationType(EnumNotificationType.API);
+//   }
+// );
+
+// export const fetchSmsMessages = createAsyncThunk(
+//   "message/fetchSmsMessages",
+//   async () => {
+//     return await fetchMessagesWithNotificationType(EnumNotificationType.SMS);
+//   }
+// );
 
 export const fetchMessagesByProjectId = createAsyncThunk(
   "message/fetchMessages",

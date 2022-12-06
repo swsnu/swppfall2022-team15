@@ -24,8 +24,8 @@ describe("MessageCreateModal", () => {
       { preloadedState }
     );
 
-    const contentInput = screen.getByTestId("type-input");
-    fireEvent.change(contentInput, {
+    const dataInput = screen.getByTestId("type-input");
+    fireEvent.change(dataInput, {
       target: { value: EnumNotificationType.SLACK },
     });
     const button = screen.getByTestId("create-button");
@@ -43,15 +43,15 @@ describe("MessageCreateModal", () => {
 
     fireEvent.click(button);
 
-    fireEvent.change(contentInput, {
-      target: { value: EnumNotificationType.API },
+    fireEvent.change(dataInput, {
+      target: { value: EnumNotificationType.WEBHOOK },
     });
 
-    fireEvent.change(contentInput, {
+    fireEvent.change(dataInput, {
       target: { value: EnumNotificationType.EMAIL },
     });
 
-    fireEvent.change(contentInput, {
+    fireEvent.change(dataInput, {
       target: { value: EnumNotificationType.SMS },
     });
   });
