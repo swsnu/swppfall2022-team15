@@ -1,13 +1,7 @@
-import {
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  ListSubheader,
-} from "@mui/material";
-import { useEffect, useState } from "react";
-import { MultiSelect } from "react-multi-select-component";
-import { fetchTargets } from "../../services/target";
+import {List, ListItem, ListItemButton, ListItemText, ListSubheader,} from "@mui/material";
+import {useEffect, useState} from "react";
+import {MultiSelect} from "react-multi-select-component";
+import {fetchTargets} from "../../services/target";
 import Iconify from "../Iconify/Iconify";
 
 interface IProps {
@@ -29,7 +23,7 @@ export default function TargetUserMultiSelect(props: IProps) {
   };
   useEffect(() => {
     initTargetUsers();
-  }, [props.notification_type]);
+  }, [selected]);
 
   return (
     <>

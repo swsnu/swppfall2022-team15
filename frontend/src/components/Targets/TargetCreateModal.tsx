@@ -9,13 +9,12 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "../../store";
 import {createTarget, fetchTargets} from "../../store/slices/target";
 import {EnumNotificationType} from "../../Enums";
-import {fetchProjects} from "../../store/slices/project";
-import {TargetCreateForm} from "./TargetCreateForm";
+import {TargetUserForm} from "./TargetUserForm";
 
 interface IProps {
   open: any;
@@ -29,9 +28,6 @@ export default function TargetCreateModal(props: IProps) {
   const [data, setData] = useState({});
 
   const dispatch = useDispatch<AppDispatch>();
-  useEffect(() => {
-    dispatch(fetchProjects());
-  }, []);
 
   const clearForm = () => {
     setTargetName("");
@@ -58,7 +54,7 @@ export default function TargetCreateModal(props: IProps) {
     }
   };
 
-  let form = TargetCreateForm({notificationType, targetName, setTargetName, endpoint, setEndpoint, data, setData})
+  let form = TargetUserForm({notificationType, targetName, setTargetName, endpoint, setEndpoint, data, setData})
 
   return (
     <div>

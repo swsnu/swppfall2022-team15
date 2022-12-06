@@ -3,23 +3,23 @@ import {MessageType, TargetType} from "../../types";
 import SplitButton from "../../components/SplitButton/SplitButton";
 import RecurrenceDialog from "../../components/Recurrence/RecurrenceDialog";
 import {RecurrenceType} from "../../components/Recurrence";
-import MessageCreateForm from "../../components/Message/MessageCreateForm";
+import MessageForm from "../../components/Message/MessageForm";
 import {TextField} from "@mui/material";
+import TargetListTable from "../TargetList/TargetList";
 
 interface IProps {
   notificationType: string;
   message: MessageType;
-  target: TargetType;
+  targets: TargetType[];
   handleRecurrenceChange: (recurrence: RecurrenceType) => void;
 }
 
 export default function ReservationStep(props: IProps) {
-   const {notificationType, message, target, handleRecurrenceChange} = props;
+   const {notificationType, message, targets, handleRecurrenceChange} = props;
    const [open, setOpen] = useState(false);
 
-  const messageForm = MessageCreateForm({notificationType, name: message.name, setName:(x: string)=>{}, data: message.data, setData:(_: string )=>{}, fieldErrors: {}, setFieldErrors: (_: any) => {}}, true);
-  // const targetUserForm = TargetCreateForm({target: target, setTarget: (_: TargetType) => {}}, true);
-
+  const messageForm = MessageForm({notificationType, name: message.name, setName:(x: string)=>{}, data: message.data, setData:(_: string )=>{}, fieldErrors: {}, setFieldErrors: (_: any) => {}}, true);
+  const targetTable = TargetListTable()
   return (
     <>
         <RecurrenceDialog
