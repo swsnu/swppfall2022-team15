@@ -15,6 +15,9 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
+if (process.env.NODE_ENV === "production") {
+  axios.defaults.baseURL = "http://43.201.145.62:8000";
+}
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.interceptors.request.use(function (config: any) {
   if (hasToken()) {

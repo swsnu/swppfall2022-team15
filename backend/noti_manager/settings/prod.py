@@ -18,3 +18,8 @@ DATABASES = {
         'HOST': 'noti-manager.cgt0l9cbagk3.ap-northeast-2.rds.amazonaws.com',
     }
 }
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = False
+
+CORS_ALLOW_HEADERS = ['*']
