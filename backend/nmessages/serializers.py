@@ -1,29 +1,28 @@
 from rest_framework import serializers
 
 from nmessages.models import NMessage
+from notifications.models import EnumNotificationType
 
 
 class NMessageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = NMessage
-        fields = '__all__'
-
-
-class SlackNMessageSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    channel = serializers.CharField(write_only=True)
-    message = serializers.CharField(write_only=True)
 
     class Meta:
         model = NMessage
-        fields = ('user', 'channel', 'message', 'notification_type', 'data',)
-        extra_kwargs = {
-            'data': {'read_only': True},
-        }
+        fields = ('user', 'name', 'notification_type', 'data',)
 
-    def create(self, validated_data):
-        validated_data['data'] = {
-            'channel': validated_data.pop('channel'),
-            'message': validated_data.pop('message')
-        }
-        return super().create(validated_data)
+    def validate(self, attrs):
+        notification_type = attrs['notification_type']
+        print(attrs)
+        data = attrs['data']
+        if notification_type == EnumNotificationType.SLACK:
+            if not ('channel' in data and 'message' in data):
+                raise serializers.ValidationError('No channel or content provided')
+        elif notification_type == EnumNotificationType.SMS:
+            pass
+        elif notification_type == EnumNotificationType.EMAIL:
+            pass
+        elif notification_type == EnumNotificationType.WEBHOOK:
+            pass
+
+        return attrs

@@ -44,7 +44,7 @@ export interface MessageType {
   data: any;
 }
 
-export interface SlackContent {
+export interface SlackData {
     channel: string;
     message: string;
 }
@@ -54,7 +54,7 @@ export interface EmailContent {
     content: string;
 }
 
-export type Content = SlackContent | EmailContent;
+export type Data = SlackData | EmailContent;
 
 export interface MessageListType {
   [key: string]: MessageType[]
