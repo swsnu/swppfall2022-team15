@@ -15,7 +15,7 @@ interface IProps {
 }
 
 
-export default function MessageCreateForm(props: IProps, disabled: boolean = false) {
+export default function MessageForm(props: IProps, disabled: boolean = false) {
   let form;
   const {name, setName, notificationType, data, setData, fieldErrors, setFieldErrors} = props;
 
