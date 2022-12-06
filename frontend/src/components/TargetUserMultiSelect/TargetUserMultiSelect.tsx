@@ -2,12 +2,12 @@ import {List, ListItem, ListItemButton, ListItemText, ListSubheader,} from "@mui
 import {useEffect, useState} from "react";
 import {MultiSelect} from "react-multi-select-component";
 import Iconify from "../Iconify/Iconify";
-import {TargetType} from "../../types";
+import {TargetType, TargetUserIdNameDto} from "../../types";
 
 interface IProps {
   notification_type: string;
-  selected: any;
-  setSelected: (selected: any) => void;
+  selected: TargetUserIdNameDto[];
+  setSelected: (selected: TargetUserIdNameDto[]) => void;
   targetUsers: TargetType[];
 }
 

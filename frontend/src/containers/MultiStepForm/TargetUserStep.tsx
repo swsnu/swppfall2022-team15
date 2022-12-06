@@ -6,7 +6,7 @@ import {createTarget, fetchTargets, targetSelect} from "../../store/slices/targe
 import TargetUserMultiSelect from "../../components/TargetUserMultiSelect/TargetUserMultiSelect";
 import {TargetUserForm} from "../../components/Targets/TargetUserForm";
 import {FormWrapper} from "./FormWrapper";
-import {TargetType} from "../../types";
+import {TargetType, TargetUserIdNameDto} from "../../types";
 import {EnumNotificationType} from "../../Enums";
 
 
@@ -22,12 +22,12 @@ interface IProps {
     data: any;
     setData: (data: any) => void;
 
-    targetUsers: TargetType[];
-    setTargetUsers: (targetUser: TargetType[]) => void;
+    targetUserIdNameList: TargetUserIdNameDto[];
+    setTargetUserIdNameList: (targetUser: TargetUserIdNameDto[]) => void;
 }
 
 export default function TargetUserStep(props: IProps) {
-  const {notificationType, targetName, setTargetName, endpoint, setEndpoint, data, setData, targetUsers, setTargetUsers} = props;
+  const {notificationType, targetName, setTargetName, endpoint, setEndpoint, data, setData, targetUserIdNameList, setTargetUserIdNameList} = props;
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -86,7 +86,7 @@ export default function TargetUserStep(props: IProps) {
         </Grid>
       </Dialog>
       <Button variant="contained" onClick={() => setDialogOpen(true)}>Add now</Button>
-      <TargetUserMultiSelect notification_type={props.notificationType} selected={targetUsers} setSelected={setTargetUsers} targetUsers={targetState.targets} />
+      <TargetUserMultiSelect notification_type={props.notificationType} selected={targetUserIdNameList} setSelected={setTargetUserIdNameList} targetUsers={targetState.targets} />
     </FormWrapper>
   );
 }
