@@ -36,6 +36,8 @@ export default function TargetUserStep(props: IProps) {
     dispatch(fetchTargets());
   }, []);
 
+  const targetState = useSelector(targetSelect);
+
   const clearForm = () => {
     setTargetName("");
     setEndpoint("");
@@ -84,7 +86,7 @@ export default function TargetUserStep(props: IProps) {
         </Grid>
       </Dialog>
       <Button variant="contained" onClick={() => setDialogOpen(true)}>Add now</Button>
-      <TargetUserMultiSelect notification_type={props.notificationType} selected={targetUsers} setSelected={setTargetUsers} />
+      <TargetUserMultiSelect notification_type={props.notificationType} selected={targetUsers} setSelected={setTargetUsers} targetUsers={targetState.targets} />
     </FormWrapper>
   );
 }
