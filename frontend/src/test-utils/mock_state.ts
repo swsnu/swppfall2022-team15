@@ -44,10 +44,10 @@ const preloadedState: RootState = {
   message: {
     messages: {
       SLACK: [
-        {
-          id: 1,
-          content: "test message",
-        },
+        // {
+        //   id: 1,
+        //   content: "test message",
+        // },
       ],
     },
     selectedMessage: null,
