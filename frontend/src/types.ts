@@ -49,12 +49,12 @@ export interface SlackData {
     message: string;
 }
 
-export interface EmailContent {
+export interface EmailData {
     title: string;
     content: string;
 }
 
-export type Data = SlackData | EmailContent;
+export type Data = SlackData | EmailData;
 
 export interface MessageListType {
   [key: string]: MessageType[]
