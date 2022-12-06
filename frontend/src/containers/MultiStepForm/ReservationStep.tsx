@@ -4,6 +4,7 @@ import SplitButton from "../../components/SplitButton/SplitButton";
 import RecurrenceDialog from "../../components/Recurrence/RecurrenceDialog";
 import {RecurrenceType} from "../../components/Recurrence";
 import MessageCreateForm from "../../components/Message/MessageCreateForm";
+import {TextField} from "@mui/material";
 
 interface IProps {
   notificationType: string;
@@ -26,7 +27,15 @@ export default function ReservationStep(props: IProps) {
           onClose={()=>setOpen(false)}
           handleRecurrenceChange={props.handleRecurrenceChange}/>
         <h1>Notification Type</h1>
-        {props.notificationType}
+        <TextField
+          id="outlined-multiline-static"
+          fullWidth
+          multiline
+          inputProps={{ "data-testid": "message-input" }}
+          value={notificationType}
+          rows={1}
+          disabled={true}
+          required/>
         <br />
         <br />
         <br />
