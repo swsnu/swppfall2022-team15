@@ -58,7 +58,7 @@ export default function MessageForm(props: IProps) {
     }
   };
 
-  const form = MessageCreateForm(props, mode==='import');
+  const form = MessageCreateForm(props, mode !=='create');
   const getContentFieldName = (notificationType: string): string[] => {
     switch (notificationType) {
       case 'EMAIL':
