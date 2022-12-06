@@ -7,8 +7,8 @@ interface IProps {
   name: string;
   setName: (name: string) => void;
 
-  content: any;
-  setContent: (content: any) => void;
+  data: any;
+  setData: (content: any) => void;
 
   fieldErrors: any;
   setFieldErrors: (error: any) => void;
@@ -17,7 +17,7 @@ interface IProps {
 
 export default function MessageCreateForm(props: IProps, disabled: boolean = false) {
   let form;
-  const {name, setName, notificationType, content, setContent, fieldErrors, setFieldErrors} = props;
+  const {name, setName, notificationType, data, setData, fieldErrors, setFieldErrors} = props;
 
   switch (notificationType) {
     case EnumNotificationType.WEBHOOK:
@@ -55,10 +55,10 @@ export default function MessageCreateForm(props: IProps, disabled: boolean = fal
             multiline
             inputProps={{ "data-testid": "slack-channel-input" }}
             onChange={(event: any) => {
-              setContent({ ...content, channel: event.target.value });
+              setData({ ...data, channel: event.target.value });
               setFieldErrors({ ...fieldErrors, channel: undefined });
             }}
-            value={"channel" in content ? content.channel : ""}
+            value={"channel" in data ? data.channel : ""}
             helperText={fieldErrors?.channel}
             error={Boolean(fieldErrors?.channel)}
             rows={1}
@@ -76,10 +76,10 @@ export default function MessageCreateForm(props: IProps, disabled: boolean = fal
             multiline
             inputProps={{ "data-testid": "slack-message-input" }}
             onChange={(event: any) => {
-              setContent({ ...content, message: event.target.value });
+              setData({ ...data, message: event.target.value });
               setFieldErrors({ ...fieldErrors, message: undefined });
             }}
-            value={"message" in content ? content.message : ""}
+            value={"message" in data ? data.message : ""}
             helperText={fieldErrors?.message}
             error={Boolean(fieldErrors?.message)}
             rows={4}

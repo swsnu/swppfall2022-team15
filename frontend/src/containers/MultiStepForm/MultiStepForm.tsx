@@ -108,7 +108,7 @@ export default function MultiStepForm() {
           {activeStep === 0 && <NotificationTypeForm notificationType={notificationType} setNotificationType={setNotificationType} />}
           {activeStep === 1 ?
               <MessageStep
-              name={messageName} setName={setMessageName} message={message} setMessage={setMessage} notificationType={notificationType} setContent={setContent} content={content} fieldErrors={fieldErrors} setFieldErrors={setFieldErrors}
+                  name={messageName} setName={setMessageName} message={message} setMessage={setMessage} notificationType={notificationType} setData={setContent} data={content} fieldErrors={fieldErrors} setFieldErrors={setFieldErrors}
               />
               : null
           }

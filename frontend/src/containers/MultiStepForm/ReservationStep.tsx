@@ -17,7 +17,7 @@ export default function ReservationStep(props: IProps) {
    const {notificationType, message, target, handleRecurrenceChange} = props;
    const [open, setOpen] = useState(false);
 
-  const messageForm = MessageCreateForm({notificationType, name: message.name, setName:(x: string)=>{}, content: message.content, setContent:(_: string )=>{}, fieldErrors: {}, setFieldErrors: (_: any) => {}}, true);
+  const messageForm = MessageCreateForm({notificationType, name: message.name, setName:(x: string)=>{}, data: message.data, setData:(_: string )=>{}, fieldErrors: {}, setFieldErrors: (_: any) => {}}, true);
   // const targetUserForm = TargetCreateForm({target: target, setTarget: (_: TargetType) => {}}, true);
 
   return (

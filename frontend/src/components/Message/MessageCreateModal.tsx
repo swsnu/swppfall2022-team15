@@ -51,7 +51,7 @@ export default function MessageCreateModal(props: IProps) {
     }
   };
 
-  const form = MessageCreateForm({notificationType, name, setName, content, setContent, fieldErrors, setFieldErrors});
+  const form = MessageCreateForm({notificationType, name, setName, data: content, setData: setContent, fieldErrors, setFieldErrors});
 
   return (
     <div>

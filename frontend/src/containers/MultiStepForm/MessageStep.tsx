@@ -17,8 +17,8 @@ interface IProps {
   name: any;
   setName: (name: any) => void;
 
-  content: any;
-  setContent: (content: any) => void;
+  data: any;
+  setData: (content: any) => void;
 
   fieldErrors: any;
   setFieldErrors: (error: any) => void;
@@ -28,7 +28,7 @@ interface IProps {
 }
 
 export default function MessageStep(props: IProps) {
-  const { notificationType, name, setName, content, setContent, fieldErrors, setFieldErrors, message, setMessage }= props;
+  const { notificationType, name, setName, data, setData, fieldErrors, setFieldErrors, message, setMessage }= props;
 
   // ui
   const [mode, setMode] = useState(''); // import , create
@@ -48,8 +48,8 @@ export default function MessageStep(props: IProps) {
   }
 
   const handleClickConfirm = async () => {
-    if (notificationType && name && content) {
-      const errorField = await messageCreateService(notificationType, name, content, fieldErrors);
+    if (notificationType && name && data) {
+      const errorField = await messageCreateService(notificationType, name, data, fieldErrors);
       if (errorField) {
         setFieldErrors(errorField);
       }
@@ -80,7 +80,7 @@ export default function MessageStep(props: IProps) {
           onChange={(e) => {
             if (e.target.value === 'import' && message) {
               setName(message?.name);
-              setContent(message?.content)
+              setData(message?.data)
             }
               setMode(e.target.value);
           }}
@@ -112,7 +112,7 @@ export default function MessageStep(props: IProps) {
           onClickRow={(id: number) => {
             const message = messages[notificationType].find((message: any) => message.id === id);
             setName(message?.name);
-            setContent(message?.content)
+            setData(message?.data)
             setMessage(message);
             setDialogOpen(false);
           }}/>
