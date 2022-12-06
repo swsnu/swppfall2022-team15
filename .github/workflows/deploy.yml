@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - develop
-  pull_request:
-    types: [opened, synchronize, reopened]
+
 env:
   AWS_REGION: ap-northeast-2
   ECR_REGISTRY: 532649915990.dkr.ecr.ap-northeast-2.amazonaws.com
