@@ -44,17 +44,17 @@ export interface MessageType {
   data: any;
 }
 
-export interface SlackContent {
+export interface SlackData {
     channel: string;
     message: string;
 }
 
-export interface EmailContent {
+export interface EmailData {
     title: string;
     content: string;
 }
 
-export type Content = SlackContent | EmailContent;
+export type Data = SlackData | EmailData;
 
 export interface MessageListType {
   [key: string]: MessageType[]

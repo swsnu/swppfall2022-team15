@@ -20,11 +20,17 @@ class TargetUserAPITestCase(APITestCase):
 
     def test_create(self):
         self.client.force_login(self.user)
-        data = {'notification_type': EnumNotificationType.SLACK,
-                'name': 'name', 'api_key': 'api-key'}
-        response = self.client.post(reverse('targetuser-list'), data=data)
+        request_data = {
+            'notification_type': EnumNotificationType.SLACK,
+            'name': 'name',
+            'data': {
+                'auth': 'api_key',
+                'api_key': 'api-key',
+            }
+        }
+        response = self.client.post(reverse('targetuser-list'), data=request_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(TargetUser.objects.last().name, data['name'])
+        self.assertEqual(TargetUser.objects.last().name, request_data['name'])
 
     def test_invalid_type_create(self):
         self.client.force_login(self.user)
