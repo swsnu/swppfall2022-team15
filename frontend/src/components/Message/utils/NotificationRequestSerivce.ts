@@ -1,5 +1,5 @@
 import {EnumNotificationType} from "../../../Enums";
-import {createMessage2} from "../../../services/message";
+import {createMessage} from "../../../services/message";
 import {Content, SlackContent} from "../../../types";
 
 export const messageCreateService = async (notificationType: string, content: Content, oldFieldErrors: any) => {
@@ -12,7 +12,7 @@ export const messageCreateService = async (notificationType: string, content: Co
         Boolean(content.channel) &&
         Boolean(content.message)
       )
-        await createMessage2(notificationType, {
+        await createMessage(notificationType, {
           channel: content.channel,
           message: content.message,
         });
