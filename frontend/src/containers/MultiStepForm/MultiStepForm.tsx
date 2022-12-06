@@ -10,7 +10,7 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
-import NotificationTypeForm from "./NotificaitonTypeStep";
+import NotificationTypeForm from "./NotificationTypeStep";
 import {MessageType, TargetType} from "../../types";
 import {RecurrenceType} from "../../components/Recurrence";
 

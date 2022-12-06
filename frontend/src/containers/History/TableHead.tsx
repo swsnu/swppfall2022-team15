@@ -39,10 +39,15 @@ export default function HistoryTableHead() {
             checked: !project.checked,
           };
         } else {
-          return project;
+          return {
+            object: project.object,
+            checked: project.checked,
+          };
         }
       });
       setSelectedProjects(newSelectedProjects);
+    } else {
+      return;
     }
   };
   function initializeProject() {
@@ -61,9 +66,7 @@ export default function HistoryTableHead() {
     { object: "HTTP", checked: true },
     { object: "SMS", checked: true },
   ];
-  const [selectedTypes, setSelectedTypes] = useState<tuple[] | null>(
-    typesInitial
-  );
+  const [selectedTypes, setSelectedTypes] = useState<tuple[]>(typesInitial);
   const handleTypeOpen = (event: React.MouseEvent<HTMLTableCellElement>) => {
     setAnchorElType(event.currentTarget);
   };
@@ -71,19 +74,20 @@ export default function HistoryTableHead() {
     setAnchorElType(null);
   };
   const handleTypeClick = (event: React.MouseEvent<HTMLElement>) => {
-    if (selectedTypes !== null) {
-      const newSelectedTypes = selectedTypes.map((type) => {
-        if (type.object === event.currentTarget.textContent) {
-          return {
-            object: type.object,
-            checked: !type.checked,
-          };
-        } else {
-          return type;
-        }
-      });
-      setSelectedTypes(newSelectedTypes);
-    }
+    const newSelectedTypes = selectedTypes.map((type) => {
+      if (type.object === event.currentTarget.textContent) {
+        return {
+          object: type.object,
+          checked: !type.checked,
+        };
+      } else {
+        return {
+          object: type.object,
+          checked: type.checked,
+        };
+      }
+    });
+    setSelectedTypes(newSelectedTypes);
   };
 
   const [anchorElStatus, setAnchorElStatus] = useState<null | HTMLElement>(
@@ -95,9 +99,7 @@ export default function HistoryTableHead() {
     { object: "Failed", checked: true },
     { object: "Pending", checked: true },
   ];
-  const [selectedStatus, setSelectedStatus] = useState<tuple[] | null>(
-    statusInitial
-  );
+  const [selectedStatus, setSelectedStatus] = useState<tuple[]>(statusInitial);
   const handleStatusOpen = (event: React.MouseEvent<HTMLTableCellElement>) => {
     setAnchorElStatus(event.currentTarget);
   };
@@ -105,19 +107,17 @@ export default function HistoryTableHead() {
     setAnchorElStatus(null);
   };
   const handleStatusClick = (event: React.MouseEvent<HTMLElement>) => {
-    if (selectedStatus !== null) {
-      const newSelectedStatus = selectedStatus.map((status) => {
-        if (status.object === event.currentTarget.textContent) {
-          return {
-            object: status.object,
-            checked: !status.checked,
-          };
-        } else {
-          return status;
-        }
-      });
-      setSelectedStatus(newSelectedStatus);
-    }
+    const newSelectedStatus = selectedStatus.map((status) => {
+      if (status.object === event.currentTarget.textContent) {
+        return {
+          object: status.object,
+          checked: !status.checked,
+        };
+      } else {
+        return status;
+      }
+    });
+    setSelectedStatus(newSelectedStatus);
   };
 
   const [anchorElTarget, setAnchorElTarget] = useState<null | HTMLElement>(
@@ -144,6 +144,8 @@ export default function HistoryTableHead() {
         }
       });
       setSelectedTargets(newSelectedTargets);
+    } else {
+      return;
     }
   };
   function initializeTarget() {

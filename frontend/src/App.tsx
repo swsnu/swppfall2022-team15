@@ -16,7 +16,6 @@ import SignUp from "./containers/SignUp/SignUp";
 import TargetListTable from "./containers/TargetList/TargetList";
 import MessageListTable from "./containers/MessageList/MessageList";
 import AuthRoute from "./components/AuthRoute/AuthRoute";
-import Demo from "./components/Reservation";
 import HistoryTable from "./containers/History/HistoryTable";
 
 export const SidebarLayout = () => (

@@ -21,10 +21,10 @@ export default function HistoryTable() {
                     <TableCell>{"project"}</TableCell>
                     <TableCell>{notification.type}</TableCell>
                     <TableCell>
-                      {notification.history?.at(0)?.endpoint}
+                      {"ENDPOINT"}
                     </TableCell>
-                    <TableCell>{notification.history?.at(0)?.date}</TableCell>
-                    <TableCell>{notification.history?.at(0)?.status}</TableCell>
+                    <TableCell>{"DATE"}</TableCell>
+                    <TableCell>{"STATUS"}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

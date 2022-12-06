@@ -13,36 +13,6 @@ describe("ProjectDetail", () => {
     );
   });
 
-  it("should handle create notification button", () => {
-    render(
-      <Provider store={store}>
-        <ProjectDetail />
-      </Provider>
-    );
 
-    const createNotificationButton = screen.getByTestId(
-      "createNotificationButton"
-    );
-    expect(createNotificationButton).toBeInTheDocument();
 
-    fireEvent.click(createNotificationButton);
-
-  });
-
-  it("should handle modal", () => {
-    render(
-      <Provider store={store}>
-        <ProjectDetail />
-      </Provider>
-    );
-
-    const createNotificationButton = screen.getByTestId(
-      "createNotificationButton"
-    );
-    expect(createNotificationButton).toBeInTheDocument();
-
-    fireEvent.click(createNotificationButton);
-
-    userEvent.keyboard("{esc}");
-  });
 });

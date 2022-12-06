@@ -34,7 +34,7 @@ export default function HistoryTableHeadCell(props: IProps) {
   function render() {
     if (props.selectedObjects !== null) {
       return props.selectedObjects?.map((selected) => (
-        <MenuItem onClick={props.handleClick} disableRipple>
+        <MenuItem onClick={props.handleClick} data-testid={`click ${props.title} ${selected.object}`} disableRipple>
           <Checkbox checked={selected.checked} />
           <span>{selected.object}</span>
         </MenuItem>
@@ -46,7 +46,7 @@ export default function HistoryTableHeadCell(props: IProps) {
 
   return (
     <>
-      <TableCell onClick={props.handleOpen}>
+      <TableCell onClick={props.handleOpen} data-testid={`click ${props.title}`}>
         <Container>
           <Grid container>
             <Grid item xs={10} sm={10} md={8} lg={3}>

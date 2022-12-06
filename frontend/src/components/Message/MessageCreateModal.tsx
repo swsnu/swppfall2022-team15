@@ -9,13 +9,13 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
-import {fetchMessages} from "../../store/slices/message";
-import {AppDispatch} from "../../store";
-import {fetchProjects} from "../../store/slices/project";
-import {EnumNotificationType} from "../../Enums";
-import {messageCreateService} from "./utils/MessageRequestSerivce";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { fetchMessages } from "../../store/slices/message";
+import { AppDispatch } from "../../store";
+import { fetchProjects } from "../../store/slices/project";
+import { EnumNotificationType } from "../../Enums";
+import { messageCreateService } from "./utils/MessageRequestService";
 import MessageCreateForm from "./MessageCreateForm";
 
 interface IProps {
@@ -24,8 +24,8 @@ interface IProps {
 }
 
 export default function MessageCreateModal(props: IProps) {
-  const [notificationType, setNotificationType] = useState("")
-  const [name, setName] = useState("")
+  const [notificationType, setNotificationType] = useState("");
+  const [name, setName] = useState("");
   const [content, setContent]: [any, any] = useState({});
   const [fieldErrors, setFieldErrors]: [any, any] = useState({});
 
@@ -41,7 +41,12 @@ export default function MessageCreateModal(props: IProps) {
 
   const handleClickConfirm = async () => {
     if (notificationType && name && content) {
-      const errorField =  await messageCreateService(notificationType, name, content, fieldErrors);
+      const errorField = await messageCreateService(
+        notificationType,
+        name,
+        content,
+        fieldErrors
+      );
       if (errorField) {
         setFieldErrors(errorField);
       }
@@ -51,7 +56,15 @@ export default function MessageCreateModal(props: IProps) {
     }
   };
 
-  const form = MessageCreateForm({notificationType, name, setName, data: content, setData: setContent, fieldErrors, setFieldErrors});
+  const form = MessageCreateForm({
+    notificationType,
+    name,
+    setName,
+    data: content,
+    setData: setContent,
+    fieldErrors,
+    setFieldErrors,
+  });
 
   return (
     <div>
@@ -64,7 +77,9 @@ export default function MessageCreateModal(props: IProps) {
       >
         <DialogTitle>New Message</DialogTitle>
         <DialogContent>
-          <InputLabel id="demo-simple-select-label">Notification Type</InputLabel>
+          <InputLabel id="demo-simple-select-label">
+            Notification Type
+          </InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -83,9 +98,9 @@ export default function MessageCreateModal(props: IProps) {
             <MenuItem value={EnumNotificationType.WEBHOOK}>WEBHOOK</MenuItem>
             <MenuItem value={EnumNotificationType.SMS}>SMS</MenuItem>
           </Select>
-          <br/>
-          <br/>
-          <br/>
+          <br />
+          <br />
+          <br />
           {form}
         </DialogContent>
         <DialogActions>

@@ -13,6 +13,11 @@ const preloadedState: RootState = {
         id: 1,
         project_type: "ORGANIZATION",
         name: "test",
+      },
+      {
+        id: 2,
+        project_type: "ORGANIZATION",
+        name: "test2",
       }
     ],
   },
@@ -36,7 +41,7 @@ const preloadedState: RootState = {
         name: "test target",
         notification_type: "EMAIL",
         endpoint: "email@email.com",
-        project: 1,
+        data: {},
       },
     ],
     selectedTarget: null,
@@ -44,11 +49,16 @@ const preloadedState: RootState = {
   message: {
     messages: {
       SLACK: [
-        // {
-        //   id: 1,
-        //   content: "test message",
-        // },
+        {
+          id: 1,
+          name: "test",
+          notification_type: "SLACK",
+          data: { channel: 'test', message: 'test' },
+       },
       ],
+      EMAIL: [],
+      WEBHOOK: [],
+      SMS: [],
     },
     selectedMessage: null,
   },

@@ -1,5 +1,5 @@
-import {EnumNotificationType} from "../../Enums";
-import {InputLabel, TextField} from "@mui/material";
+import { EnumNotificationType } from "../../Enums";
+import { InputLabel, TextField } from "@mui/material";
 
 interface IProps {
   notificationType: string;
@@ -14,10 +14,20 @@ interface IProps {
   setFieldErrors: (error: any) => void;
 }
 
-
-export default function MessageCreateForm(props: IProps, disabled: boolean = false) {
+export default function MessageCreateForm(
+  props: IProps,
+  disabled: boolean = false
+) {
   let form;
-  const {name, setName, notificationType, data, setData, fieldErrors, setFieldErrors} = props;
+  const {
+    name,
+    setName,
+    notificationType,
+    data,
+    setData,
+    fieldErrors,
+    setFieldErrors,
+  } = props;
 
   switch (notificationType) {
     case EnumNotificationType.WEBHOOK:
@@ -39,12 +49,13 @@ export default function MessageCreateForm(props: IProps, disabled: boolean = fal
             multiline
             inputProps={{ "data-testid": "message-input" }}
             onChange={(event) => {
-                setName(event.target.value);
+              setName(event.target.value);
             }}
             value={name}
             rows={1}
             disabled={disabled}
-            required/>
+            required
+          />
           <br />
           <br />
           <br />
