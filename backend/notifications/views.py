@@ -37,7 +37,7 @@ class NotificationViewSet(ModelViewSet):
         api_dto = ApiNotificationDto(
             endpoint=targetuser.endpoint,
             headers=headers,
-            data=nmessage.content,
+            data=nmessage.data,
         )
 
         task_send_api_notification.delay(api_dto)

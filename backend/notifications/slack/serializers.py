@@ -13,10 +13,10 @@ class SlackNotificationSerializer(serializers.ModelSerializer):
         fields = ('id', 'text', 'channel', 'api_key')
 
     def get_text(self, obj):
-        return obj.reservation.notification_config.nmessage.content['message']
+        return obj.reservation.notification_config.nmessage.data['message']
 
     def get_channel(self, obj):
-        return obj.reservation.notification_config.nmessage.content['channel']
+        return obj.reservation.notification_config.nmessage.data['channel']
 
     def get_api_key(self, obj):
         return obj.target_user.data['api_key']

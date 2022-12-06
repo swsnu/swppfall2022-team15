@@ -10,4 +10,4 @@ class NMessage(TimeStampedModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, null=True)  # TODO shouldn't be nullable
     notification_type = models.CharField(max_length=32, choices=EnumNotificationType.choices)
-    content = models.JSONField()
+    data = models.JSONField()

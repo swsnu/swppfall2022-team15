@@ -35,7 +35,7 @@ export default function MessageTable(props: {
                   <TableRow hover key={row.id} tabIndex={-1}>
                     {props.keys.map((key: string) => {
                       return (
-                        <TableCell align="left">{row.content[key]}</TableCell>
+                        <TableCell align="left">{row.data[key]}</TableCell>
                       );
                     })}
                     <TableCell align="right">
