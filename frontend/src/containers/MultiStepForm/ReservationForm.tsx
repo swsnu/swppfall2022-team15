@@ -1,9 +1,9 @@
-import {InputLabel,} from "@mui/material";
 import {useState} from "react";
 import {MessageType, TargetType} from "../../types";
 import SplitButton from "../../components/SplitButton/SplitButton";
 import RecurrenceDialog from "../../components/Recurrence/RecurrenceDialog";
 import {RecurrenceType} from "../../components/Recurrence";
+import MessageCreateForm from "../../components/Message/MessageCreateForm";
 
 interface IProps {
   notificationType: string;
@@ -13,7 +13,11 @@ interface IProps {
 }
 
 export default function ReservationForm(props: IProps) {
-  const [open, setOpen] = useState(false);
+   const {notificationType, message, target, handleRecurrenceChange} = props;
+   const [open, setOpen] = useState(false);
+
+  const messageForm = MessageCreateForm({notificationType, name: message.name, setName:(x: string)=>{}, content: message.content, setContent:(_: string )=>{}, fieldErrors: {}, setFieldErrors: (_: any) => {}}, true);
+  // const targetUserForm = TargetCreateForm({target: target, setTarget: (_: TargetType) => {}}, true);
 
   return (
     <>
@@ -21,17 +25,18 @@ export default function ReservationForm(props: IProps) {
           open={open}
           onClose={()=>setOpen(false)}
           handleRecurrenceChange={props.handleRecurrenceChange}/>
-        <InputLabel>Notification Type</InputLabel>
+        <h1>Notification Type</h1>
         {props.notificationType}
         <br />
         <br />
         <br />
-        <InputLabel>TargetUser</InputLabel>
-        {props.target}
+        <h1>Message</h1>
+        {messageForm}
         <br />
         <br />
         <br />
-        <InputLabel>Message</InputLabel>
+        <h1>TargetUser</h1>
+        {/*{targetUserForm}*/}
         <br />
         <br />
         <br />
