@@ -106,7 +106,7 @@ export default function Home() {
             </Grid>
           </Grid>
 
-          <Grid container spacing={3}>
+          <Grid container spacing={3} className="widgetContainer">
             <Grid item xs={12} sm={6} md={3}>
               <Widget
                 icon="eos-icons:project"
@@ -163,7 +163,7 @@ export default function Home() {
             </Grid>
           </Grid>
 
-          <Grid container spacing={3}>
+          <Grid container spacing={3} className="widgetContainer">
             <Grid item xs={12} sm={12} md={12}>
               <Today />
             </Grid>
