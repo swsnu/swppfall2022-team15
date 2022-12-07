@@ -134,7 +134,7 @@ export default function Today() {
 
       <Grid item xs={12} sm={6} md={7}>
         <Card>
-          <CardHeader title="Requests Today" subheader="00:00 ~ 23:59" />
+          <CardHeader title="Requests Today" subheader="00:00 ~ 23:59 KST" />
           <Box sx={{ p: 3, pb: 1 }} dir="ltr">
             <BarLineToday />
           </Box>
