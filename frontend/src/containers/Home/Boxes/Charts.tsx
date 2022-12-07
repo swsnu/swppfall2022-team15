@@ -4,7 +4,7 @@ import { green, red, blue } from "@mui/material/colors";
 
 import BarLineChart from "./BarLineAnalytics";
 import PieChart from "./PieChart";
-import { projectListSelector } from "../../../store/slices/project";
+import { projectListSelector, projectSelect } from "../../../store/slices/project";
 
 interface IProps {
   selectedTab: number;
@@ -16,6 +16,8 @@ const types = ["Slack", "Email", "HTTP", "SMS"];
 
 export default function Charts(props: IProps) {
   const projects = useSelector(projectListSelector);
+  const selectedProject = useSelector(projectSelect);
+
   function getTitle() {
     if (props.selectedTab === 0) {
       return "Notification status";
@@ -41,15 +43,19 @@ export default function Charts(props: IProps) {
   }
 
   function getAll() {
-    return shortenNumber(331);
+    return shortenNumber(0);
   }
 
   function getNumberByProject() {
-    return shortenNumber(361346273);
+    return shortenNumber(0);
   }
 
   function getNumberByType() {
-    return shortenNumber(51634);
+    return shortenNumber(0);
+  }
+
+  function getTotal() {
+    return 0;
   }
 
   function shortenNumber(value: number) {
@@ -81,9 +87,10 @@ export default function Charts(props: IProps) {
         <PieChart
           title={getTitle()}
           subheader={getSubheader()}
-          series={[44, 55, 41]}
+          series={[0, 0, 0]}
           labels={["Success", "Failure", "Upcoming"]}
           colors={[green[300], red[300], blue[300]]}
+          total={getTotal()}
         />
       </Grid>
     </>

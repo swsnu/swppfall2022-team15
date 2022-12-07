@@ -12,8 +12,13 @@ import { AppDispatch } from "../../store";
 import { authSelector } from "../../store/slices/auth";
 import { fetchTargets, targetListSelector } from "../../store/slices/target";
 import { fetchProjects, projectListSelector } from "../../store/slices/project";
-import { fetchAllNotifications, notificationListSelector } from "../../store/slices/notifications";
+import {
+  fetchAllNotifications,
+  notificationListSelector,
+} from "../../store/slices/notifications";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
+import axios from "axios";
+import { getDate } from "date-fns";
 
 export default function Home() {
   const projects = useSelector(projectListSelector);
@@ -32,6 +37,36 @@ export default function Home() {
   const handleClickCreateButton = (event: React.MouseEvent) => {
     //Todo: open notification create
   };
+
+  const getTodayStart = () => {
+    const time = new Date();
+
+    let formattedDate = `${time.getFullYear()}-${
+      time.getMonth() + 1
+    }-${time.getDate()} 00:00:00`;
+    return formattedDate;
+  };
+
+  const getTodayEnd = () => {
+    const time = new Date();
+
+    let formattedDate = `${time.getFullYear()}-${
+      time.getMonth() + 1
+    }-${time.getDate()} 23:59:59`;
+    return formattedDate;
+  };
+
+  /*
+  const getSuccessfulNotifications = async () => {
+    try {
+      await axios.get{
+        //`/api/notification/metrics/?start=${getDate(new Date())}&end=${getDate(new Date())}&interval=${hour}`
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  */
 
   return (
     <Scrollbar>
