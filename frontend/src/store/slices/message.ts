@@ -48,16 +48,6 @@ export const fetchSlackMessages = createAsyncThunk(
 //   }
 // );
 
-export const fetchMessagesByProjectId = createAsyncThunk(
-  "message/fetchMessages",
-  async (projectId: number) => {
-    const response = await axios.get<MessageType[]>(
-      `/api/message?projectId=${projectId}`
-    );
-    return response.data;
-  }
-);
-
 export const fetchMessage = createAsyncThunk(
   "message/fetchMessage",
   async (messageId: number) => {
@@ -66,13 +56,6 @@ export const fetchMessage = createAsyncThunk(
   }
 );
 
-export const createMessage = createAsyncThunk(
-  "message/createMessage",
-  async (message: { project: number; content: string }) => {
-    const response = await axios.post<MessageType>("/api/message/", message);
-    return response.data;
-  }
-);
 
 const initialState: {
   messages: { [key: string]: MessageType[] };
