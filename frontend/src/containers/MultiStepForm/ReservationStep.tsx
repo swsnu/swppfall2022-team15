@@ -41,7 +41,7 @@ export default function ReservationStep(props: IProps) {
  }
 
   const [recurrence, setRecurrence] = useState<RecurrenceType>(defaultRecurrence);
-    const [rrules, setRrules] = useState<RRule | null>(null);
+    const [rrule, setRrule] = useState<RRule | null>(null);
     const handleRecurrenceChange = (recurrenceType: RecurrenceType) => {
       setRecurrence(recurrenceType)
   }
@@ -54,28 +54,28 @@ export default function ReservationStep(props: IProps) {
  anywhere you go. since data is reactive
  * */
 
-  useEffect(() => {
-    // setRrule(newRrule)
-    },[recurrence])
+  // useEffect(() => {
+  //   // setRrule(newRrule)
+  //   },[recurrence])
 
 
-  const reservation = rrules?.all().map((rrule) => {
-      return <>
-          <TextField
+  const reservation = (
+    <>
+      <TextField
             id="outlined-multiline-static"
             fullWidth
             multiline
             inputProps={{ "data-testid": "sms-name-input" }}
-            value={rrule.toString()}
-            rows={1}
+            value={rrule?.toString()}
+            // rows={1}
             disabled={true}
             required
           />
         <br/>
         <br/>
         <br/>
-      </>
-  })
+    </>
+ )
 
   return (
     <>
@@ -84,7 +84,7 @@ export default function ReservationStep(props: IProps) {
           onClose={()=>setOpen(false)}
           recurrence={recurrence}
           handleRecurrenceChange={handleRecurrenceChange}
-          setRrule={setRrules}/>
+          setRrule={setRrule}/>
         {/* info */}
         <h1>Notification Type</h1>
         <TextField
