@@ -55,6 +55,7 @@ export default function NotiSidebar() {
           <MenuItem 
             className="userInfo"
             icon={userIcon}
+            routerLink={<Link to="/user" />}
             >
             {username}
           </MenuItem>
