@@ -9,6 +9,8 @@ import {useSelector} from "react-redux";
 import {targetSelect} from "../../store/slices/target";
 import {RRule} from "rrule";
 import DynamicTable from "../../components/Message/DynamicTable";
+import {projectSelect} from "../../store/slices/project";
+import {createNotificationConfig, createReservation} from "../../services/reservation";
 
 interface IProps {
   notificationType: string;
@@ -20,8 +22,27 @@ export default function ReservationStep(props: IProps) {
   const {notificationType, message, targetUserIds} = props;
   const [open, setOpen] = useState(false);
 
+  const projectState = useSelector(projectSelect);
+  const projectId = projectState.selectedProject?.id
   const messageForm = MessageForm({notificationType, name: message.name, setName:(x: string)=>{}, data: message.data, setData:(_: string )=>{}, fieldErrors: {}, setFieldErrors: (_: any) => {}}, true);
   const targetState = useSelector(targetSelect);
+
+  const sendCreateNotificationCreateRequest = async () => {
+    const config = {
+      projectId: projectId,
+      type: notificationType,
+      message: message.id,
+    };
+    await createNotificationConfig(config)
+  }
+
+  const sendCreateReservationRequest = async () => {
+      const reservation = {
+          rruleString: rrule?.toString(),
+          target_users: targetUsers.map(x => x.id),
+      }
+      await createReservation(reservation)
+  }
 
   const getTargetColumns = (notificationType: string ) => {
     switch(notificationType) {
@@ -79,8 +100,10 @@ export default function ReservationStep(props: IProps) {
 
   const [recurrence, setRecurrence] = useState<RecurrenceType>(defaultRecurrence);
     const [rrule, setRrule] = useState<RRule | null>(null);
-    const handleRecurrenceChange = (recurrenceType: RecurrenceType) => {
+    const handleRecurrenceChange = async (recurrenceType: RecurrenceType) => {
       setRecurrence(recurrenceType)
+      // await sendCreateNotificationCreateRequest()
+      await sendCreateReservationRequest()
   }
     const [mode, setMode] = useState("")
 
