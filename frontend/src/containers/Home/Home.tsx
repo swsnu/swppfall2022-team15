@@ -18,6 +18,7 @@ import {
   notificationListSelector,
 } from "../../store/slices/notifications";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
+import MultiStepFormDialog from "../MultiStepFormDialog/MultiStepFormDialog";
 
 export default function Home() {
   const projects = useSelector(projectListSelector);
@@ -29,6 +30,8 @@ export default function Home() {
   const [successfulNotifications, setSuccessfulNotifications] = useState(0);
   const [failedNotifications, setFailedNotifications] = useState(0);
 
+  const [open, setOpen] = useState(false);
+
   useEffect(() => {
     dispatch(fetchProjects());
     dispatch(fetchAllNotifications());
@@ -36,7 +39,7 @@ export default function Home() {
   }, [user, dispatch]);
 
   const handleClickCreateButton = (event: React.MouseEvent) => {
-    //Todo: open notification create
+    setOpen(true);
   };
 
   const getTodayStart = () => {
@@ -85,87 +88,90 @@ export default function Home() {
   }, []);
 
   return (
-    <Scrollbar>
-      <Container maxWidth="xl" className="Home">
-        <Grid container justifyContent="space-between">
-          <Grid item>
-            <h2>{"Overview"}</h2>
-          </Grid>
-          <Grid item className="Home_button">
-            <Button
-              data-testid="create-button"
-              onClick={handleClickCreateButton}
-            >
-              Send Notification
-            </Button>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={3}>
-            <Widget
-              icon="eos-icons:project"
-              title="Projects"
-              subtitle="Number of projects"
-              value={projects.length}
-              color_main={grey[500]}
-              color_dark={grey[600]}
-              color_light={grey[400]}
-              color_darker={grey[900]}
-              color_lighter={grey[200]}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Widget
-              icon="wpf:sent"
-              title="Total"
-              subtitle="Total notification requests"
-              value={notifications.length}
-              color_main={indigo[500]}
-              color_dark={indigo[600]}
-              color_light={indigo[400]}
-              color_darker={indigo[900]}
-              color_lighter={indigo[200]}
-            />
+    <>
+      <MultiStepFormDialog open={open} onClose={() => setOpen(false)} />
+      <Scrollbar>
+        <Container maxWidth="xl" className="Home">
+          <Grid container justifyContent="space-between">
+            <Grid item>
+              <h2>{"Overview"}</h2>
+            </Grid>
+            <Grid item className="Home_button">
+              <Button
+                data-testid="create-button"
+                onClick={handleClickCreateButton}
+              >
+                Send Notification
+              </Button>
+            </Grid>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
-            <Widget
-              icon="mdi:check"
-              title="Success"
-              subtitle="Successful notification requests today"
-              value={successfulNotifications}
-              color_main={green[500]}
-              color_dark={green[600]}
-              color_light={green[400]}
-              color_darker={green[900]}
-              color_lighter={green[200]}
-            />
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={3}>
+              <Widget
+                icon="eos-icons:project"
+                title="Projects"
+                subtitle="Number of projects"
+                value={projects.length}
+                color_main={grey[500]}
+                color_dark={grey[600]}
+                color_light={grey[400]}
+                color_darker={grey[900]}
+                color_lighter={grey[200]}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Widget
+                icon="wpf:sent"
+                title="Total"
+                subtitle="Total notification requests"
+                value={notifications.length}
+                color_main={indigo[500]}
+                color_dark={indigo[600]}
+                color_light={indigo[400]}
+                color_darker={indigo[900]}
+                color_lighter={indigo[200]}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={3}>
+              <Widget
+                icon="mdi:check"
+                title="Success"
+                subtitle="Successful notification requests today"
+                value={successfulNotifications}
+                color_main={green[500]}
+                color_dark={green[600]}
+                color_light={green[400]}
+                color_darker={green[900]}
+                color_lighter={green[200]}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={3}>
+              <Widget
+                icon="mdi:exclamation-thick"
+                title="Failure"
+                subtitle="Failed notification requests today"
+                value={failedNotifications}
+                color_main={red[500]}
+                color_dark={red[600]}
+                color_light={red[400]}
+                color_darker={red[900]}
+                color_lighter={red[200]}
+              />
+            </Grid>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
-            <Widget
-              icon="mdi:exclamation-thick"
-              title="Failure"
-              subtitle="Failed notification requests today"
-              value={failedNotifications}
-              color_main={red[500]}
-              color_dark={red[600]}
-              color_light={red[400]}
-              color_darker={red[900]}
-              color_lighter={red[200]}
-            />
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={12} md={12}>
+              <Today />
+            </Grid>
           </Grid>
-        </Grid>
-
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={12} md={12}>
-            <Today />
-          </Grid>
-        </Grid>
-        <h2>Analytics</h2>
-        <Analytics />
-      </Container>
-    </Scrollbar>
+          <h2>Analytics</h2>
+          <Analytics />
+        </Container>
+      </Scrollbar>
+    </>
   );
 }
