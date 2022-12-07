@@ -7,6 +7,7 @@ import { LoadingButton } from "@mui/lab";
 import axios from "axios";
 
 import { setToken } from "../../store/slices/auth";
+import logo from "../../assets/notimanager-logo-transparent.png";
 
 export default function SignIn() {
   const [email, setEmail] = useState<string>("");
@@ -75,7 +76,9 @@ export default function SignIn() {
 
   return (
     <div className="SignIn">
-      <h2>NotiManager</h2>
+      <img alt="" height="100px" width="400px" src={logo} />
+      <br />
+      <br />
       <form onSubmit={handleSignIn}>
         <Stack spacing={2}>
           {error && (
@@ -87,7 +90,7 @@ export default function SignIn() {
             data-testid="email"
             className="email"
             name="email"
-            label="Email address"
+            placeholder="Email address"
             value={email}
             onChange={handleEmailChange}
           />
@@ -95,7 +98,7 @@ export default function SignIn() {
             data-testid="password"
             className="password"
             name="password"
-            label="Password"
+            placeholder="Password"
             type="password"
             value={password}
             onChange={handlePasswordChange}
