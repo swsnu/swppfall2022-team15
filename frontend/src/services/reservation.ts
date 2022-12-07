@@ -16,6 +16,5 @@ export async function createReservation(reservation: any) {
     return resp.data.id;
   } catch (e: any) {
     console.log(e.response);
-    return null;
   }
 }

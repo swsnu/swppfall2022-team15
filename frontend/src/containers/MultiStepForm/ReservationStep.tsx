@@ -105,8 +105,7 @@ export default function ReservationStep(props: IProps) {
       setRecurrence(recurrenceType)
       const id = await sendCreateNotificationCreateRequest()
       await sendCreateReservationRequest(id)
-
-  }
+    }
     const [mode, setMode] = useState("")
 
  /*
