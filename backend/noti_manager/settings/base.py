@@ -132,3 +132,5 @@ REST_FRAMEWORK = {
 
 
 SLACK_HOST = 'https://slack.com'
+
+APPEND_SLASH = True

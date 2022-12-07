@@ -2,8 +2,9 @@ import axios from "axios";
 
 
 export async function createNotificationConfig(notificationConfig: any)  {
+  console.log(notificationConfig)
   const response = await axios.post(
-    "/api/notification_config",
+    "/api/notification_config/",
     notificationConfig
   );
   return response.data.id;
@@ -15,6 +16,5 @@ export async function createReservation(reservation: any) {
     return resp.data.id;
   } catch (e: any) {
     console.log(e.response);
-    return null;
   }
 }

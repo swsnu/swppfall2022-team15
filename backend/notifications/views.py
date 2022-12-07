@@ -17,7 +17,7 @@ from notifications.services import task_send_api_notification, ApiNotificationDt
 from targetusers.models import TargetUser
 
 
-class NotificationViewSet(ModelViewSet):
+class NotificationConfigViewSet(ModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = NotificationConfigSerializer
     queryset = Notification.objects.all()
@@ -27,24 +27,6 @@ class NotificationViewSet(ModelViewSet):
         serializers = self.get_serializer(data=request.data)
         serializers.is_valid(raise_exception=True)
         serializers.save()
-
-        # send notification
-        targetuser_id = request.data.get('target')
-        targetuser = TargetUser.objects.get(id=targetuser_id)
-
-        headers = request.data.get('headers', {
-            'Content-Type': 'application/json',
-        })
-
-        nmessage_id = request.data.get('message')
-        nmessage = NMessage.objects.get(id=nmessage_id)
-        api_dto = ApiNotificationDto(
-            endpoint=targetuser.endpoint,
-            headers=headers,
-            data=nmessage.data,
-        )
-
-        task_send_api_notification.delay(api_dto)
 
         return Response(
             data=serializers.data,
@@ -92,7 +74,8 @@ class ReservationViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         data = request.data
-        serializer = ReservationCreateSerializer(data=data, many=True)
+
+        serializer = ReservationCreateSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()  # FIXME ; abuse of serializer
 

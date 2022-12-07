@@ -29,7 +29,7 @@ export default function ReservationStep(props: IProps) {
 
   const sendCreateNotificationCreateRequest = async () => {
     const config = {
-      projectId: projectId,
+      project: projectId,
       type: notificationType,
       message: message.id,
     };
@@ -38,8 +38,8 @@ export default function ReservationStep(props: IProps) {
 
   const sendCreateReservationRequest = async (id: number) => {
       const reservation = {
-          notification_config_id: id,
-          rruleString: rrule?.toString(),
+          notification_config: id,
+          rrule: rrule?.toString(),
           target_users: targetUsers.map(x => x.id),
       }
       await createReservation(reservation)
@@ -105,8 +105,7 @@ export default function ReservationStep(props: IProps) {
       setRecurrence(recurrenceType)
       const id = await sendCreateNotificationCreateRequest()
       await sendCreateReservationRequest(id)
-
-  }
+    }
     const [mode, setMode] = useState("")
 
  /*
