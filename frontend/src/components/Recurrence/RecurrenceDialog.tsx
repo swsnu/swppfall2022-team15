@@ -10,22 +10,8 @@ interface IProps {
 }
 
 const RecurrenceDialog = (props: IProps) => {
-
-    const today = new Date()
-    const defaultRecurrence = {
-        startDate: today,
-        endDate: today,
-        frequency: FrequencyType.Weekly,
-        numberOfRepetitions: 1,
-        weekDaysRepetition: [],
-        endingCondition: EndingConditionType.None,
-        endingOccurrencesNumber: 0,
-        isAllDay: false,
-        startTime: today,
-        endTime: today
-    }
-
     const handleClickConfirm = () => {
+        props.onClose();
     }
 
     return (
