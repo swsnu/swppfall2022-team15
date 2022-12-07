@@ -30,15 +30,6 @@ export default function MessageCreateForm(
   } = props;
 
   switch (notificationType) {
-    case EnumNotificationType.WEBHOOK:
-      form = <></>;
-      break;
-    case EnumNotificationType.EMAIL:
-      form = <></>;
-      break;
-    case EnumNotificationType.SMS:
-      form = <></>;
-      break;
     case EnumNotificationType.SLACK:
       form = (
         <>
@@ -47,7 +38,8 @@ export default function MessageCreateForm(
             id="outlined-multiline-static"
             fullWidth
             multiline
-            inputProps={{ "data-testid": "message-input" }}
+            // TODO 원래 testid가 message-input인데 testid가 겹쳐서 바꿈. test 코드에 반영 필요
+            inputProps={{ "data-testid": "slack-name-input" }}
             onChange={(event) => {
               setName(event.target.value);
             }}
@@ -56,7 +48,6 @@ export default function MessageCreateForm(
             disabled={disabled}
             required
           />
-          <br />
           <br />
           <br />
           <InputLabel id="demo-simple-select-label">Channel</InputLabel>
@@ -75,7 +66,6 @@ export default function MessageCreateForm(
             rows={1}
             disabled={disabled}
           />
-          <br />
           <br />
           <br />
           <InputLabel id="demo-simple-select-label" margin="dense">
@@ -99,6 +89,144 @@ export default function MessageCreateForm(
         </>
       );
       break;
+    case EnumNotificationType.EMAIL:
+      form = (
+        <>
+          <InputLabel id="demo-simple-select-label">Name</InputLabel>
+          <TextField
+            id="outlined-multiline-static"
+            fullWidth
+            multiline
+            inputProps={{ "data-testid": "email-name-input" }}
+            onChange={(event) => {
+              setName(event.target.value);
+            }}
+            value={name}
+            rows={1}
+            disabled={disabled}
+            required
+          />
+          <br />
+          <br />
+          <InputLabel id="demo-simple-select-label">Title</InputLabel>
+          <TextField
+            id="outlined-multiline-static"
+            fullWidth
+            multiline
+            inputProps={{ "data-testid": "email-title-input" }}
+            onChange={(event: any) => {
+              setData({ ...data, title: event.target.value });
+              setFieldErrors({ ...fieldErrors, title: undefined });
+            }}
+            value={"title" in data ? data.title : ""}
+            helperText={fieldErrors?.title}
+            error={Boolean(fieldErrors?.title)}
+            rows={1}
+            disabled={disabled}
+          />
+          <br />
+          <br />
+          <InputLabel id="demo-simple-select-label" margin="dense">
+            Message
+          </InputLabel>
+          <TextField
+            id="outlined-multiline-static"
+            fullWidth
+            multiline
+            inputProps={{ "data-testid": "email-message-input" }}
+            onChange={(event: any) => {
+              setData({ ...data, message: event.target.value });
+              setFieldErrors({ ...fieldErrors, message: undefined });
+            }}
+            value={"message" in data ? data.message : ""}
+            helperText={fieldErrors?.message}
+            error={Boolean(fieldErrors?.message)}
+            rows={8}
+            disabled={disabled}
+          />
+        </>
+      );
+      break;
+    case EnumNotificationType.WEBHOOK:
+      form = (
+        <>
+          <InputLabel id="demo-simple-select-label">Name</InputLabel>
+          <TextField
+            id="outlined-multiline-static"
+            fullWidth
+            multiline
+            inputProps={{ "data-testid": "webhook-name-input" }}
+            onChange={(event) => {
+              setName(event.target.value);
+            }}
+            value={name}
+            rows={1}
+            disabled={disabled}
+            required
+          />
+          <br />
+          <br />
+          <InputLabel id="demo-simple-select-label" margin="dense">
+            JSON Message
+          </InputLabel>
+          <TextField
+            id="outlined-multiline-static"
+            fullWidth
+            multiline
+            inputProps={{ "data-testid": "webhook-message-input" }}
+            onChange={(event: any) => {
+              setData({ ...data, message: event.target.value });
+              setFieldErrors({ ...fieldErrors, message: undefined });
+            }}
+            value={"message" in data ? data.message : ""}
+            helperText={fieldErrors?.message}
+            error={Boolean(fieldErrors?.message)}
+            rows={9}
+          />
+        </>
+      );
+      break;
+    case EnumNotificationType.SMS:
+      form = (
+        <>
+          <InputLabel id="demo-simple-select-label">Name</InputLabel>
+          <TextField
+            id="outlined-multiline-static"
+            fullWidth
+            multiline
+            inputProps={{ "data-testid": "sms-name-input" }}
+            onChange={(event) => {
+              setName(event.target.value);
+            }}
+            value={name}
+            rows={1}
+            disabled={disabled}
+            required
+          />
+          <br />
+          <br />
+          <InputLabel id="demo-simple-select-label" margin="dense">
+            Message
+          </InputLabel>
+          <TextField
+            id="outlined-multiline-static"
+            fullWidth
+            multiline
+            inputProps={{ "data-testid": "sms-message-input" }}
+            onChange={(event: any) => {
+              setData({ ...data, message: event.target.value });
+              setFieldErrors({ ...fieldErrors, message: undefined });
+            }}
+            value={"message" in data ? data.message : ""}
+            helperText={fieldErrors?.message}
+            error={Boolean(fieldErrors?.message)}
+            rows={9}
+          />
+        </>
+      );
+      break;
+    default:
+      form = <></>;
   }
 
   return form;
