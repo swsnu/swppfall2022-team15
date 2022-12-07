@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import ReactApexChart from "react-apexcharts";
 import { green, red, blue, grey } from "@mui/material/colors";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 interface IProps {
@@ -228,6 +228,10 @@ export default function BarLineAnalytics(props: IProps) {
       data: [],
     },
   ];
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <Card>
