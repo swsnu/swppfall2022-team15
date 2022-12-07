@@ -52,22 +52,11 @@ export default function Analytics() {
         }}
         className="Home_tabs"
       >
-        <Tab
-          label="All"
-          icon={<Iconify icon="mdi:home" iconPosition="start" />}
-        />
-        <Tab
-          label="By Project"
-          icon={<Iconify icon="eos-icons:project" iconPosition="start" />}
-        />
+        <Tab label="All" icon={<Iconify icon="mdi:home" />} />
+        <Tab label="By Project" icon={<Iconify icon="eos-icons:project" />} />
         <Tab
           label="By Type"
-          icon={
-            <Iconify
-              icon="mdi:format-list-bulleted-type"
-              iconPosition="start"
-            />
-          }
+          icon={<Iconify icon="mdi:format-list-bulleted-type" />}
         />
       </Tabs>
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { deleteTarget, fetchTargets } from "./target";
+import { deleteTarget } from "./target";
 
 describe("targets", () => {
   it("should delete target -success", () => {
@@ -18,19 +18,4 @@ describe("targets", () => {
     deleteTarget(1);
   });
 
-  it("should fetch targets - success", () => {
-    jest
-      .spyOn(axios, "get")
-      .mockImplementation(() => Promise.resolve({ data: { id: 1 } }));
-    fetchTargets("email");
-  });
-
-    it("should fetch targets - failure", () => {
-    jest
-      .spyOn(axios, "get")
-      .mockImplementation(() =>
-        Promise.reject({ response: { data: { id: 1 } } })
-      );
-    fetchTargets("email");
-    });
 });

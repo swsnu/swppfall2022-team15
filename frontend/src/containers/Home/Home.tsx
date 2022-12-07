@@ -1,9 +1,10 @@
 import "./Home.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Button } from "@mui/material";
 import { Grid } from "@material-ui/core";
 import { green, grey, red, indigo } from "@mui/material/colors";
+import axios from "axios";
 
 import Widget from "./Boxes/Widget";
 import Analytics from "./Boxes/Analytics";
@@ -17,16 +18,16 @@ import {
   notificationListSelector,
 } from "../../store/slices/notifications";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
-import axios from "axios";
-import { getDate } from "date-fns";
 
 export default function Home() {
   const projects = useSelector(projectListSelector);
   const targets = useSelector(targetListSelector);
   const notifications = useSelector(notificationListSelector);
-
   const user = useSelector(authSelector);
   const dispatch = useDispatch<AppDispatch>();
+
+  const [successfulNotifications, setSuccessfulNotifications] = useState(0);
+  const [failedNotifications, setFailedNotifications] = useState(0);
 
   useEffect(() => {
     dispatch(fetchProjects());
@@ -56,22 +57,32 @@ export default function Home() {
     return formattedDate;
   };
 
-  const getSuccessfulNotifications = async () => {
+  const getNotifications = async () => {
     try {
-      await axios.get("/api/notification/metrics/", {
-        params: {
-          start: getTodayStart(),
-          end: getTodayEnd(),
-          interval: "hour",
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-      });
+      await axios
+        .get("/api/notification/metrics/", {
+          params: {
+            start: getTodayStart(),
+            end: getTodayEnd(),
+            interval: "hour",
+          },
+        })
+        .then((response) => {
+          if (response.data.length === 0) {
+            return;
+          } else {
+            setSuccessfulNotifications(response.data.status.success);
+            setFailedNotifications(response.data.status.failed);
+          }
+        });
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    getNotifications();
+  }, []);
 
   return (
     <Scrollbar>
@@ -89,8 +100,6 @@ export default function Home() {
             </Button>
           </Grid>
         </Grid>
-
-        <Button onClick={getSuccessfulNotifications}>Get</Button>
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
@@ -125,7 +134,7 @@ export default function Home() {
               icon="mdi:check"
               title="Success"
               subtitle="Successful notification requests today"
-              value={0}
+              value={successfulNotifications}
               color_main={green[500]}
               color_dark={green[600]}
               color_light={green[400]}
@@ -139,7 +148,7 @@ export default function Home() {
               icon="mdi:exclamation-thick"
               title="Failure"
               subtitle="Failed notification requests today"
-              value={0}
+              value={failedNotifications}
               color_main={red[500]}
               color_dark={red[600]}
               color_light={red[400]}
