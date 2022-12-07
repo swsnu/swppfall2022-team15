@@ -1,7 +1,6 @@
 import ReservationStep from "./ReservationStep";
-import { renderWithProviders } from "../../test-utils/mocks";
-import { screen, fireEvent } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import {renderWithProviders} from "../../test-utils/mocks";
+import {screen} from "@testing-library/react";
 
 describe("ReservationStep", () => {
   let reservationStep: JSX.Element;
@@ -26,7 +25,6 @@ describe("ReservationStep", () => {
             label: "test",
           },
         ]}
-        handleRecurrenceChange={(_: any) => {}}
       />
     );
   });
