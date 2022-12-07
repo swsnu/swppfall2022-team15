@@ -9,6 +9,7 @@ import {fetchProject} from "../../../store/slices/project";
 import CollapsibleTable from "../../Table/CollapsibleTable";
 import {Container} from "@mui/system";
 import MultiStepFormDialog from "../../../containers/MultiStepFormDialog/MultiStepFormDialog";
+import "./ProjectDetail.css";
 
 export default function ProjectDetail() {
   const [open, setOpen] = useState(false);
@@ -41,9 +42,9 @@ export default function ProjectDetail() {
         open={open}
         onClose={()=> setOpen(false)} />
 
-      <Container>
-        <Grid container justifyContent="flex-end">
-          <Button data-testid="createNotificationButton" variant="contained" onClick={handleCreateNotification}>Create Notification</Button>
+      <Container maxWidth="xl">
+        <Grid container justifyContent="flex-end" className="projectDetailButton">
+          <Button data-testid="createNotificationButton" onClick={handleCreateNotification}>Create Notification</Button>
         </Grid>
         <CollapsibleTable notifications={notifications} />
       </Container>
