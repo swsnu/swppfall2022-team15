@@ -30,7 +30,5 @@ class TargetUserSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError('No username or password provided')
             elif auth == 'api_key' and ('key' not in data or 'value' not in data):
                 raise serializers.ValidationError('No key or value provided')
-        elif notification_type == EnumNotificationType.EMAIL:
-            raise serializers.ValidationError('No email provided')
 
         return super().validate(attrs)
