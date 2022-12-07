@@ -14,15 +14,17 @@ import {
 import Grid from "@mui/material/Unstable_Grid2";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Container } from "@mui/system";
+
 import Iconify from "../../components/Iconify/Iconify";
 import Label from "../../components/Label/Label";
 import ProjectCreateModal from "../../components/Project/ProjectCreateModal";
 import { deleteProject } from "../../services/project";
 import { AppDispatch } from "../../store";
 import { fetchProjects, projectListSelector } from "../../store/slices/project";
-import { useNavigate } from "react-router-dom";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
-import { Container } from "@mui/system";
+import "./ProjectList.css"
 
 export default function ProjectListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
@@ -65,8 +67,8 @@ export default function ProjectListTable() {
         open={createModalopen}
         handleClose={() => setCreateModalOpen(false)}
       ></ProjectCreateModal>
-      <Container>
-        <Grid container justifyContent="flex-end">
+      <Container maxWidth="xl">
+        <Grid container justifyContent="flex-end" className="projectButton">
           <Button data-testid="create-button" onClick={handleClickCreateButton}>
             New Project
           </Button>

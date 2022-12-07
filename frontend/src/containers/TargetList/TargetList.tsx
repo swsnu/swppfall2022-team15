@@ -21,6 +21,7 @@ import { AppDispatch } from "../../store";
 import { fetchTargets, targetListSelector } from "../../store/slices/target";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
 import { Container } from "@mui/system";
+import "./TargetList.css"
 
 export default function TargetListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
@@ -57,8 +58,8 @@ export default function TargetListTable() {
         open={createModalopen}
         handleClose={() => setCreateModalOpen(false)}
       ></TargetCreateModal>
-      <Container>
-        <Grid container justifyContent="flex-end">
+      <Container maxWidth="xl">
+        <Grid container justifyContent="flex-end" className="targetButton">
           <Button data-testid="create-button" onClick={handleClickCreateButton}>
             New Target
           </Button>
