@@ -41,12 +41,11 @@ export default function ReservationStep(props: IProps) {
  }
 
   const [recurrence, setRecurrence] = useState<RecurrenceType>(defaultRecurrence);
-  const handleRecurrenceChange = (r: RecurrenceType) => {
-    console.log(r)
-    setRecurrence(r)
+    const [rrule, setRrule] = useState<RRule | null>(null);
+    const handleRecurrenceChange = (recurrenceType: RecurrenceType) => {
+      setRecurrence(recurrenceType)
   }
-  const [mode, setMode] = useState("")
-  const [rrule, setRrule] = useState<RRule | null>(null);
+    const [mode, setMode] = useState("")
 
  /*
  data hinders encapsulation
@@ -56,47 +55,7 @@ export default function ReservationStep(props: IProps) {
  * */
 
   useEffect(() => {
-    let frequency;
-    switch (recurrence.frequency) {
-      case FrequencyType.Annually:
-        frequency = RRule.YEARLY;
-        break;
-      case FrequencyType.Monthly:
-        frequency = RRule.MONTHLY;
-        break;
-      case FrequencyType.Weekly:
-        frequency = RRule.WEEKLY;
-        break;
-      case FrequencyType.Daily:
-        frequency = RRule.DAILY;
-        break;
-      case FrequencyType.Hourly:
-        frequency = RRule.HOURLY;
-        break;
-      case FrequencyType.Minutely:
-        frequency = RRule.MINUTELY;
-        break;
-      }
-
-    let interval = recurrence.numberOfRepetitions
-
-    switch (recurrence.endingCondition) {
-      case EndingConditionType.None:
-        break;
-      case EndingConditionType.EndDate:
-        let endDate = recurrence.endDate;
-        break;
-      case EndingConditionType.OccurrencesNumber:
-
-        break;
-    }
-
-    let startDate = recurrence.startDate;
-    let newRrule = new RRule({
-        freq: frequency,
-        interval: interval,
-    });
-    setRrule(newRrule)
+    // setRrule(newRrule)
     },[recurrence])
 
 
@@ -106,6 +65,7 @@ export default function ReservationStep(props: IProps) {
       </h1>
     </>
  )
+    console.log(rrule)
 
   return (
     <>
@@ -113,7 +73,8 @@ export default function ReservationStep(props: IProps) {
           open={open}
           onClose={()=>setOpen(false)}
           recurrence={recurrence}
-          handleRecurrenceChange={handleRecurrenceChange}/>
+          handleRecurrenceChange={handleRecurrenceChange}
+          setRrule={setRrule}/>
         {/* info */}
         <h1>Notification Type</h1>
         <TextField
@@ -143,6 +104,7 @@ export default function ReservationStep(props: IProps) {
         <br />
 
         <h1>Reservation</h1>
+        <TextField value ={rrule?.all()}/>
         <SplitButton
           mode={mode}
           setMode={setMode}
