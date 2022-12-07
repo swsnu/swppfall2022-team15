@@ -61,6 +61,15 @@ export default function SignUp() {
       return;
     }
 
+    const emailRegex = new RegExp(
+      '^([\w\.\_\-])*[a-zA-Z0-9]+([\w\.\_\-])*([a-zA-Z0-9])+([\w\.\_\-])+@([a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,8}$'
+    );
+
+    if (emailRegex.test(email) === false) {
+      setError("Invalid email");
+      return;
+    }
+
     try {
       await axios.post(
         "/api/signup/",
@@ -85,12 +94,12 @@ export default function SignUp() {
     } catch (error: any) {
       if (!error.response) {
         setError("Error connecting to server");
-      } else /*if (error.response.status === 400)*/ {
+      } else if (error.response.status === 400) {
         setError("Email already exists");
       } 
-      // else {
-      //   setError("Error signing up");
-      // }
+      else {
+        setError("Error signing up");
+      }
     }
   };
 
