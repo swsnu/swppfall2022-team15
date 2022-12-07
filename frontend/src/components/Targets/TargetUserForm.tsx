@@ -35,12 +35,6 @@ export const TargetUserForm = (props: IProps) => {
   } = props;
 
   const [apiAuth, setApiAuth] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-
-  const onPhoneNumberChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const formattedPhoneNumber = phoneNumberAutoFormat(event.target.value);
-    setPhoneNumber(formattedPhoneNumber);
-  };
 
   const commonPart = (
     <>
@@ -249,10 +243,10 @@ export const TargetUserForm = (props: IProps) => {
             id="email_addr"
             type="text"
             fullWidth
-            value={"email_addr" in data ? data["email_addr"] : ""}
+            value={endpoint}
             inputProps={{ "data-testid": "email-address-input" }}
             onChange={(event) => {
-              setData({ email_addr: event.target.value });
+              setEndpoint(event.target.value)
             }}
             required
           />
@@ -270,9 +264,12 @@ export const TargetUserForm = (props: IProps) => {
             margin="dense"
             id="phone_number"
             fullWidth
-            value={phoneNumber}
+            value={endpoint}
             inputProps={{ "data-testid": "phone-number-input" }}
-            onChange={onPhoneNumberChange}
+            onChange={(event) => {
+              phoneNumberAutoFormat(event.target.value);
+              setEndpoint(event.target.value)
+            }}
             required
           />
         </>
