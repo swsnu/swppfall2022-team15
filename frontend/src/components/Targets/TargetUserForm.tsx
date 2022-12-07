@@ -6,7 +6,8 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
+import { phoneNumberAutoFormat } from "./PhoneNumberAutoFormat";
 
 interface IProps {
   notificationType: string;
@@ -34,26 +35,30 @@ export const TargetUserForm = (props: IProps) => {
   } = props;
 
   const [apiAuth, setApiAuth] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const onPhoneNumberChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const formattedPhoneNumber = phoneNumberAutoFormat(event.target.value);
+    setPhoneNumber(formattedPhoneNumber);
+  };
 
   const commonPart = (
     <>
       <InputLabel id="demo-simple-select-label">Name</InputLabel>
       <TextField
+        id="target_name"
+        fullWidth
+        multiline
+        inputProps={{ "data-testid": "target-input" }}
         autoFocus
         margin="dense"
-        id="target_name"
-        // Label="target name"
-        type="text"
-        fullWidth
-        variant="standard"
         value={targetName}
-        inputProps={{ "data-testid": "target-input" }}
+        rows={1}
+        required
         onChange={(event) => {
           setTargetName(event.target.value);
         }}
-        required
       />
-      <br />
       <br />
       <br />
     </>
@@ -71,11 +76,10 @@ export const TargetUserForm = (props: IProps) => {
             id="username"
             type="text"
             fullWidth
-            variant="standard"
             value={"username" in data ? data.username : ""}
             inputProps={{ "data-testid": "username-input" }}
             onChange={(event) => {
-              setData({ ...data, ["username"]: event.target.value });
+              setData({ ...data, username: event.target.value });
             }}
             required
           />
@@ -89,11 +93,10 @@ export const TargetUserForm = (props: IProps) => {
             id="password"
             type="text"
             fullWidth
-            variant="standard"
             value={"password" in data ? data.password : ""}
             inputProps={{ "data-testid": "password-input" }}
             onChange={(event) => {
-              setData({ ...data, ["password"]: event.target.value });
+              setData({ ...data, password: event.target.value });
             }}
             required
           />
@@ -113,11 +116,10 @@ export const TargetUserForm = (props: IProps) => {
             id="Bearer Token"
             type="text"
             fullWidth
-            variant="standard"
             value={"token" in data ? data["token"] : ""}
             inputProps={{ "data-testid": "username-input" }}
             onChange={(event) => {
-              setData({ ...data, ["token"]: event.target.value });
+              setData({ ...data, token: event.target.value });
             }}
             required
           />
@@ -137,11 +139,10 @@ export const TargetUserForm = (props: IProps) => {
             id="key"
             type="text"
             fullWidth
-            variant="standard"
             value={"key" in data ? data.key : ""}
             inputProps={{ "data-testid": "key-input" }}
             onChange={(event) => {
-              setData({ ...data, ["key"]: event.target.value });
+              setData({ ...data, key: event.target.value });
             }}
             required
           />
@@ -155,11 +156,10 @@ export const TargetUserForm = (props: IProps) => {
             id="value"
             type="text"
             fullWidth
-            variant="standard"
             value={"value" in data ? data.value : ""}
             inputProps={{ "data-testid": "value-input" }}
             onChange={(event) => {
-              setData({ ...data, ["value"]: event.target.value });
+              setData({ ...data, value: event.target.value });
             }}
             required
           />
@@ -172,6 +172,28 @@ export const TargetUserForm = (props: IProps) => {
   }
 
   switch (notificationType) {
+    case EnumNotificationType.SLACK:
+      form = (
+        <>
+          <InputLabel id="demo-simple-select-label">API Token</InputLabel>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="api_token"
+            type="text"
+            fullWidth
+            value={"api_key" in data ? data["api_key"] : ""}
+            inputProps={{ "data-testid": "api-token-input" }}
+            onChange={(event) => {
+              setData({ api_key: event.target.value });
+            }}
+            required
+          />
+          <br />
+          <br />
+        </>
+      );
+      break;
     case EnumNotificationType.WEBHOOK:
       form = (
         <>
@@ -182,7 +204,6 @@ export const TargetUserForm = (props: IProps) => {
             id="endpoint"
             type="text"
             fullWidth
-            variant="standard"
             value={endpoint}
             inputProps={{ "data-testid": `endpoint-input` }}
             onChange={(event) => {
@@ -190,7 +211,6 @@ export const TargetUserForm = (props: IProps) => {
             }}
             required
           />
-          <br />
           <br />
           <br />
           <InputLabel id="demo-simple-select-label">Authorization</InputLabel>
@@ -204,7 +224,7 @@ export const TargetUserForm = (props: IProps) => {
             }}
             onChange={(event: SelectChangeEvent) => {
               setApiAuth(event.target.value);
-              setData({ ["auth"]: event.target.value });
+              setData({ auth: event.target.value });
             }}
             fullWidth
           >
@@ -215,38 +235,46 @@ export const TargetUserForm = (props: IProps) => {
           </Select>
           <br />
           <br />
-          <br />
           {apiAuthForm}
         </>
       );
       break;
     case EnumNotificationType.EMAIL:
-      form = <></>;
-      break;
-    case EnumNotificationType.SMS:
-      form = <></>;
-      break;
-    case EnumNotificationType.SLACK:
       form = (
         <>
-          <InputLabel id="demo-simple-select-label">API Token</InputLabel>
+          <InputLabel id="demo-simple-select-label">Email Address</InputLabel>
           <TextField
             autoFocus
             margin="dense"
-            id="api_token"
+            id="email_addr"
             type="text"
             fullWidth
-            variant="standard"
-            value={"api_key" in data ? data["api_key"] : ""}
-            inputProps={{ "data-testid": "api-token-input" }}
+            value={"email_addr" in data ? data["email_addr"] : ""}
+            inputProps={{ "data-testid": "email-address-input" }}
             onChange={(event) => {
-              setData({ ["api_key"]: event.target.value });
+              setData({ email_addr: event.target.value });
             }}
             required
           />
           <br />
           <br />
-          <br />
+        </>
+      );
+      break;
+    case EnumNotificationType.SMS:
+      form = (
+        <>
+          <InputLabel id="demo-simple-select-label">Phone Number</InputLabel>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="phone_number"
+            fullWidth
+            value={phoneNumber}
+            inputProps={{ "data-testid": "phone-number-input" }}
+            onChange={onPhoneNumberChange}
+            required
+          />
         </>
       );
       break;
