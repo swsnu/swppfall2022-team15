@@ -128,7 +128,7 @@ export default function MessageStep(props: IProps) {
       >
         <Grid
           container
-          style={{ minHeight: "100vh" }}
+          style={{ minHeight: "87vh" }}
           alignItems="top"
           justifyContent="top"
           marginTop={4}
@@ -151,10 +151,10 @@ export default function MessageStep(props: IProps) {
               }}
             />
           </Grid>
-          <Button onClick={()=> setDialogOpen(false)}>Close</Button>
-          <Grid lg></Grid>
 
+          <Grid lg></Grid>
         </Grid>
+        <Button onClick={() => setDialogOpen(false)}>Close</Button>
       </Dialog>
       <Button
         data-testid="importMessageButton"
