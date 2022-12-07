@@ -1,30 +1,16 @@
-import {
-  Box,
-  Button,
-  Card,
-  IconButton,
-  MenuItem,
-  Popover, Tab,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow, Tabs,
-} from "@mui/material";
+import {Box, Button, MenuItem, Popover, Tab, Tabs,} from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import Iconify from "../../components/Iconify/Iconify";
 import TargetCreateModal from "../../components/Targets/TargetCreateModal";
-import { deleteTarget } from "../../services/target";
-import { AppDispatch } from "../../store";
-import { fetchTargets, targetListSelector } from "../../store/slices/target";
-import Scrollbar from "../../components/Scrollbar/Scrollbar";
-import { Container } from "@mui/system";
+import {deleteTarget} from "../../services/target";
+import {AppDispatch} from "../../store";
+import {fetchTargets, targetListSelector} from "../../store/slices/target";
+import {Container} from "@mui/system";
 import "./TargetList.css"
 import DynamicTable from "../../components/Message/DynamicTable";
-import {EnumNotificationType} from "../../Enums";
+import notifications from "../../store/slices/notifications";
 
 export default function TargetListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);

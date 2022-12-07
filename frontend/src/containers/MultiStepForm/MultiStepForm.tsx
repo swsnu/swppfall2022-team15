@@ -76,7 +76,7 @@ export default function MultiStepForm() {
   return (
     <Grid
       container
-      style={{ minHeight: "100vh" }}
+      style={{ minHeight: "100vh", minWidth: "60vw" }}
       alignItems="top"
       justifyContent="top"
       marginTop={4}
