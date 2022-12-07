@@ -9,7 +9,7 @@ export async function createMessage(
 ) {
   try {
     const resp = await axios.post("/api/message/", {
-      notification_type: EnumNotificationType.SLACK,
+      notification_type: notification_type,
       name: name,
       data: data,
     });
@@ -28,10 +28,10 @@ export async function deleteMessage(messageId: number) {
 }
 
 export async function fetchMessagesWithNotificationType(
-  notificationtype: string
+  notification_type: string
 ) {
   const response = await axios.get<MessageType[]>(
-    `/api/message/?notification_type=${notificationtype}`
+    `/api/message/?notification_type=${notification_type}`
   );
   return response.data;
 }
