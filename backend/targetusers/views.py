@@ -10,14 +10,14 @@ class TargetUserViewSet(CreateByNotificationTypeMixin, ModelViewSet):
     serializer_class = TargetUserSerializer
     permission_classes = (IsAuthenticated,)
 
+    def list(self, request, *args, **kwargs):
+        if project_id := request.query_params.get('projectId'):
+            self.queryset = self.queryset.filter(project_id=int(project_id))
+        return super().list(request, *args, **kwargs)
+
     # pylint: disable=inconsistent-return-statements
     def get_create_serializer_class(self):
         return TargetUserSerializer
 
-    # pylint: disable=R0801
     def get_queryset(self):
-        queryset = self.queryset
-        if 'notification_type' in self.request.query_params:
-            notification_type = self.request.query_params['notification_type']
-            queryset = queryset.filter(notification_type=notification_type)
-        return queryset.filter(user=self.request.user)
+        return self.queryset.filter(user=self.request.user)
