@@ -23,7 +23,6 @@ export interface IProps {
 }
 
 
-
 function Row(props: { row: NotificationType }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
@@ -45,7 +44,7 @@ function Row(props: { row: NotificationType }) {
           {row.id}
         </TableCell>
         <TableCell align="right">{row.type}</TableCell>
-        <TableCell align="right">{row.status}</TableCell>
+        {/*<TableCell align="right">{row.status}</TableCell>*/}
         <TableCell align="right">{row.message}</TableCell>
       </TableRow>
       <TableRow>
@@ -53,7 +52,7 @@ function Row(props: { row: NotificationType }) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                History
+                Reservation
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
@@ -97,9 +96,9 @@ export default function CollapsibleTable(props: IProps) {
             <TableCell />
             <TableCell> id </TableCell>
             <TableCell align="right">Type</TableCell>
-            <TableCell align="right">Status</TableCell>
+            {/*<TableCell align="right">Status</TableCell>*/}
             <TableCell align="right">Message&nbsp;</TableCell>
-            <TableCell align="right">Reserved At&nbsp;</TableCell>
+            {/*<TableCell align="right">Reserved At&nbsp;</TableCell>*/}
           </TableRow>
         </TableHead>
         <TableBody>
