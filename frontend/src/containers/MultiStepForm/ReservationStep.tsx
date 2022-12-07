@@ -33,11 +33,12 @@ export default function ReservationStep(props: IProps) {
       type: notificationType,
       message: message.id,
     };
-    await createNotificationConfig(config)
+    return await createNotificationConfig(config)
   }
 
-  const sendCreateReservationRequest = async () => {
+  const sendCreateReservationRequest = async (id: number) => {
       const reservation = {
+          notification_config_id: id,
           rruleString: rrule?.toString(),
           target_users: targetUsers.map(x => x.id),
       }
@@ -102,8 +103,8 @@ export default function ReservationStep(props: IProps) {
     const [rrule, setRrule] = useState<RRule | null>(null);
     const handleRecurrenceChange = async (recurrenceType: RecurrenceType) => {
       setRecurrence(recurrenceType)
-      // await sendCreateNotificationCreateRequest()
-      await sendCreateReservationRequest()
+      const id = await sendCreateNotificationCreateRequest()
+      await sendCreateReservationRequest(id)
   }
     const [mode, setMode] = useState("")
 
