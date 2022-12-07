@@ -24,16 +24,64 @@ interface ChartDataType {
   data: { x: string; y: number }[];
 }
 
+const initialDailyData: { x: string; y: number }[] = [
+  { x: "2022-11-23", y: 0 },
+  { x: "2022-11-24", y: 0 },
+  { x: "2022-11-25", y: 0 },
+  { x: "2022-11-26", y: 0 },
+  { x: "2022-11-27", y: 0 },
+  { x: "2022-11-28", y: 0 },
+  { x: "2022-11-29", y: 0 },
+  { x: "2022-11-30", y: 0 },
+  { x: "2022-12-01", y: 0 },
+  { x: "2022-12-02", y: 0 },
+  { x: "2022-12-03", y: 0 },
+  { x: "2022-12-04", y: 0 },
+  { x: "2022-12-05", y: 0 },
+  { x: "2022-12-06", y: 0 },
+  { x: "2022-12-07", y: 0 },
+];
+
+const initialWeeklyData: { x: string; y: number }[] = [
+  { x: "2022 Nov Week 1", y: 0 },
+  { x: "2022 Nov Week 2", y: 0 },
+  { x: "2022 Nov Week 3", y: 0 },
+  { x: "2022 Nov Week 4", y: 0 },
+  { x: "2022 Nov Week 5", y: 0 },
+  { x: "2022 Dec Week 1", y: 0 },
+];
+
+const initialMonthlyData: { x: string; y: number }[] = [
+  { x: "2021 Dec", y: 0 },
+  { x: "2022 Jan", y: 0 },
+  { x: "2022 Feb", y: 0 },
+  { x: "2022 Mar", y: 0 },
+  { x: "2022 Apr", y: 0 },
+  { x: "2022 May", y: 0 },
+  { x: "2022 Jun", y: 0 },
+  { x: "2022 Jul", y: 0 },
+  { x: "2022 Aug", y: 0 },
+  { x: "2022 Sep", y: 0 },
+  { x: "2022 Oct", y: 0 },
+  { x: "2022 Nov", y: 0 },
+  { x: "2022 Dec", y: 0 },
+];
+
 export default function BarLineAnalytics(props: IProps) {
   const [type, setType] = useState<number>(10);
-  const [success, setSuccess] = useState<{ x: string; y: number }[]>([]);
-  const [failure, setFailure] = useState<{ x: string; y: number }[]>([]);
-  const [upcoming, setUpcoming] = useState<{ x: string; y: number }[]>([]);
+  const [success, setSuccess] =
+    useState<{ x: string; y: number }[]>(initialDailyData);
+  const [failure, setFailure] =
+    useState<{ x: string; y: number }[]>(initialDailyData);
+  const [upcoming, setUpcoming] =
+    useState<{ x: string; y: number }[]>(initialDailyData);
+  const [total, setTotal] =
+    useState<{ x: string; y: number }[]>(initialDailyData);
 
   const getStartDay_Daily = () => {
     const time = new Date();
     let formattedDate = `${time.getFullYear()}-${time.getMonth() + 1}-${
-      time.getDate() - 7
+      time.getDate() - 14
     }`;
 
     return formattedDate;
@@ -78,6 +126,10 @@ export default function BarLineAnalytics(props: IProps) {
           })
           .then((response) => {
             if (response.data.length === 0) {
+              setSuccess(initialDailyData);
+              setFailure(initialDailyData);
+              setUpcoming(initialDailyData);
+              setTotal(initialDailyData);
               return;
             } else {
               let successData = [];
@@ -108,6 +160,10 @@ export default function BarLineAnalytics(props: IProps) {
             }
           });
       } catch (error) {
+        setSuccess(initialDailyData);
+        setFailure(initialDailyData);
+        setUpcoming(initialDailyData);
+        setTotal(initialDailyData);
         console.log(error);
       }
     } else if (type === 20) {
@@ -123,6 +179,10 @@ export default function BarLineAnalytics(props: IProps) {
           })
           .then((response) => {
             if (response.data.length === 0) {
+              setSuccess(initialWeeklyData);
+              setFailure(initialWeeklyData);
+              setUpcoming(initialWeeklyData);
+              setTotal(initialWeeklyData);
               return;
             } else {
               let successData = [];
@@ -153,6 +213,10 @@ export default function BarLineAnalytics(props: IProps) {
             }
           });
       } catch (error) {
+        setSuccess(initialWeeklyData);
+        setFailure(initialWeeklyData);
+        setUpcoming(initialWeeklyData);
+        setTotal(initialWeeklyData);
         console.log(error);
       }
     } else {
@@ -167,6 +231,10 @@ export default function BarLineAnalytics(props: IProps) {
           })
           .then((response) => {
             if (response.data.length === 0) {
+              setSuccess(initialMonthlyData);
+              setFailure(initialMonthlyData);
+              setUpcoming(initialMonthlyData);
+              setTotal(initialMonthlyData);
               return;
             } else {
               let successData = [];
@@ -197,6 +265,10 @@ export default function BarLineAnalytics(props: IProps) {
             }
           });
       } catch (error) {
+        setSuccess(initialMonthlyData);
+        setFailure(initialMonthlyData);
+        setUpcoming(initialMonthlyData);
+        setTotal(initialMonthlyData);
         console.log(error);
       }
     }
@@ -225,13 +297,13 @@ export default function BarLineAnalytics(props: IProps) {
       name: "Total",
       type: "line",
       fill: grey[300],
-      data: [],
+      data: total,
     },
   ];
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [data]);
 
   return (
     <Card>
