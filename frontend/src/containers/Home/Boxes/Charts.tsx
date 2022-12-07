@@ -5,6 +5,7 @@ import { green, red, blue } from "@mui/material/colors";
 import BarLineChart from "./BarLineAnalytics";
 import PieChart from "./PieChart";
 import { projectListSelector, projectSelect } from "../../../store/slices/project";
+import { notificationListSelector } from '../../../store/slices/notifications';
 
 interface IProps {
   selectedTab: number;
@@ -17,6 +18,40 @@ const types = ["Slack", "Email", "HTTP", "SMS"];
 export default function Charts(props: IProps) {
   const projects = useSelector(projectListSelector);
   const selectedProject = useSelector(projectSelect);
+  const notifications = useSelector(notificationListSelector);
+
+  function getSuccess() {
+    var count = 0;
+    for(let i = 0; i < notifications.length; i++) {
+      if (notifications[i].status === "SUCCESS") {
+        count++;
+      }
+    }
+
+    return count;
+  }
+
+  function getFailure() {
+    var count = 0;
+    for(let i = 0; i < notifications.length; i++) {
+      if (notifications[i].status === "FAILURE") {
+        count++;
+      }
+    }
+
+    return count;
+  }
+
+  function getUpcoming() {
+    var count = 0;
+    for(let i = 0; i < notifications.length; i++) {
+      if (notifications[i].status === "PENDING") {
+        count++;
+      }
+    }
+
+    return count;
+  }
 
   function getTitle() {
     if (props.selectedTab === 0) {
@@ -55,7 +90,7 @@ export default function Charts(props: IProps) {
   }
 
   function getTotal() {
-    return 0;
+    return getSuccess() + getFailure() + getUpcoming();
   }
 
   function shortenNumber(value: number) {
@@ -87,8 +122,8 @@ export default function Charts(props: IProps) {
         <PieChart
           title={getTitle()}
           subheader={getSubheader()}
-          series={[0, 0, 0]}
-          labels={["Success", "Failure", "Upcoming"]}
+          series={[getSuccess(), getFailure(), getUpcoming()]}
+          labels={["Success", "Failure", "Pending"]}
           colors={[green[300], red[300], blue[300]]}
           total={getTotal()}
         />
