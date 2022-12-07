@@ -6,7 +6,7 @@ export async function createNotificationConfig(notificationConfig: any)  {
     "/api/notification_config",
     notificationConfig
   );
-  return response.data;
+  return response.data.id;
 }
 
 export async function createReservation(reservation: any) {
