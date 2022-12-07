@@ -61,11 +61,11 @@ export default function SignUp() {
       return;
     }
 
-    const emailRegex = new RegExp(
-      '^([\w\.\_\-])*[a-zA-Z0-9]+([\w\.\_\-])*([a-zA-Z0-9])+([\w\.\_\-])+@([a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,8}$'
-    );
+    const exp: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
-    if (emailRegex.test(email) === false) {
+    const result = exp.test(email);
+
+    if (result === false) {
       setError("Invalid email");
       return;
     }
@@ -94,12 +94,9 @@ export default function SignUp() {
     } catch (error: any) {
       if (!error.response) {
         setError("Error connecting to server");
-      } else if (error.response.status === 400) {
+      } else {
         setError("Email already exists");
       } 
-      else {
-        setError("Error signing up");
-      }
     }
   };
 

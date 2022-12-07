@@ -27,8 +27,7 @@ export const createNotification = createAsyncThunk(
     const response = await axios.post<NotificationType>("/api/notification/", notification);
     return response.data;
   }
-)
-
+);
 
 const initialState: {
     notifications: NotificationType[];

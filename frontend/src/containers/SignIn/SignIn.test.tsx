@@ -24,123 +24,78 @@ describe("<SignIn />", () => {
 
   it("should render correctly", () => {
     renderWithProviders(<SignIn />);
-
-    expect(screen.getByTestId("email")).toBeInTheDocument();
-    expect(screen.getByTestId("password")).toBeInTheDocument();
-    expect(screen.getByTestId("signin")).toBeInTheDocument();
-    expect(screen.getByTestId("signup")).toBeInTheDocument();
   });
 
   it("should navigate to signup page", () => {
     renderWithProviders(<SignIn />);
 
-    fireEvent.click(screen.getByTestId("signup"));
+    fireEvent.click(screen.getByTestId("signup-button"));
 
     expect(mockNavigate).toBeCalledWith("/signup");
   });
 
   it("should show error message when submitted with empty inputs", async () => {
     renderWithProviders(<SignIn />);
-    fireEvent.click(screen.getByTestId("signin"));
+    fireEvent.click(screen.getByTestId("signin-button"));
 
-    const error = screen.findByTestId("error");
+    const error = screen.findByTestId("error-message");
 
     expect((await error).textContent).toBe("Please fill in all fields");
   });
 
-  it("should change email and pw input value", () => {
-    renderWithProviders(<SignIn />);
-    const emailInput = screen.getByLabelText("Email address");
-
-    fireEvent.change(emailInput, { target: { value: "hello" } });
-
-    const passwordInput = screen.getByLabelText("Password");
-
-    fireEvent.change(passwordInput, { target: { value: "hello" } });
-
-    expect(emailInput).toHaveValue("hello");
-    expect(passwordInput).toHaveValue("hello");
-  });
-
-  it("should log in correctly", async () => {
-    jest.spyOn(axios, "post").mockResolvedValue(
-      Promise.resolve({
-        status: 200,
-        data: {
-          token: "token",
-        },
-      })
-    );
-
-    renderWithProviders(<SignIn />);
-    fireEvent.change(screen.getByLabelText("Email address"), {
-      target: { value: "test" },
-    });
-    fireEvent.change(screen.getByLabelText("Password"), {
-      target: { value: "test" },
-    });
-    fireEvent.click(screen.getByTestId("signin"));
-
-    await waitFor(() => expect(mockNavigate).toBeCalledWith("/home"));
-  });
-
-  it("should show error message when submitted - error logging in", async () => {
-    jest.spyOn(axios, "post").mockImplementation(() => {
-      return Promise.reject({ response: { status: 500 } });
-    });
-
-    renderWithProviders(<SignIn />);
-
-    fireEvent.change(screen.getByLabelText("Email address"), {
-      target: { value: "test" },
-    });
-    fireEvent.change(screen.getByLabelText("Password"), {
-      target: { value: "test" },
-    });
-    fireEvent.click(screen.getByTestId("signin"));
-
-    const error = screen.findByTestId("error");
-
-    expect((await error).textContent).toBe("Error logging in");
-  });
-
   it("should show error message when submitted with invalid inputs", async () => {
-    jest.spyOn(axios, "post").mockImplementation(() => {
-      return Promise.reject({ response: { status: 401 } });
-    });
-
     renderWithProviders(<SignIn />);
 
-    fireEvent.change(screen.getByLabelText("Email address"), {
-      target: { value: "test" },
-    });
-    fireEvent.change(screen.getByLabelText("Password"), {
-      target: { value: "test" },
-    });
-    fireEvent.click(screen.getByTestId("signin"));
+    const emailInput = screen.getByTestId("email-input");
+    const passwordInput = screen.getByTestId("password-input");
 
-    const error = screen.findByTestId("error");
+    fireEvent.change(emailInput, { target: { value: "test" } });
+    fireEvent.change(passwordInput, { target: { value: "test" } });
 
-    expect((await error).textContent).toBe("Invalid email or password");
+    fireEvent.click(screen.getByTestId("signin-button"));
+
+    const error = screen.findByTestId("error-message");
+
+    expect((await error).textContent).toBe("Invalid email");
   });
 
-  it("should show error message when submitted - error connecting to server", async () => {
-    jest.spyOn(axios, "post").mockImplementation(() => {
-      return Promise.reject({ response: null });
+  it("should show error message when submitted with invalid credentials", async () => {
+    jest.spyOn(axios, "post").mockRejectedValue({
+      response: {
+        status: 401,
+      },
     });
 
     renderWithProviders(<SignIn />);
 
-    fireEvent.change(screen.getByLabelText("Email address"), {
-      target: { value: "test" },
-    });
-    fireEvent.change(screen.getByLabelText("Password"), {
-      target: { value: "test" },
-    });
-    fireEvent.click(screen.getByTestId("signin"));
+    const emailInput = screen.getByTestId("email-input");
+    const passwordInput = screen.getByTestId("password-input");
 
-    const error = screen.findByTestId("error");
+    fireEvent.change(emailInput, { target: { value: "test@test.com" } });
+    fireEvent.change(passwordInput, { target: { value: "test" } });
 
-    expect((await error).textContent).toBe("Error connecting to server");
+    fireEvent.click(screen.getByTestId("signin-button"));
+    await waitFor(() => {
+      expect(screen.getByText("Invalid email or password")).toBeInTheDocument();
+    });
+  });
+
+  it("should show error message when server is down", async () => {
+    jest.spyOn(axios, "post").mockRejectedValue({
+      status: 500,
+    });
+
+    renderWithProviders(<SignIn />);
+
+    const emailInput = screen.getByTestId("email-input");
+    const passwordInput = screen.getByTestId("password-input");
+
+    fireEvent.change(emailInput, { target: { value: "test@test.com" } });
+    fireEvent.change(passwordInput, { target: { value: "test" } });
+
+    fireEvent.click(screen.getByTestId("signin-button"));
+    await waitFor(() => {
+      expect(screen.getByText("Error connecting to server")).toBeInTheDocument();
+    });
   });
 });
