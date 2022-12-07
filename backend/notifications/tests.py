@@ -52,6 +52,19 @@ class NotificationAPITestCase(APITestCase):
         # Then
         self.assertEqual(response.status_code, 201)
 
+    def test_metrics(self):
+        # Given
+
+        baker.make(Notification, status=EnumNotificationStatus.SUCCESS, updated_at=timezone.now() - timezone.timedelta(hours=24), _quantity=2)
+        baker.make(Notification, status=EnumNotificationStatus.FAILURE, updated_at=timezone.now() - timezone.timedelta(hours=24))
+
+        # When
+        self.client.force_authenticate(user=self.user)
+        response = self.client.get('/api/notification/metrics/?start=2022-12-07&end=2022-12-09&interval=hour')
+
+        # Then
+        self.assertEqual(response.status_code, 200)
+
 
 class ReservationAPITestCase(APITestCase):
 

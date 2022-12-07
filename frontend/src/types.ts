@@ -41,8 +41,6 @@ export interface TargetUserIdNameDto {
   label: string;
 }
 
-// TODO: Message Type 내 attribute를 정하는 과정이 필요해 보입니다
-// (https://github.com/swsnu/swppfall2022-team15/issues/48)
 export interface MessageType {
   id: number;
   name: string;
@@ -60,7 +58,13 @@ export interface EmailData {
   content: string;
 }
 
-export type Data = SlackData | EmailData;
+export interface WebhookData {
+  message: string;
+}
+
+export interface SmsData {
+  message: string;
+}
 
 export interface MessageListType {
   [key: string]: MessageType[];
