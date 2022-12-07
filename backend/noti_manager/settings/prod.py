@@ -23,3 +23,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = False
 
 CORS_ALLOW_HEADERS = ['*']
+
+# CELERY
+CELERY_BROKER_URL = 'redis://noti-manager.wwlvtt.ng.0001.apn2.cache.amazonaws.com:6379'
+CELERY_RESULT_BACKEND = 'redis://noti-manager.wwlvtt.ng.0001.apn2.cache.amazonaws.com:6379'
