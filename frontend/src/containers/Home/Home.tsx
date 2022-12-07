@@ -56,17 +56,22 @@ export default function Home() {
     return formattedDate;
   };
 
-  /*
   const getSuccessfulNotifications = async () => {
     try {
-      await axios.get{
-        //`/api/notification/metrics/?start=${getDate(new Date())}&end=${getDate(new Date())}&interval=${hour}`
-      }
+      await axios.get("/api/notification/metrics/", {
+        params: {
+          start: getTodayStart(),
+          end: getTodayEnd(),
+          interval: "hour",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
     } catch (error) {
       console.log(error);
     }
-  }
-  */
+  };
 
   return (
     <Scrollbar>
@@ -84,6 +89,8 @@ export default function Home() {
             </Button>
           </Grid>
         </Grid>
+
+        <Button onClick={getSuccessfulNotifications}>Get</Button>
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
