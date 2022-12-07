@@ -28,24 +28,6 @@ class NotificationConfigViewSet(ModelViewSet):
         serializers.is_valid(raise_exception=True)
         serializers.save()
 
-        # send notification
-        targetuser_id = request.data.get('target')
-        targetuser = TargetUser.objects.get(id=targetuser_id)
-
-        headers = request.data.get('headers', {
-            'Content-Type': 'application/json',
-        })
-
-        nmessage_id = request.data.get('message')
-        nmessage = NMessage.objects.get(id=nmessage_id)
-        api_dto = ApiNotificationDto(
-            endpoint=targetuser.endpoint,
-            headers=headers,
-            data=nmessage.data,
-        )
-
-        task_send_api_notification.delay(api_dto)
-
         return Response(
             data=serializers.data,
             status=status.HTTP_201_CREATED
@@ -92,7 +74,8 @@ class ReservationViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         data = request.data
-        serializer = ReservationCreateSerializer(data=data, many=True)
+
+        serializer = ReservationCreateSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()  # FIXME ; abuse of serializer
 
