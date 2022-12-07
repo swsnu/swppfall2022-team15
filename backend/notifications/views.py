@@ -62,9 +62,11 @@ class NotificationViewSet(ModelViewSet):
     def metrics(self, request):
         def convert(metric):
             result = dict()
+            
             result['status'] = metric['status']
-            result['time'] = datetime.datetime.strftime(metric['key'], '%Y-%m-%d %H:%M:%S')
+            result['time'] = datetime.datetime.strftime(metric['time'], '%Y-%m-%d %H:%M:%S')
             result['count'] = metric['count']
+            
             return result
 
         start_time = request.query_params.get('start')
@@ -75,11 +77,11 @@ class NotificationViewSet(ModelViewSet):
         metrics = Notification.objects.filter(
             updated_at__range=(start_time, end_time)
         ).annotate(
-            key=Trunc('updated_at', interval)
-        ).values('status', 'key').annotate(
-            count=Count('key')
-        ).order_by('count', 'status')
-
+            time=Trunc('updated_at', interval)
+        ).values('status', 'time').annotate(
+            count=Count('time')
+        ).order_by('time', 'status', 'count',)
+        
         response = list(map(convert, metrics))
 
         return Response(data=response, status=status.HTTP_200_OK)
