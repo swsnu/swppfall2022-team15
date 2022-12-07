@@ -1,21 +1,29 @@
-// import { render } from "@testing-library/react";
-// import TargetUserMultiSelect from "./TargetUserMultiSelect";
-// import { EnumNotificationType } from "../../Enums";
-// import axios from "axios";
-//
-// describe("TargetUserMultiSelect", () => {
-//   it("should render", () => {
-//     jest.spyOn(axios, "get").mockImplementation(() =>
-//       Promise.resolve({
-//         data: [
-//           { id: 1, name: "target user 1" },
-//           { id: 2, name: "target user 2" },
-//         ],
-//       })
-//     );
-//     render(
-//       <TargetUserMultiSelect notification_type={EnumNotificationType.SLACK} />
-//     );
-//   });
-// });
-export {}
+import { renderWithProviders } from "../../test-utils/mocks";
+import TargetUserMultiSelect from "./TargetUserMultiSelect";
+import { fireEvent, screen } from "@testing-library/react";
+
+describe("<TargetUserMultiSelect />", () => {
+  it("should render", () => {
+    renderWithProviders(
+      <TargetUserMultiSelect
+        notification_type="webhook"
+        selected={[]}
+        setSelected={() => {}}
+        targetUsers={[]}
+      />
+    );
+  });
+
+  it("should render with selected", () => {
+    const setSelected = jest.fn();
+    renderWithProviders(
+      <TargetUserMultiSelect
+        notification_type="webhook"
+        selected={[{ label: "test", value: 1 }]}
+        setSelected={setSelected}
+        targetUsers={[]}
+      />
+    );
+  });
+
+});

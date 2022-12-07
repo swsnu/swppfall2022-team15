@@ -12,6 +12,7 @@ import { AppDispatch } from "../../store";
 import { Container } from "@mui/system";
 import MessageTable from "../../components/Message/MessageTable";
 import { EnumNotificationType } from "../../Enums";
+import preloadedState from "../../test-utils/mock_state";
 
 export default function MessageListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
@@ -73,8 +74,7 @@ export default function MessageListTable() {
           <Box sx={{ "margin-bottom": "20px" }}>
             <MessageTable
               columns={["Id", "Name", "Title", "Message"]}
-              keys={["id", "name", "title", "message"]}
-              // TODO: Slack 내용 말고 Email Data 보여줄 것
+              keys={["id", "name", "data.title", "data.message"]}
               rows={
                 EnumNotificationType.EMAIL in messages ? messages.EMAIL : []
               }
@@ -88,8 +88,7 @@ export default function MessageListTable() {
           <Box sx={{ "margin-bottom": "20px" }}>
             <MessageTable
               columns={["Id", "Name", "JSON Message"]}
-              keys={["id", "name", "message"]}
-              // TODO: slack 내용 말고 JSON Data 보여줄 것
+              keys={["id", "name", "data.message"]}
               rows={
                 EnumNotificationType.WEBHOOK in messages ? messages.WEBHOOK : []
               }
@@ -103,22 +102,15 @@ export default function MessageListTable() {
           <Box sx={{ "margin-bottom": "20px" }}>
             <MessageTable
               columns={["Id", "Name", "Message"]}
-              keys={["id", "name", "message"]}
-              // TODO: Slack 내용 말고 SMS Data 보여줄 것
+              keys={["id", "name", "data.message"]}
               rows={EnumNotificationType.SMS in messages ? messages.SMS : []}
               handleOpenMenu={handleOpenMenu}
             />
           </Box>
         );
       default:
-        return (
-          <MessageTable
-            columns={["channel", "message"]}
-            keys={["channel", "message"]}
-            rows={EnumNotificationType.SLACK in messages ? messages.SLACK : []}
-            handleOpenMenu={handleOpenMenu}
-          />
-        );
+        setSelectedTab(0);
+        return <></>;
     }
   }
 

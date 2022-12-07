@@ -13,6 +13,8 @@ import { authSelector } from "../../store/slices/auth";
 import { targetListSelector } from "../../store/slices/target";
 import { fetchProjects, projectListSelector } from "../../store/slices/project";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
+import { store } from "../../store";
+import preloadedState from "../../test-utils/mock_state";
 
 export default function Home() {
   const projects = useSelector(projectListSelector);
@@ -23,6 +25,8 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(fetchProjects());
+    //console.log(preloadedState);
+    console.log(store.getState());
     //Todo: fetch notifications
     //dispatch(fetchNotifcations());
   }, [user, dispatch]);

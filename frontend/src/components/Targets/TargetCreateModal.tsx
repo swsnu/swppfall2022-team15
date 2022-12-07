@@ -9,12 +9,12 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import {useState} from "react";
-import {useDispatch} from "react-redux";
-import {AppDispatch} from "../../store";
-import {createTarget, fetchTargets} from "../../store/slices/target";
-import {EnumNotificationType} from "../../Enums";
-import {TargetUserForm} from "./TargetUserForm";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
+import { createTarget, fetchTargets } from "../../store/slices/target";
+import { EnumNotificationType } from "../../Enums";
+import { TargetUserForm } from "./TargetUserForm";
 
 interface IProps {
   open: any;
@@ -34,12 +34,14 @@ export default function TargetCreateModal(props: IProps) {
     setNotificationType("");
     setEndpoint("");
     setData({});
-  }
+  };
 
   const handleClickConfirm = async () => {
     if (
-        (targetName && notificationType && endpoint) || // NON SLACK
-        (notificationType==EnumNotificationType.SLACK.toString() && targetName && 'api_key' in data) // SLACK
+      (targetName && notificationType && endpoint) || // NON SLACK
+      (notificationType == EnumNotificationType.SLACK.toString() &&
+        targetName &&
+        "api_key" in data) // SLACK
     ) {
       const requestData = {
         name: targetName,
@@ -47,14 +49,22 @@ export default function TargetCreateModal(props: IProps) {
         endpoint: endpoint,
         data: data,
       };
-      clearForm()
+      clearForm();
       dispatch(createTarget(requestData));
       props.handleClose();
       dispatch(fetchTargets());
     }
   };
 
-  let form = TargetUserForm({notificationType, targetName, setTargetName, endpoint, setEndpoint, data, setData})
+  let form = TargetUserForm({
+    notificationType,
+    targetName,
+    setTargetName,
+    endpoint,
+    setEndpoint,
+    data,
+    setData,
+  });
 
   return (
     <div>
@@ -63,10 +73,13 @@ export default function TargetCreateModal(props: IProps) {
         onClose={props.handleClose}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
-        fullWidth>
+        fullWidth
+      >
         <DialogTitle>New Target</DialogTitle>
         <DialogContent>
-          <InputLabel id="demo-simple-select-label">Notification Type</InputLabel>
+          <InputLabel id="demo-simple-select-label">
+            Notification Type
+          </InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -86,9 +99,9 @@ export default function TargetCreateModal(props: IProps) {
             <MenuItem value={EnumNotificationType.WEBHOOK}>API</MenuItem>
             <MenuItem value={EnumNotificationType.SMS}>SMS</MenuItem>
           </Select>
-          <br/>
-          <br/>
-          <br/>
+          <br />
+          <br />
+          <br />
           {form}
         </DialogContent>
         <DialogActions>

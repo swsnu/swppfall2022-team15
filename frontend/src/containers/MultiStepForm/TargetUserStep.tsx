@@ -1,33 +1,46 @@
-import {Button, Dialog, Grid,} from "@mui/material";
-import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch} from "../../store";
-import {createTarget, fetchTargets, targetSelect} from "../../store/slices/target";
+import { Button, Dialog, Grid } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../store";
+import {
+  createTarget,
+  fetchTargets,
+  targetSelect,
+} from "../../store/slices/target";
 import TargetUserMultiSelect from "../../components/TargetUserMultiSelect/TargetUserMultiSelect";
-import {TargetUserForm} from "../../components/Targets/TargetUserForm";
-import {FormWrapper} from "./FormWrapper";
-import {TargetType, TargetUserIdNameDto} from "../../types";
-import {EnumNotificationType} from "../../Enums";
-
+import { TargetUserForm } from "../../components/Targets/TargetUserForm";
+import { FormWrapper } from "./FormWrapper";
+import { TargetType, TargetUserIdNameDto } from "../../types";
+import { EnumNotificationType } from "../../Enums";
 
 interface IProps {
-    notificationType: string;
+  notificationType: string;
 
-    targetName: string;
-    setTargetName: (name: string) => void;
+  targetName: string;
+  setTargetName: (name: string) => void;
 
-    endpoint: string;
-    setEndpoint: (endpoint: string) => void;
+  endpoint: string;
+  setEndpoint: (endpoint: string) => void;
 
-    data: any;
-    setData: (data: any) => void;
+  data: any;
+  setData: (data: any) => void;
 
-    targetUserIdNameList: TargetUserIdNameDto[];
-    setTargetUserIdNameList: (targetUser: TargetUserIdNameDto[]) => void;
+  targetUserIdNameList: TargetUserIdNameDto[];
+  setTargetUserIdNameList: (targetUser: TargetUserIdNameDto[]) => void;
 }
 
 export default function TargetUserStep(props: IProps) {
-  const {notificationType, targetName, setTargetName, endpoint, setEndpoint, data, setData, targetUserIdNameList, setTargetUserIdNameList} = props;
+  const {
+    notificationType,
+    targetName,
+    setTargetName,
+    endpoint,
+    setEndpoint,
+    data,
+    setData,
+    targetUserIdNameList,
+    setTargetUserIdNameList,
+  } = props;
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -42,12 +55,14 @@ export default function TargetUserStep(props: IProps) {
     setTargetName("");
     setEndpoint("");
     setData({});
-  }
+  };
 
   const handleClickConfirm = async () => {
     if (
-        (targetName && notificationType && endpoint) || // NON SLACK
-        (notificationType==EnumNotificationType.SLACK.toString() && targetName && 'api_key' in data) // SLACK
+      (targetName && notificationType && endpoint) || // NON SLACK
+      (notificationType == EnumNotificationType.SLACK.toString() &&
+        targetName &&
+        "api_key" in data) // SLACK
     ) {
       const requestData = {
         name: targetName,
@@ -58,7 +73,7 @@ export default function TargetUserStep(props: IProps) {
       dispatch(createTarget(requestData));
       dispatch(fetchTargets());
       setDialogOpen(false);
-      clearForm()
+      clearForm();
     }
   };
 
@@ -70,23 +85,34 @@ export default function TargetUserStep(props: IProps) {
         maxWidth="md"
         fullWidth
         open={dialogOpen}
-        onClose={() => setDialogOpen(false)}>
+        onClose={() => setDialogOpen(false)}
+      >
         <Grid
           container
           style={{ minHeight: "50vh" }}
           alignItems="top"
           justifyContent="top"
-          marginTop={4}>
-          <Grid lg/>
+          marginTop={4}
+        >
+          <Grid lg />
           <Grid lg={10}>
             {form}
-            <Button data-testid="confirm-button" onClick={handleClickConfirm}>Confirm</Button>
+            <Button data-testid="confirm-button" onClick={handleClickConfirm}>
+              Confirm
+            </Button>
           </Grid>
-        <Grid lg/>
+          <Grid lg />
         </Grid>
       </Dialog>
-      <Button variant="contained" onClick={() => setDialogOpen(true)}>Add now</Button>
-      <TargetUserMultiSelect notification_type={props.notificationType} selected={targetUserIdNameList} setSelected={setTargetUserIdNameList} targetUsers={targetState.targets} />
+      <Button variant="contained" onClick={() => setDialogOpen(true)}>
+        Add now
+      </Button>
+      <TargetUserMultiSelect
+        notification_type={props.notificationType}
+        selected={targetUserIdNameList}
+        setSelected={setTargetUserIdNameList}
+        targetUsers={targetState.targets}
+      />
     </FormWrapper>
   );
 }

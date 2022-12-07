@@ -1,6 +1,6 @@
 import SignIn from "./SignIn";
 
-import { screen, fireEvent } from "@testing-library/react";
+import { screen, fireEvent, waitFor } from "@testing-library/react";
 import { renderWithProviders } from "../../test-utils/mocks";
 import axios from "axios";
 
@@ -64,12 +64,13 @@ describe("<SignIn />", () => {
 
   it("should log in correctly", async () => {
     jest.spyOn(axios, "post").mockResolvedValue(
-        Promise.resolve({
-          status: 200,
-          data: {
-            token: "token",
-          }
-    }));
+      Promise.resolve({
+        status: 200,
+        data: {
+          token: "token",
+        },
+      })
+    );
 
     renderWithProviders(<SignIn />);
     fireEvent.change(screen.getByLabelText("Email address"), {
@@ -80,11 +81,12 @@ describe("<SignIn />", () => {
     });
     fireEvent.click(screen.getByTestId("signin"));
 
+    await waitFor(() => expect(mockNavigate).toBeCalledWith("/home"));
   });
 
   it("should show error message when submitted - error logging in", async () => {
-    jest.spyOn(axios, "post").mockImplementation( () => {
-      return Promise.reject({response: {status: 500}})
+    jest.spyOn(axios, "post").mockImplementation(() => {
+      return Promise.reject({ response: { status: 500 } });
     });
 
     renderWithProviders(<SignIn />);
@@ -103,8 +105,8 @@ describe("<SignIn />", () => {
   });
 
   it("should show error message when submitted with invalid inputs", async () => {
-    jest.spyOn(axios, "post").mockImplementation( () => {
-      return Promise.reject({response: {status: 401}})
+    jest.spyOn(axios, "post").mockImplementation(() => {
+      return Promise.reject({ response: { status: 401 } });
     });
 
     renderWithProviders(<SignIn />);
@@ -123,8 +125,8 @@ describe("<SignIn />", () => {
   });
 
   it("should show error message when submitted - error connecting to server", async () => {
-    jest.spyOn(axios, "post").mockImplementation( () => {
-      return Promise.reject({response: null})
+    jest.spyOn(axios, "post").mockImplementation(() => {
+      return Promise.reject({ response: null });
     });
 
     renderWithProviders(<SignIn />);
