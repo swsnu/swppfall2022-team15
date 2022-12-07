@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { Stack, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import axios from "axios";
-
 import { setToken } from "../../store/slices/auth";
+import logo from "../../assets/notimanager-transparent.png";
 
 export default function SignIn() {
   const [email, setEmail] = useState<string>("");
@@ -75,7 +75,9 @@ export default function SignIn() {
 
   return (
     <div className="SignIn">
-      <h2>NotiManager</h2>
+      <img alt="" height="100px" width="400px" src={logo} />
+      <br />
+      <br />
       <form onSubmit={handleSignIn}>
         <Stack spacing={2}>
           {error && (
