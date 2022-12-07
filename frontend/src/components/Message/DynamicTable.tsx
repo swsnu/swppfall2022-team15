@@ -11,7 +11,7 @@ import {
 import Iconify from "../Iconify/Iconify";
 import Scrollbar from "../Scrollbar/Scrollbar";
 
-export default function MessageTable(props: {
+export default function DynamicTable(props: {
   columns: string[];
   keys: any;
   rows: any;
@@ -23,6 +23,8 @@ export default function MessageTable(props: {
       props.onClickRow(id);
     }
   }
+
+  console.log(props.rows)
 
   return (
     <Card>

@@ -1,15 +1,16 @@
 import {
+  Box,
   Button,
   Card,
   IconButton,
   MenuItem,
-  Popover,
+  Popover, Tab,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
+  TableRow, Tabs,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import React, { useEffect, useState } from "react";
@@ -22,10 +23,14 @@ import { fetchTargets, targetListSelector } from "../../store/slices/target";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
 import { Container } from "@mui/system";
 import "./TargetList.css"
+import DynamicTable from "../../components/Message/DynamicTable";
+import {EnumNotificationType} from "../../Enums";
 
 export default function TargetListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
   const [createModalopen, setCreateModalOpen] = useState(false);
+  const [selectedTab, setSelectedTab] = useState(0);
+
 
   const handleOpenMenu = (event: any) => {
     setOpen(event.currentTarget);
@@ -52,6 +57,80 @@ export default function TargetListTable() {
   }, [dispatch]);
   const targets = useSelector(targetListSelector);
 
+  function a11yProps(index: number) {
+    return {
+      id: `simple-tab-${index}`,
+      "data-testid": `tab-${index}`,
+      "aria-controls": `simple-tabpanel-${index}`,
+    };
+  }
+
+  console.log(targets)
+
+  function renderTable() {
+    switch (selectedTab) {
+      // Slack
+      case 0:
+        return (
+          <Box sx={{ "margin-bottom": "20px" }}>
+            <DynamicTable
+              columns={["Id", "Name", "API-KEY"]}
+              keys={["id", "name", "data.api_key"]}
+              rows={
+                targets.filter((target) => target.notification_type == 'SLACK')
+              }
+              handleOpenMenu={handleOpenMenu}
+            />
+          </Box>
+        );
+      // Email
+      case 1:
+        return (
+          <Box sx={{ "margin-bottom": "20px" }}>
+            <DynamicTable
+              columns={["Id", "Name", "Title", "Message"]}
+              keys={["id", "name", "data.title", "data.message"]}
+              rows={
+                targets.filter((target) => target.notification_type == 'EMAIL')
+              }
+              handleOpenMenu={handleOpenMenu}
+            />
+          </Box>
+        );
+      // Webhook
+      case 2:
+        return (
+          <Box sx={{ "margin-bottom": "20px" }}>
+            <DynamicTable
+              columns={["Id", "Name", "auth"]}
+              keys={["id", "name", "data.auth"]}
+              rows={
+                targets.filter((target) => target.notification_type == 'WEBHOOK')
+              }
+              handleOpenMenu={handleOpenMenu}
+            />
+          </Box>
+        );
+      // SMS
+      case 3:
+        return (
+          <Box sx={{ "margin-bottom": "20px" }}>
+            <DynamicTable
+              columns={["Id", "Name", "Message"]}
+              keys={["id", "name", "data.message"]}
+              rows={
+                targets.filter((target) => target.notification_type == 'SMS')
+              }
+              handleOpenMenu={handleOpenMenu}
+            />
+          </Box>
+        );
+      default:
+        setSelectedTab(0);
+        return <></>;
+    }
+  }
+
   return (
     <>
       <TargetCreateModal
@@ -64,46 +143,41 @@ export default function TargetListTable() {
             New Target
           </Button>
         </Grid>
-        <Card>
-          <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Notification Type</TableCell>
-                    <TableCell>End Point</TableCell>
-                    {/*TODO - project name*/}
-                    <TableCell>Project Id</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {targets.map((row) => {
-                    const { id, name, notification_type, endpoint, data } = row;
-                    return (
-                      <TableRow hover key={id} tabIndex={-1}>
-                        <TableCell align="left">{name}</TableCell>
-                        <TableCell align="left">{notification_type}</TableCell>
-                        <TableCell align="left">{endpoint}</TableCell>
-                        <TableCell align="right">
-                          <IconButton
-                            size="large"
-                            color="inherit"
-                            data-testid="open-menu"
-                            onClick={handleOpenMenu}
-                            data-id={id}
-                          >
-                            <Iconify icon={"eva:more-vertical-fill"} />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Scrollbar>
-        </Card>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={selectedTab}
+            onChange={(e, newValue) => {
+              setSelectedTab(newValue);
+            }}
+            aria-label="basic tabs example"
+          >
+            <Tab
+              icon={<Iconify icon={"la:slack"} />}
+              label="Slack"
+              iconPosition="start"
+              {...a11yProps(0)}
+            />
+            <Tab
+              icon={<Iconify icon={"ic:outline-email"} />}
+              iconPosition="start"
+              label="Email"
+              {...a11yProps(1)}
+            />
+            <Tab
+              icon={<Iconify icon={"material-symbols:webhook"} />}
+              iconPosition="start"
+              label="Webhook"
+              {...a11yProps(2)}
+            />
+            <Tab
+              icon={<Iconify icon={"material-symbols:sms-outline"} />}
+              iconPosition="start"
+              label="SMS"
+              {...a11yProps(3)}
+            />
+          </Tabs>
+        </Box>
+        {renderTable()}
       </Container>
       <Popover
         open={Boolean(open)}
