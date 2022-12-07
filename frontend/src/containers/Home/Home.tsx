@@ -1,39 +1,88 @@
 import "./Home.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Button } from "@mui/material";
 import { Grid } from "@material-ui/core";
 import { green, grey, red, indigo } from "@mui/material/colors";
+import axios from "axios";
 
 import Widget from "./Boxes/Widget";
 import Analytics from "./Boxes/Analytics";
 import Today from "./Boxes/Today";
 import { AppDispatch } from "../../store";
 import { authSelector } from "../../store/slices/auth";
-import { targetListSelector } from "../../store/slices/target";
+import { fetchTargets, targetListSelector } from "../../store/slices/target";
 import { fetchProjects, projectListSelector } from "../../store/slices/project";
+import {
+  fetchAllNotifications,
+  notificationListSelector,
+} from "../../store/slices/notifications";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
-import { store } from "../../store";
-import preloadedState from "../../test-utils/mock_state";
 
 export default function Home() {
   const projects = useSelector(projectListSelector);
   const targets = useSelector(targetListSelector);
-
+  const notifications = useSelector(notificationListSelector);
   const user = useSelector(authSelector);
   const dispatch = useDispatch<AppDispatch>();
 
+  const [successfulNotifications, setSuccessfulNotifications] = useState(0);
+  const [failedNotifications, setFailedNotifications] = useState(0);
+
   useEffect(() => {
     dispatch(fetchProjects());
-    //console.log(preloadedState);
-    console.log(store.getState());
-    //Todo: fetch notifications
-    //dispatch(fetchNotifcations());
+    dispatch(fetchAllNotifications());
+    dispatch(fetchTargets());
   }, [user, dispatch]);
 
   const handleClickCreateButton = (event: React.MouseEvent) => {
     //Todo: open notification create
   };
+
+  const getTodayStart = () => {
+    const time = new Date();
+
+    let formattedDate = `${time.getFullYear()}-${
+      time.getMonth() + 1
+    }-${time.getDate()} 00:00:00`;
+    return formattedDate;
+  };
+
+  const getTodayEnd = () => {
+    const time = new Date();
+
+    let formattedDate = `${time.getFullYear()}-${
+      time.getMonth() + 1
+    }-${time.getDate()} 23:59:59`;
+    return formattedDate;
+  };
+
+  const getNotifications = async () => {
+    try {
+      await axios
+        .get("/api/notification/metrics/", {
+          params: {
+            start: getTodayStart(),
+            end: getTodayEnd(),
+            interval: "hour",
+          },
+        })
+        .then((response) => {
+          if (response.data.length === 0) {
+            return;
+          } else {
+            setSuccessfulNotifications(response.data.status.success);
+            setFailedNotifications(response.data.status.failed);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getNotifications();
+  }, []);
 
   return (
     <Scrollbar>
@@ -71,7 +120,7 @@ export default function Home() {
               icon="wpf:sent"
               title="Total"
               subtitle="Total notification requests"
-              value={161346134}
+              value={notifications.length}
               color_main={indigo[500]}
               color_dark={indigo[600]}
               color_light={indigo[400]}
@@ -85,7 +134,7 @@ export default function Home() {
               icon="mdi:check"
               title="Success"
               subtitle="Successful notification requests today"
-              value={targets.length}
+              value={successfulNotifications}
               color_main={green[500]}
               color_dark={green[600]}
               color_light={green[400]}
@@ -99,7 +148,7 @@ export default function Home() {
               icon="mdi:exclamation-thick"
               title="Failure"
               subtitle="Failed notification requests today"
-              value={0}
+              value={failedNotifications}
               color_main={red[500]}
               color_dark={red[600]}
               color_light={red[400]}

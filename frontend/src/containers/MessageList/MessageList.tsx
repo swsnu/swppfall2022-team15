@@ -12,7 +12,7 @@ import { AppDispatch } from "../../store";
 import { Container } from "@mui/system";
 import MessageTable from "../../components/Message/MessageTable";
 import { EnumNotificationType } from "../../Enums";
-import preloadedState from "../../test-utils/mock_state";
+import "./MessageList.css";
 
 export default function MessageListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
@@ -120,8 +120,8 @@ export default function MessageListTable() {
         open={createModalopen}
         handleClose={() => setCreateModalOpen(false)}
       ></MessageCreateModal>
-      <Container>
-        <Grid container justifyContent="flex-end">
+      <Container maxWidth="xl">
+        <Grid container justifyContent="flex-end" className="messageButton">
           <Button data-testid="create-button" onClick={handleClickCreateButton}>
             New Message
           </Button>

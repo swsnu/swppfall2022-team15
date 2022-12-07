@@ -10,6 +10,7 @@ import reportWebVitals from "./reportWebVitals";
 import { store } from "./store";
 import GlobalStyles from "./components/Styles/GlobalStyles";
 import { getToken, hasToken } from "./store/slices/auth";
+import { createMuiTheme } from "@mui/material";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

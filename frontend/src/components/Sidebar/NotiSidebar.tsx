@@ -52,7 +52,10 @@ export default function NotiSidebar() {
           <img className="Icon" src={logo} alt="" />
         </div>
         <Menu>
-          <MenuItem className="userInfo" icon={userIcon}>
+          <MenuItem 
+            className="userInfo"
+            icon={userIcon}
+            >
             {username}
           </MenuItem>
         </Menu>
