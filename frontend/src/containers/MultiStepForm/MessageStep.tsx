@@ -14,7 +14,7 @@ import { fetchMessages, messageSelect } from "../../store/slices/message";
 import { AppDispatch } from "../../store";
 import MessageCreateForm from "../../components/Message/MessageForm";
 import { MessageType } from "../../types";
-import MessageTable from "../../components/Message/MessageTable";
+import DynamicTable from "../../components/Message/DynamicTable";
 import { messageCreateService } from "../../components/Message/utils/MessageRequestService";
 
 interface IProps {
@@ -135,7 +135,7 @@ export default function MessageStep(props: IProps) {
         >
           <Grid lg></Grid>
           <Grid lg={10}>
-            <MessageTable
+            <DynamicTable
               columns={["id", "name", "channel", "message"]} // todo: refactor
               keys={contentFieldList}
               rows={messages[notificationType]}

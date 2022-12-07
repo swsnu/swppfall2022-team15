@@ -1,11 +1,11 @@
 import { renderWithProviders } from "../../test-utils/mocks";
-import MessageTable from "./MessageTable";
+import DynamicTable from "./DynamicTable";
 import { fireEvent, screen } from "@testing-library/react";
 
 describe("MessageTable", () => {
   it("should render", () => {
     renderWithProviders(
-      <MessageTable
+      <DynamicTable
         columns={["col1"]}
         rows={[{ data: { col1: "" } }]}
         keys={["col1"]}
@@ -16,7 +16,7 @@ describe("MessageTable", () => {
 
   it("should handle click row", () => {
     renderWithProviders(
-      <MessageTable
+      <DynamicTable
         columns={["col1"]}
         rows={[{ data: { col1: "" } }]}
         keys={["col1"]}

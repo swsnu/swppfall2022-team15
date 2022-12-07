@@ -76,13 +76,13 @@ export default function MultiStepForm() {
   return (
     <Grid
       container
-      style={{ minHeight: "100vh" }}
+      style={{ minHeight: "100vh"}}
       alignItems="top"
       justifyContent="top"
       marginTop={4}
     >
       <Grid xs></Grid>
-      <Grid xs={6}>
+      <Grid xs={8}>
         <Stepper data-testid="stepper" activeStep={activeStep}>
           {steps.map((label, index) => {
             const stepProps: { completed?: boolean } = {};

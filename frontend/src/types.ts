@@ -41,6 +41,10 @@ export interface TargetUserIdNameDto {
   label: string;
 }
 
+export interface TargetListType {
+  [key: string]: TargetType[];
+}
+
 export interface MessageType {
   id: number;
   name: string;

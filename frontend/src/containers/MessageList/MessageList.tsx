@@ -10,7 +10,7 @@ import { fetchMessages, messageListSelector } from "../../store/slices/message";
 
 import { AppDispatch } from "../../store";
 import { Container } from "@mui/system";
-import MessageTable from "../../components/Message/MessageTable";
+import DynamicTable from "../../components/Message/DynamicTable";
 import { EnumNotificationType } from "../../Enums";
 import "./MessageList.css";
 
@@ -58,7 +58,7 @@ export default function MessageListTable() {
       case 0:
         return (
           <Box sx={{ "margin-bottom": "20px" }}>
-            <MessageTable
+            <DynamicTable
               columns={["Id", "Name", "Channel", "Message"]}
               keys={["id", "name", "data.channel", "data.message"]}
               rows={
@@ -72,7 +72,7 @@ export default function MessageListTable() {
       case 1:
         return (
           <Box sx={{ "margin-bottom": "20px" }}>
-            <MessageTable
+            <DynamicTable
               columns={["Id", "Name", "Title", "Message"]}
               keys={["id", "name", "data.title", "data.message"]}
               rows={
@@ -86,7 +86,7 @@ export default function MessageListTable() {
       case 2:
         return (
           <Box sx={{ "margin-bottom": "20px" }}>
-            <MessageTable
+            <DynamicTable
               columns={["Id", "Name", "JSON Message"]}
               keys={["id", "name", "data.message"]}
               rows={
@@ -100,7 +100,7 @@ export default function MessageListTable() {
       case 3:
         return (
           <Box sx={{ "margin-bottom": "20px" }}>
-            <MessageTable
+            <DynamicTable
               columns={["Id", "Name", "Message"]}
               keys={["id", "name", "data.message"]}
               rows={EnumNotificationType.SMS in messages ? messages.SMS : []}
