@@ -11,13 +11,19 @@ interface IProps {
 }
 
 export default function PieChart(props: IProps) {
-
-
   const renderChart = () => {
     if (props.total === 0) {
       return (
         <>
           <Box>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             <br />
             <br />
             <br />
@@ -27,44 +33,51 @@ export default function PieChart(props: IProps) {
             <br />
             <br />
             <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
           </Box>
         </>
       );
     } else {
       return (
         <ReactApexChart
-        type="pie"
-        series={props.series}
-        options={{
-          labels: props.labels,
-          colors: props.colors,
-          legend: {
-            show: true,
-            position: "right",
-            horizontalAlign: "center",
-            fontSize: "18px",
-          },
-          dataLabels: {
-            enabled: true,
-            style: {
+          type="pie"
+          series={props.series}
+          options={{
+            labels: props.labels,
+            colors: props.colors,
+            legend: {
+              show: true,
+              position: "right",
+              horizontalAlign: "center",
               fontSize: "18px",
             },
-          },
-          responsive: [
-            {
-              breakpoint: 480,
+            dataLabels: {
+              enabled: true,
+              style: {
+                fontSize: "18px",
+              },
             },
-          ],
-          plotOptions: {
-            pie: {
-              customScale: 0.8,
+            responsive: [
+              {
+                breakpoint: 480,
+              },
+            ],
+            plotOptions: {
+              pie: {
+                customScale: 0.8,
+              },
             },
-          },
-        }}
-      />
-      )
+          }}
+        />
+      );
     }
-  }
+  };
 
   return (
     <Card>
