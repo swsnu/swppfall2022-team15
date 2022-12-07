@@ -87,7 +87,7 @@ export default function SignIn() {
             data-testid="email"
             className="email"
             name="email"
-            label="Email address"
+            placeholder="Email address"
             value={email}
             onChange={handleEmailChange}
           />
@@ -95,7 +95,7 @@ export default function SignIn() {
             data-testid="password"
             className="password"
             name="password"
-            label="Password"
+            placeholder="Password"
             type="password"
             value={password}
             onChange={handlePasswordChange}
