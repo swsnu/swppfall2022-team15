@@ -1,13 +1,30 @@
 import { Card, CardHeader, Box, Grid, Paper, Typography } from "@mui/material";
 
-import "./Today.css"
+import "./Today.css";
 import Iconify from "../../../components/Iconify/Iconify";
 import BarLineToday from "./BarLineToday";
+import { useSelector } from "react-redux";
+import { notificationListSelector } from "../../../store/slices/notifications";
+import { projectListSelector } from "../../../store/slices/project";
 
 export default function Today() {
+  const notifications = useSelector(notificationListSelector);
+  const projects = useSelector(projectListSelector);
   function getRate() {
-
-    return "90%";
+    if (notifications.length === 0) {
+      return "0%";
+    } else {
+      let success = 0;
+      let fail = 0;
+      notifications.forEach((notification) => {
+        if (notification.status === "SUCCESS") {
+          success++;
+        } else {
+          fail++;
+        }
+      });
+      return `${Math.round((success / (success + fail)) * 100)}%`;
+    }
   }
 
   function getToday() {
@@ -17,32 +34,55 @@ export default function Today() {
   }
 
   function getProjectWithMostRequests() {
-    return "Project 1";
+    if (projects.length === 0) {
+      return "No Projects yet";
+    } else {
+      if (notifications.length === 0) {
+        return "No notifications yet";
+      } else {
+        //TODO
+        return "Project 1";
+      }
+    }
   }
 
   function getMostUsedChannel() {
-    return "Slack";
+    if (notifications.length === 0) {
+      return "No notifications yet";
+    } else {
+      return "Slack";
+    }
   }
 
   function getMostActiveTime() {
-    return "5PM ~ 6PM";
+    if (notifications.length === 0) {
+      return "No notifications yet";
+    } else {
+      //TODO
+      return "7PM ~ 8PM";
+    }
   }
 
   function getMostRecentFailure() {
-    return "Failed Message";
+    if (notifications.length === 0) {
+      return "No notifications yet";
+    } else {
+      //TODO
+      return "Failed Message";
+    }
   }
 
   return (
     <Grid container spacing={2} className="Today">
-      <Grid item xs={12} sm={6} md={7} lg={8}>
+      <Grid item xs={12} sm={12} md={12} lg={4}>
         <Card>
           <CardHeader title="Requests Today" subheader="00:00 ~ 23:59 KST" />
-          <Box sx={{ p: 3, pb: 1 }} dir="ltr">
+          <Box dir="ltr">
             <BarLineToday />
           </Box>
         </Card>
       </Grid>
-      <Grid item xs={12} sm={6} md={5} lg={6}>
+      <Grid item xs={12} sm={12} md={12} lg={8}>
         <Card>
           <CardHeader title="Daily Statistics" />
 
