@@ -41,7 +41,7 @@ export default function ReservationStep(props: IProps) {
  }
 
   const [recurrence, setRecurrence] = useState<RecurrenceType>(defaultRecurrence);
-    const [rrule, setRrule] = useState<RRule | null>(null);
+    const [rrules, setRrules] = useState<RRule | null>(null);
     const handleRecurrenceChange = (recurrenceType: RecurrenceType) => {
       setRecurrence(recurrenceType)
   }
@@ -59,13 +59,23 @@ export default function ReservationStep(props: IProps) {
     },[recurrence])
 
 
-  const reservation = (
-    <>
-      <h1>
-      </h1>
-    </>
- )
-    console.log(rrule)
+  const reservation = rrules?.all().map((rrule) => {
+      return <>
+          <TextField
+            id="outlined-multiline-static"
+            fullWidth
+            multiline
+            inputProps={{ "data-testid": "sms-name-input" }}
+            value={rrule.toString()}
+            rows={1}
+            disabled={true}
+            required
+          />
+        <br/>
+        <br/>
+        <br/>
+      </>
+  })
 
   return (
     <>
@@ -74,7 +84,7 @@ export default function ReservationStep(props: IProps) {
           onClose={()=>setOpen(false)}
           recurrence={recurrence}
           handleRecurrenceChange={handleRecurrenceChange}
-          setRrule={setRrule}/>
+          setRrule={setRrules}/>
         {/* info */}
         <h1>Notification Type</h1>
         <TextField
@@ -104,7 +114,7 @@ export default function ReservationStep(props: IProps) {
         <br />
 
         <h1>Reservation</h1>
-        <TextField value ={rrule?.all()}/>
+        {reservation}
         <SplitButton
           mode={mode}
           setMode={setMode}
