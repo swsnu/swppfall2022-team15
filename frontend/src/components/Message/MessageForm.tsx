@@ -40,13 +40,13 @@ export default function MessageCreateForm(
             multiline
             // TODO 원래 testid가 message-input인데 testid가 겹쳐서 바꿈. test 코드에 반영 필요
             inputProps={{ "data-testid": "slack-name-input" }}
-            onChange={(event) => {
-              setName(event.target.value);
-            }}
             value={name}
             rows={1}
             disabled={disabled}
             required
+            onChange={(event) => {
+              setName(event.target.value);
+            }}
           />
           <br />
           <br />

@@ -84,7 +84,6 @@ export default function TargetCreateModal(props: IProps) {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={notificationType}
-            // Label="project type"
             inputProps={{
               "data-testid": "type-input",
             }}
@@ -96,10 +95,9 @@ export default function TargetCreateModal(props: IProps) {
           >
             <MenuItem value={EnumNotificationType.SLACK}>SLACK</MenuItem>
             <MenuItem value={EnumNotificationType.EMAIL}>EMAIL</MenuItem>
-            <MenuItem value={EnumNotificationType.WEBHOOK}>API</MenuItem>
+            <MenuItem value={EnumNotificationType.WEBHOOK}>WEBHOOK</MenuItem>
             <MenuItem value={EnumNotificationType.SMS}>SMS</MenuItem>
           </Select>
-          <br />
           <br />
           <br />
           {form}
