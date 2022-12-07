@@ -17,7 +17,7 @@ from notifications.services import task_send_api_notification, ApiNotificationDt
 from targetusers.models import TargetUser
 
 
-class NotificationViewSet(ModelViewSet):
+class NotificationConfigViewSet(ModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = NotificationConfigSerializer
     queryset = Notification.objects.all()
