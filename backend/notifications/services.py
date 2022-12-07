@@ -106,6 +106,7 @@ def task_bulk_create_notification(reserved_at, target_user_ids, notification_con
     reservation = Reservation.objects.create(
         notification_config_id=notification_config_id,
         reserved_at=reserved_at,
+        status=EnumReservationStatus.PENDING
     )
 
     notifications = [
