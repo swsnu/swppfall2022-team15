@@ -86,7 +86,7 @@ export default function MessageStep(props: IProps) {
       case "SMS":
         return ["content"];
       case "SLACK":
-        return ["channel", "message"];
+        return ["id", "name", "data.channel", "data.message"];
     }
     return [""];
   };
@@ -136,7 +136,7 @@ export default function MessageStep(props: IProps) {
           <Grid lg></Grid>
           <Grid lg={10}>
             <MessageTable
-              columns={contentFieldList} // todo: refactor
+              columns={["id", "name", "channel", "message"]} // todo: refactor
               keys={contentFieldList}
               rows={messages[notificationType]}
               handleOpenMenu={null}
