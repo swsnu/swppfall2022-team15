@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 import ReactApexChart from "react-apexcharts";
 import { green, red, blue, grey } from "@mui/material/colors";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 interface IProps {
   title: string;
@@ -19,137 +21,217 @@ interface ChartDataType {
   name: string;
   type: string;
   fill: string;
-  data: { x: string; y: number; }[];
+  data: { x: string; y: number }[];
 }
 
-const fakeData: ChartDataType[] = [
-  {
-    name: "Success",
-    type: "column",
-    fill: green[300],
-    data: [
-      {
-        x: "02-10-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-11-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-12-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-13-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-14-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-15-2017 GMT",
-        y: 0,
-      },
-    ],
-  },
-  {
-    name: "Failure",
-    type: "column",
-    fill: red[300],
-    data: [
-      {
-        x: "02-10-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-11-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-12-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-13-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-14-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-15-2017 GMT",
-        y: 0,
-      },
-    ],
-  },
-  {
-    name: "Upcoming",
-    type: "column",
-    fill: blue[300],
-    data: [
-      {
-        x: "02-10-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-11-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-12-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-13-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-14-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-15-2017 GMT",
-        y: 0,
-      },
-    ],
-  },
-  {
-    name: "Total",
-    type: "line",
-    fill: grey[300],
-    data: [
-      {
-        x: "02-10-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-11-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-12-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-13-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-14-2017 GMT",
-        y: 0,
-      },
-      {
-        x: "02-15-2017 GMT",
-        y: 0,
-      },
-    ],
-  },
-];
-
 export default function BarLineAnalytics(props: IProps) {
+  const [type, setType] = useState<number>(10);
+  const [success, setSuccess] = useState<{ x: string; y: number }[]>([]);
+  const [failure, setFailure] = useState<{ x: string; y: number }[]>([]);
+  const [upcoming, setUpcoming] = useState<{ x: string; y: number }[]>([]);
+
+  const getStartDay_Daily = () => {
+    const time = new Date();
+    let formattedDate = `${time.getFullYear()}-${time.getMonth() + 1}-${
+      time.getDate() - 7
+    }`;
+
+    return formattedDate;
+  };
+
+  const getStartDay_Weekly = () => {
+    const time = new Date();
+    let formattedDate = `${time.getFullYear()}-${
+      time.getMonth() - 2
+    }-${time.getDate()}`;
+    return formattedDate;
+  };
+
+  const getStartDay_Monthly = () => {
+    const time = new Date();
+    let formattedDate = `${time.getFullYear() - 1}-${
+      time.getMonth() + 1
+    }-${time.getDate()}`;
+    return formattedDate;
+  };
+
+  const getToday = () => {
+    const time = new Date();
+    let formattedDate = `${time.getFullYear()}-${
+      time.getMonth() + 1
+    }-${time.getDate()}`;
+
+    return formattedDate;
+  };
+
+  const getData = async () => {
+    if (type === 10) {
+      // Daily
+      try {
+        await axios
+          .get("/api/notification/metrics/", {
+            params: {
+              start: getStartDay_Daily(),
+              end: getToday(),
+              interval: "day",
+            },
+          })
+          .then((response) => {
+            if (response.data.length === 0) {
+              return;
+            } else {
+              let successData = [];
+              let failureData = [];
+              let upcomingData = [];
+
+              for (let i = 0; i < response.data.length; i++) {
+                if (response.data[i].status === "SUCCESS") {
+                  successData.push({
+                    x: response.data[i].time,
+                    y: response.data[i].count,
+                  });
+                } else if (response.data[i].status === "FAILURE") {
+                  failureData.push({
+                    x: response.data[i].time,
+                    y: response.data[i].count,
+                  });
+                } else {
+                  upcomingData.push({
+                    x: response.data[i].time,
+                    y: response.data[i].count,
+                  });
+                }
+              }
+              setSuccess(successData);
+              setFailure(failureData);
+              setUpcoming(upcomingData);
+            }
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (type === 20) {
+      // Weekly
+      try {
+        await axios
+          .get("/api/notification/metrics/", {
+            params: {
+              start: getStartDay_Weekly(),
+              end: getToday(),
+              interval: "week",
+            },
+          })
+          .then((response) => {
+            if (response.data.length === 0) {
+              return;
+            } else {
+              let successData = [];
+              let failureData = [];
+              let upcomingData = [];
+
+              for (let i = 0; i < response.data.length; i++) {
+                if (response.data[i].status === "SUCCESS") {
+                  successData.push({
+                    x: response.data[i].time,
+                    y: response.data[i].count,
+                  });
+                } else if (response.data[i].status === "FAILURE") {
+                  failureData.push({
+                    x: response.data[i].time,
+                    y: response.data[i].count,
+                  });
+                } else {
+                  upcomingData.push({
+                    x: response.data[i].time,
+                    y: response.data[i].count,
+                  });
+                }
+              }
+              setSuccess(successData);
+              setFailure(failureData);
+              setUpcoming(upcomingData);
+            }
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        await axios
+          .get("/api/notification/metrics/", {
+            params: {
+              start: getStartDay_Monthly(),
+              end: getToday(),
+              interval: "month",
+            },
+          })
+          .then((response) => {
+            if (response.data.length === 0) {
+              return;
+            } else {
+              let successData = [];
+              let failureData = [];
+              let upcomingData = [];
+
+              for (let i = 0; i < response.data.length; i++) {
+                if (response.data[i].status === "SUCCESS") {
+                  successData.push({
+                    x: response.data[i].time,
+                    y: response.data[i].count,
+                  });
+                } else if (response.data[i].status === "FAILURE") {
+                  failureData.push({
+                    x: response.data[i].time,
+                    y: response.data[i].count,
+                  });
+                } else {
+                  upcomingData.push({
+                    x: response.data[i].time,
+                    y: response.data[i].count,
+                  });
+                }
+              }
+              setSuccess(successData);
+              setFailure(failureData);
+              setUpcoming(upcomingData);
+            }
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const data: ChartDataType[] = [
+    {
+      name: "Success",
+      type: "column",
+      fill: green[300],
+      data: success,
+    },
+    {
+      name: "Failure",
+      type: "column",
+      fill: red[300],
+      data: failure,
+    },
+    {
+      name: "Upcoming",
+      type: "column",
+      fill: blue[300],
+      data: upcoming,
+    },
+    {
+      name: "Total",
+      type: "line",
+      fill: grey[300],
+      data: [],
+    },
+  ];
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <Card>
@@ -157,23 +239,23 @@ export default function BarLineAnalytics(props: IProps) {
 
       <Box sx={{ p: 3, pb: 1 }} dir="ltr">
         <FormControl>
-          <InputLabel id="demo-simple-select-label">Range</InputLabel>
+          <InputLabel id="demo-simple-select-label">Type</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             data-testid="button"
-            value={10}
-            label="Range"
-            /*onChange={handleChange}*/
+            value={type}
+            label="Type"
+            onChange={(e) => setType(e.target.value as number)}
           >
-            <MenuItem value={10}>Last 7 days</MenuItem>
-            <MenuItem value={20}>Last 30 days</MenuItem>
-            <MenuItem value={30}>Last 90 days</MenuItem>
+            <MenuItem value={10}>Daily</MenuItem>
+            <MenuItem value={20}>Weekly</MenuItem>
+            <MenuItem value={30}>Monthly</MenuItem>
           </Select>
         </FormControl>
         <ReactApexChart
           type="line"
-          series={fakeData}
+          series={data}
           height={350}
           options={{
             labels: [
