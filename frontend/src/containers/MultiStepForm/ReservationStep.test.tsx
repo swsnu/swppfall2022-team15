@@ -20,16 +20,12 @@ describe("ReservationStep", () => {
             message: "test",
           },
         }}
-        target={{
-          id: 1,
-          name: "test",
-          notification_type: "SLACK",
-          data: {
-            channel: "test",
-            message: "test",
+        targetUserIds={[
+          {
+            value: 1,
+            label: "test",
           },
-          endpoint: "test",
-        }}
+        ]}
         handleRecurrenceChange={(_: any) => {}}
       />
     );

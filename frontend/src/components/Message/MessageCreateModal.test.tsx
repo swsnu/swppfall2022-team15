@@ -66,5 +66,37 @@ describe("MessageCreateModal", () => {
     fireEvent.click(button);
   });
 
+  it("should handle slack form correctly", () => {
+    jest.spyOn(axios, "post").mockResolvedValue(
+      Promise.resolve({
+        data: {},
+      })
+    );
+
+    renderWithProviders(
+      <MessageCreateModal open={true} handleClose={() => {}} />,
+      { preloadedState }
+    );
+
+    const dataInput = screen.getByTestId("type-input");
+    fireEvent.change(dataInput, {
+      target: { value: EnumNotificationType.SLACK },
+    });
+
+    const nameInput = screen.getByTestId("message-input");
+    fireEvent.change(nameInput, {
+      target: { value: "name" },
+    });
+
+    const channelInput = screen.getByTestId("slack-channel-input");
+    fireEvent.change(channelInput, {
+      target: { value: "channel" },
+    });
+
+    const button = screen.getByTestId("create-button");
+    fireEvent.click(button);
+    
+  });
+
 
 });
