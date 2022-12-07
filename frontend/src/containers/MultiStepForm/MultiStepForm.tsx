@@ -1,18 +1,19 @@
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import MessageStep from "./MessageStep";
 import TargetUserStep from "./TargetUserStep";
 import ReservationStep from "./ReservationStep";
 import * as React from "react";
-import { useState } from "react";
+import {useState} from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
+
+import {MessageType, TargetUserIdNameDto} from "../../types";
+import {RecurrenceType} from "../../components/Recurrence";
 import NotificationTypeForm from "./NotificationTypeStep";
-import { MessageType, TargetType, TargetUserIdNameDto } from "../../types";
-import { RecurrenceType } from "../../components/Recurrence";
 
 const steps = ["Notification Type", "Message", "Target", "Reservaton"];
 
@@ -138,7 +139,6 @@ export default function MultiStepForm() {
               message={message!}
               targetUserIds={targetUsers}
               notificationType={notificationType}
-              handleRecurrenceChange={setRecurrence}
             />
           ) : null}
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
