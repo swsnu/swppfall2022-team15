@@ -1,4 +1,4 @@
-import { Card, CardHeader } from "@mui/material";
+import { Box, Card, CardHeader, Paper, Typography } from "@mui/material";
 import ReactApexChart from "react-apexcharts";
 
 interface IProps {
@@ -7,14 +7,32 @@ interface IProps {
   series: number[];
   labels: string[];
   colors: string[];
+  total: number;
 }
 
 export default function PieChart(props: IProps) {
-  return (
-    <Card>
-      <CardHeader title={props.title} subheader={props.subheader} />
 
-      <ReactApexChart
+
+  const renderChart = () => {
+    if (props.total === 0) {
+      return (
+        <>
+          <Box>
+            <br />
+            <br />
+            <br />
+            <Typography variant="body1" textAlign="center">
+              No data to display
+            </Typography>
+            <br />
+            <br />
+            <br />
+          </Box>
+        </>
+      );
+    } else {
+      return (
+        <ReactApexChart
         type="pie"
         series={props.series}
         options={{
@@ -44,6 +62,15 @@ export default function PieChart(props: IProps) {
           },
         }}
       />
+      )
+    }
+  }
+
+  return (
+    <Card>
+      <CardHeader title={props.title} subheader={props.subheader} />
+
+      {renderChart()}
     </Card>
   );
 }

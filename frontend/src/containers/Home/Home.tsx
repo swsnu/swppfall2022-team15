@@ -10,29 +10,67 @@ import Analytics from "./Boxes/Analytics";
 import Today from "./Boxes/Today";
 import { AppDispatch } from "../../store";
 import { authSelector } from "../../store/slices/auth";
-import { targetListSelector } from "../../store/slices/target";
+import { fetchTargets, targetListSelector } from "../../store/slices/target";
 import { fetchProjects, projectListSelector } from "../../store/slices/project";
+import {
+  fetchAllNotifications,
+  notificationListSelector,
+} from "../../store/slices/notifications";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
-import { store } from "../../store";
-import preloadedState from "../../test-utils/mock_state";
+import axios from "axios";
+import { getDate } from "date-fns";
 
 export default function Home() {
   const projects = useSelector(projectListSelector);
   const targets = useSelector(targetListSelector);
+  const notifications = useSelector(notificationListSelector);
 
   const user = useSelector(authSelector);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchProjects());
-    //console.log(preloadedState);
-    console.log(store.getState());
-    //Todo: fetch notifications
-    //dispatch(fetchNotifcations());
+    dispatch(fetchAllNotifications());
+    dispatch(fetchTargets());
   }, [user, dispatch]);
 
   const handleClickCreateButton = (event: React.MouseEvent) => {
     //Todo: open notification create
+  };
+
+  const getTodayStart = () => {
+    const time = new Date();
+
+    let formattedDate = `${time.getFullYear()}-${
+      time.getMonth() + 1
+    }-${time.getDate()} 00:00:00`;
+    return formattedDate;
+  };
+
+  const getTodayEnd = () => {
+    const time = new Date();
+
+    let formattedDate = `${time.getFullYear()}-${
+      time.getMonth() + 1
+    }-${time.getDate()} 23:59:59`;
+    return formattedDate;
+  };
+
+  const getSuccessfulNotifications = async () => {
+    try {
+      await axios.get("/api/notification/metrics/", {
+        params: {
+          start: getTodayStart(),
+          end: getTodayEnd(),
+          interval: "hour",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -51,6 +89,8 @@ export default function Home() {
             </Button>
           </Grid>
         </Grid>
+
+        <Button onClick={getSuccessfulNotifications}>Get</Button>
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
@@ -71,7 +111,7 @@ export default function Home() {
               icon="wpf:sent"
               title="Total"
               subtitle="Total notification requests"
-              value={161346134}
+              value={notifications.length}
               color_main={indigo[500]}
               color_dark={indigo[600]}
               color_light={indigo[400]}
@@ -85,7 +125,7 @@ export default function Home() {
               icon="mdi:check"
               title="Success"
               subtitle="Successful notification requests today"
-              value={targets.length}
+              value={0}
               color_main={green[500]}
               color_dark={green[600]}
               color_light={green[400]}
