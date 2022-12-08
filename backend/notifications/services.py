@@ -19,6 +19,7 @@ from notifications.models import (
 )
 from notifications.slack.serializers import SlackNotificationSerializer
 from notifications.slack.services import task_send_slack_notification
+from notifications.sms.services import task_send_sms_notification
 
 logger = getLogger(__name__)
 
@@ -86,8 +87,8 @@ def task_handle_chunk_notification(notification_ids: list[int]):
             task_send_slack_notification.delay(
                 SlackNotificationSerializer(notification).data
             )
-        # elif notification.notificaiton_group.type == EnumNotificationType.SMS:
-        #     pass
+        elif notification.notificaiton_group.type == EnumNotificationType.SMS:
+            task_send_sms_notification.delay()
 
 
 @app.task
