@@ -13,7 +13,7 @@ class NotificationConfigSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NotificationConfig
-        fields = ('id', 'message', 'project', 'type', 'rrule',)
+        fields = ('id', 'message', 'project', 'type', 'rrule', 'target_users',)
         extra_kwargs = {
             'target_users': {'write_only': True},
         }

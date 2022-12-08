@@ -16,6 +16,14 @@ export type NotificationType = {
   history?: NotificationHistoryType[];
 };
 
+export type NotificationConfigCreateDto = {
+      project: number,
+      type: string
+      rrule: string,
+      message: number
+      target_users: number[]
+    };
+
 export type ReservationType = {
   id: number;
   reservation: string;
