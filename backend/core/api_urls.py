@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 
 from account.views import SignUpView, UserView
 from nmessages.views import NMessageViewSet
-from notifications.views import NotificationConfigViewSet, ReservationViewSet
+from notifications.views import NotificationConfigViewSet, ReservationViewSet, NotificationViewSet
 from project.views import ProjectViewSet
 from targetusers.views import TargetUserViewSet
 
@@ -24,6 +24,7 @@ router.register(r'targetuser', TargetUserViewSet, basename='targetuser')
 router.register(r'message', NMessageViewSet, basename='nmessage')
 # notification app
 router.register(r'notification_config', NotificationConfigViewSet, basename='notification_config')
+router.register(r'notification', NotificationViewSet, basename='notification-config')
 router.register(r'reservation', ReservationViewSet, basename='reservation')
 
 urlpatterns += router.urls

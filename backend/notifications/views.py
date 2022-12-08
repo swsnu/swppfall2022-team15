@@ -4,26 +4,23 @@ from django.db.models import Count
 from django.db.models.functions import Trunc
 from rest_framework import status
 from rest_framework.decorators import action
+from rest_framework.mixins import ListModelMixin
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from core.permissions import IsOwner
-from nmessages.models import NMessage
-from notifications.models import Notification
+from notifications.models import NotificationConfig, Notification
 from notifications.models import Reservation
-from notifications.serializers import NotificationConfigSerializer, ReservationCreateSerializer
-from notifications.services import task_send_api_notification, ApiNotificationDto
-from targetusers.models import TargetUser
+from notifications.serializers import NotificationConfigSerializer, ReservationSerializer
 
 
 class NotificationConfigViewSet(ModelViewSet):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
     serializer_class = NotificationConfigSerializer
-    queryset = Notification.objects.all()
+    queryset = NotificationConfig.objects.all()
 
     def create(self, request, *args, **kwargs):
-        # save notification
         serializers = self.get_serializer(data=request.data)
         serializers.is_valid(raise_exception=True)
         serializers.save()
@@ -33,6 +30,8 @@ class NotificationConfigViewSet(ModelViewSet):
             status=status.HTTP_201_CREATED
         )
 
+
+class NotificationViewSet(ListModelMixin, GenericViewSet):
     @action(detail=True, methods=['get'], permission_classes=[AllowAny, IsAuthenticated, IsOwner])
     def getAll(self, request):
         notifications = Notification.objects.filter(
@@ -63,7 +62,6 @@ class NotificationConfigViewSet(ModelViewSet):
         ).values('status', 'time').annotate(
             count=Count('time')
         ).order_by('time', 'status', 'count',)
-        
         response = list(map(convert, metrics))
 
         return Response(data=response, status=status.HTTP_200_OK)
@@ -71,12 +69,4 @@ class NotificationConfigViewSet(ModelViewSet):
 
 class ReservationViewSet(ModelViewSet):
     queryset = Reservation.objects.all()
-
-    def create(self, request, *args, **kwargs):
-        data = request.data
-
-        serializer = ReservationCreateSerializer(data=data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()  # FIXME ; abuse of serializer
-
-        return Response(status=status.HTTP_201_CREATED)
+    serializer_class = ReservationSerializer

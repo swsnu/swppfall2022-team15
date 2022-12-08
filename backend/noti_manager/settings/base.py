@@ -133,4 +133,6 @@ REST_FRAMEWORK = {
 
 SLACK_HOST = 'https://slack.com'
 
+MAX_RESERVATION_COUNT = 100
+
 APPEND_SLASH = True
