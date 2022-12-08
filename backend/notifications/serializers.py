@@ -27,12 +27,14 @@ class NotificationConfigCreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         target_users: list[int] = validated_data.pop('target_users')
-        notification_config_id = validated_data.get('notification_config')
-        rrule = validated_data.get('rrule')
 
+        notification_config = super().create(validated_data)
+
+        rrule = validated_data.get('rrule')
         rrule = rrulestr(rrule)[:settings.MAX_RESERVATION_COUNT]
+
         for time in rrule:
-            task_bulk_create_notification.delay(time, target_users, notification_config_id)
+            task_bulk_create_notification.delay(time, target_users, notification_config.id)
 
         return super().create(validated_data)
 
