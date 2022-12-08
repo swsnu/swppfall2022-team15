@@ -5,6 +5,7 @@ import preloadedState from "../../test-utils/mock_state";
 import { BrowserRouter } from "react-router-dom";
 import { screen, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import axios from "axios";
 
 jest.mock("react-apexcharts", () => ({
   __esModule: true,
@@ -13,6 +14,12 @@ jest.mock("react-apexcharts", () => ({
 
 describe("Home", () => {
   it("should render correctly", () => {
+    jest.spyOn(axios, "get").mockImplementation(() => {
+      return Promise.resolve({
+        data: {},
+      });
+    });
+
     renderWithProviders(
       <BrowserRouter>
         <Home />
@@ -34,5 +41,16 @@ describe("Home", () => {
       createProjectButton.click();
     });
     userEvent.keyboard("{esc}");
+  });
+
+  it("should handle get notifications", async () => {
+    renderWithProviders(
+      <BrowserRouter>
+        <Home />
+      </BrowserRouter>,
+      { preloadedState }
+    );
+
+    
   });
 });

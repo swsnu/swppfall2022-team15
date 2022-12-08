@@ -1,6 +1,7 @@
 import { renderWithProviders } from "../../../test-utils/mocks";
 import Charts from "./Charts";
 import { screen } from "@testing-library/react";
+import { EnumNotificationStatus } from "../../../Enums";
 
 jest.mock("react-apexcharts", () => {
   return {
@@ -40,27 +41,42 @@ describe("Charts", () => {
     screen.getByText("Notification status (Slack)");
   });
 
-  it("should shortenNumber correctly: M", () => {
+  it("should handle getting notifications", () => {
     renderWithProviders(
-      <Charts selectedTab={1} selectedProject={0} selectedType={0} />
+      <Charts selectedTab={0} selectedProject={0} selectedType={0} />,
+      {
+        preloadedState: {
+          notification: {
+            notifications: [
+              {
+                id: 1,
+                status: EnumNotificationStatus.SUCCESS,
+                message: "test",
+                reservedAt: "2022-12-01T00:00:00.000Z",
+                type: "SLACK",
+                history: [],
+              },
+              {
+                id: 2,
+                status: EnumNotificationStatus.FAILURE,
+                message: "test",
+                reservedAt: "2022-12-01T00:00:00.000Z",
+                type: "SLACK",
+                history: [],
+              },
+              {
+                id: 3,
+                status: EnumNotificationStatus.PENDING,
+                message: "test",
+                reservedAt: "2022-12-01T00:00:00.000Z",
+                type: "SLACK",
+                history: [],
+              },
+            ],
+            selectedNotification: null,
+          },
+        },
+      }
     );
-
-    screen.getByText("Total notification requests: 361.3M");
-  });
-
-  it("should shortenNumber correctly: K", () => {
-    renderWithProviders(
-      <Charts selectedTab={2} selectedProject={0} selectedType={0} />
-    );
-
-    screen.getByText("Total notification requests: 51.6K");
-  });
-
-  it("should shortenNumber correctly: normal", () => {
-    renderWithProviders(
-      <Charts selectedTab={0} selectedProject={0} selectedType={0} />
-    );
-
-    screen.getByText("Total notification requests: 331");
   });
 });

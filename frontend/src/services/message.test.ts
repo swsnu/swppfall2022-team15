@@ -1,4 +1,8 @@
-import { deleteMessage, createMessage } from "./message";
+import {
+  deleteMessage,
+  createMessage,
+  fetchMessagesWithNotificationType,
+} from "./message";
 import axios from "axios";
 import { EnumNotificationType } from "../Enums";
 
@@ -43,5 +47,16 @@ describe("message", () => {
       })
     );
     createMessage(EnumNotificationType.SLACK, "test", "test");
+  });
+
+  it("should fetch messages with notification type - success", () => {
+    jest
+      .spyOn(axios, "get")
+      .mockImplementation(() => Promise.resolve({ data: { 
+        notification_type: EnumNotificationType.SLACK,
+        name: "test",
+        data: "test",
+       } }));
+    fetchMessagesWithNotificationType(EnumNotificationType.SLACK);
   });
 });

@@ -16,13 +16,15 @@ export default function Today() {
     } else {
       let success = 0;
       let fail = 0;
-      notifications.forEach((notification) => {
-        if (notification.status === "SUCCESS") {
+      
+      var i;
+      for(i = 0; i < notifications.length; i++) {
+        if (notifications[i].status === "SUCCESS") {
           success++;
         } else {
           fail++;
         }
-      });
+      };
       return `${Math.round((success / (success + fail)) * 100)}%`;
     }
   }

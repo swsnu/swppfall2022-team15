@@ -44,6 +44,7 @@ function Row(props: { row: NotificationConfigType }) {
           {row.id}
         </TableCell>
         <TableCell align="right">{row.type}</TableCell>
+        {/*<TableCell align="right">{row.status}</TableCell>*/}
         <TableCell align="right">{row.message}</TableCell>
         <TableCell align="right">{row.rrule}</TableCell>
       </TableRow>

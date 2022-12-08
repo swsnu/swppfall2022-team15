@@ -67,13 +67,12 @@ export default function ReservationStep(props: IProps) {
   const today = new Date()
   const defaultRecurrence = {
     startDate: today,
-    endDate: today,
     frequency: FrequencyType.Weekly,
     numberOfRepetitions: 1,
-
     weekDaysRepetition: [],
     endingCondition: EndingConditionType.None,
     endingOccurrencesNumber: 0,
+    endDate: today,
     isAllDay: false,
     startTime: today,
     endTime: today
