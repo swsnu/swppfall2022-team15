@@ -1,6 +1,6 @@
 from functools import wraps
 
-import redis as redis
+import redis
 from celery.utils.log import task_logger
 from django.conf import settings
 from limitlion import throttle_configure, throttle
@@ -15,14 +15,15 @@ def rate_limit(maximum_allowed_per_minute, key=None):
         if key is None:
             key = func.__name__
 
+        # pylint: disable=R1710
         @wraps(func)
         def wrapper(self, *args, **kwargs):
             allowed, _, sleep = throttle(key, rps=maximum_allowed_per_minute / 60, window=60)
-            if allowed:
-                return func(self, *args, **kwargs)
-            else:
+            if not allowed:
                 task_logger.info("rate limit exceeded")
                 self.retry(countdown=sleep)
+                return
+            return func(self, *args, **kwargs)
 
         return wrapper
 
