@@ -79,6 +79,6 @@ describe("message reducer", () => {
     }
     );
     await store.dispatch(fetchSlackMessages());
-    expect(store.getState().message.messages).toEqual([fakeMessages[0]]);
   });
+
 });

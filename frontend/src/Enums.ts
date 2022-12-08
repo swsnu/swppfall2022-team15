@@ -5,7 +5,7 @@ export enum EnumProjectType {
 
 export const enum EnumNotificationStatus {
   // Before Sending
-  PEDNING = "PENDING",
+  PENDING = "PENDING",
 
   // Sending
   SENDING = "SENDING",

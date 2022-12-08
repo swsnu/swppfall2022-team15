@@ -11,6 +11,7 @@ import ReactApexChart from "react-apexcharts";
 import { green, red, blue, grey } from "@mui/material/colors";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import moment from "moment";
 
 interface IProps {
   title: string;
@@ -79,37 +80,19 @@ export default function BarLineAnalytics(props: IProps) {
     useState<{ x: string; y: number }[]>(initialDailyData);
 
   const getStartDay_Daily = () => {
-    const time = new Date();
-    let formattedDate = `${time.getFullYear()}-${time.getMonth() + 1}-${
-      time.getDate() - 14
-    }`;
-
-    return formattedDate;
+    return moment().subtract(14, "days").format("YYYY-MM-DD");
   };
 
   const getStartDay_Weekly = () => {
-    const time = new Date();
-    let formattedDate = `${time.getFullYear()}-${
-      time.getMonth() - 2
-    }-${time.getDate()}`;
-    return formattedDate;
+    return moment().subtract(3, "months").format("YYYY-MM-DD");
   };
 
   const getStartDay_Monthly = () => {
-    const time = new Date();
-    let formattedDate = `${time.getFullYear() - 1}-${
-      time.getMonth() + 1
-    }-${time.getDate()}`;
-    return formattedDate;
+    return moment().subtract(1, "years").format("YYYY-MM-DD");
   };
 
   const getToday = () => {
-    const time = new Date();
-    let formattedDate = `${time.getFullYear()}-${
-      time.getMonth() + 1
-    }-${time.getDate()}`;
-
-    return formattedDate;
+    return moment().format("YYYY-MM-DD");
   };
 
   const getData = async () => {
@@ -125,6 +108,7 @@ export default function BarLineAnalytics(props: IProps) {
             },
           })
           .then((response) => {
+            console.log(response);
             if (response.data.length === 0) {
               setSuccess(initialDailyData);
               setFailure(initialDailyData);
@@ -315,10 +299,12 @@ export default function BarLineAnalytics(props: IProps) {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            data-testid="button"
+            inputProps={{ "data-testid": "button" }}
             value={type}
             label="Type"
-            onChange={(e) => setType(e.target.value as number)}
+            onChange={(e) => {
+              setType(e.target.value as number);
+            }}
           >
             <MenuItem value={10}>Daily</MenuItem>
             <MenuItem value={20}>Weekly</MenuItem>

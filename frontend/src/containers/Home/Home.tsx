@@ -19,6 +19,7 @@ import {
 } from "../../store/slices/notifications";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
 import MultiStepFormDialog from "../MultiStepFormDialog/MultiStepFormDialog";
+import moment from "moment";
 
 export default function Home() {
   const projects = useSelector(projectListSelector);
@@ -43,21 +44,11 @@ export default function Home() {
   };
 
   const getTodayStart = () => {
-    const time = new Date();
-
-    let formattedDate = `${time.getFullYear()}-${
-      time.getMonth() + 1
-    }-${time.getDate()} 00:00:00`;
-    return formattedDate;
+    return moment().format("YYYY-MM-DD 00:00:00");
   };
 
   const getTodayEnd = () => {
-    const time = new Date();
-
-    let formattedDate = `${time.getFullYear()}-${
-      time.getMonth() + 1
-    }-${time.getDate()} 23:59:59`;
-    return formattedDate;
+    return moment().format("YYYY-MM-DD 23:59:59");
   };
 
   const getNotifications = async () => {

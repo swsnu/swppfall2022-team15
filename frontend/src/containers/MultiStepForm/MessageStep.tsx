@@ -80,15 +80,9 @@ export default function MessageStep(props: IProps) {
 
   const form = MessageCreateForm(props, mode !== "create");
   const getContentFieldName = (notificationType: string): string[] => {
-    switch (notificationType) {
-      case "EMAIL":
-        return ["title"];
-      case "SMS":
-        return ["content"];
-      case "SLACK":
-        return ["id", "name", "data.channel", "data.message"];
-    }
-    return [""];
+    if(notificationType === "EMAIL") return ["title"];
+    else if (notificationType === "SMS") return ["content"];
+    else return ["id", "name", "data.channel", "data.message"];
   };
 
   const contentFieldList = getContentFieldName(notificationType);

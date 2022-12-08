@@ -27,8 +27,7 @@ export const createNotification = createAsyncThunk(
     const response = await axios.post<NotificationType>("/api/notification/", notification);
     return response.data;
   }
-)
-
+);
 
 const initialState: {
     notifications: NotificationType[];
@@ -43,9 +42,6 @@ export const notificationSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-      builder.addCase(fetchNotifications.fulfilled, (state, action) => {
-        state.notifications = action.payload;
-      });
       builder.addCase(fetchAllNotifications.fulfilled, (state, action) => {
         state.notifications = action.payload;
       });

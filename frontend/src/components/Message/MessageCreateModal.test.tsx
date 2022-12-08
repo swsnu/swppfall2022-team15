@@ -31,10 +31,55 @@ describe("MessageCreateModal", () => {
     const button = screen.getByTestId("create-button");
     fireEvent.click(button);
 
+    const slackNameInput = screen.getByTestId("slack-name-input");
+    fireEvent.change(slackNameInput, {
+      target: { value: "name" },
+    });
+
     const slackChannelInput = screen.getByTestId("slack-channel-input");
     fireEvent.change(slackChannelInput, {
       target: { value: "channel" },
     });
+
+    const slackMessageInput = screen.getByTestId("slack-message-input");
+    fireEvent.change(slackMessageInput, {
+      target: { value: "message" },
+    });
+
+    fireEvent.click(button);
+
+    fireEvent.change(dataInput, {
+      target: { value: EnumNotificationType.WEBHOOK },
+    });
+
+    fireEvent.change(dataInput, {
+      target: { value: EnumNotificationType.EMAIL },
+    });
+
+    fireEvent.change(dataInput, {
+      target: { value: EnumNotificationType.SMS },
+    });
+  });
+
+  it("should handle create button correctly - error", () => {
+    renderWithProviders(
+      <MessageCreateModal open={true} handleClose={() => {}} />,
+      { preloadedState }
+    );
+
+    const dataInput = screen.getByTestId("type-input");
+    fireEvent.change(dataInput, {
+      target: { value: EnumNotificationType.SLACK },
+    });
+    const button = screen.getByTestId("create-button");
+    fireEvent.click(button);
+
+    const slackNameInput = screen.getByTestId("slack-name-input");
+    fireEvent.change(slackNameInput, {
+      target: { value: "name" },
+    });
+
+
 
     const slackMessageInput = screen.getByTestId("slack-message-input");
     fireEvent.change(slackMessageInput, {
@@ -64,38 +109,6 @@ describe("MessageCreateModal", () => {
 
     const button = screen.getByTestId("create-button");
     fireEvent.click(button);
-  });
-
-  it("should handle slack form correctly", () => {
-    jest.spyOn(axios, "post").mockResolvedValue(
-      Promise.resolve({
-        data: {},
-      })
-    );
-
-    renderWithProviders(
-      <MessageCreateModal open={true} handleClose={() => {}} />,
-      { preloadedState }
-    );
-
-    const dataInput = screen.getByTestId("type-input");
-    fireEvent.change(dataInput, {
-      target: { value: EnumNotificationType.SLACK },
-    });
-
-    const nameInput = screen.getByTestId("message-input");
-    fireEvent.change(nameInput, {
-      target: { value: "name" },
-    });
-
-    const channelInput = screen.getByTestId("slack-channel-input");
-    fireEvent.change(channelInput, {
-      target: { value: "channel" },
-    });
-
-    const button = screen.getByTestId("create-button");
-    fireEvent.click(button);
-    
   });
 
 

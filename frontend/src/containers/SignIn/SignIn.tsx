@@ -39,6 +39,15 @@ export default function SignIn() {
       return;
     }
 
+    const exp: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
+    const result = exp.test(email);
+
+    if (result === false) {
+      setError("Invalid email");
+      return;
+    }
+
     try {
       const response = await axios.post(
         "/api/signin/",
@@ -62,10 +71,8 @@ export default function SignIn() {
     } catch (error: any) {
       if (!error.response) {
         setError("Error connecting to server");
-      } else if (error.response.status === 401) {
-        setError("Invalid email or password");
       } else {
-        setError("Error logging in");
+        setError("Invalid email or password");
       }
     }
   };
@@ -82,12 +89,12 @@ export default function SignIn() {
       <form onSubmit={handleSignIn}>
         <Stack spacing={2}>
           {error && (
-            <div className="error" data-testid="error">
+            <div className="error" data-testid="error-message">
               {error}
             </div>
           )}
           <TextField
-            data-testid="email"
+            inputProps={{ "data-testid": "email-input" }}
             className="email"
             name="email"
             placeholder="Email address"
@@ -95,7 +102,7 @@ export default function SignIn() {
             onChange={handleEmailChange}
           />
           <TextField
-            data-testid="password"
+            inputProps={{ "data-testid": "password-input" }}
             className="password"
             name="password"
             placeholder="Password"
@@ -108,7 +115,7 @@ export default function SignIn() {
         <Stack spacing={2} direction="row">
           <LoadingButton
             fullWidth
-            data-testid="signin"
+            data-testid="signin-button"
             size="large"
             type="submit"
             variant="contained"
@@ -118,7 +125,7 @@ export default function SignIn() {
           <br />
           <LoadingButton
             fullWidth
-            data-testid="signup"
+            data-testid="signup-button"
             size="large"
             variant="contained"
             onClick={() => handleSignUp()}
