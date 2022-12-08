@@ -34,6 +34,11 @@ const preloadedState: RootState = {
     ],
     selectedNotification: null,
   },
+  notificationConfig: {
+    notificationConfigs: [
+    ],
+    selectedNotificationConfig: null,
+  },
   target: {
     targets: [
       {

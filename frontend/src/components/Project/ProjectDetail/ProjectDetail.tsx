@@ -1,18 +1,15 @@
-import { Grid } from "@mui/material";
+import {Grid} from "@mui/material";
 import Button from "@mui/material/Button";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
-import { AppDispatch } from "../../../store";
-import {
-  fetchNotifications,
-  notificationListSelector,
-} from "../../../store/slices/notifications";
-import { fetchProject } from "../../../store/slices/project";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router";
+import {AppDispatch} from "../../../store";
+import {fetchProject} from "../../../store/slices/project";
 import CollapsibleTable from "../../Table/CollapsibleTable";
-import { Container } from "@mui/system";
+import {Container} from "@mui/system";
 import MultiStepFormDialog from "../../../containers/MultiStepFormDialog/MultiStepFormDialog";
 import "./ProjectDetail.css";
+import {fetchNotificationConfigs, notificationConfigSelect} from "../../../store/slices/notificationConfig";
 
 export default function ProjectDetail() {
   const [open, setOpen] = useState(false);
@@ -25,9 +22,10 @@ export default function ProjectDetail() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(fetchProject(projectId));
-    dispatch(fetchNotifications(projectId));
+    dispatch(fetchNotificationConfigs(projectId));
   }, [dispatch, projectId]);
-  const notifications = useSelector(notificationListSelector);
+  const notificationConfigState = useSelector(notificationConfigSelect);
+  const notificationConfigList = notificationConfigState.notificationConfigs;
 
   // event handlers
   const handleCreateNotification = (event: React.MouseEvent) => {
@@ -53,10 +51,10 @@ export default function ProjectDetail() {
             data-testid="createNotificationButton"
             onClick={handleCreateNotification}
           >
-            Create Notification
+            NEW RESERVATION
           </Button>
         </Grid>
-        <CollapsibleTable notifications={notifications} />
+        <CollapsibleTable notificationConfigs={notificationConfigList} />
       </Container>
     </>
   );

@@ -7,6 +7,14 @@ export type ProjectType = {
   name: string;
 };
 
+export type NotificationConfigType = {
+    id: number;
+    project: number;
+    message: number
+    type: string;
+    rrule: string;
+}
+
 export type NotificationType = {
   id: number;
   status: EnumNotificationStatus;
@@ -15,6 +23,14 @@ export type NotificationType = {
   type: string;
   history?: NotificationHistoryType[];
 };
+
+export type NotificationConfigCreateDto = {
+      project: number,
+      type: string
+      rrule: string,
+      message: number
+      target_users: number[]
+    };
 
 export type ReservationType = {
   id: number;

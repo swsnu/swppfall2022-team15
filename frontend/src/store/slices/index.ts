@@ -8,12 +8,14 @@ import projectReducer from "./project";
 import notificationReducer from "./notifications";
 import targetReducer from "./target";
 import messageReducer from "./message";
+import notificationConfigReducer  from "./notificationConfig";
 import authReducer from "./auth";
 import { RootState } from "../index";
 
 const rootReducer = combineReducers({
   project: projectReducer,
   notification: notificationReducer,
+  notificationConfig: notificationConfigReducer,
   target: targetReducer,
   message: messageReducer,
   auth: authReducer,
