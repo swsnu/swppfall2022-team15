@@ -8,6 +8,13 @@ from dateutil.rrule import rrulestr
 
 
 class NotificationConfigSerializer(serializers.ModelSerializer):
+    message = serializers.CharField(source='nmessage_id')
+
+    class Meta:
+        model = NotificationConfig
+        fields = ('id', 'message', 'project', 'type', 'rrule',)
+
+class NotificationConfigCreateSerializer(serializers.ModelSerializer):
     message = serializers.IntegerField(source='nmessage_id')
     target_users = serializers.ListField(child=serializers.IntegerField())
 
@@ -15,11 +22,11 @@ class NotificationConfigSerializer(serializers.ModelSerializer):
         model = NotificationConfig
         fields = ('id', 'message', 'project', 'type', 'rrule', 'target_users',)
         extra_kwargs = {
-            'target_users': {'write_only': True},
+            'target_users': {'write_only': True, },
         }
 
     def create(self, validated_data):
-        target_users: list[int] = validated_data.get('target_users')
+        target_users: list[int] = validated_data.pop('target_users')
         notification_config_id = validated_data.get('notification_config')
         rrule = validated_data.get('rrule')
 
@@ -27,7 +34,7 @@ class NotificationConfigSerializer(serializers.ModelSerializer):
         for time in rrule:
             task_bulk_create_notification.delay(time, target_users, notification_config_id)
 
-        return validated_data
+        return super().create(validated_data)
 
 
 class ReservationSerializer(serializers.ModelSerializer):

@@ -13,17 +13,17 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-import { NotificationType } from '../../types';
+import {NotificationConfigType, NotificationType} from '../../types';
 // TODO(Given) 
 // Notification Status Implementation Issue
 // 1) get data on api call 
 // 2) just get in advance before rendering
 export interface IProps {
-  notifications: NotificationType[]
+  notificationConfigs: NotificationConfigType[]
 }
 
 
-function Row(props: { row: NotificationType }) {
+function Row(props: { row: NotificationConfigType }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
 
@@ -44,8 +44,8 @@ function Row(props: { row: NotificationType }) {
           {row.id}
         </TableCell>
         <TableCell align="right">{row.type}</TableCell>
-        {/*<TableCell align="right">{row.status}</TableCell>*/}
         <TableCell align="right">{row.message}</TableCell>
+        <TableCell align="right">{row.rrule}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -64,18 +64,18 @@ function Row(props: { row: NotificationType }) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history?.map((historyRow) => (
+                  {/*{row.history?.map((historyRow) => (
                     <TableRow key={historyRow.date}>
                       <TableCell component="th" scope="row">
                         {historyRow.date}
                       </TableCell>
                       <TableCell>{historyRow.endpoint}</TableCell>
-                      {/* <TableCell align="right">{historyRow.amount}</TableCell>
+                       <TableCell align="right">{historyRow.amount}</TableCell>
                       <TableCell align="right">
                         {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell> */}
+                      </TableCell>
                     </TableRow>
-                  ))}
+                  ))}*/}
                 </TableBody>
               </Table>
             </Box>
@@ -94,15 +94,14 @@ export default function CollapsibleTable(props: IProps) {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell> id </TableCell>
-            <TableCell align="right">Type</TableCell>
-            {/*<TableCell align="right">Status</TableCell>*/}
-            <TableCell align="right">Message&nbsp;</TableCell>
-            {/*<TableCell align="right">Reserved At&nbsp;</TableCell>*/}
+            <TableCell>Id</TableCell>
+            <TableCell align="right">Notification Type</TableCell>
+            <TableCell align="right">Message</TableCell>
+            <TableCell align="right">Rrule</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.notifications.map((notification) => (
+          {props.notificationConfigs.map((notification) => (
             <Row key={notification.id} row={notification} />
           ))}
         </TableBody>

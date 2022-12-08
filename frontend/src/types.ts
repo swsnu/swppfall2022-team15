@@ -7,6 +7,14 @@ export type ProjectType = {
   name: string;
 };
 
+export type NotificationConfigType = {
+    id: number;
+    project: number;
+    message: number
+    type: string;
+    rrule: string;
+}
+
 export type NotificationType = {
   id: number;
   status: EnumNotificationStatus;

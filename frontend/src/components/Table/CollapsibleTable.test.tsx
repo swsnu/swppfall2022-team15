@@ -4,13 +4,13 @@ import preloadedState from "../../test-utils/mock_state";
 
 describe("CollapsibleTable", () => {
     it("should render", () => {
-        const notifications = preloadedState.notification.notifications;
-        render(<CollapsibleTable notifications={notifications} /> );
+        const notificationConfigs = preloadedState.notificationConfig.notificationConfigs;
+        render(<CollapsibleTable notificationConfigs={notificationConfigs} /> );
     });
 
     it("should handle expand-button", () => {
-        const notifications = preloadedState.notification.notifications;
-        render(<CollapsibleTable notifications={notifications} /> );
+        const notificationConfigs = preloadedState.notificationConfig.notificationConfigs;
+        render(<CollapsibleTable notificationConfigs={notificationConfigs} /> );
 
         const expandButton = screen.getByTestId("expand-button");
         fireEvent.click(expandButton);

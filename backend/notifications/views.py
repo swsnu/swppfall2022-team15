@@ -12,7 +12,11 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from core.permissions import IsOwner
 from notifications.models import NotificationConfig, Notification
 from notifications.models import Reservation
-from notifications.serializers import NotificationConfigSerializer, ReservationSerializer
+from notifications.serializers import (
+    NotificationConfigCreateSerializer,
+    ReservationSerializer,
+    NotificationConfigSerializer,
+)
 
 
 class NotificationConfigViewSet(ModelViewSet):
@@ -21,12 +25,12 @@ class NotificationConfigViewSet(ModelViewSet):
     queryset = NotificationConfig.objects.all()
 
     def create(self, request, *args, **kwargs):
-        serializers = self.get_serializer(data=request.data)
+        serializers = NotificationConfigCreateSerializer(data=request.data)
         serializers.is_valid(raise_exception=True)
         serializers.save()
 
         return Response(
-            data=serializers.data,
+            # data=serializers.data,
             status=status.HTTP_201_CREATED
         )
 
