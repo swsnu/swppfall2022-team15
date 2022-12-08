@@ -53,7 +53,7 @@ export default function ProjectDetail() {
             data-testid="createNotificationButton"
             onClick={handleCreateNotification}
           >
-            Create Notification
+            NEW RESERVATION
           </Button>
         </Grid>
         <CollapsibleTable notifications={notifications} />
