@@ -30,7 +30,7 @@ def task_send_api_notification(notification: dict):
     try:
         response = requests.post(
             url=notification['endpoint'],
-            json=json.loads(notification['data']),
+            json=notification['data'],
             headers=notification['headers'],
             timeout=5,
         )
@@ -80,7 +80,7 @@ def task_handle_chunk_notification(notification_ids: list[int]):
             data = ApiNotificationDto(
                 endpoint=notification.target_user.endpoint,
                 headers=notification.target_user.data,
-                data=notification.request,
+                data=notification.reservation.notification_config.nmessage.data,
             )
             task_send_api_notification.delay(data)
         elif notification.reservation.notification_config.type == EnumNotificationType.SLACK:
