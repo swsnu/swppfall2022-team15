@@ -71,8 +71,8 @@ export default function TargetListTable() {
         <Box sx={{ "margin-bottom": "20px" }}>
           <DynamicTable
             data-testid="menu-button"
-            columns={["Id", "Name", "Title", "Message"]}
-            keys={["id", "name", "data.title", "data.message"]}
+            columns={["Id", "Name", "Email Address"]}
+            keys={["id", "name", "endpoint"]}
             rows={targets.filter(
               (target) => target.notification_type == "EMAIL"
             )}
@@ -99,8 +99,8 @@ export default function TargetListTable() {
         <Box sx={{ "margin-bottom": "20px" }}>
           <DynamicTable
             data-testid="menu-button"
-            columns={["Id", "Name", "Message"]}
-            keys={["id", "name", "data.message"]}
+            columns={["Id", "Name", "Phone Number"]}
+            keys={["id", "name", "endpoint"]}
             rows={targets.filter((target) => target.notification_type == "SMS")}
             handleOpenMenu={handleOpenMenu}
           />
