@@ -25,11 +25,10 @@ export default function SplitButton(props: IProps) {
   const handleClick = () => {
     console.log(selectedIndex);
     if (selectedIndex === 0) { // Reserve
-      props.setMode("reserve")
+      props.setMode("RESERVATION")
       props.setOpen();
     } else { // fire immediately
-      props.setMode("fire")
-      console.log("fire immediately");
+      props.setMode("IMMEDIATE")
     }
   };
 

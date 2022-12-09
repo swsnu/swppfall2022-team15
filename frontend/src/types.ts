@@ -13,6 +13,7 @@ export type NotificationConfigType = {
     message: number
     type: string;
     rrule: string;
+    mode: string;
 }
 
 export type NotificationType = {
@@ -27,9 +28,10 @@ export type NotificationType = {
 export type NotificationConfigCreateDto = {
       project: number,
       type: string
-      rrule: string,
-      message: number
-      target_users: number[]
+      rrule?: string,
+      message: number,
+      target_users: number[],
+      mode: string
     };
 
 export type ReservationType = {
