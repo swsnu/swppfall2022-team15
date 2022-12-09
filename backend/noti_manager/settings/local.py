@@ -25,3 +25,5 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+SMS_SENDER ='01000000000'
