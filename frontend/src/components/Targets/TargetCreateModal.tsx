@@ -39,11 +39,29 @@ export default function TargetCreateModal(props: IProps) {
   const handleClickConfirm = async () => {
     console.log(targetName, notificationType, endpoint)
     if (
-      (targetName && notificationType && endpoint) || // NON SLACK
-      (notificationType == EnumNotificationType.SLACK.toString() &&
-        targetName &&
-        "api_key" in data) // SLACK
+        (targetName && notificationType && endpoint) || // NON SLACK
+        (notificationType == EnumNotificationType.SLACK.toString() &&
+            targetName &&
+            "api_key" in data) // SLACK
     ) {
+      // validation check
+      switch (notificationType) {
+        case EnumNotificationType.WEBHOOK.toString():
+          try {
+            new URL(endpoint);
+          } catch (TypeError) {
+            console.log("Invalid URL");
+            return
+          }
+          break;
+        case EnumNotificationType.EMAIL.toString():
+          // TODO
+          break;
+        case EnumNotificationType.SMS.toString():
+          // TODO
+          break;
+
+      }
       const requestData = {
         name: targetName,
         notification_type: notificationType,
@@ -55,7 +73,7 @@ export default function TargetCreateModal(props: IProps) {
       props.handleClose();
       dispatch(fetchTargets());
     }
-  };
+  }
 
   let form = TargetUserForm({
     notificationType,
