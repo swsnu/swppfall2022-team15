@@ -50,8 +50,8 @@ export default function TargetCreateModal(props: IProps) {
         endpoint: endpoint,
         data: data,
       };
-      clearForm();
       dispatch(createTarget(requestData));
+      clearForm();
       props.handleClose();
       dispatch(fetchTargets());
     }

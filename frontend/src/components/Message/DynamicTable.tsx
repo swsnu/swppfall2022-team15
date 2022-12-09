@@ -24,8 +24,6 @@ export default function DynamicTable(props: {
     }
   }
 
-  console.log(props.rows)
-
   return (
     <Card>
       <Scrollbar>
