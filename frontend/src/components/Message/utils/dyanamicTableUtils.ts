@@ -1,13 +1,13 @@
 export const getTargetColumns = (notificationType: string ) => {
     switch(notificationType) {
         case "SLACK":
-          return ['Id', 'Name', 'API-KEY']
+          return ['Id', 'Name', 'API Token']
         case "EMAIL":
-          return ['Id', 'Name', 'ADDRESS']
+          return ['Id', 'Name', 'Email Address']
         case "SMS":
-          return ['Id', 'Name', 'PHONE NUMBER', 'COUNTRY CODE']
+          return ['Id', 'Name', 'Phone Number']
         case "WEBHOOK":
-          return ['Id', 'Name', 'URL', 'AUTH']
+          return ['Id', 'Name', 'URL', 'Authorization']
     }
     return [""]
   }
@@ -19,7 +19,7 @@ export const getTargetKeys = (notificationType: string ) => {
       case "EMAIL":
         return ['id', 'name', 'endpoint']
       case "SMS":
-        return ['id', 'name', 'endpoint', 'data.country_code']
+        return ['id', 'name', 'endpoint']
       case "WEBHOOK":
         return ['id', 'name', 'endpoint', 'data.auth']
     }
