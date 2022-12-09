@@ -32,14 +32,15 @@ class NotificationConfigCreateSerializer(serializers.ModelSerializer):
 
         notification_config = super().create(validated_data)
 
-        rrule = validated_data.get('rrule')
-        rrule = rrulestr(rrule)[:settings.MAX_RESERVATION_COUNT]
-
+        reservation_time = []
         if notification_config.mode == EnumNotificationMode.RESERVATION:
-            for time in rrule:
-                task_bulk_create_notification.delay(time, target_users, notification_config.id)
+            rrule = validated_data.get('rrule')
+            reservation_time += rrulestr(rrule)[:settings.MAX_RESERVATION_COUNT]
         elif notification_config.mode == EnumNotificationMode.IMMEDIATE:
-            task_bulk_create_notification.delay(None, target_users, notification_config.id)
+            reservation_time += [datetime.now()]
+
+        for time in reservation_time:
+            task_bulk_create_notification.delay(time, target_users, notification_config.id, notification_config.mode)
 
         return notification_config
 
