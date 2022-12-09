@@ -11,7 +11,6 @@ import {
 import Iconify from "../Iconify/Iconify";
 import Scrollbar from "../Scrollbar/Scrollbar";
 
-
 export default function DynamicTable(props: {
   columns: string[];
   keys: any;
@@ -20,24 +19,24 @@ export default function DynamicTable(props: {
   onClickRow?: (id: number) => void;
   parser?: (field: string, item: any) => any;
 }) {
-  const {parser} = props;
+  const { parser } = props;
 
   const defaultInDepthFieldParser = (key: string, row: any) => {
-    const fields = key.split('.')
+    const fields = key.split(".");
 
     let value = row;
     fields.forEach((field) => {
       value = value[field];
     });
     return value;
-  }
+  };
 
   const inDepthFieldParser = (key: string, row: any) => {
     if (!parser) {
-     return defaultInDepthFieldParser(key, row);
-   }
-   return parser(key, row);
-  }
+      return defaultInDepthFieldParser(key, row);
+    }
+    return parser(key, row);
+  };
 
   const handleClickRow = (id: number) => {
     if (props.onClickRow) {
@@ -50,6 +49,11 @@ export default function DynamicTable(props: {
       <Scrollbar>
         <TableContainer sx={{ minWidth: 800 }}>
           <Table stickyHeader>
+            <colgroup>
+              <col style={{ width: "20%" }} />
+              <col style={{ width: "20%" }} />
+              <col style={{ width: "20%" }} />
+            </colgroup>
             <TableHead>
               <TableRow>
                 {props.columns.map((col) => {
@@ -67,10 +71,8 @@ export default function DynamicTable(props: {
                     onClick={() => handleClickRow(row.id)}
                   >
                     {props.keys.map((key: string) => {
-                      let value = inDepthFieldParser(key, row)
-                      return (
-                        <TableCell align="left">{value}</TableCell>
-                      );
+                      let value = inDepthFieldParser(key, row);
+                      return <TableCell align="left">{value}</TableCell>;
                     })}
                     {props.handleOpenMenu && (
                       <TableCell align="right">
@@ -94,5 +96,4 @@ export default function DynamicTable(props: {
       </Scrollbar>
     </Card>
   );
-
 }
