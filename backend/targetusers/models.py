@@ -10,5 +10,5 @@ class TargetUser(TimeStampedModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=32)
     notification_type = models.CharField(max_length=32, choices=EnumNotificationType.choices)
-    endpoint = models.CharField(max_length=255)
+    endpoint = models.CharField(max_length=255, blank=True)
     data = models.JSONField()

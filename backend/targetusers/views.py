@@ -5,6 +5,7 @@ from core.views import CreateByNotificationTypeMixin
 from targetusers.models import TargetUser
 from targetusers.serializers import TargetUserSerializer
 
+
 class TargetUserViewSet(CreateByNotificationTypeMixin, ModelViewSet):
     queryset = TargetUser.objects.all()
     serializer_class = TargetUserSerializer
