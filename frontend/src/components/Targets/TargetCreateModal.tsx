@@ -152,7 +152,9 @@ export default function TargetCreateModal(props: IProps) {
         aria-describedby="parent-modal-description"
         fullWidth
       >
-        <DialogTitle>New Target</DialogTitle>
+        <DialogTitle>
+          {props.targetId ? "Update Target" : "New Target"}
+        </DialogTitle>
         <DialogContent>
           <InputLabel id="demo-simple-select-label">
             Notification Type
