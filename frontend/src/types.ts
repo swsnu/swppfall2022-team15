@@ -51,7 +51,7 @@ export interface TargetType {
   name: string;
   notification_type: string;
   endpoint: string;
-  data: object;
+  data: any;
 }
 
 export interface TargetUserIdNameDto {
