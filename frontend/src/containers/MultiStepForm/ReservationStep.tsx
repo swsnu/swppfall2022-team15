@@ -57,16 +57,17 @@ export default function ReservationStep(props: IProps) {
   }
   const [mode, setMode] = useState("")
   const handleConfirm = async () => {
-    if (!rrule || !projectId) {
+    if ( (!rrule && mode === 'RESERVATION') || !projectId) {
         return;
     }
 
     const config = {
       project: projectId,
       type: notificationType,
-      rrule: rrule.toString(),
+      rrule: rrule?.toString(),
       message: message.id,
-      target_users: targetUsers.map((target) => target.id)
+      target_users: targetUsers.map((target) => target.id),
+      mode: mode
     };
     await createNotificationConfig(config)
   }
