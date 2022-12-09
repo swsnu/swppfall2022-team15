@@ -27,8 +27,8 @@ export const TargetUserForm = (props: IProps) => {
   const {
     notificationType,
     targetName,
-    endpoint,
-    setEndpoint,
+    endpoint: url,
+    setEndpoint: setURL,
     data,
     setData,
     setTargetName,
@@ -191,17 +191,17 @@ export const TargetUserForm = (props: IProps) => {
     case EnumNotificationType.WEBHOOK:
       form = (
         <>
-          <InputLabel id="demo-simple-select-label">ENDPOINT</InputLabel>
+          <InputLabel id="demo-simple-select-label">URL</InputLabel>
           <TextField
             autoFocus
             margin="dense"
-            id="endpoint"
+            id="url"
             type="text"
             fullWidth
-            value={endpoint}
-            inputProps={{ "data-testid": `endpoint-input` }}
+            value={url}
+            inputProps={{ "data-testid": `url-input` }}
             onChange={(event) => {
-              setEndpoint(event.target.value);
+              setURL(event.target.value);
             }}
             required
           />
@@ -222,10 +222,10 @@ export const TargetUserForm = (props: IProps) => {
             }}
             fullWidth
           >
-            <MenuItem value={"no_auth"}>No Auth</MenuItem>
+            <MenuItem value={"no_auth"}>No Authorization</MenuItem>
             <MenuItem value={"api_key"}>API Key</MenuItem>
             <MenuItem value={"bearer"}>Bearer Token</MenuItem>
-            <MenuItem value={"basic"}>Basic Auth</MenuItem>
+            <MenuItem value={"basic"}>Basic Authorization</MenuItem>
           </Select>
           <br />
           <br />
@@ -243,10 +243,10 @@ export const TargetUserForm = (props: IProps) => {
             id="email_addr"
             type="text"
             fullWidth
-            value={endpoint}
+            value={url}
             inputProps={{ "data-testid": "email-address-input" }}
             onChange={(event) => {
-              setEndpoint(event.target.value)
+              setURL(event.target.value);
             }}
             required
           />
@@ -264,11 +264,11 @@ export const TargetUserForm = (props: IProps) => {
             margin="dense"
             id="phone_number"
             fullWidth
-            value={endpoint}
+            value={url}
             inputProps={{ "data-testid": "phone-number-input" }}
             onChange={(event) => {
               phoneNumberAutoFormat(event.target.value);
-              setEndpoint(event.target.value)
+              setURL(event.target.value);
             }}
             required
           />

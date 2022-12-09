@@ -21,7 +21,6 @@ export default function TargetListTable() {
   const [selectedTab, setSelectedTab] = useState(0);
   const [notificationType, setNotificationType] = useState("");
   const [showState, setShowState] = useState<number[]>([]);
-  const [targetId, setTargetId]: any = useState(null);
 
   useEffect(() => {
     const getNotificationType = (type: number) => {
@@ -92,11 +91,9 @@ export default function TargetListTable() {
         case "no_auth":
           return "No Authentication";
         case "basic":
-          if ("username" in data && "password" in data) {
-          }
           return `Basic Authentication , Username: ${data.username} , Password: ${data.password}`;
         case "bearer":
-          return `Bearer Authentication  , Token: ${data.token}`;
+          return `Bearer Authentication , Token: ${data.token}`;
         case "api_key":
           return `API Key Authentication , Key: ${data.key}  ,  Value: ${data.value}`;
         default:
