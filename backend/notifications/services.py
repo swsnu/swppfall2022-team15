@@ -87,8 +87,12 @@ def task_handle_chunk_notification(notification_ids: list[int]):
             task_send_slack_notification.delay(
                 SlackNotificationSerializer(notification).data
             )
-        elif notification.notificaiton_group.type == EnumNotificationType.SMS:
-            task_send_sms_notification.delay()
+        elif notification.reservation.notification_config.type == EnumNotificationType.SMS:
+            data = notification.reservation.notification_config.nmessage.data
+            message = data.get("message")
+            endpoint = notification.target_user.endpoint
+            task_send_sms_notification.delay(message, endpoint)
+
 
 
 @app.task
