@@ -9,7 +9,7 @@ class TargetUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TargetUser
-        fields = ('id', 'user', 'name', 'data', 'notification_type',)
+        fields = ('id', 'user', 'name', 'data', 'endpoint', 'notification_type',)
 
     def validate(self, attrs):
         notification_type = attrs.get('notification_type')

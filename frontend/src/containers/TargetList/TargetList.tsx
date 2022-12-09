@@ -85,8 +85,8 @@ export default function TargetListTable() {
         <Box sx={{ "margin-bottom": "20px" }}>
           <DynamicTable
             data-testid="menu-button"
-            columns={["Id", "Name", "auth"]}
-            keys={["id", "name", "data.auth"]}
+            columns={["Id", "Name", "Endpoint", "auth"]}
+            keys={["id", "name", "endpoint", "data.auth"]}
             rows={targets.filter(
               (target) => target.notification_type == "WEBHOOK"
             )}

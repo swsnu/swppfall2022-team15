@@ -30,9 +30,7 @@ export const createTarget = createAsyncThunk(
     endpoint: string;
     notification_type: string;
   }) => {
-    if (requestData.notification_type === "API") {
-      requestData = { ...requestData, notification_type: "WEBHOOK" };
-    }
+    console.log(requestData)
     const response = await axios.post<TargetType>(
       `/api/targetuser/`,
       requestData
