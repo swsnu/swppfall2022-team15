@@ -24,12 +24,12 @@ export default function MessageListTable() {
   useEffect(() => {
     const getNotificationType = (type: number) => {
       switch (type) {
-        case 1:
+        case 0:
           return "SLACK";
+        case 1:
+          return "EMAIL";
         case 2:
           return "WEBHOOK";
-        case 3:
-          return "EMAIL";
         default:
           return "SMS";
       }
