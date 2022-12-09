@@ -28,6 +28,7 @@ export default function SplitButton(props: IProps) {
       props.setMode("RESERVATION")
       props.setOpen();
     } else { // fire immediately
+    console.log(props.mode)
       props.setMode("IMMEDIATE")
     }
   };
