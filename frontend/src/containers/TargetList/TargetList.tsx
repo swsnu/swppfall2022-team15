@@ -19,7 +19,6 @@ export default function TargetListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
   const [createModalopen, setCreateModalOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
-
   const [notificationType, setNotificationType] = useState("");
   const [showState, setShowState] = useState<number[]>([]);
 
@@ -126,8 +125,13 @@ export default function TargetListTable() {
     <>
       <TargetCreateModal
         open={createModalopen}
-        handleClose={() => setCreateModalOpen(false)}
+        handleClose={() => {
+          setTargetId(null);
+          setCreateModalOpen(false);
+        }}
+        targetId={targetId}
       ></TargetCreateModal>
+
       <Container maxWidth="xl">
         <Grid container justifyContent="flex-end" className="targetButton">
           <Button data-testid="create-button" onClick={handleClickCreateButton}>
@@ -188,7 +192,14 @@ export default function TargetListTable() {
           },
         }}
       >
-        <MenuItem>
+        <MenuItem
+          onClick={async () => {
+            handleCloseMenu();
+            const targetId = open!.dataset.id;
+            await setTargetId(targetId);
+            setCreateModalOpen(true);
+          }}
+        >
           <Iconify icon={"eva:edit-fill"} sx={{ mr: 2 }} />
           Edit
         </MenuItem>
