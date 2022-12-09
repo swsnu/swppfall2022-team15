@@ -56,64 +56,37 @@ export default function TargetCreateModal(props: IProps) {
 
   const handleClickConfirm = async () => {
     console.log(targetName, notificationType, endpoint);
-    if (props.targetId) {
-      if (
-        (targetName && notificationType && endpoint) || // NON SLACK
-        (notificationType == EnumNotificationType.SLACK.toString() &&
-          targetName &&
-          "api_key" in data) // SLACK
-      ) {
-        // validation check
-        switch (notificationType) {
-          case EnumNotificationType.WEBHOOK.toString():
-            try {
-              new URL(endpoint);
-            } catch (TypeError) {
-              console.log("Invalid URL");
-              return;
-            }
-            break;
-          case EnumNotificationType.EMAIL.toString():
-            // TODO
-            break;
-          case EnumNotificationType.SMS.toString():
-            // TODO
-            break;
-        }
+    if (
+      (targetName && notificationType && endpoint) || // NON SLACK
+      (notificationType == EnumNotificationType.SLACK.toString() &&
+        targetName &&
+        "api_key" in data) // SLACK
+    ) {
+      // validation check
+      switch (notificationType) {
+        case EnumNotificationType.WEBHOOK.toString():
+          try {
+            new URL(endpoint);
+          } catch (TypeError) {
+            console.log("Invalid URL");
+            return;
+          }
+          break;
+        case EnumNotificationType.EMAIL.toString():
+          // TODO
+          break;
+        case EnumNotificationType.SMS.toString():
+          // TODO
+          break;
+      }
+      if (props.targetId) {
         const requestData = {
           name: targetName,
           endpoint: endpoint,
           data: data,
         };
         await updateTarget(props.targetId, requestData);
-        clearForm();
-        props.handleClose();
-        dispatch(fetchTargets());
-      }
-    } else {
-      if (
-        (targetName && notificationType && endpoint) || // NON SLACK
-        (notificationType == EnumNotificationType.SLACK.toString() &&
-          targetName &&
-          "api_key" in data) // SLACK
-      ) {
-        // validation check
-        switch (notificationType) {
-          case EnumNotificationType.WEBHOOK.toString():
-            try {
-              new URL(endpoint);
-            } catch (TypeError) {
-              console.log("Invalid URL");
-              return;
-            }
-            break;
-          case EnumNotificationType.EMAIL.toString():
-            // TODO
-            break;
-          case EnumNotificationType.SMS.toString():
-            // TODO
-            break;
-        }
+      } else {
         const requestData = {
           name: targetName,
           notification_type: notificationType,
@@ -121,10 +94,10 @@ export default function TargetCreateModal(props: IProps) {
           data: data,
         };
         dispatch(createTarget(requestData));
-        clearForm();
-        props.handleClose();
-        dispatch(fetchTargets());
       }
+      clearForm();
+      props.handleClose();
+      dispatch(fetchTargets());
     }
   };
 
