@@ -19,6 +19,23 @@ export default function MessageListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
   const [createModalopen, setCreateModalOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
+  const [notificationType, setNotificationType] = useState("");
+
+  useEffect(() => {
+    const getNotificationType = (type: number) => {
+      switch (type) {
+        case 1:
+          return "SLACK";
+        case 2:
+          return "WEBHOOK";
+        case 3:
+          return "EMAIL";
+        default:
+          return "SMS";
+      }
+    }
+    setNotificationType(getNotificationType(selectedTab));
+  }, [selectedTab]);
 
   const handleOpenMenu = (event: any) => {
     setOpen(event.currentTarget);
@@ -54,65 +71,18 @@ export default function MessageListTable() {
   }
 
   function renderTable() {
-    switch (selectedTab) {
-      // Slack
-      case 0:
-        return (
-          <Box sx={{ "margin-bottom": "20px" }}>
-            <DynamicTable
-              columns={getMessageColumns("SLACK")}
-              keys={getMessageKeys("SLACK")}
-              rows={
-                EnumNotificationType.SLACK in messages ? messages.SLACK : []
-              }
-              handleOpenMenu={handleOpenMenu}
-            />
-          </Box>
-        );
-      // Email
-      case 1:
-        return (
-          <Box sx={{ "margin-bottom": "20px" }}>
-            <DynamicTable
-              columns={getMessageColumns("EMAIL")}
-              keys={getMessageKeys("EMAIL")}
-              rows={
-                EnumNotificationType.EMAIL in messages ? messages.EMAIL : []
-              }
-              handleOpenMenu={handleOpenMenu}
-            />
-          </Box>
-        );
-      // Webhook
-      case 2:
-        return (
-          <Box sx={{ "margin-bottom": "20px" }}>
-            <DynamicTable
-              columns={getMessageColumns("WEBHOOK")}
-              keys={getMessageKeys("WEBHOOK")}
-              rows={
-                EnumNotificationType.WEBHOOK in messages ? messages.WEBHOOK : []
-              }
-              handleOpenMenu={handleOpenMenu}
-            />
-          </Box>
-        );
-      // SMS
-      case 3:
-        return (
-          <Box sx={{ "margin-bottom": "20px" }}>
-            <DynamicTable
-              columns={getMessageColumns("SMS")}
-              keys={getMessageKeys("SMS")}
-              rows={EnumNotificationType.SMS in messages ? messages.SMS : []}
-              handleOpenMenu={handleOpenMenu}
-            />
-          </Box>
-        );
-      default:
-        setSelectedTab(0);
-        return <></>;
-    }
+    return (
+      <Box sx={{ "margin-bottom": "20px" }}>
+        <DynamicTable
+          columns={getMessageColumns(notificationType)}
+          keys={getMessageKeys(notificationType)}
+          rows={
+            notificationType in messages ? messages[notificationType] : []
+          }
+          handleOpenMenu={handleOpenMenu}
+        />
+      </Box>
+    );
   }
 
   return (
