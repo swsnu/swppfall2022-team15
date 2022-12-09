@@ -20,11 +20,6 @@ import { getTarget, updateTarget } from "../../services/target";
 interface IProps {
   open: any;
   handleClose: any;
-  update?: boolean;
-  data?: any;
-  endpoint?: string;
-  notificationType?: string;
-  targetName?: string;
   targetId?: number | null;
 }
 
