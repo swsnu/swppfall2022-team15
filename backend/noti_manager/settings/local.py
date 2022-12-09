@@ -26,4 +26,8 @@ DATABASES = {
     }
 }
 
+
+REDIS_HOST = 'localhost'
+
+# SMS
 SMS_SENDER ='01000000000'
