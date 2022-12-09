@@ -11,13 +11,34 @@ import {
 import Iconify from "../Iconify/Iconify";
 import Scrollbar from "../Scrollbar/Scrollbar";
 
+
 export default function DynamicTable(props: {
   columns: string[];
   keys: any;
   rows: any;
   handleOpenMenu: any;
-  onClickRow?: (e:any) => void;
+  onClickRow?: (id: number) => void;
+  parser?: (field: string, item: any) => any;
 }) {
+  const {parser} = props;
+
+  const defaultInDepthFieldParser = (key: string, row: any) => {
+    const fields = key.split('.')
+
+    let value = row;
+    fields.forEach((field) => {
+      value = value[field];
+    });
+    return value;
+  }
+
+  const inDepthFieldParser = (key: string, row: any) => {
+    if (!parser) {
+     return defaultInDepthFieldParser(key, row);
+   }
+   return parser(key, row);
+  }
+
   const handleClickRow = (id: number) => {
     if (props.onClickRow) {
       props.onClickRow(id);
@@ -41,12 +62,7 @@ export default function DynamicTable(props: {
                 return (
                   <TableRow hover key={row.id} tabIndex={-1} onClick={()=>handleClickRow(row.id)}>
                     {props.keys.map((key: string) => {
-                      const fields = key.split('.')
-                      let value = row;
-
-                      fields.forEach((field) => {
-                        value = value[field];
-                      });
+                      let value = inDepthFieldParser(key, row)
                       return (
                         <TableCell align="left">{value}</TableCell>
                       );
@@ -72,4 +88,5 @@ export default function DynamicTable(props: {
       </Scrollbar>
     </Card>
   );
+
 }

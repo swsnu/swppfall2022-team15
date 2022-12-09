@@ -18,6 +18,7 @@ export default function TargetListTable() {
   const [selectedTab, setSelectedTab] = useState(0);
 
   const [notificationType, setNotificationType] = useState("");
+  const [showState , setShowState] = useState<number[]>([]);
 
   useEffect(() => {
     const getNotificationType = (type: number) => {
@@ -35,6 +36,13 @@ export default function TargetListTable() {
     setNotificationType(getNotificationType(selectedTab));
   }, [selectedTab]);
 
+  const handleRowClick = (rowId: number) => {
+    if (showState.includes(rowId)) {
+      setShowState(showState.filter((id) => id !== rowId));
+      return;
+    }
+    setShowState([...showState, rowId]);
+  }
 
   const handleOpenMenu = (event: any) => {
     setOpen(event.currentTarget);
@@ -69,6 +77,33 @@ export default function TargetListTable() {
     };
   }
 
+  const handleAuthColumn = (fieldName: string, target: any): string => {
+    // AUTH COLUMN
+    if (fieldName === "data.auth") {
+      let data = target.data;
+      if ('auth' in target) return ""
+      if (!showState.includes(target.id)) return "**********";
+
+      let auth = target.data['auth']
+      switch (auth) {
+        case "no_auth":
+          return "No Authentication";
+        case "basic":
+          if ('username' in data && 'password' in data) {
+
+          }
+          return `Basic Authentication , Username: ${data.username} , Password: ${data.password}`;
+        case "bearer":
+          return `Bearer Authentication  , Token: ${data.token}`
+        case "api_key":
+          return `API Key Authentication , Key: ${data.key}  ,  Value: ${data.value}`
+        default:
+          return "No Authentication";
+      }
+    }
+    return target[fieldName];
+  }
+
   function renderTable() {
       return (
         <Box sx={{ "margin-bottom": "20px" }}>
@@ -77,9 +112,11 @@ export default function TargetListTable() {
             columns={getTargetColumns(notificationType)}
             keys={getTargetKeys(notificationType)}
             rows={targets.filter(
-              (target) => target.notification_type == "SLACK"
+              (target) => target.notification_type == notificationType
             )}
             handleOpenMenu={handleOpenMenu}
+            onClickRow={handleRowClick}
+            parser={handleAuthColumn}
           />
         </Box>
       );
