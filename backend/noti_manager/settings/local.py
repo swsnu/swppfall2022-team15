@@ -25,3 +25,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+REDIS_HOST = 'localhost'
+
+# SMS
+SMS_SENDER ='01000000000'
