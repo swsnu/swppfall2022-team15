@@ -13,6 +13,7 @@ import { Container } from "@mui/system";
 import DynamicTable from "../../components/Message/DynamicTable";
 import { EnumNotificationType } from "../../Enums";
 import "./MessageList.css";
+import {getMessageColumns, getMessageKeys} from "../../components/Message/utils/dyanamicTableUtils";
 
 export default function MessageListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
@@ -59,8 +60,8 @@ export default function MessageListTable() {
         return (
           <Box sx={{ "margin-bottom": "20px" }}>
             <DynamicTable
-              columns={["Id", "Name", "Channel", "Message"]}
-              keys={["id", "name", "data.channel", "data.message"]}
+              columns={getMessageColumns("SLACK")}
+              keys={getMessageKeys("SLACK")}
               rows={
                 EnumNotificationType.SLACK in messages ? messages.SLACK : []
               }
@@ -73,8 +74,8 @@ export default function MessageListTable() {
         return (
           <Box sx={{ "margin-bottom": "20px" }}>
             <DynamicTable
-              columns={["Id", "Name", "Title", "Message"]}
-              keys={["id", "name", "data.title", "data.message"]}
+              columns={getMessageColumns("EMAIL")}
+              keys={getMessageKeys("EMAIL")}
               rows={
                 EnumNotificationType.EMAIL in messages ? messages.EMAIL : []
               }
@@ -87,8 +88,8 @@ export default function MessageListTable() {
         return (
           <Box sx={{ "margin-bottom": "20px" }}>
             <DynamicTable
-              columns={["Id", "Name", "JSON Message"]}
-              keys={["id", "name", "data.message"]}
+              columns={getMessageColumns("WEBHOOK")}
+              keys={getMessageKeys("WEBHOOK")}
               rows={
                 EnumNotificationType.WEBHOOK in messages ? messages.WEBHOOK : []
               }
@@ -101,8 +102,8 @@ export default function MessageListTable() {
         return (
           <Box sx={{ "margin-bottom": "20px" }}>
             <DynamicTable
-              columns={["Id", "Name", "Message"]}
-              keys={["id", "name", "data.message"]}
+              columns={getMessageColumns("SMS")}
+              keys={getMessageKeys("SMS")}
               rows={EnumNotificationType.SMS in messages ? messages.SMS : []}
               handleOpenMenu={handleOpenMenu}
             />

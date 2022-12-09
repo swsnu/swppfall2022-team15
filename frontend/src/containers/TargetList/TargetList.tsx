@@ -10,11 +10,31 @@ import { fetchTargets, targetListSelector } from "../../store/slices/target";
 import { Container } from "@mui/system";
 import "./TargetList.css";
 import DynamicTable from "../../components/Message/DynamicTable";
+import {getTargetColumns, getTargetKeys} from "../../components/Message/utils/dyanamicTableUtils";
 
 export default function TargetListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
   const [createModalopen, setCreateModalOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
+
+  const [notificationType, setNotificationType] = useState("");
+
+  useEffect(() => {
+    const getNotificationType = (type: number) => {
+      switch (type) {
+        case 1:
+          return "SLACK";
+        case 2:
+          return "WEBHOOK";
+        case 3:
+          return "EMAIL";
+        default:
+          return "SMS";
+      }
+    }
+    setNotificationType(getNotificationType(selectedTab));
+  }, [selectedTab]);
+
 
   const handleOpenMenu = (event: any) => {
     setOpen(event.currentTarget);
@@ -49,16 +69,13 @@ export default function TargetListTable() {
     };
   }
 
-  console.log(targets);
-
   function renderTable() {
-    if (selectedTab === 0) {
       return (
         <Box sx={{ "margin-bottom": "20px" }}>
           <DynamicTable
             data-testid="menu-button"
-            columns={["Id", "Name", "API-KEY"]}
-            keys={["id", "name", "data.api_key"]}
+            columns={getTargetColumns(notificationType)}
+            keys={getTargetKeys(notificationType)}
             rows={targets.filter(
               (target) => target.notification_type == "SLACK"
             )}
@@ -66,47 +83,6 @@ export default function TargetListTable() {
           />
         </Box>
       );
-    } else if (selectedTab === 1) {
-      return (
-        <Box sx={{ "margin-bottom": "20px" }}>
-          <DynamicTable
-            data-testid="menu-button"
-            columns={["Id", "Name", "Email Address"]}
-            keys={["id", "name", "endpoint"]}
-            rows={targets.filter(
-              (target) => target.notification_type == "EMAIL"
-            )}
-            handleOpenMenu={handleOpenMenu}
-          />
-        </Box>
-      );
-    } else if (selectedTab === 2) {
-      return (
-        <Box sx={{ "margin-bottom": "20px" }}>
-          <DynamicTable
-            data-testid="menu-button"
-            columns={["Id", "Name", "Endpoint", "auth"]}
-            keys={["id", "name", "endpoint", "data.auth"]}
-            rows={targets.filter(
-              (target) => target.notification_type == "WEBHOOK"
-            )}
-            handleOpenMenu={handleOpenMenu}
-          />
-        </Box>
-      );
-    } else {
-      return (
-        <Box sx={{ "margin-bottom": "20px" }}>
-          <DynamicTable
-            data-testid="menu-button"
-            columns={["Id", "Name", "Phone Number"]}
-            keys={["id", "name", "endpoint"]}
-            rows={targets.filter((target) => target.notification_type == "SMS")}
-            handleOpenMenu={handleOpenMenu}
-          />
-        </Box>
-      );
-    }
   }
 
   return (

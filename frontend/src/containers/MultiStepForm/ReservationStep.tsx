@@ -11,6 +11,7 @@ import {RRule} from "rrule";
 import DynamicTable from "../../components/Message/DynamicTable";
 import {projectSelect} from "../../store/slices/project";
 import {createNotificationConfig} from "../../services/notifications";
+import {getTargetColumns, getTargetKeys} from "../../components/Message/utils/dyanamicTableUtils";
 
 interface IProps {
   notificationType: string;
@@ -27,38 +28,10 @@ export default function ReservationStep(props: IProps) {
   const messageForm = MessageForm({notificationType, name: message.name, setName:(x: string)=>{}, data: message.data, setData:(_: string )=>{}, fieldErrors: {}, setFieldErrors: (_: any) => {}}, true);
   const targetState = useSelector(targetSelect);
 
-  const getTargetColumns = (notificationType: string ) => {
-    switch(notificationType) {
-        case "SLACK":
-          return ['Id', 'Name', 'API-KEY']
-        case "EMAIL":
-          return ['Id', 'Name', 'ADDRESS']
-        case "SMS":
-          return ['Id', 'Name', 'PHONE NUMBER', 'COUNTRY CODE']
-        case "WEBHOOK":
-          return ['Id', 'Name', 'URL', 'AUTH']
-    }
-    return [""]
-  }
-
-  const getTargetRows = (notificationType: string ) => {
-    switch(notificationType) {
-      case "SLACK":
-        return ['id', 'name', 'data.api_key']
-      case "EMAIL":
-        return ['id', 'name', 'endpoint']
-      case "SMS":
-        return ['id', 'name', 'endpoint', 'data.country_code']
-      case "WEBHOOK":
-        return ['id', 'name', 'endpoint', 'data.auth']
-    }
-    return [""]
-  }
-
     // runtime 에 데이터가 바뀜. mutable.
     const targetUsers = targetState.targets.filter((target) => targetUserIds.map((targetUser) => targetUser.value).includes(target.id));
     const columns = getTargetColumns(notificationType);
-    const keys = getTargetRows(notificationType);
+    const keys = getTargetKeys(notificationType);
 
     const targetTable = DynamicTable(
         {columns, keys, rows: targetUsers, handleOpenMenu: null}
