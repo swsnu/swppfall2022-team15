@@ -26,10 +26,18 @@ class EnumNotificationType(models.TextChoices):
     SMS = 'SMS'
 
 
+class EnumNotificationMode(models.TextChoices):
+    IMMEDIATE = 'IMMEDIATE'
+    RESERVATION = 'RESERVATION'
+
+
 class NotificationConfig(TimeStampedModel):
     project = models.ForeignKey('project.Project', on_delete=models.CASCADE)
     nmessage = models.ForeignKey('nmessages.NMessage', on_delete=models.CASCADE)
     type = models.CharField(max_length=20, choices=EnumNotificationType.choices)
+    mode = models.CharField(
+        max_length=20, choices=EnumNotificationMode.choices, default=EnumNotificationMode.RESERVATION
+    )
     rrule = models.TextField(null=True)
 
 

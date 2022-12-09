@@ -1,7 +1,9 @@
+from datetime import datetime
+
 from django.conf import settings
 from rest_framework import serializers
 
-from notifications.models import NotificationConfig, Reservation
+from notifications.models import NotificationConfig, Reservation, EnumNotificationMode
 from notifications.services import task_bulk_create_notification
 
 from dateutil.rrule import rrulestr
@@ -20,7 +22,7 @@ class NotificationConfigCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NotificationConfig
-        fields = ('id', 'message', 'project', 'type', 'rrule', 'target_users',)
+        fields = ('id', 'message', 'project', 'type', 'rrule', 'target_users', 'mode',)
         extra_kwargs = {
             'target_users': {'write_only': True, },
         }
@@ -30,13 +32,17 @@ class NotificationConfigCreateSerializer(serializers.ModelSerializer):
 
         notification_config = super().create(validated_data)
 
-        rrule = validated_data.get('rrule')
-        rrule = rrulestr(rrule)[:settings.MAX_RESERVATION_COUNT]
+        reservation_time = []
+        if notification_config.mode == EnumNotificationMode.RESERVATION:
+            rrule = validated_data.get('rrule')
+            reservation_time += rrulestr(rrule)[:settings.MAX_RESERVATION_COUNT]
+        elif notification_config.mode == EnumNotificationMode.IMMEDIATE:
+            reservation_time += [datetime.now()]
 
-        for time in rrule:
-            task_bulk_create_notification.delay(time, target_users, notification_config.id)
+        for time in reservation_time:
+            task_bulk_create_notification.delay(time, target_users, notification_config.id, notification_config.mode)
 
-        return super().create(validated_data)
+        return notification_config
 
 
 class ReservationSerializer(serializers.ModelSerializer):
