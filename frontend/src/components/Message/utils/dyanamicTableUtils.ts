@@ -33,7 +33,7 @@ export const getMessageColumns = (notificationType: string ) => {
         case "EMAIL":
           return ["Id", "Name", "Title", "Message"]
         case "WEBHOOK":
-          return ["Id", "Name", "JSON Message"]
+          return ["Id", "Name", "Request Body  ( JSON )"]
         case "SMS":
           return ["Id", "Name", "Message"]
     }

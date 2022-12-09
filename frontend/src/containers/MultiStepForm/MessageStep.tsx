@@ -16,6 +16,7 @@ import MessageCreateForm from "../../components/Message/MessageForm";
 import { MessageType } from "../../types";
 import DynamicTable from "../../components/Message/DynamicTable";
 import { messageCreateService } from "../../components/Message/utils/MessageRequestService";
+import {getMessageColumns, getMessageKeys} from "../../components/Message/utils/dyanamicTableUtils";
 
 interface IProps {
   notificationType: string;
@@ -79,13 +80,7 @@ export default function MessageStep(props: IProps) {
   };
 
   const form = MessageCreateForm(props, mode !== "create");
-  const getContentFieldName = (notificationType: string): string[] => {
-    if(notificationType === "EMAIL") return ["title"];
-    else if (notificationType === "SMS") return ["content"];
-    else return ["id", "name", "data.channel", "data.message"];
-  };
 
-  const contentFieldList = getContentFieldName(notificationType);
 
   return (
     <FormWrapper>
@@ -130,8 +125,8 @@ export default function MessageStep(props: IProps) {
           <Grid lg></Grid>
           <Grid lg={10}>
             <DynamicTable
-              columns={["id", "name", "channel", "message"]} // todo: refactor
-              keys={contentFieldList}
+              columns={getMessageColumns(notificationType)} // todo: refactor
+              keys={getMessageKeys(notificationType)}
               rows={messages[notificationType]}
               handleOpenMenu={null}
               onClickRow={(id: number) => {
