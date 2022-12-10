@@ -24,7 +24,7 @@ import { deleteProject } from "../../services/project";
 import { AppDispatch } from "../../store";
 import { fetchProjects, projectListSelector } from "../../store/slices/project";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
-import "./ProjectList.css"
+import "./ProjectList.css";
 
 export default function ProjectListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
@@ -75,14 +75,22 @@ export default function ProjectListTable() {
         </Grid>
         <Card>
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 800, height: 700 }}>
+            <TableContainer sx={{ minWidth: 800, maxHeight: '85vh' }}>
               <Table stickyHeader>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Id</TableCell>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Type</TableCell>
-                    <TableCell>Most Recently Sent Notification</TableCell>
+                    <TableCell>
+                      <Container>Id</Container>
+                    </TableCell>
+                    <TableCell>
+                      <Container>Name</Container>
+                    </TableCell>
+                    <TableCell>
+                      <Container>Type</Container>
+                    </TableCell>
+                    <TableCell>
+                      <Container>Most Recently Sent Notification</Container>
+                    </TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -91,27 +99,24 @@ export default function ProjectListTable() {
                     const { id, name, project_type } = row;
                     return (
                       <TableRow hover key={id} tabIndex={-1}>
-                        <TableCell
-                          align="left"
-                          onClick={() => handleClickRow(id)}
-                        >
-                          {id}
+                        <TableCell>
+                          <Container>{id}</Container>
                         </TableCell>
-                        <TableCell
-                          align="left"
-                          onClick={() => handleClickRow(id)}
-                        >
-                          {name}
+                        <TableCell onClick={() => handleClickRow(id)}>
+                          <Container>{name}</Container>
                         </TableCell>
-                        <TableCell align="left">
-                          <Label
-                            color={
-                              (project_type === "ORGANIZATION" && "primary") ||
-                              "secondary"
-                            }
-                          >
-                            {project_type}
-                          </Label>
+                        <TableCell>
+                          <Container>
+                            <Label
+                              color={
+                                (project_type === "ORGANIZATION" &&
+                                  "primary") ||
+                                "secondary"
+                              }
+                            >
+                              {project_type}
+                            </Label>
+                          </Container>
                         </TableCell>
 
                         <TableCell align="right">

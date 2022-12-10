@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { TableHead, TableCell, TableRow } from "@mui/material";
+import { TableHead, TableCell, TableRow, Container } from "@mui/material";
 
 import { projectListSelector } from "../../store/slices/project";
 
@@ -194,7 +194,7 @@ export default function HistoryTableHead() {
           selectedObjects={selectedTargets}
           selectedRange={null}
         />
-        <TableCell>Created</TableCell>
+        <TableCell><Container>Created</Container></TableCell>
         <HistoryTableHeadCell
           title={"Status"}
           handleOpen={handleStatusOpen}
