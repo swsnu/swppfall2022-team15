@@ -39,7 +39,7 @@ function initializeMonthlyData() {
   const monthlyData: DataHash = {};
   for (let i = 12; i >= 0; i--) {
     //TODO: fix this to YYYY-MM-01
-    const date = moment().subtract(i, "months").format("YYYY-MM-DD");
+    const date = moment().subtract(i, "months").format("YYYY-MM-01");
     monthlyData[date] = 0;
   }
 
