@@ -56,6 +56,7 @@ export const getDailyData = createAsyncThunk(
         interval: "day",
       },
     });
+    console.log(response.data);
     return response.data;
   }
 );
@@ -72,6 +73,7 @@ export const getWeeklyData = createAsyncThunk(
         interval: "week",
       },
     });
+    console.log(response.data);
     return response.data;
   }
 );
@@ -88,6 +90,7 @@ export const getMonthlyData = createAsyncThunk(
         interval: "month",
       },
     });
+    console.log(response.data);
     return response.data;
   }
 );

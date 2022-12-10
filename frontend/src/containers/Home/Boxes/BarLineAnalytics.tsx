@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { green, red, blue, grey } from "@mui/material/colors";
 
 import { AppDispatch } from "../../../store";
-import { analyticsSelector, getDailyData } from "../../../store/slices/analytics";
+import { analyticsSelector, getDailyData, getWeeklyData, getMonthlyData } from "../../../store/slices/analytics";
 import moment from "moment";
 
 interface IProps {
@@ -101,6 +101,24 @@ export default function BarLineAnalytics(props: IProps) {
     ];
 
     setData(data);
+    
+    console.log(analyticsData.barlineType);
+  };
+
+  const handleTypeChange = async (value: number) => {
+    setType(value);
+    if(value === 10) {
+      await dispatch(getDailyData());
+      await getData();
+    }
+    else if(value === 20) {
+      await dispatch(getWeeklyData());
+      await getData();
+    }
+    else {
+      await dispatch(getMonthlyData());
+      await getData();
+    }
   };
 
   return (
@@ -116,9 +134,7 @@ export default function BarLineAnalytics(props: IProps) {
             inputProps={{ "data-testid": "button" }}
             value={type}
             label="Type"
-            onChange={(e) => {
-              setType(e.target.value as number);
-            }}
+            onChange={(e) => handleTypeChange(e.target.value as number)}
           >
             <MenuItem value={10}>Daily</MenuItem>
             <MenuItem value={20}>Weekly</MenuItem>
