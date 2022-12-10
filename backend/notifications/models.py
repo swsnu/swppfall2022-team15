@@ -56,6 +56,14 @@ class Notification(TimeStampedModel):
     request = models.JSONField(null=True)
     response = models.JSONField(null=True)
 
+    def update_result(self, status, response_status, response_data):
+        self.status = status
+        self.response = {
+            'response': response_data,
+            'status_code': response_status,
+        }
+        self.save(update_fields=['status', 'response'])
+
 
 class Reservation(TimeStampedModel):
     notification_config = \

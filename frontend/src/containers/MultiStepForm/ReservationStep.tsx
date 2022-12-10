@@ -80,7 +80,7 @@ export default function ReservationStep(props: IProps) {
   const handleRecurrenceChange = async (recurrenceType: RecurrenceType) => {
     setRecurrence(recurrenceType)
   }
-  const [mode, setMode] = useState("")
+  const [mode, setMode] = useState("IMMEDIATE")
   const handleConfirm = async () => {
     if ( (!rrule && mode === 'RESERVATION') || !projectId) {
         return;

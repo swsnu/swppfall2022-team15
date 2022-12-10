@@ -1,20 +1,23 @@
 import base64
 import hashlib
 import hmac
-import json
 import time
-from datetime import datetime
+from logging import getLogger
 
 import requests
 from django.conf import settings
 
-from core.exceptions import NotificationServiceException
 from noti_manager.celery import app
+from notifications.models import Notification, EnumNotificationStatus
+
+logger = getLogger(__name__)
 
 
 @app.task
-def task_send_sms_notification(data, endpoint):
+def task_send_sms_notification(notification_data):
     """Send a notification to the notification service."""
+    endpoint = notification_data['endpoint']
+    data = notification_data['data']
 
     headers = create_ncloud_headers()
     request_data = {
@@ -31,15 +34,22 @@ def task_send_sms_notification(data, endpoint):
         ]
     }
 
+    response = requests.post(
+        url=settings.NCLOUD_SMS_ENDPOINT,
+        json=request_data,
+        headers=headers,
+    )
     try:
-        response = requests.post(
-            url=settings.NCLOUD_SMS_ENDPOINT,
-            json=request_data,
-            headers=headers,
-        )
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
-        raise NotificationServiceException from e
+        logger.info(response.text)
+        notification = Notification.objects.get(id=notification_data['id'])
+        notification.update_result(EnumNotificationStatus.FAILURE, response.status_code, response.text)
+
+        return
+
+    notification = Notification.objects.get(id=notification_data['id'])
+    notification.update_result(EnumNotificationStatus.SUCCESS, response.status_code, response.text)
 
 
 def create_ncloud_headers():
