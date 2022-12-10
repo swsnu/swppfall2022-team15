@@ -1,12 +1,13 @@
 import { EnumNotificationType } from "../../../Enums";
-import { createMessage } from "../../../services/message";
+import { createMessage, updateMessage } from "../../../services/message";
 import { SlackData, EmailData, WebhookData, SmsData } from "../../../types";
 
 export const messageCreateService = async (
   notificationType: string,
   name: string,
   data: any,
-  oldFieldErrors: any
+  oldFieldErrors: any,
+  messageId?: number | null
 ) => {
   switch (notificationType) {
     case EnumNotificationType.SLACK:
@@ -17,7 +18,11 @@ export const messageCreateService = async (
         Boolean(data.channel) &&
         Boolean(data.message)
       ) {
-        await createMessage(notificationType, name, data);
+        if (messageId) {
+          await updateMessage(messageId, notificationType, name, data);
+        } else {
+          await createMessage(notificationType, name, data);
+        }
       } else {
         let newFieldErrors = oldFieldErrors;
         if (!Boolean(data.channel)) {

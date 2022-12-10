@@ -57,7 +57,8 @@ export default function MessageCreateModal(props: IProps) {
         notificationType,
         name,
         content,
-        fieldErrors
+        fieldErrors,
+        props.messageId
       );
       if (errorField) {
         setFieldErrors(errorField);

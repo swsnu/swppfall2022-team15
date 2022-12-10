@@ -40,3 +40,16 @@ export async function getMessage(messageId: number) {
   const response = await axios.get<MessageType>(`/api/message/${messageId}/`);
   return response.data;
 }
+
+export async function updateMessage(
+  messageId: number,
+  notificationType: string,
+  name: string,
+  data: any
+) {
+  await axios.patch<MessageType>(`/api/message/${messageId}/`, {
+    notification_type: notificationType,
+    name,
+    data,
+  });
+}
