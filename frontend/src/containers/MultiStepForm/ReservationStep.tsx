@@ -25,17 +25,42 @@ export default function ReservationStep(props: IProps) {
 
   const projectState = useSelector(projectSelect);
   const projectId = projectState.selectedProject?.id
-  const messageForm = MessageForm({notificationType, name: message.name, setName:(x: string)=>{}, data: message.data, setData:(_: string )=>{}, fieldErrors: {}, setFieldErrors: (_: any) => {}}, true);
+  let messageForm
+  if (message) {
+    messageForm = MessageForm({notificationType, name: message.name, setName:(x: string)=>{}, data: message.data, setData:(_: string )=>{}, fieldErrors: {}, setFieldErrors: (_: any) => {}}, true);
+  } else {
+    messageForm = <TextField
+      id="outlined-multiline-static"
+      fullWidth
+      multiline
+      value={"Message Not Selected"}
+      rows={1}
+      disabled
+    />
+  }
+
   const targetState = useSelector(targetSelect);
 
     // runtime 에 데이터가 바뀜. mutable.
-    const targetUsers = targetState.targets.filter((target) => targetUserIds.map((targetUser) => targetUser.value).includes(target.id));
-    const columns = getTargetColumns(notificationType);
-    const keys = getTargetKeys(notificationType);
+  const targetUsers = targetState.targets.filter((target) => targetUserIds.map((targetUser) => targetUser.value).includes(target.id));
+  const columns = getTargetColumns(notificationType);
+  const keys = getTargetKeys(notificationType);
 
-    const targetTable = DynamicTable(
-        {columns, keys, rows: targetUsers, handleOpenMenu: null}
-    )
+  let targets;
+  if (targetUsers.length > 0) {
+      targets = DynamicTable(
+          {columns, keys, rows: targetUsers, handleOpenMenu: null}
+      )
+  } else {
+      targets = <TextField
+          id="outlined-multiline-static"
+          fullWidth
+          multiline
+          value={"Target Not Selected"}
+          rows={1}
+          disabled
+      />
+  }
 
   const today = new Date()
   const defaultRecurrence = {
@@ -72,33 +97,20 @@ export default function ReservationStep(props: IProps) {
     await createNotificationConfig(config)
   }
 
- /*
- data hinders encapsulation
- everywhere, data can be mutated.
- so logic placement is not bound to the "concerns".
- anywhere you go. since data is reactive
- * */
-
-  // useEffect(() => {
-  //   // setRrule(newRrule)
-  //   },[recurrence])
-
-
   const reservation = (
     <>
       <TextField
-            id="outlined-multiline-static"
-            fullWidth
-            multiline
-            inputProps={{ "data-testid": "sms-name-input" }}
-            value={rrule?.toString()}
-            // rows={1}
-            disabled={true}
-            required
-          />
-        <br/>
-        <br/>
-        <br/>
+        id="outlined-multiline-static"
+        fullWidth
+        multiline
+        inputProps={{ "data-testid": "sms-name-input" }}
+        value={rrule? rrule.toString() : "Reservation Not Selected"}
+        disabled={true}
+        required
+      />
+    <br/>
+    <br/>
+    <br/>
     </>
  )
 
@@ -111,7 +123,7 @@ export default function ReservationStep(props: IProps) {
           handleRecurrenceChange={handleRecurrenceChange}
           setRrule={setRrule}/>
         {/* info */}
-        <h1>Notification Type</h1>
+        <h2>Notification Type</h2>
         <TextField
           id="outlined-multiline-static"
           fullWidth
@@ -124,18 +136,18 @@ export default function ReservationStep(props: IProps) {
         <br />
         <br />
         <br />
-        <h1>Message</h1>
+        <h2>Message</h2>
         {messageForm}
         <br />
         <br />
         <br />
-        <h1>TargetUser</h1>
-        {targetTable}
+        <h2>TargetUser</h2>
+        {targets}
         <br />
         <br />
         <br />
 
-        <h1>Reservation</h1>
+        <h2>Reservation</h2>
         {reservation}
         <Grid>
         <SplitButton
