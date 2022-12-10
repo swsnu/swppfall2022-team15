@@ -1,5 +1,5 @@
 import "./Home.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Button } from "@mui/material";
 import { Grid } from "@material-ui/core";
@@ -53,7 +53,7 @@ export default function Home() {
     return moment().format("YYYY-MM-DD 23:59:59");
   };
 
-  const getNotifications = async () => {
+  const getNotifications = useCallback(async () => {
     try {
       await axios
         .get("/api/notification/metrics/", {
@@ -74,11 +74,11 @@ export default function Home() {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     getNotifications();
-  }, []);
+  }, [getNotifications]);
 
   return (
     <>
