@@ -77,15 +77,9 @@ export default function ProjectListTable() {
           <Scrollbar>
             <TableContainer
               sx={{
-                mb: 2,
-                display: "flex",
-                flexDirection: "column",
                 maxHeight: "calc(100vh - 200px)",
-                overflow: "hidden",
-                overflowY: "scroll",
               }}
             >
-              {" "}
               <Table stickyHeader>
                 <TableHead>
                   <TableRow>
