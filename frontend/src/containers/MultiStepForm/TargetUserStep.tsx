@@ -108,10 +108,9 @@ export default function TargetUserStep(props: IProps) {
         Add now
       </Button>
       <TargetUserMultiSelect
-        notification_type={props.notificationType}
         selected={targetUserIdNameList}
         setSelected={setTargetUserIdNameList}
-        targetUsers={targetState.targets}
+        targetUsers={targetState.targets.filter((target) => {target.notification_type == notificationType})}
       />
     </FormWrapper>
   );
