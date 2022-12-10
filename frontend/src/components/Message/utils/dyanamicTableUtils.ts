@@ -53,3 +53,13 @@ export const getMessageKeys = (notificationType: string ) => {
     }
     return [""]
   }
+
+
+export const defaultInDepthFieldParser = (key: string, row: any) => {
+  const fields = key.split(".");
+  let value = row;
+  fields.forEach((field) => {
+      value = value[field];
+  });
+  return value;
+};

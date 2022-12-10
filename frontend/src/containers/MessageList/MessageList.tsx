@@ -110,7 +110,10 @@ export default function MessageListTable() {
             </Button>
           </Grid>
         </Grid>
-        <Box>
+        <h1>Messages</h1>
+        <br/>
+        <br/>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={selectedTab}
             onChange={(e, newValue) => {
