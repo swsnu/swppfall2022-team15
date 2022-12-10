@@ -76,7 +76,8 @@
       "!src/reportWebVitals.ts",
       "!src/Enums.ts",
       "!src/types.ts",
-      "!src/*/**/index.tsx"
+      "!src/*/**/index.tsx",
+      "!src/*/**/types.ts"
     ]
   }
 }
