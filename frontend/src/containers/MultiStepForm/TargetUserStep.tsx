@@ -1,5 +1,5 @@
 import { Button, Dialog, Grid } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import {
@@ -47,7 +47,7 @@ export default function TargetUserStep(props: IProps) {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(fetchTargets());
-  }, []);
+  }, [dispatch]);
 
   const targetState = useSelector(targetSelect);
 

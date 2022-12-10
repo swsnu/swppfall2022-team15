@@ -13,7 +13,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { green, red, blue, grey } from "@mui/material/colors";
 
 import { AppDispatch } from "../../../store";
-import { analyticsSelector, getDailyData, getWeeklyData, getMonthlyData } from "../../../store/slices/analytics";
+import {
+  analyticsSelector,
+  getDailyData,
+  getWeeklyData,
+  getMonthlyData,
+} from "../../../store/slices/analytics";
 import moment from "moment";
 
 interface IProps {
@@ -25,7 +30,7 @@ interface ChartDataType {
   name: string;
   type: string;
   fill: string;
-  data: { x: string, y: number } [];
+  data: { x: string; y: number }[];
 }
 
 export default function BarLineAnalytics(props: IProps) {
@@ -35,13 +40,23 @@ export default function BarLineAnalytics(props: IProps) {
   const [data, setData] = useState<ChartDataType[]>([]);
 
   useEffect(() => {
-    dispatch(getDailyData());
-    getData();
-  }, []);
-  useEffect(() => {
+    const handleTypeChange = async () => {
+      if (type === 10) {
+        await dispatch(getDailyData());
+        console.log("daily called");
+      } else if (type === 20) {
+        await dispatch(getWeeklyData());
+        console.log("weekly called");
+      } else {
+        await dispatch(getMonthlyData());
+        console.log("monthly called");
+      }
+    };
     handleTypeChange();
+  }, [type]);
+  useEffect(() => {
     getData();
-  }, [type])
+  }, [analyticsData])
 
   function getData() {
     let success = [];
@@ -49,34 +64,32 @@ export default function BarLineAnalytics(props: IProps) {
     let pending = [];
     let total = [];
 
-    if(analyticsData.barlineType === "daily") {
+    if (analyticsData.barlineType === "daily") {
       for (let i = 14; i >= 0; i--) {
         const date = moment().subtract(i, "days").format("YYYY-MM-DD");
-        success.push({x: date, y: analyticsData.barLineData.Success[date]});
+        success.push({ x: date, y: analyticsData.barLineData.Success[date] });
         fail.push({ x: date, y: analyticsData.barLineData.Failure[date] });
         pending.push({ x: date, y: analyticsData.barLineData.Pending[date] });
         total.push({ x: date, y: analyticsData.barLineData.Total[date] });
       }
-    }
-    else if(analyticsData.barlineType === "weekly") {
+    } else if (analyticsData.barlineType === "weekly") {
       for (let i = 15; i >= 0; i--) {
         const date = moment().subtract(i, "weeks").format("YYYY-MM-DD");
-        success.push({x: date, y: analyticsData.barLineData.Success[date]});
+        success.push({ x: date, y: analyticsData.barLineData.Success[date] });
         fail.push({ x: date, y: analyticsData.barLineData.Failure[date] });
         pending.push({ x: date, y: analyticsData.barLineData.Pending[date] });
         total.push({ x: date, y: analyticsData.barLineData.Total[date] });
       }
-    }
-    else {
+    } else {
       for (let i = 12; i >= 0; i--) {
         const date = moment().subtract(i, "months").format("YYYY-MM-DD");
-        success.push({x: date, y: analyticsData.barLineData.Success[date]});
+        success.push({ x: date, y: analyticsData.barLineData.Success[date] });
         fail.push({ x: date, y: analyticsData.barLineData.Failure[date] });
         pending.push({ x: date, y: analyticsData.barLineData.Pending[date] });
         total.push({ x: date, y: analyticsData.barLineData.Total[date] });
       }
     }
-    
+
     const data = [
       {
         name: "Success",
@@ -106,19 +119,7 @@ export default function BarLineAnalytics(props: IProps) {
 
     setData(data);
     console.log(analyticsData.barlineType);
-  };
-
-  const handleTypeChange = () => {
-    if(type === 10) {
-      dispatch(getDailyData());
-    }
-    else if(type === 20) {
-      dispatch(getWeeklyData());
-    }
-    else {
-      dispatch(getMonthlyData());
-    }
-  };
+  }
 
   return (
     <Card>
@@ -133,7 +134,10 @@ export default function BarLineAnalytics(props: IProps) {
             inputProps={{ "data-testid": "button" }}
             value={type}
             label="Type"
-            onChange={(e) => setType(e.target.value as number)}
+            onChange={(e) => {
+              setType(e.target.value as number);
+              console.log(e.target.value);
+            }}
           >
             <MenuItem value={10}>Daily</MenuItem>
             <MenuItem value={20}>Weekly</MenuItem>
