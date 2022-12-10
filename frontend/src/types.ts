@@ -22,7 +22,6 @@ export type NotificationType = {
   message: string; // FIXME(Given) : rename to data?
   reservedAt: string;
   type: string;
-  history?: NotificationHistoryType[];
 };
 
 export type NotificationConfigCreateDto = {
@@ -37,13 +36,6 @@ export type NotificationConfigCreateDto = {
 export type ReservationType = {
   id: number;
   reservation: string;
-};
-
-export type NotificationHistoryType = {
-  id: number;
-  endpoint: string;
-  date: string;
-  status: EnumNotificationStatus;
 };
 
 export interface TargetType {

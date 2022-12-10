@@ -90,7 +90,7 @@ function Row(props: { row: NotificationConfigType }) {
 
 export default function CollapsibleTable(props: IProps) {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer sx={{ minHeight: 800, maxHeight: "calc(100vh-150px)" }} component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>

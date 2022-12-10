@@ -11,14 +11,13 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
+import { Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container } from "@mui/system";
 
 import Iconify from "../../components/Iconify/Iconify";
-import Label from "../../components/Label/Label";
 import ProjectCreateModal from "../../components/Project/ProjectCreateModal";
 import { deleteProject } from "../../services/project";
 import { AppDispatch } from "../../store";
@@ -66,21 +65,29 @@ export default function ProjectListTable() {
       <ProjectCreateModal
         open={createModalopen}
         handleClose={() => setCreateModalOpen(false)}
-      ></ProjectCreateModal>
-      <Container maxWidth="xl">
-        <Grid container justifyContent="flex-end" className="projectButton">
-          <Button data-testid="create-button" onClick={handleClickCreateButton}>
-            New Project
-          </Button>
+      />
+      <Container maxWidth="xl" className="projectList">
+        <Grid container justifyContent="space-between">
+          <Grid item>
+            <h2>{"Projects"}</h2>
+          </Grid>
+          <Grid item className="projectButton">
+            <Button
+              data-testid="create-button"
+              onClick={handleClickCreateButton}
+            >
+              New Project
+            </Button>
+          </Grid>
         </Grid>
         <Card>
           <Scrollbar>
-            <TableContainer
+            <Table
               sx={{
-                maxHeight: "calc(100vh - 150px)",
+                minHeight: 800,
+                maxHeight: "calc(100vh - 200px)",
               }}
             >
-              <Table stickyHeader>
                 <TableHead>
                   <TableRow>
                     <TableCell>
@@ -90,7 +97,7 @@ export default function ProjectListTable() {
                       <Container>Name</Container>
                     </TableCell>
                     <TableCell>
-                      <Container>Type</Container>
+                      <Container>Number of Requests</Container>
                     </TableCell>
                     <TableCell>
                       <Container>Most Recently Sent Notification</Container>
@@ -100,7 +107,7 @@ export default function ProjectListTable() {
 
                 <TableBody>
                   {projects.map((row) => {
-                    const { id, name, project_type } = row;
+                    const { id, name } = row;
                     return (
                       <TableRow hover key={id} tabIndex={-1}>
                         <TableCell>
@@ -111,15 +118,7 @@ export default function ProjectListTable() {
                         </TableCell>
                         <TableCell>
                           <Container>
-                            <Label
-                              color={
-                                (project_type === "ORGANIZATION" &&
-                                  "primary") ||
-                                "secondary"
-                              }
-                            >
-                              {project_type}
-                            </Label>
+                            {"NEED FIX: Number of Requests"}
                           </Container>
                         </TableCell>
 
@@ -138,8 +137,8 @@ export default function ProjectListTable() {
                     );
                   })}
                 </TableBody>
-              </Table>
-            </TableContainer>
+\
+            </Table>
           </Scrollbar>
         </Card>
       </Container>

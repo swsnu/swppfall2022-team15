@@ -3,7 +3,7 @@ from datetime import datetime
 from django.conf import settings
 from rest_framework import serializers
 
-from notifications.models import NotificationConfig, Reservation, EnumNotificationMode
+from notifications.models import NotificationConfig, Reservation, EnumNotificationMode, Notification
 from notifications.services import task_bulk_create_notification
 
 from dateutil.rrule import rrulestr
@@ -52,3 +52,10 @@ class ReservationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reservation
         fields = ('id', 'notification_config', 'rrule', 'target_users',)
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    target = serializers.CharField(source='target_user')
+    class Meta:
+        model = Notification
+        fields = ('id', 'reservation', 'target', 'status', 'request', 'response',)
