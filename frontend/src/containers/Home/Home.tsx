@@ -63,7 +63,6 @@ export default function Home() {
                           <Typography>Grid</Typography>
                           <Switch
                             defaultChecked
-                            onChange={() => setIsGridStyle(!isGridStyle)}
                             data-testid="switch"
                           />
                           <Typography>List</Typography>
@@ -79,11 +78,9 @@ export default function Home() {
                     </Stack>
                   </div>
                   <div className="project">
-                    {isGridStyle ? (
+   
                       <GridLayout data-testid="grid" />
-                    ) : (
-                      <List data-testid="list" />
-                    )}
+                    
                   </div>
                 </div>
               </div>
