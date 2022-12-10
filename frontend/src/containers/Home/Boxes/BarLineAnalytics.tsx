@@ -49,7 +49,7 @@ export default function BarLineAnalytics(props: IProps) {
         if(props.type === 0) {
           await dispatch(getDailyData());
         }
-        else if (props.type === 20) {
+        else if (props.type === 1) {
           if(projectState) {
             await dispatch(getDailyDataByProject(projectState.id));
           }

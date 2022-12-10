@@ -134,7 +134,6 @@ export default function ProjectListTable() {
                     );
                   })}
                 </TableBody>
-\
             </Table>
           </Scrollbar>
         </Card>
