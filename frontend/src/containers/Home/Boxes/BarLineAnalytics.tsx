@@ -19,6 +19,7 @@ import {
   getWeeklyData,
   getMonthlyData,
   getDailyDataByProject,
+  getDailyDataByType,
 } from "../../../store/slices/analytics";
 import moment from "moment";
 import { projectSelect } from "../../../store/slices/project";
@@ -27,6 +28,7 @@ interface IProps {
   title: string;
   subtitle: string;
   type: number;
+  noti_type: string;
 }
 
 interface ChartDataType {
@@ -53,6 +55,9 @@ export default function BarLineAnalytics(props: IProps) {
           if(projectState) {
             await dispatch(getDailyDataByProject(projectState.id));
           }
+        }
+        else {
+          await dispatch(getDailyDataByType(props.noti_type));
         }
         
       } else if (type === 20) {
