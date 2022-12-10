@@ -43,7 +43,7 @@ def task_send_sms_notification(notification_data):
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
         logger.info(response.text)
-        notification = Notification.objects.filter(pk=notification_data['id'])
+        notification = Notification.objects.get(id=notification_data['id'])
         notification.update_result(EnumNotificationStatus.FAILURE, response.status_code, response.text)
 
         return
