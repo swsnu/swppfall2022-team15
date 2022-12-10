@@ -1,13 +1,13 @@
 export const getTargetColumns = (notificationType: string ) => {
     switch(notificationType) {
         case "SLACK":
-          return ['Id', 'Name', 'API Token']
+          return ['Name', 'API Token']
         case "EMAIL":
-          return ['Id', 'Name', 'Email Address']
+          return ['Name', 'Email Address']
         case "SMS":
-          return ['Id', 'Name', 'Phone Number']
+          return ['Name', 'Phone Number']
         case "WEBHOOK":
-          return ['Id', 'Name', 'URL', 'Authorization']
+          return ['Name', 'URL', 'Authorization']
     }
     return [""]
   }
@@ -15,13 +15,13 @@ export const getTargetColumns = (notificationType: string ) => {
 export const getTargetKeys = (notificationType: string ) => {
     switch(notificationType) {
       case "SLACK":
-        return ['id', 'name', 'data.api_key']
+        return ['name', 'data.api_key']
       case "EMAIL":
-        return ['id', 'name', 'endpoint']
+        return ['name', 'endpoint']
       case "SMS":
-        return ['id', 'name', 'endpoint']
+        return ['name', 'endpoint']
       case "WEBHOOK":
-        return ['id', 'name', 'endpoint', 'data.auth']
+        return ['name', 'endpoint', 'data.auth']
     }
     return [""]
   }
@@ -29,13 +29,13 @@ export const getTargetKeys = (notificationType: string ) => {
 export const getMessageColumns = (notificationType: string ) => {
     switch(notificationType) {
         case "SLACK":
-          return ["Id", "Name", "Channel", "Message"]
+          return ["Name", "Channel", "Message"]
         case "EMAIL":
-          return ["Id", "Name", "Title", "Message"]
+          return [ "Name", "Title", "Message"]
         case "WEBHOOK":
-          return ["Id", "Name", "Request Body  ( JSON )"]
+          return ["Name", "Request Body  ( JSON )"]
         case "SMS":
-          return ["Id", "Name", "Message"]
+          return ["Name", "Message"]
     }
     return [""]
   }
@@ -43,13 +43,13 @@ export const getMessageColumns = (notificationType: string ) => {
 export const getMessageKeys = (notificationType: string ) => {
     switch(notificationType) {
       case "SLACK":
-        return ["id", "name", "data.channel", "data.message"]
+        return ["name", "data.channel", "data.message"]
       case "EMAIL":
-        return ["id", "name", "data.title", "data.message"]
+        return ["name", "data.title", "data.message"]
       case "SMS":
-        return ["id", "name", "data.message"]
+        return ["name", "data.message"]
       case "WEBHOOK":
-        return ["id", "name", "data.message"]
+        return ["name", "data.message"]
     }
     return [""]
   }

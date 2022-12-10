@@ -81,7 +81,7 @@ export const getMonthlyData = createAsyncThunk(
   async () => {
     const response = await axios.get("/api/notification/metrics/", {
       params: {
-        start: moment().subtract(12, "months").format("YYYY-MM-DD"),
+        start: moment().subtract(12, "months").format("YYYY-MM-01"),
         end: moment().format("YYYY-MM-DD"),
         interval: "month",
       },

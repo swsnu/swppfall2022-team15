@@ -1,6 +1,6 @@
 import { Box, Button, MenuItem, Popover, Tab, Tabs } from "@mui/material";
 import { Grid } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Iconify from "../../components/Iconify/Iconify";
 import TargetCreateModal from "../../components/Targets/TargetCreateModal";
