@@ -18,12 +18,15 @@ import {
   getDailyData,
   getWeeklyData,
   getMonthlyData,
+  getDailyDataByProject,
 } from "../../../store/slices/analytics";
 import moment from "moment";
+import { projectSelect } from "../../../store/slices/project";
 
 interface IProps {
   title: string;
   subtitle: string;
+  type: number;
 }
 
 interface ChartDataType {
@@ -38,18 +41,24 @@ export default function BarLineAnalytics(props: IProps) {
   const dispatch = useDispatch<AppDispatch>();
   const analyticsData = useSelector(analyticsSelector);
   const [data, setData] = useState<ChartDataType[]>([]);
+  const projectState = useSelector(projectSelect).selectedProject;
 
   useEffect(() => {
     const handleTypeChange = async () => {
       if (type === 10) {
-        await dispatch(getDailyData());
-        console.log("daily called");
+        if(props.type === 0) {
+          await dispatch(getDailyData());
+        }
+        else if (props.type === 20) {
+          if(projectState) {
+            await dispatch(getDailyDataByProject(projectState.id));
+          }
+        }
+        
       } else if (type === 20) {
         await dispatch(getWeeklyData());
-        console.log("weekly called");
       } else {
         await dispatch(getMonthlyData());
-        console.log("monthly called");
       }
     };
     handleTypeChange();
@@ -116,7 +125,6 @@ export default function BarLineAnalytics(props: IProps) {
       ];
 
       setData(data);
-      console.log(analyticsData.barlineType);
     }
     getData();
   }, [analyticsData])
@@ -136,7 +144,6 @@ export default function BarLineAnalytics(props: IProps) {
             label="Type"
             onChange={(e) => {
               setType(e.target.value as number);
-              console.log(e.target.value);
             }}
           >
             <MenuItem value={10}>Daily</MenuItem>

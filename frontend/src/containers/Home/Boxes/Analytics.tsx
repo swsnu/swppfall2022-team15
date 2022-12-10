@@ -1,19 +1,29 @@
 import { Tabs, Tab } from "@mui/material";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Grid } from "@material-ui/core";
 
 import Iconify from "../../../components/Iconify/Iconify";
-import { projectListSelector } from "../../../store/slices/project";
+import { fetchProject, projectListSelector } from "../../../store/slices/project";
 import Charts from "./Charts";
+import { AppDispatch } from "../../../store";
 
 const types = ["Slack", "Email", "HTTP", "SMS"];
 
 export default function Analytics() {
   const [selectedTab, setSelectedTab] = useState(0);
-  const [selectedProject, setSelectedProject] = useState(0);
   const [selectedType, setSelectedType] = useState(0);
   const projects = useSelector(projectListSelector);
+  const [selectedProject, setSelectedProject] = useState(0);
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    const projectId = projects.at(selectedProject)?.id;
+    if (projectId) {
+      dispatch(fetchProject(projectId));
+    }
+    console.log(projectId);
+  }, [selectedProject]);
 
   function renderTabs() {
     if (selectedTab === 0) {
@@ -65,8 +75,8 @@ export default function Analytics() {
       <Grid container spacing={3} className="Home_analytics">
         <Charts
           selectedTab={selectedTab}
-          selectedProject={selectedProject}
           selectedType={selectedType}
+          selectedProject={selectedProject}
         />
       </Grid>
     </>
