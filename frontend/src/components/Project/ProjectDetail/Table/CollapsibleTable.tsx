@@ -13,12 +13,12 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-import {NotificationConfigType} from '../../types';
+import {NotificationConfigType} from '../../../../types';
 // TODO(Given) 
 // Notification Status Implementation Issue
 // 1) get data on api call 
 // 2) just get in advance before rendering
-export interface IProps {
+interface IProps {
   notificationConfigs: NotificationConfigType[]
 }
 
