@@ -91,10 +91,7 @@ export default function ProjectListTable() {
                 <TableHead>
                   <TableRow>
                     <TableCell>
-                      <Container>Id</Container>
-                    </TableCell>
-                    <TableCell>
-                      <Container>Name</Container>
+                      <Container>Project Name</Container>
                     </TableCell>
                     <TableCell>
                       <Container>Number of Requests</Container>
@@ -110,9 +107,6 @@ export default function ProjectListTable() {
                     const { id, name } = row;
                     return (
                       <TableRow hover key={id} tabIndex={-1}>
-                        <TableCell>
-                          <Container>{id}</Container>
-                        </TableCell>
                         <TableCell>
                           <Container><Link href="#" underline="hover" onClick={() => handleClickRow(id)}>{name}</Link></Container>
                         </TableCell>
