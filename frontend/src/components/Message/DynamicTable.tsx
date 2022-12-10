@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import Iconify from "../Iconify/Iconify";
 import Scrollbar from "../Scrollbar/Scrollbar";
+import {defaultInDepthFieldParser} from "./utils/dyanamicTableUtils";
 
 export default function DynamicTable(props: {
   columns: string[];
@@ -21,15 +22,7 @@ export default function DynamicTable(props: {
 }) {
   const { parser } = props;
 
-  const defaultInDepthFieldParser = (key: string, row: any) => {
-    const fields = key.split(".");
 
-    let value = row;
-    fields.forEach((field) => {
-      value = value[field];
-    });
-    return value;
-  };
 
   const inDepthFieldParser = (key: string, row: any) => {
     if (!parser) {
