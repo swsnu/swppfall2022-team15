@@ -6,6 +6,7 @@ from logging import getLogger
 
 import requests
 from django.conf import settings
+from django.utils import timezone
 
 from noti_manager.celery import app
 from notifications.models import Notification, EnumNotificationStatus
@@ -33,23 +34,24 @@ def task_send_sms_notification(notification_data):
             }
         ]
     }
-
+    started_at = timezone.now()
     response = requests.post(
         url=settings.NCLOUD_SMS_ENDPOINT,
         json=request_data,
         headers=headers,
     )
+    finished_at = timezone.now()
     try:
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
         logger.info(response.text)
         notification = Notification.objects.get(id=notification_data['id'])
-        notification.update_result(EnumNotificationStatus.FAILURE, response.status_code, response.text)
+        notification.update_result(EnumNotificationStatus.FAILURE, response.status_code, response.text, started_at, finished_at)
 
         return
 
     notification = Notification.objects.get(id=notification_data['id'])
-    notification.update_result(EnumNotificationStatus.SUCCESS, response.status_code, response.text)
+    notification.update_result(EnumNotificationStatus.SUCCESS, response.status_code, response.text, started_at, finished_at)
 
 
 def create_ncloud_headers():
