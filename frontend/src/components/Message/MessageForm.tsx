@@ -226,6 +226,7 @@ export default function MessageCreateForm(
             helperText={fieldErrors?.message}
             error={Boolean(fieldErrors?.message)}
             rows={9}
+            disabled={disabled}
             required
           />
         </>
