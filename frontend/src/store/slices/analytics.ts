@@ -49,8 +49,6 @@ function initializeMonthlyData() {
 export const getDailyData = createAsyncThunk(
   "analytics/getDailyData",
   async () => {
-    initializeDailyData();
-
     const response = await axios.get("/api/notification/metrics/", {
       params: {
         start: moment().subtract(14, "days").format("YYYY-MM-DD"),
@@ -66,8 +64,6 @@ export const getDailyData = createAsyncThunk(
 export const getWeeklyData = createAsyncThunk(
   "analytics/getWeeklyData",
   async () => {
-    initializeWeeklyData();
-
     const response = await axios.get("/api/notification/metrics/", {
       params: {
         start: moment().subtract(15, "weeks").format("YYYY-MM-DD"),
@@ -83,8 +79,6 @@ export const getWeeklyData = createAsyncThunk(
 export const getMonthlyData = createAsyncThunk(
   "analytics/getMonthlyData",
   async () => {
-    initializeMonthlyData();
-
     const response = await axios.get("/api/notification/metrics/", {
       params: {
         start: moment().subtract(12, "months").format("YYYY-MM-DD"),
@@ -116,6 +110,10 @@ export const AnalyticsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getDailyData.fulfilled, (state, action) => {
+      state.barLineData.Success = initializeDailyData();
+      state.barLineData.Failure = initializeDailyData();
+      state.barLineData.Pending = initializeDailyData();
+      state.barLineData.Total = initializeDailyData();
       for (let i = 0; i < action.payload.length; i++) {
         const data = action.payload[i];
         const time = action.payload[i].time.split(" ")[0];
@@ -132,6 +130,10 @@ export const AnalyticsSlice = createSlice({
       state.barlineType = "daily";
     });
     builder.addCase(getWeeklyData.fulfilled, (state, action) => {
+      state.barLineData.Success = initializeWeeklyData();
+      state.barLineData.Failure = initializeWeeklyData();
+      state.barLineData.Pending = initializeWeeklyData();
+      state.barLineData.Total = initializeWeeklyData();
       for (let i = 0; i < action.payload.length; i++) {
         const data = action.payload[i];
         const time = action.payload[i].time.split(" ")[0];
@@ -147,6 +149,10 @@ export const AnalyticsSlice = createSlice({
       state.barlineType = "weekly";
     });
     builder.addCase(getMonthlyData.fulfilled, (state, action) => {
+      state.barLineData.Success = initializeMonthlyData();
+      state.barLineData.Failure = initializeMonthlyData();
+      state.barLineData.Pending = initializeMonthlyData();
+      state.barLineData.Total = initializeMonthlyData();
       for (let i = 0; i < action.payload.length; i++) {
         const data = action.payload[i];
         const time = action.payload[i].time.split(" ")[0];

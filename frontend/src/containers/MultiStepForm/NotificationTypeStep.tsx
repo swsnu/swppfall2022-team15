@@ -6,6 +6,7 @@ interface IProps {
   notificationType: string;
   setNotificationType: (notificationType: string) => void;
   error: string | null;
+  setError: (error: string) => void;
 }
 
 export default function NotificationTypeForm(props: IProps) {
@@ -17,7 +18,7 @@ export default function NotificationTypeForm(props: IProps) {
         value={props.notificationType}
         onChange={(event) => {
           props.setNotificationType(event.target.value as string);
-          props.error = null;
+          props.setError("");
         }}
         data-testid="notification-type-select"
       >

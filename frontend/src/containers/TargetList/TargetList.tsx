@@ -28,13 +28,13 @@ export default function TargetListTable() {
     const getNotificationType = (type: number) => {
       switch (type) {
         case 0:
-          return "SLACK";
+          return "WEBHOOK";
         case 1:
           return "EMAIL";
         case 2:
-          return "WEBHOOK";
-        default:
           return "SMS";
+        default:
+          return "SLACK";
       }
     };
     setNotificationType(getNotificationType(selectedTab));
@@ -146,9 +146,6 @@ export default function TargetListTable() {
             </Button>
           </Grid>
         </Grid>
-        <h1>Targets</h1>
-        <br/>
-        <br/>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={selectedTab}
@@ -157,28 +154,30 @@ export default function TargetListTable() {
             }}
           >
             <Tab
-              icon={<Iconify icon={"la:slack"} />}
-              label="Slack"
+              icon={<Iconify icon={"material-symbols:webhook"} />}
               iconPosition="start"
-              {...a11yProps(0)}
+              label="Webhook"
+              {...a11yProps(2)}
             />
+
             <Tab
               icon={<Iconify icon={"ic:outline-email"} />}
               iconPosition="start"
               label="Email"
               {...a11yProps(1)}
             />
-            <Tab
-              icon={<Iconify icon={"material-symbols:webhook"} />}
-              iconPosition="start"
-              label="Webhook"
-              {...a11yProps(2)}
-            />
+
             <Tab
               icon={<Iconify icon={"material-symbols:sms-outline"} />}
               iconPosition="start"
               label="SMS"
               {...a11yProps(3)}
+            />
+            <Tab
+              icon={<Iconify icon={"la:slack"} />}
+              label="Slack"
+              iconPosition="start"
+              {...a11yProps(0)}
             />
           </Tabs>
         </Box>

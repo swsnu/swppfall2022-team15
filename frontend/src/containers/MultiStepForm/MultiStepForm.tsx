@@ -108,6 +108,7 @@ export default function MultiStepForm() {
               notificationType={notificationType}
               setNotificationType={setNotificationType}
               error={error}
+              setError={setError}
             />
           )}
           {activeStep === 1 ? (

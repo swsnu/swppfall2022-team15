@@ -23,7 +23,7 @@ export default function HistoryTable() {
 
   return (
     <>
-      <Container>
+      <Container maxWidth="xl">
         <Grid container justifyContent="space-between" className="HistoryTitle">
           <Grid item>
             <h2>History</h2>
@@ -31,7 +31,12 @@ export default function HistoryTable() {
         </Grid>
         <Card>
           <Scrollbar>
-            <Table>
+            <Table
+              sx={{
+                minHeight: 800,
+                maxHeight: "calc(100vh - 200px)",
+              }}
+            >
               <HistoryTableHead />
               <TableBody>
                 {notificationConfigs.map((notification, index) => (
