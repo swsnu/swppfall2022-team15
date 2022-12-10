@@ -21,6 +21,8 @@ import Scrollbar from "../../components/Scrollbar/Scrollbar";
 import MultiStepFormDialog from "../MultiStepFormDialog/MultiStepFormDialog";
 import moment from "moment";
 
+import "./Home.css"
+
 export default function Home() {
   const projects = useSelector(projectListSelector);
   const targets = useSelector(targetListSelector);
@@ -82,7 +84,7 @@ export default function Home() {
     <>
       <MultiStepFormDialog open={open} onClose={() => setOpen(false)} />
       <Scrollbar>
-        <Container maxWidth="xl" className="Home">
+        <Container maxWidth="xl" className="Home_Title">
           <Grid container justifyContent="space-between">
             <Grid item>
               <h2>{"Overview"}</h2>

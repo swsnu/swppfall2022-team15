@@ -12,7 +12,6 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 
 import {MessageType, TargetUserIdNameDto} from "../../types";
-import {RecurrenceType} from "../../components/Recurrence";
 import NotificationTypeForm from "./NotificationTypeStep";
 
 const steps = ["Notification Type", "Message", "Target", "Reservaton"];

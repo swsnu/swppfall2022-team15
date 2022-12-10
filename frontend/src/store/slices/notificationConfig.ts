@@ -23,9 +23,11 @@ export const fetchAllNotificationConfigs = createAsyncThunk(
 
 const initialState: {
     notificationConfigs: NotificationConfigType[];
+    notificationConfigs_project: NotificationConfigType[];
     selectedNotificationConfig: NotificationConfigType | null;
 } = {
     notificationConfigs: [],
+    notificationConfigs_project: [],
     selectedNotificationConfig: null,
 }
 
@@ -35,7 +37,7 @@ export const notificationConfigSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
       builder.addCase(fetchNotificationConfigs.fulfilled, (state, action) => {
-        state.notificationConfigs = action.payload;
+        state.notificationConfigs_project = action.payload;
       });
       builder.addCase(fetchAllNotificationConfigs.fulfilled, (state, action) => {
         state.notificationConfigs = action.payload;
@@ -43,5 +45,7 @@ export const notificationConfigSlice = createSlice({
     }
 });
 
+export const notificationConfigList = (state: RootState) => state.notificationConfig.notificationConfigs;
+export const notificationConfitList_project = (state: RootState) => state.notificationConfig.notificationConfigs_project;
 export const notificationConfigSelect = (state: RootState) => state.notificationConfig;
 export default notificationConfigSlice.reducer;

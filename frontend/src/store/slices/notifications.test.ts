@@ -33,7 +33,6 @@ describe("notification reducer", () => {
       message: "test",
       reservedAt: "2021-01-01",
       type: "API",
-      history: [],
     },
     {
       id: 2,
@@ -41,7 +40,6 @@ describe("notification reducer", () => {
       message: "test",
       reservedAt: "2021-01-01",
       type: "API",
-      history: [],
     },
     {
       id: 3,
@@ -49,7 +47,6 @@ describe("notification reducer", () => {
       message: "test",
       reservedAt: "2021-01-01",
       type: "API",
-      history: [],
     },
   ];
 
@@ -93,7 +90,6 @@ describe("notification reducer", () => {
         message: "test",
         reservedAt: "2021-01-01",
         type: "API",
-        history: [],
       })
     );
     expect(store.getState().notification.notifications[0]).toEqual(
