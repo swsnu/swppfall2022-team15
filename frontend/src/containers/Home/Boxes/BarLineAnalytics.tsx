@@ -8,9 +8,12 @@ import {
   MenuItem,
 } from "@mui/material";
 import ReactApexChart from "react-apexcharts";
-import { green, red, blue, grey } from "@mui/material/colors";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { green, red, blue, grey } from "@mui/material/colors";
+
+import { AppDispatch } from "../../../store";
+import { analyticsSelector, getDailyData } from "../../../store/slices/analytics";
 import moment from "moment";
 
 interface IProps {
@@ -22,272 +25,83 @@ interface ChartDataType {
   name: string;
   type: string;
   fill: string;
-  data: { x: string; y: number }[];
+  data: { x: string, y: number } [];
 }
-
-const initialDailyData: { x: string; y: number }[] = [
-  { x: "2022-11-23", y: 0 },
-  { x: "2022-11-24", y: 0 },
-  { x: "2022-11-25", y: 0 },
-  { x: "2022-11-26", y: 0 },
-  { x: "2022-11-27", y: 0 },
-  { x: "2022-11-28", y: 0 },
-  { x: "2022-11-29", y: 0 },
-  { x: "2022-11-30", y: 0 },
-  { x: "2022-12-01", y: 0 },
-  { x: "2022-12-02", y: 0 },
-  { x: "2022-12-03", y: 0 },
-  { x: "2022-12-04", y: 0 },
-  { x: "2022-12-05", y: 0 },
-  { x: "2022-12-06", y: 0 },
-  { x: "2022-12-07", y: 0 },
-];
-
-const initialWeeklyData: { x: string; y: number }[] = [
-  { x: "2022 Nov Week 1", y: 0 },
-  { x: "2022 Nov Week 2", y: 0 },
-  { x: "2022 Nov Week 3", y: 0 },
-  { x: "2022 Nov Week 4", y: 0 },
-  { x: "2022 Nov Week 5", y: 0 },
-  { x: "2022 Dec Week 1", y: 0 },
-];
-
-const initialMonthlyData: { x: string; y: number }[] = [
-  { x: "2021 Dec", y: 0 },
-  { x: "2022 Jan", y: 0 },
-  { x: "2022 Feb", y: 0 },
-  { x: "2022 Mar", y: 0 },
-  { x: "2022 Apr", y: 0 },
-  { x: "2022 May", y: 0 },
-  { x: "2022 Jun", y: 0 },
-  { x: "2022 Jul", y: 0 },
-  { x: "2022 Aug", y: 0 },
-  { x: "2022 Sep", y: 0 },
-  { x: "2022 Oct", y: 0 },
-  { x: "2022 Nov", y: 0 },
-  { x: "2022 Dec", y: 0 },
-];
 
 export default function BarLineAnalytics(props: IProps) {
   const [type, setType] = useState<number>(10);
-  const [success, setSuccess] =
-    useState<{ x: string; y: number }[]>(initialDailyData);
-  const [failure, setFailure] =
-    useState<{ x: string; y: number }[]>(initialDailyData);
-  const [upcoming, setUpcoming] =
-    useState<{ x: string; y: number }[]>(initialDailyData);
-  const [total, setTotal] =
-    useState<{ x: string; y: number }[]>(initialDailyData);
-
-  const getStartDay_Daily = () => {
-    return moment().subtract(14, "days").format("YYYY-MM-DD");
-  };
-
-  const getStartDay_Weekly = () => {
-    return moment().subtract(3, "months").format("YYYY-MM-DD");
-  };
-
-  const getStartDay_Monthly = () => {
-    return moment().subtract(1, "years").format("YYYY-MM-DD");
-  };
-
-  const getToday = () => {
-    return moment().format("YYYY-MM-DD");
-  };
-
-  const getData = async () => {
-    if (type === 10) {
-      // Daily
-      try {
-        await axios
-          .get("/api/notification/metrics/", {
-            params: {
-              start: getStartDay_Daily(),
-              end: getToday(),
-              interval: "day",
-            },
-          })
-          .then((response) => {
-            console.log(response);
-            if (response.data.length === 0) {
-              setSuccess(initialDailyData);
-              setFailure(initialDailyData);
-              setUpcoming(initialDailyData);
-              setTotal(initialDailyData);
-              return;
-            } else {
-              let successData = [];
-              let failureData = [];
-              let upcomingData = [];
-
-              for (let i = 0; i < response.data.length; i++) {
-                if (response.data[i].status === "SUCCESS") {
-                  successData.push({
-                    x: response.data[i].time,
-                    y: response.data[i].count,
-                  });
-                } else if (response.data[i].status === "FAILURE") {
-                  failureData.push({
-                    x: response.data[i].time,
-                    y: response.data[i].count,
-                  });
-                } else {
-                  upcomingData.push({
-                    x: response.data[i].time,
-                    y: response.data[i].count,
-                  });
-                }
-              }
-              setSuccess(successData);
-              setFailure(failureData);
-              setUpcoming(upcomingData);
-            }
-          });
-      } catch (error) {
-        setSuccess(initialDailyData);
-        setFailure(initialDailyData);
-        setUpcoming(initialDailyData);
-        setTotal(initialDailyData);
-        console.log(error);
-      }
-    } else if (type === 20) {
-      // Weekly
-      try {
-        await axios
-          .get("/api/notification/metrics/", {
-            params: {
-              start: getStartDay_Weekly(),
-              end: getToday(),
-              interval: "week",
-            },
-          })
-          .then((response) => {
-            if (response.data.length === 0) {
-              setSuccess(initialWeeklyData);
-              setFailure(initialWeeklyData);
-              setUpcoming(initialWeeklyData);
-              setTotal(initialWeeklyData);
-              return;
-            } else {
-              let successData = [];
-              let failureData = [];
-              let upcomingData = [];
-
-              for (let i = 0; i < response.data.length; i++) {
-                if (response.data[i].status === "SUCCESS") {
-                  successData.push({
-                    x: response.data[i].time,
-                    y: response.data[i].count,
-                  });
-                } else if (response.data[i].status === "FAILURE") {
-                  failureData.push({
-                    x: response.data[i].time,
-                    y: response.data[i].count,
-                  });
-                } else {
-                  upcomingData.push({
-                    x: response.data[i].time,
-                    y: response.data[i].count,
-                  });
-                }
-              }
-              setSuccess(successData);
-              setFailure(failureData);
-              setUpcoming(upcomingData);
-            }
-          });
-      } catch (error) {
-        setSuccess(initialWeeklyData);
-        setFailure(initialWeeklyData);
-        setUpcoming(initialWeeklyData);
-        setTotal(initialWeeklyData);
-        console.log(error);
-      }
-    } else {
-      try {
-        await axios
-          .get("/api/notification/metrics/", {
-            params: {
-              start: getStartDay_Monthly(),
-              end: getToday(),
-              interval: "month",
-            },
-          })
-          .then((response) => {
-            if (response.data.length === 0) {
-              setSuccess(initialMonthlyData);
-              setFailure(initialMonthlyData);
-              setUpcoming(initialMonthlyData);
-              setTotal(initialMonthlyData);
-              return;
-            } else {
-              let successData = [];
-              let failureData = [];
-              let upcomingData = [];
-
-              for (let i = 0; i < response.data.length; i++) {
-                if (response.data[i].status === "SUCCESS") {
-                  successData.push({
-                    x: response.data[i].time,
-                    y: response.data[i].count,
-                  });
-                } else if (response.data[i].status === "FAILURE") {
-                  failureData.push({
-                    x: response.data[i].time,
-                    y: response.data[i].count,
-                  });
-                } else {
-                  upcomingData.push({
-                    x: response.data[i].time,
-                    y: response.data[i].count,
-                  });
-                }
-              }
-              setSuccess(successData);
-              setFailure(failureData);
-              setUpcoming(upcomingData);
-            }
-          });
-      } catch (error) {
-        setSuccess(initialMonthlyData);
-        setFailure(initialMonthlyData);
-        setUpcoming(initialMonthlyData);
-        setTotal(initialMonthlyData);
-        console.log(error);
-      }
-    }
-  };
-
-  const data: ChartDataType[] = [
-    {
-      name: "Success",
-      type: "column",
-      fill: green[300],
-      data: success,
-    },
-    {
-      name: "Failure",
-      type: "column",
-      fill: red[300],
-      data: failure,
-    },
-    {
-      name: "Upcoming",
-      type: "column",
-      fill: blue[300],
-      data: upcoming,
-    },
-    {
-      name: "Total",
-      type: "line",
-      fill: grey[300],
-      data: total,
-    },
-  ];
+  const dispatch = useDispatch<AppDispatch>();
+  const analyticsData = useSelector(analyticsSelector);
+  const [data, setData] = useState<ChartDataType[]>([]);
 
   useEffect(() => {
+    dispatch(getDailyData());
     getData();
   }, []);
+
+  function getData() {
+    let success = [];
+    let fail = [];
+    let pending = [];
+    let total = [];
+
+    if(analyticsData.barlineType === "daily") {
+      for (let i = 14; i >= 0; i--) {
+        const date = moment().subtract(i, "days").format("YYYY-MM-DD");
+        success.push({x: date, y: analyticsData.barLineData.Success[date]});
+        fail.push({ x: date, y: analyticsData.barLineData.Failure[date] });
+        pending.push({ x: date, y: analyticsData.barLineData.Pending[date] });
+        total.push({ x: date, y: analyticsData.barLineData.Total[date] });
+      }
+    }
+    else if(analyticsData.barlineType === "weekly") {
+      for (let i = 15; i >= 0; i--) {
+        const date = moment().subtract(i, "weeks").format("YYYY-MM-DD");
+        success.push({x: date, y: analyticsData.barLineData.Success[date]});
+        fail.push({ x: date, y: analyticsData.barLineData.Failure[date] });
+        pending.push({ x: date, y: analyticsData.barLineData.Pending[date] });
+        total.push({ x: date, y: analyticsData.barLineData.Total[date] });
+      }
+    }
+    else {
+      for (let i = 12; i >= 0; i--) {
+        const date = moment().subtract(i, "months").format("YYYY-MM-DD");
+        success.push({x: date, y: analyticsData.barLineData.Success[date]});
+        fail.push({ x: date, y: analyticsData.barLineData.Failure[date] });
+        pending.push({ x: date, y: analyticsData.barLineData.Pending[date] });
+        total.push({ x: date, y: analyticsData.barLineData.Total[date] });
+      }
+    }
+    
+    const data = [
+      {
+        name: "Success",
+        type: "column",
+        fill: green[300],
+        data: success,
+      },
+      {
+        name: "Failure",
+        type: "column",
+        fill: red[300],
+        data: fail,
+      },
+      {
+        name: "Pending",
+        type: "column",
+        fill: blue[300],
+        data: pending,
+      },
+      {
+        name: "Total",
+        type: "line",
+        fill: grey[300],
+        data: total,
+      },
+    ];
+
+    setData(data);
+  };
 
   return (
     <Card>
