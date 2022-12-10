@@ -78,9 +78,10 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
         metrics.annotate(
             time=Trunc('updated_at', interval),
             project=F('reservation__notification_config__project_id'),
-        ).values('status', 'time', 'project').annotate(
+            type=F('reservation__notification_config__type'),
+        ).values('status', 'time', 'project', 'type').annotate(
             count=Count('time')
-        ).order_by('time', 'status', 'count', 'project')
+        ).order_by('time', 'status', 'count', 'project', 'type')
 
         response = list(map(convert, metrics))
 

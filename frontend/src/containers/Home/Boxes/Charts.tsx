@@ -116,7 +116,7 @@ export default function Charts(props: IProps) {
   return (
     <>
       <Grid item xs={12} sm={12} md={12} lg={5}>
-        <BarLineChart title="Notification requests" subtitle={getSubtitle()} type={props.selectedTab}/>
+        <BarLineChart title="Notification requests" subtitle={getSubtitle()} type={props.selectedTab} noti_type={types[props.selectedType]}/>
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={7}>
         <PieChart

@@ -8,7 +8,7 @@ import { fetchProject, projectListSelector } from "../../../store/slices/project
 import Charts from "./Charts";
 import { AppDispatch } from "../../../store";
 
-const types = ["Slack", "Email", "HTTP", "SMS"];
+const types = ["WEBHOOK", "Email", "SMS", "SLACK"];
 
 export default function Analytics() {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -22,7 +22,6 @@ export default function Analytics() {
     if (projectId) {
       dispatch(fetchProject(projectId));
     }
-    console.log(projectId);
   }, [selectedProject]);
 
   function renderTabs() {
