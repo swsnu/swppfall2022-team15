@@ -53,73 +53,72 @@ export default function BarLineAnalytics(props: IProps) {
       }
     };
     handleTypeChange();
-  }, [type]);
+  }, [type, dispatch]);
   useEffect(() => {
+    function getData() {
+      let success = [];
+      let fail = [];
+      let pending = [];
+      let total = [];
+
+      if (analyticsData.barlineType === "daily") {
+        for (let i = 14; i >= 0; i--) {
+          const date = moment().subtract(i, "days").format("YYYY-MM-DD");
+          success.push({ x: date, y: analyticsData.barLineData.Success[date] });
+          fail.push({ x: date, y: analyticsData.barLineData.Failure[date] });
+          pending.push({ x: date, y: analyticsData.barLineData.Pending[date] });
+          total.push({ x: date, y: analyticsData.barLineData.Total[date] });
+        }
+      } else if (analyticsData.barlineType === "weekly") {
+        for (let i = 15; i >= 0; i--) {
+          const date = moment().subtract(i, "weeks").format("YYYY-MM-DD");
+          success.push({ x: date, y: analyticsData.barLineData.Success[date] });
+          fail.push({ x: date, y: analyticsData.barLineData.Failure[date] });
+          pending.push({ x: date, y: analyticsData.barLineData.Pending[date] });
+          total.push({ x: date, y: analyticsData.barLineData.Total[date] });
+        }
+      } else {
+        for (let i = 12; i >= 0; i--) {
+          const date = moment().subtract(i, "months").format("YYYY-MM-DD");
+          success.push({ x: date, y: analyticsData.barLineData.Success[date] });
+          fail.push({ x: date, y: analyticsData.barLineData.Failure[date] });
+          pending.push({ x: date, y: analyticsData.barLineData.Pending[date] });
+          total.push({ x: date, y: analyticsData.barLineData.Total[date] });
+        }
+      }
+
+      const data = [
+        {
+          name: "Success",
+          type: "column",
+          fill: green[300],
+          data: success,
+        },
+        {
+          name: "Failure",
+          type: "column",
+          fill: red[300],
+          data: fail,
+        },
+        {
+          name: "Pending",
+          type: "column",
+          fill: blue[300],
+          data: pending,
+        },
+        {
+          name: "Total",
+          type: "line",
+          fill: grey[300],
+          data: total,
+        },
+      ];
+
+      setData(data);
+      console.log(analyticsData.barlineType);
+    }
     getData();
   }, [analyticsData])
-
-  function getData() {
-    let success = [];
-    let fail = [];
-    let pending = [];
-    let total = [];
-
-    if (analyticsData.barlineType === "daily") {
-      for (let i = 14; i >= 0; i--) {
-        const date = moment().subtract(i, "days").format("YYYY-MM-DD");
-        success.push({ x: date, y: analyticsData.barLineData.Success[date] });
-        fail.push({ x: date, y: analyticsData.barLineData.Failure[date] });
-        pending.push({ x: date, y: analyticsData.barLineData.Pending[date] });
-        total.push({ x: date, y: analyticsData.barLineData.Total[date] });
-      }
-    } else if (analyticsData.barlineType === "weekly") {
-      for (let i = 15; i >= 0; i--) {
-        const date = moment().subtract(i, "weeks").format("YYYY-MM-DD");
-        success.push({ x: date, y: analyticsData.barLineData.Success[date] });
-        fail.push({ x: date, y: analyticsData.barLineData.Failure[date] });
-        pending.push({ x: date, y: analyticsData.barLineData.Pending[date] });
-        total.push({ x: date, y: analyticsData.barLineData.Total[date] });
-      }
-    } else {
-      for (let i = 12; i >= 0; i--) {
-        const date = moment().subtract(i, "months").format("YYYY-MM-DD");
-        success.push({ x: date, y: analyticsData.barLineData.Success[date] });
-        fail.push({ x: date, y: analyticsData.barLineData.Failure[date] });
-        pending.push({ x: date, y: analyticsData.barLineData.Pending[date] });
-        total.push({ x: date, y: analyticsData.barLineData.Total[date] });
-      }
-    }
-
-    const data = [
-      {
-        name: "Success",
-        type: "column",
-        fill: green[300],
-        data: success,
-      },
-      {
-        name: "Failure",
-        type: "column",
-        fill: red[300],
-        data: fail,
-      },
-      {
-        name: "Pending",
-        type: "column",
-        fill: blue[300],
-        data: pending,
-      },
-      {
-        name: "Total",
-        type: "line",
-        fill: grey[300],
-        data: total,
-      },
-    ];
-
-    setData(data);
-    console.log(analyticsData.barlineType);
-  }
 
   return (
     <Card>

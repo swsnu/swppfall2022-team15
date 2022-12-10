@@ -11,7 +11,6 @@ import Analytics from "./Boxes/Analytics";
 import Today from "./Boxes/Today";
 import { AppDispatch } from "../../store";
 import { authSelector } from "../../store/slices/auth";
-import { fetchTargets, targetListSelector } from "../../store/slices/target";
 import { fetchProjects, projectListSelector } from "../../store/slices/project";
 import {
   fetchAllNotifications,
@@ -25,7 +24,6 @@ import "./Home.css"
 
 export default function Home() {
   const projects = useSelector(projectListSelector);
-  const targets = useSelector(targetListSelector);
   const notifications = useSelector(notificationListSelector);
   const user = useSelector(authSelector);
   const dispatch = useDispatch<AppDispatch>();
@@ -38,7 +36,6 @@ export default function Home() {
   useEffect(() => {
     dispatch(fetchProjects());
     dispatch(fetchAllNotifications());
-    dispatch(fetchTargets());
   }, [user, dispatch]);
 
   const handleClickCreateButton = (event: React.MouseEvent) => {

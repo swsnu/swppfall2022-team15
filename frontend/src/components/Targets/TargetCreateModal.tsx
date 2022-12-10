@@ -9,7 +9,7 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { createTarget, fetchTargets } from "../../store/slices/target";
@@ -31,7 +31,7 @@ export default function TargetCreateModal(props: IProps) {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const initializeFields = async () => {
+  const initializeFields = useCallback(async () => {
     const target = await getTarget(props.targetId!);
     if (target) {
       setEndpoint(target.endpoint);
@@ -39,13 +39,13 @@ export default function TargetCreateModal(props: IProps) {
       setNotificationType(target.notification_type);
       setTargetName(target.name);
     }
-  };
+  }, [props.targetId]);
 
   useEffect(() => {
     if (props.targetId) {
       initializeFields();
     }
-  }, [props.targetId]);
+  }, [props.targetId, initializeFields]);
 
   const clearForm = () => {
     setTargetName("");
@@ -58,7 +58,7 @@ export default function TargetCreateModal(props: IProps) {
     console.log(targetName, notificationType, endpoint);
     if (
       (targetName && notificationType && endpoint) || // NON SLACK
-      (notificationType == EnumNotificationType.SLACK.toString() &&
+      (notificationType === EnumNotificationType.SLACK.toString() &&
         targetName &&
         "api_key" in data) // SLACK
     ) {

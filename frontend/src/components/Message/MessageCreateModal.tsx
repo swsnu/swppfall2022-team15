@@ -9,11 +9,10 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { fetchMessages } from "../../store/slices/message";
 import { AppDispatch } from "../../store";
-import { fetchProjects } from "../../store/slices/project";
 import { EnumNotificationType } from "../../Enums";
 import { messageCreateService } from "./utils/MessageRequestService";
 import MessageCreateForm from "./MessageForm";
@@ -33,18 +32,18 @@ export default function MessageCreateModal(props: IProps) {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const initializeFields = async () => {
+  const initializeFields = useCallback(async () => {
     const message = await getMessage(props.messageId!);
     setNotificationType(message.notification_type);
     setName(message.name);
     setContent(message.data);
-  };
+  }, [props.messageId]);
 
   useEffect(() => {
     if (props.messageId) {
       initializeFields();
     }
-  }, [props.messageId]);
+  }, [props.messageId, initializeFields]);
 
   const clearForm = () => {
     setName("");
