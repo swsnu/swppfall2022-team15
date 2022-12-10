@@ -8,12 +8,13 @@ export type ProjectType = {
 };
 
 export type NotificationConfigType = {
-  id: number;
-  project: number;
-  message: number;
-  type: string;
-  rrule: string;
-};
+    id: number;
+    project: number;
+    message: number
+    type: string;
+    rrule: string;
+    mode: string;
+}
 
 export type NotificationType = {
   id: number;
@@ -24,12 +25,13 @@ export type NotificationType = {
 };
 
 export type NotificationConfigCreateDto = {
-  project: number;
-  type: string;
-  rrule: string;
-  message: number;
-  target_users: number[];
-};
+      project: number,
+      type: string
+      rrule?: string,
+      message: number,
+      target_users: number[],
+      mode: string
+    };
 
 export type ReservationType = {
   id: number;
@@ -41,7 +43,7 @@ export interface TargetType {
   name: string;
   notification_type: string;
   endpoint: string;
-  data: object;
+  data: any;
 }
 
 export interface TargetUserIdNameDto {

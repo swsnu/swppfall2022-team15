@@ -75,7 +75,11 @@ export default function ProjectListTable() {
         </Grid>
         <Card>
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 800, maxHeight: '85vh' }}>
+            <TableContainer
+              sx={{
+                maxHeight: "calc(100vh - 150px)",
+              }}
+            >
               <Table stickyHeader>
                 <TableHead>
                   <TableRow>

@@ -16,19 +16,48 @@ export default function DynamicTable(props: {
   keys: any;
   rows: any;
   handleOpenMenu: any;
-  onClickRow?: (e:any) => void;
+  onClickRow?: (id: number) => void;
+  parser?: (field: string, item: any) => any;
 }) {
+  const { parser } = props;
+
+  const defaultInDepthFieldParser = (key: string, row: any) => {
+    const fields = key.split(".");
+
+    let value = row;
+    fields.forEach((field) => {
+      value = value[field];
+    });
+    return value;
+  };
+
+  const inDepthFieldParser = (key: string, row: any) => {
+    if (!parser) {
+      return defaultInDepthFieldParser(key, row);
+    }
+    return parser(key, row);
+  };
+
   const handleClickRow = (id: number) => {
     if (props.onClickRow) {
       props.onClickRow(id);
     }
-  }
+  };
 
   return (
     <Card>
       <Scrollbar>
-        <TableContainer sx={{ minWidth: 800 }}>
+        <TableContainer
+          sx={{
+            maxHeight: "calc(100vh - 200px)",
+          }}
+        >
           <Table stickyHeader>
+            <colgroup>
+              <col style={{ width: "20%" }} />
+              <col style={{ width: "20%" }} />
+              <col style={{ width: "20%" }} />
+            </colgroup>
             <TableHead>
               <TableRow>
                 {props.columns.map((col) => {
@@ -39,30 +68,29 @@ export default function DynamicTable(props: {
             <TableBody>
               {props.rows.map((row: any) => {
                 return (
-                  <TableRow hover key={row.id} tabIndex={-1} onClick={()=>handleClickRow(row.id)}>
+                  <TableRow
+                    hover
+                    key={row.id}
+                    tabIndex={-1}
+                    onClick={() => handleClickRow(row.id)}
+                  >
                     {props.keys.map((key: string) => {
-                      const fields = key.split('.')
-                      let value = row;
-
-                      fields.forEach((field) => {
-                        value = value[field];
-                      });
-                      return (
-                        <TableCell align="left">{value}</TableCell>
-                      );
+                      let value = inDepthFieldParser(key, row);
+                      return <TableCell align="left">{value}</TableCell>;
                     })}
                     {props.handleOpenMenu && (
                       <TableCell align="right">
-                      <IconButton
-                        size="large"
-                        color="inherit"
-                        data-testid="open-menu-button"
-                        onClick={props.handleOpenMenu}
-                        data-id={row.id}
-                      >
-                        <Iconify icon={"eva:more-vertical-fill"} />
-                      </IconButton>
-                    </TableCell>)}
+                        <IconButton
+                          size="large"
+                          color="inherit"
+                          data-testid="open-menu-button"
+                          onClick={props.handleOpenMenu}
+                          data-id={row.id}
+                        >
+                          <Iconify icon={"eva:more-vertical-fill"} />
+                        </IconButton>
+                      </TableCell>
+                    )}
                   </TableRow>
                 );
               })}

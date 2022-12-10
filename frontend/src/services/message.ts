@@ -27,9 +27,29 @@ export async function deleteMessage(messageId: number) {
   }
 }
 
-export async function fetchMessagesWithNotificationType(notification_type: string) {
+export async function fetchMessagesWithNotificationType(
+  notification_type: string
+) {
   const response = await axios.get<MessageType[]>(
     `/api/message/?notification_type=${notification_type}`
   );
   return response.data;
+}
+
+export async function getMessage(messageId: number) {
+  const response = await axios.get<MessageType>(`/api/message/${messageId}/`);
+  return response.data;
+}
+
+export async function updateMessage(
+  messageId: number,
+  notificationType: string,
+  name: string,
+  data: any
+) {
+  await axios.patch<MessageType>(`/api/message/${messageId}/`, {
+    notification_type: notificationType,
+    name,
+    data,
+  });
 }

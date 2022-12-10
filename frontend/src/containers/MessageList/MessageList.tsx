@@ -13,27 +13,31 @@ import { Container } from "@mui/system";
 import DynamicTable from "../../components/Message/DynamicTable";
 import { EnumNotificationType } from "../../Enums";
 import "./MessageList.css";
-import {getMessageColumns, getMessageKeys} from "../../components/Message/utils/dyanamicTableUtils";
+import {
+  getMessageColumns,
+  getMessageKeys,
+} from "../../components/Message/utils/dyanamicTableUtils";
 
 export default function MessageListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
   const [createModalopen, setCreateModalOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
   const [notificationType, setNotificationType] = useState("");
+  const [messageId, setMessageId]: any = useState(null);
 
   useEffect(() => {
     const getNotificationType = (type: number) => {
       switch (type) {
-        case 1:
+        case 0:
           return "SLACK";
+        case 1:
+          return "EMAIL";
         case 2:
           return "WEBHOOK";
-        case 3:
-          return "EMAIL";
         default:
           return "SMS";
       }
-    }
+    };
     setNotificationType(getNotificationType(selectedTab));
   }, [selectedTab]);
 
@@ -76,9 +80,7 @@ export default function MessageListTable() {
         <DynamicTable
           columns={getMessageColumns(notificationType)}
           keys={getMessageKeys(notificationType)}
-          rows={
-            notificationType in messages ? messages[notificationType] : []
-          }
+          rows={notificationType in messages ? messages[notificationType] : []}
           handleOpenMenu={handleOpenMenu}
         />
       </Box>
@@ -89,7 +91,11 @@ export default function MessageListTable() {
     <>
       <MessageCreateModal
         open={createModalopen}
-        handleClose={() => setCreateModalOpen(false)}
+        handleClose={() => {
+          setMessageId(null);
+          setCreateModalOpen(false);
+        }}
+        messageId={messageId}
       ></MessageCreateModal>
       <Container maxWidth="xl">
         <Grid container justifyContent="flex-end" className="messageButton">
@@ -151,7 +157,14 @@ export default function MessageListTable() {
           },
         }}
       >
-        <MenuItem>
+        <MenuItem
+          onClick={async () => {
+            handleCloseMenu();
+            const messageId = open!.dataset.id;
+            await setMessageId(messageId);
+            setCreateModalOpen(true);
+          }}
+        >
           <Iconify icon={"eva:edit-fill"} sx={{ mr: 2 }} />
           Edit
         </MenuItem>

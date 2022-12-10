@@ -10,31 +10,42 @@ import { fetchTargets, targetListSelector } from "../../store/slices/target";
 import { Container } from "@mui/system";
 import "./TargetList.css";
 import DynamicTable from "../../components/Message/DynamicTable";
-import {getTargetColumns, getTargetKeys} from "../../components/Message/utils/dyanamicTableUtils";
+import {
+  getTargetColumns,
+  getTargetKeys,
+} from "../../components/Message/utils/dyanamicTableUtils";
 
 export default function TargetListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
   const [createModalopen, setCreateModalOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
-
   const [notificationType, setNotificationType] = useState("");
+  const [showState, setShowState] = useState<number[]>([]);
+  const [targetId, setTargetId]: any = useState(null);
 
   useEffect(() => {
     const getNotificationType = (type: number) => {
       switch (type) {
-        case 1:
+        case 0:
           return "SLACK";
+        case 1:
+          return "EMAIL";
         case 2:
           return "WEBHOOK";
-        case 3:
-          return "EMAIL";
         default:
           return "SMS";
       }
-    }
+    };
     setNotificationType(getNotificationType(selectedTab));
   }, [selectedTab]);
 
+  const handleRowClick = (rowId: number) => {
+    if (showState.includes(rowId)) {
+      setShowState(showState.filter((id) => id !== rowId));
+      return;
+    }
+    setShowState([...showState, rowId]);
+  };
 
   const handleOpenMenu = (event: any) => {
     setOpen(event.currentTarget);
@@ -69,27 +80,57 @@ export default function TargetListTable() {
     };
   }
 
+  const handleAuthColumn = (fieldName: string, target: any): string => {
+    // AUTH COLUMN
+    if (fieldName === "data.auth") {
+      let data = target.data;
+      if ("auth" in target) return "";
+      if (!showState.includes(target.id)) return "**********";
+
+      let auth = target.data["auth"];
+      switch (auth) {
+        case "no_auth":
+          return "No Authentication";
+        case "basic":
+          return `Basic Authentication , Username: ${data.username} , Password: ${data.password}`;
+        case "bearer":
+          return `Bearer Authentication , Token: ${data.token}`;
+        case "api_key":
+          return `API Key Authentication , Key: ${data.key}  ,  Value: ${data.value}`;
+        default:
+          return "No Authentication";
+      }
+    }
+    return target[fieldName];
+  };
+
   function renderTable() {
-      return (
-        <Box sx={{ "margin-bottom": "20px" }}>
-          <DynamicTable
-            data-testid="menu-button"
-            columns={getTargetColumns(notificationType)}
-            keys={getTargetKeys(notificationType)}
-            rows={targets.filter(
-              (target) => target.notification_type == "SLACK"
-            )}
-            handleOpenMenu={handleOpenMenu}
-          />
-        </Box>
-      );
+    return (
+      <Box sx={{ "margin-bottom": "20px" }}>
+        <DynamicTable
+          data-testid="menu-button"
+          columns={getTargetColumns(notificationType)}
+          keys={getTargetKeys(notificationType)}
+          rows={targets.filter(
+            (target) => target.notification_type == notificationType
+          )}
+          handleOpenMenu={handleOpenMenu}
+          onClickRow={handleRowClick}
+          parser={handleAuthColumn}
+        />
+      </Box>
+    );
   }
 
   return (
     <>
       <TargetCreateModal
         open={createModalopen}
-        handleClose={() => setCreateModalOpen(false)}
+        handleClose={() => {
+          setTargetId(null);
+          setCreateModalOpen(false);
+        }}
+        targetId={targetId}
       ></TargetCreateModal>
       <Container maxWidth="xl">
         <Grid container justifyContent="flex-end" className="targetButton">
@@ -151,7 +192,14 @@ export default function TargetListTable() {
           },
         }}
       >
-        <MenuItem>
+        <MenuItem
+          onClick={async () => {
+            handleCloseMenu();
+            const targetId = open!.dataset.id;
+            await setTargetId(targetId);
+            setCreateModalOpen(true);
+          }}
+        >
           <Iconify icon={"eva:edit-fill"} sx={{ mr: 2 }} />
           Edit
         </MenuItem>

@@ -65,6 +65,7 @@ export default function MessageCreateForm(
             error={Boolean(fieldErrors?.channel)}
             rows={1}
             disabled={disabled}
+            required
           />
           <br />
           <br />
@@ -85,6 +86,7 @@ export default function MessageCreateForm(
             error={Boolean(fieldErrors?.message)}
             rows={4}
             disabled={disabled}
+            required
           />
         </>
       );
@@ -123,6 +125,7 @@ export default function MessageCreateForm(
             error={Boolean(fieldErrors?.title)}
             rows={1}
             disabled={disabled}
+            required
           />
           <br />
           <br />
@@ -143,6 +146,7 @@ export default function MessageCreateForm(
             error={Boolean(fieldErrors?.message)}
             rows={8}
             disabled={disabled}
+            required
           />
         </>
       );
@@ -182,6 +186,7 @@ export default function MessageCreateForm(
             helperText={fieldErrors?.message}
             error={Boolean(fieldErrors?.message)}
             rows={9}
+            required
           />
         </>
       );
@@ -221,6 +226,8 @@ export default function MessageCreateForm(
             helperText={fieldErrors?.message}
             error={Boolean(fieldErrors?.message)}
             rows={9}
+            disabled={disabled}
+            required
           />
         </>
       );

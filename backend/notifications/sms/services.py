@@ -13,20 +13,20 @@ from noti_manager.celery import app
 
 
 @app.task
-def task_send_sms_notification():
+def task_send_sms_notification(data, endpoint):
     """Send a notification to the notification service."""
 
     headers = create_ncloud_headers()
-    data = {
+    request_data = {
         "type": "SMS",
         "contentType": "COMM",
         "countryCode": "82",
-        "from": "01000000000", # phone number
+        "from": settings.SMS_SENDER,  # phone number
         "content": "내용",
         "messages": [
             {
-                "to": "01055409195",
-                "content": "위의 content와 별도로 해당 번호로만 보내는 내용(optional)"
+                "to": endpoint,
+                "content": data
             }
         ]
     }
@@ -34,7 +34,7 @@ def task_send_sms_notification():
     try:
         response = requests.post(
             url=settings.NCLOUD_SMS_ENDPOINT,
-            json=data,
+            json=request_data,
             headers=headers,
         )
         response.raise_for_status()

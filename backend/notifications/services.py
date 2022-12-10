@@ -15,7 +15,7 @@ from notifications.models import (
     EnumNotificationStatus,
     EnumNotificationType,
     Reservation,
-    EnumReservationStatus,
+    EnumReservationStatus, EnumNotificationMode,
 )
 from notifications.slack.serializers import SlackNotificationSerializer
 from notifications.slack.services import task_send_slack_notification
@@ -87,8 +87,12 @@ def task_handle_chunk_notification(notification_ids: list[int]):
             task_send_slack_notification.delay(
                 SlackNotificationSerializer(notification).data
             )
-        elif notification.notificaiton_group.type == EnumNotificationType.SMS:
-            task_send_sms_notification.delay()
+        elif notification.reservation.notification_config.type == EnumNotificationType.SMS:
+            data = notification.reservation.notification_config.nmessage.data
+            message = data.get("message")
+            endpoint = notification.target_user.endpoint
+            task_send_sms_notification.delay(message, endpoint)
+
 
 
 @app.task
@@ -103,7 +107,7 @@ def cron_task_handle_reservation():
 
 
 @app.task
-def task_bulk_create_notification(reserved_at, target_user_ids, notification_config_id):
+def task_bulk_create_notification(reserved_at, target_user_ids, notification_config_id, mode):
     reservation = Reservation.objects.create(
         notification_config_id=notification_config_id,
         reserved_at=reserved_at,
@@ -118,3 +122,6 @@ def task_bulk_create_notification(reserved_at, target_user_ids, notification_con
         ) for target_user_id in target_user_ids
     ]
     Notification.objects.bulk_create(notifications)
+
+    if mode == EnumNotificationMode.IMMEDIATE:
+        task_spawn_notification_by_chunk.delay(reservation.id)

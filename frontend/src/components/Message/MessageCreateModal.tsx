@@ -17,10 +17,12 @@ import { fetchProjects } from "../../store/slices/project";
 import { EnumNotificationType } from "../../Enums";
 import { messageCreateService } from "./utils/MessageRequestService";
 import MessageCreateForm from "./MessageForm";
+import { getMessage } from "../../services/message";
 
 interface IProps {
   open: any;
   handleClose: any;
+  messageId?: number | null;
 }
 
 export default function MessageCreateModal(props: IProps) {
@@ -30,9 +32,19 @@ export default function MessageCreateModal(props: IProps) {
   const [fieldErrors, setFieldErrors]: [any, any] = useState({});
 
   const dispatch = useDispatch<AppDispatch>();
+
+  const initializeFields = async () => {
+    const message = await getMessage(props.messageId!);
+    setNotificationType(message.notification_type);
+    setName(message.name);
+    setContent(message.data);
+  };
+
   useEffect(() => {
-    dispatch(fetchProjects());
-  }, []);
+    if (props.messageId) {
+      initializeFields();
+    }
+  }, [props.messageId]);
 
   const clearForm = () => {
     setName("");
@@ -45,7 +57,8 @@ export default function MessageCreateModal(props: IProps) {
         notificationType,
         name,
         content,
-        fieldErrors
+        fieldErrors,
+        props.messageId
       );
       if (errorField) {
         setFieldErrors(errorField);
@@ -70,7 +83,12 @@ export default function MessageCreateModal(props: IProps) {
     <div>
       <Dialog
         open={props.open}
-        onClose={props.handleClose}
+        onClose={() => {
+          if (props.messageId) {
+            clearForm();
+          }
+          props.handleClose();
+        }}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
         fullWidth
@@ -91,6 +109,7 @@ export default function MessageCreateModal(props: IProps) {
               setNotificationType(event.target.value as string);
             }}
             fullWidth
+            disabled={Boolean(props.messageId)}
           >
             <MenuItem value={EnumNotificationType.SLACK}>SLACK</MenuItem>
             <MenuItem value={EnumNotificationType.EMAIL}>EMAIL</MenuItem>

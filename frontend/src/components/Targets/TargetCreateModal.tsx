@@ -9,16 +9,18 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { createTarget, fetchTargets } from "../../store/slices/target";
 import { EnumNotificationType } from "../../Enums";
 import { TargetUserForm } from "./TargetUserForm";
+import { getTarget, updateTarget } from "../../services/target";
 
 interface IProps {
   open: any;
   handleClose: any;
+  targetId?: number | null;
 }
 
 export default function TargetCreateModal(props: IProps) {
@@ -29,6 +31,22 @@ export default function TargetCreateModal(props: IProps) {
 
   const dispatch = useDispatch<AppDispatch>();
 
+  const initializeFields = async () => {
+    const target = await getTarget(props.targetId!);
+    if (target) {
+      setEndpoint(target.endpoint);
+      setData(target.data);
+      setNotificationType(target.notification_type);
+      setTargetName(target.name);
+    }
+  };
+
+  useEffect(() => {
+    if (props.targetId) {
+      initializeFields();
+    }
+  }, [props.targetId]);
+
   const clearForm = () => {
     setTargetName("");
     setNotificationType("");
@@ -37,20 +55,46 @@ export default function TargetCreateModal(props: IProps) {
   };
 
   const handleClickConfirm = async () => {
-    console.log(targetName, notificationType, endpoint)
+    console.log(targetName, notificationType, endpoint);
     if (
       (targetName && notificationType && endpoint) || // NON SLACK
       (notificationType == EnumNotificationType.SLACK.toString() &&
         targetName &&
         "api_key" in data) // SLACK
     ) {
-      const requestData = {
-        name: targetName,
-        notification_type: notificationType,
-        endpoint: endpoint,
-        data: data,
-      };
-      dispatch(createTarget(requestData));
+      // validation check
+      switch (notificationType) {
+        case EnumNotificationType.WEBHOOK.toString():
+          try {
+            new URL(endpoint);
+          } catch (TypeError) {
+            console.log("Invalid URL");
+            return;
+          }
+          break;
+        case EnumNotificationType.EMAIL.toString():
+          // TODO
+          break;
+        case EnumNotificationType.SMS.toString():
+          // TODO
+          break;
+      }
+      if (props.targetId) {
+        const requestData = {
+          name: targetName,
+          endpoint: endpoint,
+          data: data,
+        };
+        await updateTarget(props.targetId, requestData);
+      } else {
+        const requestData = {
+          name: targetName,
+          notification_type: notificationType,
+          endpoint: endpoint,
+          data: data,
+        };
+        dispatch(createTarget(requestData));
+      }
       clearForm();
       props.handleClose();
       dispatch(fetchTargets());
@@ -71,12 +115,19 @@ export default function TargetCreateModal(props: IProps) {
     <div>
       <Dialog
         open={props.open}
-        onClose={props.handleClose}
+        onClose={() => {
+          if (props.targetId) {
+            clearForm();
+          }
+          props.handleClose();
+        }}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
         fullWidth
       >
-        <DialogTitle>New Target</DialogTitle>
+        <DialogTitle>
+          {props.targetId ? "Update Target" : "New Target"}
+        </DialogTitle>
         <DialogContent>
           <InputLabel id="demo-simple-select-label">
             Notification Type
@@ -93,6 +144,7 @@ export default function TargetCreateModal(props: IProps) {
               setData({});
             }}
             fullWidth
+            disabled={Boolean(props.targetId)}
           >
             <MenuItem value={EnumNotificationType.SLACK}>SLACK</MenuItem>
             <MenuItem value={EnumNotificationType.EMAIL}>EMAIL</MenuItem>
@@ -112,3 +164,7 @@ export default function TargetCreateModal(props: IProps) {
     </div>
   );
 }
+
+TargetCreateModal.defaultProps = {
+  update: false,
+};
