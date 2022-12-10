@@ -31,23 +31,25 @@ def task_send_api_notification(notification: NotificationTaskDto):
     url = notification['endpoint']
     headers = notification['headers']
 
+    started_at = timezone.now()
     response = requests.post(
         url=url,
         json=request_data,
         headers=headers,
         timeout=5,
     )
+    finished_at = timezone.now()
     try:
         response.raise_for_status()
     except requests.exceptions.RequestException:
         logger.info(response.text)
         notification = Notification.objects.get(id=notification['id'])
-        notification.update_result(EnumNotificationStatus.FAILURE, response.status_code, response.text)
+        notification.update_result(EnumNotificationStatus.FAILURE, response.status_code, response.text, started_at, finished_at)
 
         return
 
     notification = Notification.objects.get(id=notification['id'])
-    notification.update_result(EnumNotificationStatus.SUCCESS, response.status_code, response.text)
+    notification.update_result(EnumNotificationStatus.SUCCESS, response.status_code, response.text, started_at, finished_at)
 
     return
 
