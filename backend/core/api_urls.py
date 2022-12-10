@@ -24,7 +24,7 @@ router.register(r'targetuser', TargetUserViewSet, basename='targetuser')
 router.register(r'message', NMessageViewSet, basename='nmessage')
 # notification app
 router.register(r'notification_config', NotificationConfigViewSet, basename='notification_config')
-router.register(r'notification', NotificationViewSet, basename='notification-config')
+router.register(r'notification', NotificationViewSet, basename='notification')
 router.register(r'reservation', ReservationViewSet, basename='reservation')
 
 urlpatterns += router.urls

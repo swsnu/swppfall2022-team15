@@ -1,6 +1,6 @@
 import datetime
 
-from django.db.models import Count
+from django.db.models import Count, F
 from django.db.models.functions import Trunc
 from rest_framework import status
 from rest_framework.decorators import action
@@ -15,7 +15,7 @@ from notifications.models import Reservation
 from notifications.serializers import (
     NotificationConfigCreateSerializer,
     ReservationSerializer,
-    NotificationConfigSerializer,
+    NotificationConfigSerializer, NotificationSerializer,
 )
 
 
@@ -36,6 +36,8 @@ class NotificationConfigViewSet(ModelViewSet):
 
 
 class NotificationViewSet(ListModelMixin, GenericViewSet):
+    queryset = Notification.objects.all()
+    serializer_class = NotificationSerializer
     @action(detail=True, methods=['get'], permission_classes=[AllowAny, IsAuthenticated, IsOwner])
     def getAll(self, request):
         notifications = Notification.objects.filter(
@@ -51,6 +53,7 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
             result['status'] = metric['status']
             result['time'] = datetime.datetime.strftime(metric['time'], '%Y-%m-%d %H:%M:%S')
             result['count'] = metric['count']
+            result['project'] = metric['project']
             
             return result
 
@@ -59,13 +62,15 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
 
         interval = request.query_params.get('interval')
 
-        metrics = Notification.objects.filter(
+        metrics = Notification.objects.select_related('reservation__notification_config').filter(
             updated_at__range=(start_time, end_time)
         ).annotate(
-            time=Trunc('updated_at', interval)
-        ).values('status', 'time').annotate(
+            time=Trunc('updated_at', interval),
+            project=F('reservation__notification_config__project_id'),
+        ).values('status', 'time', 'project').annotate(
             count=Count('time')
-        ).order_by('time', 'status', 'count',)
+        ).order_by('time', 'status', 'count', 'project')
+
         response = list(map(convert, metrics))
 
         return Response(data=response, status=status.HTTP_200_OK)
