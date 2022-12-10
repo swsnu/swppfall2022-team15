@@ -5,17 +5,20 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
 import HistoryTableHead from "./TableHead";
-import { fetchAllNotificationConfigs, notificationConfigList } from "../../store/slices/notificationConfig"
+import {
+  fetchAllNotifications,
+  notificationListSelector,
+} from "../../store/slices/notifications";
 import { useEffect } from "react";
 import { AppDispatch } from "../../store";
 
 import "./HistoryTable.css"
 
 export default function HistoryTable() {
-  const notificationConfigs = useSelector(notificationConfigList);
+  const notificationConfigs = useSelector(notificationListSelector);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(fetchAllNotificationConfigs());
+    dispatch(fetchAllNotifications());
   }, [])
 
   return (
@@ -34,19 +37,19 @@ export default function HistoryTable() {
                 {notificationConfigs.map((notification, index) => (
                   <TableRow key={index}>
                     <TableCell>
-                      <Container>{notification.project}</Container>
+                      <Container>{"NEED API TO GET PROJECT"}</Container>
                     </TableCell>
                     <TableCell>
                       <Container>{notification.type}</Container>
                     </TableCell>
                     <TableCell>
-                      <Container>{"ENDPOINT: NEED FIX"}</Container>
+                      <Container>{"NEED API TO GET TARGET"}</Container>
                     </TableCell>
                     <TableCell>
-                      <Container>{"CREATED AT: NEED FIX"}</Container>
+                      <Container>{notification.reservedAt}</Container>
                     </TableCell>
                     <TableCell>
-                      <Container>{"STATUS: NEED FIX"}</Container>
+                      <Container>{notification.status}</Container>
                     </TableCell>
                   </TableRow>
                 ))}
