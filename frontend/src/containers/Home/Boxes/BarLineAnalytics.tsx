@@ -38,6 +38,10 @@ export default function BarLineAnalytics(props: IProps) {
     dispatch(getDailyData());
     getData();
   }, []);
+  useEffect(() => {
+    handleTypeChange();
+    getData();
+  }, [type])
 
   function getData() {
     let success = [];
@@ -101,23 +105,18 @@ export default function BarLineAnalytics(props: IProps) {
     ];
 
     setData(data);
-    
     console.log(analyticsData.barlineType);
   };
 
-  const handleTypeChange = async (value: number) => {
-    setType(value);
-    if(value === 10) {
-      await dispatch(getDailyData());
-      await getData();
+  const handleTypeChange = () => {
+    if(type === 10) {
+      dispatch(getDailyData());
     }
-    else if(value === 20) {
-      await dispatch(getWeeklyData());
-      await getData();
+    else if(type === 20) {
+      dispatch(getWeeklyData());
     }
     else {
-      await dispatch(getMonthlyData());
-      await getData();
+      dispatch(getMonthlyData());
     }
   };
 
@@ -134,7 +133,7 @@ export default function BarLineAnalytics(props: IProps) {
             inputProps={{ "data-testid": "button" }}
             value={type}
             label="Type"
-            onChange={(e) => handleTypeChange(e.target.value as number)}
+            onChange={(e) => setType(e.target.value as number)}
           >
             <MenuItem value={10}>Daily</MenuItem>
             <MenuItem value={20}>Weekly</MenuItem>

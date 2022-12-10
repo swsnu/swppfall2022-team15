@@ -51,12 +51,12 @@ export const getDailyData = createAsyncThunk(
 
     const response = await axios.get("/api/notification/metrics/", {
       params: {
-        start_date: moment().subtract(14, "days").format("YYYY-MM-DD"),
-        end_date: moment().format("YYYY-MM-DD"),
+        start: moment().subtract(14, "days").format("YYYY-MM-DD"),
+        end: moment().format("YYYY-MM-DD"),
         interval: "day",
       },
     });
-    console.log(response.data);
+    console.log(response);
     return response.data;
   }
 );
@@ -68,12 +68,12 @@ export const getWeeklyData = createAsyncThunk(
 
     const response = await axios.get("/api/notification/metrics/", {
       params: {
-        start_date: moment().subtract(15, "weeks").format("YYYY-MM-DD"),
-        end_date: moment().format("YYYY-MM-DD"),
+        start: moment().subtract(15, "weeks").format("YYYY-MM-DD"),
+        end: moment().format("YYYY-MM-DD"),
         interval: "week",
       },
     });
-    console.log(response.data);
+    console.log(response);
     return response.data;
   }
 );
@@ -85,12 +85,12 @@ export const getMonthlyData = createAsyncThunk(
 
     const response = await axios.get("/api/notification/metrics/", {
       params: {
-        start_date: moment().subtract(12, "months").format("YYYY-MM-DD"),
-        end_date: moment().format("YYYY-MM-DD"),
+        start: moment().subtract(12, "months").format("YYYY-MM-DD"),
+        end: moment().format("YYYY-MM-DD"),
         interval: "month",
       },
     });
-    console.log(response.data);
+    console.log(response);
     return response.data;
   }
 );
