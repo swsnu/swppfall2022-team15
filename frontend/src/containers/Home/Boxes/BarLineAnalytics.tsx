@@ -287,7 +287,7 @@ export default function BarLineAnalytics(props: IProps) {
 
   useEffect(() => {
     getData();
-  }, [data]);
+  }, []);
 
   return (
     <Card>
