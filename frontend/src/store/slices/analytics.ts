@@ -28,7 +28,8 @@ function initializeWeeklyData() {
   const weeklyData: DataHash = {};
   for (let i = 15; i >= 0; i--) {
     //TODO: fix this to YYYY-MM-(firstdayofweek)
-    const date = moment().subtract(i, "weeks").format("YYYY-MM-DD");
+    const today = moment();
+    const date = moment().subtract(i, "weeks").subtract(today.weekday()-1, "days").format("YYYY-MM-DD");
     weeklyData[date] = 0;
   }
 
@@ -38,7 +39,6 @@ function initializeWeeklyData() {
 function initializeMonthlyData() {
   const monthlyData: DataHash = {};
   for (let i = 12; i >= 0; i--) {
-    //TODO: fix this to YYYY-MM-01
     const date = moment().subtract(i, "months").format("YYYY-MM-01");
     monthlyData[date] = 0;
   }

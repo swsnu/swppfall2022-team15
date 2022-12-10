@@ -71,7 +71,8 @@ export default function BarLineAnalytics(props: IProps) {
         }
       } else if (analyticsData.barlineType === "weekly") {
         for (let i = 15; i >= 0; i--) {
-          const date = moment().subtract(i, "weeks").format("YYYY-MM-DD");
+          const today = moment();
+          const date = moment().subtract(i, "weeks").subtract(today.weekday()-1, "days").format("YYYY-MM-DD");
           success.push({ x: date, y: analyticsData.barLineData.Success[date] });
           fail.push({ x: date, y: analyticsData.barLineData.Failure[date] });
           pending.push({ x: date, y: analyticsData.barLineData.Pending[date] });
@@ -79,7 +80,7 @@ export default function BarLineAnalytics(props: IProps) {
         }
       } else {
         for (let i = 12; i >= 0; i--) {
-          const date = moment().subtract(i, "months").format("YYYY-MM-DD");
+          const date = moment().subtract(i, "months").format("YYYY-MM-01");
           success.push({ x: date, y: analyticsData.barLineData.Success[date] });
           fail.push({ x: date, y: analyticsData.barLineData.Failure[date] });
           pending.push({ x: date, y: analyticsData.barLineData.Pending[date] });
