@@ -132,7 +132,6 @@ export default function TargetListTable() {
         }}
         targetId={targetId}
       ></TargetCreateModal>
-
       <Container maxWidth="xl">
         <Grid container justifyContent="flex-end" className="targetButton">
           <Button data-testid="create-button" onClick={handleClickCreateButton}>

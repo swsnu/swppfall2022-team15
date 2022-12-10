@@ -24,7 +24,7 @@ import { deleteProject } from "../../services/project";
 import { AppDispatch } from "../../store";
 import { fetchProjects, projectListSelector } from "../../store/slices/project";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
-import "./ProjectList.css"
+import "./ProjectList.css";
 
 export default function ProjectListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
@@ -75,7 +75,17 @@ export default function ProjectListTable() {
         </Grid>
         <Card>
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 800, height: 700 }}>
+            <TableContainer
+              sx={{
+                mb: 2,
+                display: "flex",
+                flexDirection: "column",
+                maxHeight: "calc(100vh - 200px)",
+                overflow: "hidden",
+                overflowY: "scroll",
+              }}
+            >
+              {" "}
               <Table stickyHeader>
                 <TableHead>
                   <TableRow>
