@@ -43,14 +43,15 @@ export default function MultiStepForm() {
   const [endpoint, setEndpoint] = useState("");
   const [data, setData] = useState<any>({});
 
-  // Reservation
-  const [recurrence, setRecurrence] = React.useState<RecurrenceType>();
-
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
   };
 
   const handleNext = () => {
+    if (!notificationType) {
+      return
+    }
+
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
