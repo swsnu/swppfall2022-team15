@@ -47,7 +47,11 @@ export default function DynamicTable(props: {
   return (
     <Card>
       <Scrollbar>
-        <TableContainer sx={{ minWidth: 800 }}>
+        <TableContainer
+          sx={{
+            maxHeight: "calc(100vh - 200px)",
+          }}
+        >
           <Table stickyHeader>
             <colgroup>
               <col style={{ width: "20%" }} />
