@@ -57,9 +57,6 @@ export default function ProjectDetail() {
             </Button>
           </Grid>
         </Grid>
-        <h1>Notification Config</h1>
-        <br/>
-        <br/>
         <CollapsibleTable notificationConfigs={notificationConfigList} />
         <Button onClick={handleBackButton}>Back</Button>
       </Container>

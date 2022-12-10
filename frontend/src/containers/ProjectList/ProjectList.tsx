@@ -9,8 +9,9 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Link
 } from "@mui/material";
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -79,9 +80,6 @@ export default function ProjectListTable() {
             </Button>
           </Grid>
         </Grid>
-        <h1>Project</h1>
-        <br/>
-        <br/>
         <Card>
           <Scrollbar>
             <Table
@@ -115,8 +113,8 @@ export default function ProjectListTable() {
                         <TableCell>
                           <Container>{id}</Container>
                         </TableCell>
-                        <TableCell onClick={() => handleClickRow(id)}>
-                          <Container>{name}</Container>
+                        <TableCell>
+                          <Container><Link href="#" underline="hover" onClick={() => handleClickRow(id)}>{name}</Link></Container>
                         </TableCell>
                         <TableCell>
                           <Container>

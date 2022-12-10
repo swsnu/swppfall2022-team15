@@ -10,6 +10,7 @@ describe("NotificationTypeStep", () => {
         notificationType="EMAIL"
         setNotificationType={() => {}}
         error=""
+        setError={() => {}}
       />
     );
   });
@@ -20,6 +21,7 @@ describe("NotificationTypeStep", () => {
         notificationType="SMS"
         setNotificationType={() => {}}
         error=""
+        setError={() => {}}
       />
     );
   });
@@ -30,6 +32,7 @@ describe("NotificationTypeStep", () => {
         notificationType="SLACK"
         setNotificationType={() => {}}
         error=""
+        setError={() => {}}
       />
     );
   });
@@ -40,6 +43,7 @@ describe("NotificationTypeStep", () => {
         notificationType="EMAIL"
         setNotificationType={() => {}}
         error=""
+        setError={() => {}}
       />,
       {
         preloadedState: {
