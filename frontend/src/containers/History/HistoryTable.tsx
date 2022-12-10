@@ -111,7 +111,7 @@ export default function HistoryTable() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(fetchAllNotifications());
-  })
+  }, [])
   const notifications = fakeData;
 
   return (

@@ -82,12 +82,12 @@ export default function ProjectListTable() {
         </Grid>
         <Card>
           <Scrollbar>
-            <TableContainer
+            <Table
               sx={{
-                maxHeight: "calc(100vh - 150px)",
+                minHeight: 800,
+                maxHeight: "calc(100vh - 200px)",
               }}
             >
-              <Table stickyHeader>
                 <TableHead>
                   <TableRow>
                     <TableCell>
@@ -137,8 +137,8 @@ export default function ProjectListTable() {
                     );
                   })}
                 </TableBody>
-              </Table>
-            </TableContainer>
+\
+            </Table>
           </Scrollbar>
         </Card>
       </Container>

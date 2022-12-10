@@ -75,7 +75,7 @@ export default function MessageListTable() {
 
   function renderTable() {
     return (
-      <Box sx={{ "margin-bottom": "20px" }}>
+      <Box>
         <DynamicTable
           columns={getMessageColumns(notificationType)}
           keys={getMessageKeys(notificationType)}
@@ -110,13 +110,12 @@ export default function MessageListTable() {
             </Button>
           </Grid>
         </Grid>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Box>
           <Tabs
             value={selectedTab}
             onChange={(e, newValue) => {
               setSelectedTab(newValue);
             }}
-            aria-label="basic tabs example"
           >
             <Tab
               icon={<Iconify icon={"la:slack"} />}

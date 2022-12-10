@@ -1,4 +1,8 @@
-.projectDetailButton {
+.projectDetailList {
     padding-top: 40px;
     padding-bottom: 20px;
+}
+
+.projectDetailButton {
+    padding-top: 20px;
 }

@@ -106,9 +106,8 @@ export default function TargetListTable() {
 
   function renderTable() {
     return (
-      <Box sx={{ "margin-bottom": "20px" }}>
+      <Box>
         <DynamicTable
-          data-testid="menu-button"
           columns={getTargetColumns(notificationType)}
           keys={getTargetKeys(notificationType)}
           rows={targets.filter(
@@ -146,13 +145,12 @@ export default function TargetListTable() {
             </Button>
           </Grid>
         </Grid>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Box>
           <Tabs
             value={selectedTab}
             onChange={(e, newValue) => {
               setSelectedTab(newValue);
             }}
-            aria-label="basic tabs example"
           >
             <Tab
               icon={<Iconify icon={"la:slack"} />}
