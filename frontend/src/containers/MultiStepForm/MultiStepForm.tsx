@@ -2,8 +2,7 @@ import {useNavigate} from "react-router-dom";
 import MessageStep from "./MessageStep";
 import TargetUserStep from "./TargetUserStep";
 import ReservationStep from "./ReservationStep";
-import * as React from "react";
-import {useState} from "react";
+import {useState, Fragment} from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stepper from "@mui/material/Stepper";
@@ -20,11 +19,12 @@ export default function MultiStepForm() {
   const navigate = useNavigate();
 
   // State
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set<number>());
+  const [activeStep, setActiveStep] = useState(0);
+  const [skipped, setSkipped] = useState(new Set<number>());
+  const [error, setError] = useState("");
 
   // Notification
-  const [notificationType, setNotificationType] = React.useState("");
+  const [notificationType, setNotificationType] = useState("");
 
   // Message
   const [message, setMessage] = useState<MessageType | null>(null);
@@ -34,7 +34,7 @@ export default function MultiStepForm() {
   const [fieldErrors, setFieldErrors] = useState<any>({});
 
   // Target
-  const [targetUsers, setTargetUsers] = React.useState<TargetUserIdNameDto[]>(
+  const [targetUsers, setTargetUsers] = useState<TargetUserIdNameDto[]>(
     []
   );
   // for create
@@ -48,6 +48,7 @@ export default function MultiStepForm() {
 
   const handleNext = () => {
     if (!notificationType) {
+      setError("Notification Type is required");
       return
     }
 
@@ -100,12 +101,13 @@ export default function MultiStepForm() {
             );
           })}
         </Stepper>
-        <React.Fragment>
+        <Fragment>
           <br />
           {activeStep === 0 && (
             <NotificationTypeForm
               notificationType={notificationType}
               setNotificationType={setNotificationType}
+              error={error}
             />
           )}
           {activeStep === 1 ? (
@@ -161,7 +163,7 @@ export default function MultiStepForm() {
               </Button>
             )}
           </Box>
-        </React.Fragment>
+        </Fragment>
       </Grid>
       <Grid xs></Grid>
     </Grid>
