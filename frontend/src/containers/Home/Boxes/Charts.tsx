@@ -13,7 +13,7 @@ interface IProps {
   selectedType: number;
 }
 
-const types = ["Slack", "Email", "HTTP", "SMS"];
+const types = ["WEBHOOK", "Email", "SMS", "SLACK"];
 
 export default function Charts(props: IProps) {
   const projects = useSelector(projectListSelector);
@@ -78,7 +78,7 @@ export default function Charts(props: IProps) {
   }
 
   function getAll() {
-    return shortenNumber(0);
+    return shortenNumber(getTotal());
   }
 
   function getNumberByProject() {
