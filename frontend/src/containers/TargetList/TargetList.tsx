@@ -11,6 +11,7 @@ import { Container } from "@mui/system";
 import "./TargetList.css";
 import DynamicTable from "../../components/Message/DynamicTable";
 import {
+  defaultInDepthFieldParser,
   getTargetColumns,
   getTargetKeys,
 } from "../../components/Message/utils/dyanamicTableUtils";
@@ -101,7 +102,7 @@ export default function TargetListTable() {
           return "No Authentication";
       }
     }
-    return target[fieldName];
+    return defaultInDepthFieldParser(fieldName, target);
   };
 
   function renderTable() {
@@ -145,7 +146,10 @@ export default function TargetListTable() {
             </Button>
           </Grid>
         </Grid>
-        <Box>
+        <h1>Targets</h1>
+        <br/>
+        <br/>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={selectedTab}
             onChange={(e, newValue) => {
