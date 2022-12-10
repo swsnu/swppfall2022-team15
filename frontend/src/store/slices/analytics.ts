@@ -27,6 +27,7 @@ function initializeDailyData() {
 function initializeWeeklyData() {
   const weeklyData: DataHash = {};
   for (let i = 15; i >= 0; i--) {
+    //TODO: fix this to YYYY-MM-(firstdayofweek)
     const date = moment().subtract(i, "weeks").format("YYYY-MM-DD");
     weeklyData[date] = 0;
   }
@@ -37,6 +38,7 @@ function initializeWeeklyData() {
 function initializeMonthlyData() {
   const monthlyData: DataHash = {};
   for (let i = 12; i >= 0; i--) {
+    //TODO: fix this to YYYY-MM-01
     const date = moment().subtract(i, "months").format("YYYY-MM-DD");
     monthlyData[date] = 0;
   }
@@ -117,6 +119,7 @@ export const AnalyticsSlice = createSlice({
       for (let i = 0; i < action.payload.length; i++) {
         const data = action.payload[i];
         const time = action.payload[i].time.split(" ")[0];
+        console.log(time);
         if (data.status === "SUCCESS") {
           state.barLineData.Success[time] += data.count;
         } else if (data.status === "FAILURE") {

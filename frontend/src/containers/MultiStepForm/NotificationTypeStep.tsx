@@ -1,21 +1,24 @@
 import { MenuItem, Select } from "@mui/material";
-import { EnumNotificationType, EnumProjectType } from "../../Enums";
-import { useSelector } from "react-redux";
-import { projectSelect } from "../../store/slices/project";
+import { EnumNotificationType } from "../../Enums";
+import { Typography } from "@mui/material";
 
 interface IProps {
   notificationType: string;
   setNotificationType: (notificationType: string) => void;
+  error: string | null;
 }
 
 export default function NotificationTypeForm(props: IProps) {
-    return (
+  return (
+    <>
       <Select
+        sx={{ mt: 2 }}
         fullWidth={true}
         value={props.notificationType}
-        onChange={(event) =>
-          props.setNotificationType(event.target.value as string)
-        }
+        onChange={(event) => {
+          props.setNotificationType(event.target.value as string);
+          props.error = null;
+        }}
         data-testid="notification-type-select"
       >
         <MenuItem value={EnumNotificationType.WEBHOOK}>WEBHOOK</MenuItem>
@@ -23,5 +26,11 @@ export default function NotificationTypeForm(props: IProps) {
         <MenuItem value={EnumNotificationType.SMS}>SMS</MenuItem>
         <MenuItem value={EnumNotificationType.SLACK}>SLACK</MenuItem>
       </Select>
-    );
+      {props.error && (
+        <Typography color="error" variant="body2">
+          {props.error}
+        </Typography>
+      )}
+    </>
+  );
 }
