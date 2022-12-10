@@ -6,7 +6,6 @@ describe("<TargetUserMultiSelect />", () => {
   it("should render", () => {
     renderWithProviders(
       <TargetUserMultiSelect
-        notification_type="webhook"
         selected={[]}
         setSelected={() => {}}
         targetUsers={[]}
@@ -18,7 +17,6 @@ describe("<TargetUserMultiSelect />", () => {
     const setSelected = jest.fn();
     renderWithProviders(
       <TargetUserMultiSelect
-        notification_type="webhook"
         selected={[{ label: "test", value: 1 }]}
         setSelected={setSelected}
         targetUsers={[]}

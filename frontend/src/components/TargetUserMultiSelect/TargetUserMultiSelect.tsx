@@ -5,14 +5,13 @@ import Iconify from "../Iconify/Iconify";
 import {TargetType, TargetUserIdNameDto} from "../../types";
 
 interface IProps {
-  notification_type: string;
   selected: TargetUserIdNameDto[];
   setSelected: (selected: TargetUserIdNameDto[]) => void;
   targetUsers: TargetType[];
 }
 
 export default function TargetUserMultiSelect(props: IProps) {
-  const {targetUsers, selected, setSelected, notification_type} = props;
+  const {targetUsers, selected, setSelected} = props;
   const [options, setOptions]: any = useState([]);
 
   useEffect(() => {
