@@ -77,7 +77,7 @@ export default function ProjectListTable() {
           <Scrollbar>
             <TableContainer
               sx={{
-                maxHeight: "calc(100vh - 200px)",
+                maxHeight: "calc(100vh - 150px)",
               }}
             >
               <Table stickyHeader>
