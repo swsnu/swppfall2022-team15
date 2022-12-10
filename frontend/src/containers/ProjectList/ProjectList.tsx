@@ -83,10 +83,18 @@ export default function ProjectListTable() {
               <Table stickyHeader>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Id</TableCell>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Type</TableCell>
-                    <TableCell>Most Recently Sent Notification</TableCell>
+                    <TableCell>
+                      <Container>Id</Container>
+                    </TableCell>
+                    <TableCell>
+                      <Container>Name</Container>
+                    </TableCell>
+                    <TableCell>
+                      <Container>Type</Container>
+                    </TableCell>
+                    <TableCell>
+                      <Container>Most Recently Sent Notification</Container>
+                    </TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -95,27 +103,24 @@ export default function ProjectListTable() {
                     const { id, name, project_type } = row;
                     return (
                       <TableRow hover key={id} tabIndex={-1}>
-                        <TableCell
-                          align="left"
-                          onClick={() => handleClickRow(id)}
-                        >
-                          {id}
+                        <TableCell>
+                          <Container>{id}</Container>
                         </TableCell>
-                        <TableCell
-                          align="left"
-                          onClick={() => handleClickRow(id)}
-                        >
-                          {name}
+                        <TableCell onClick={() => handleClickRow(id)}>
+                          <Container>{name}</Container>
                         </TableCell>
-                        <TableCell align="left">
-                          <Label
-                            color={
-                              (project_type === "ORGANIZATION" && "primary") ||
-                              "secondary"
-                            }
-                          >
-                            {project_type}
-                          </Label>
+                        <TableCell>
+                          <Container>
+                            <Label
+                              color={
+                                (project_type === "ORGANIZATION" &&
+                                  "primary") ||
+                                "secondary"
+                              }
+                            >
+                              {project_type}
+                            </Label>
+                          </Container>
                         </TableCell>
 
                         <TableCell align="right">
