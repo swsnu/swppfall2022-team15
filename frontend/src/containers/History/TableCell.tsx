@@ -7,7 +7,7 @@ import {
   MenuItem,
 } from "@mui/material";
 
-import Iconify from "../../components/Iconify/Iconify";
+import { Icon, InlineIcon } from "@iconify/react";
 
 interface tuple {
   object: string;
@@ -48,14 +48,7 @@ export default function HistoryTableHeadCell(props: IProps) {
     <>
       <TableCell onClick={props.handleOpen} data-testid={`click ${props.title}`}>
         <Container>
-          <Grid container>
-            <Grid item xs={10} sm={10} md={8} lg={3}>
-              {props.title}
-            </Grid>
-            <Grid item xs={2} sm={2} md={4} lg={9}>
-              <Iconify icon="material-symbols:filter-list" />
-            </Grid>
-          </Grid>
+          <p>{props.title} <InlineIcon icon="material-symbols:filter-list"/></p>
         </Container>
       </TableCell>
       <Menu
