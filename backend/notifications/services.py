@@ -25,22 +25,36 @@ logger = getLogger(__name__)
 
 
 @app.task
-def task_send_api_notification(notification: dict):
+def task_send_api_notification(notification: NotificationTaskDto):
     """Send a notification to the notification service."""
+
+    request_data = notification['data']
+    url = notification['endpoint']
+    headers = notification['headers']
+
+    response = requests.post(
+        url=url,
+        json=request_data,
+        headers=headers,
+        timeout=5,
+    )
     try:
-        response = requests.post(
-            url=notification['endpoint'],
-            json=notification['data'],
-            headers=notification['headers'],
-            timeout=5,
-        )
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
-        raise NotificationServiceException from e
+        logger.info(response.text)
+        notification = Notification.objects.filter(pk=notification['id'])
+        notification.update_result(EnumNotificationStatus.FAILURE, response.status_code, response.text)
 
+        return
 
-class ApiNotificationDto(TypedDict):
+    notification = Notification.objects.get(id=notification['id'])
+    notification.update_result(EnumNotificationStatus.SUCCESS, response.status_code, response.text)
+
+    return
+
+class NotificationTaskDto(TypedDict):
     """Data transfer object for notifications."""
+    id: int
     endpoint: str
     headers: dict
     data: str
@@ -77,7 +91,8 @@ def task_handle_chunk_notification(notification_ids: list[int]):
     for notification in notifications:
         # TODO 하나의 클래스로 추상화 해서 바로 던지는 게 좋을 듯
         if notification.reservation.notification_config.type == EnumNotificationType.WEBHOOK:
-            data = ApiNotificationDto(
+            data = NotificationTaskDto(
+                id=notification.id,
                 endpoint=notification.target_user.endpoint,
                 headers=notification.target_user.data,
                 data=notification.reservation.notification_config.nmessage.data,
@@ -88,11 +103,13 @@ def task_handle_chunk_notification(notification_ids: list[int]):
                 SlackNotificationSerializer(notification).data
             )
         elif notification.reservation.notification_config.type == EnumNotificationType.SMS:
-            data = notification.reservation.notification_config.nmessage.data
-            message = data.get("message")
-            endpoint = notification.target_user.endpoint
-            task_send_sms_notification.delay(message, endpoint)
-
+            data = NotificationTaskDto(
+                id=notification.id,
+                endpoint=notification.target_user.endpoint,
+                headers=notification.target_user.data,
+                data=notification.reservation.notification_config.nmessage.data.get('data'),
+            )
+            task_send_sms_notification.delay(data)
 
 
 @app.task
