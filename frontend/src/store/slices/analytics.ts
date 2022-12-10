@@ -118,13 +118,13 @@ export const AnalyticsSlice = createSlice({
         const data = action.payload[i];
         const time = action.payload[i].time.split(" ")[0];
         if (data.status === "SUCCESS") {
-          state.barLineData.Success[time] = data.count;
+          state.barLineData.Success[time] += data.count;
         } else if (data.status === "FAILURE") {
-          state.barLineData.Failure[time] = data.count;
+          state.barLineData.Failure[time] += data.count;
         } else {
-          state.barLineData.Pending[time] = data.count;
+          state.barLineData.Pending[time] += data.count;
         }
-        state.barLineData.Total[time] = data.count;
+        state.barLineData.Total[time] += data.count;
       }
       state.barlineType = "daily";
     });
@@ -133,13 +133,13 @@ export const AnalyticsSlice = createSlice({
         const data = action.payload[i];
         const time = action.payload[i].time.split(" ")[0];
         if (data.status === "SUCCESS") {
-          state.barLineData.Success[time] = data.count;
+          state.barLineData.Success[time] += data.count;
         } else if (data.status === "FAILURE") {
-          state.barLineData.Failure[time] = data.count;
+          state.barLineData.Failure[time] += data.count;
         } else {
-          state.barLineData.Pending[time] = data.count;
+          state.barLineData.Pending[time] += data.count;
         }
-        state.barLineData.Total[time] = data.count;
+        state.barLineData.Total[time] += data.count;
       }
       state.barlineType = "weekly";
     });
@@ -148,13 +148,13 @@ export const AnalyticsSlice = createSlice({
         const data = action.payload[i];
         const time = action.payload[i].time.split(" ")[0];
         if (data.status === "SUCCESS") {
-          state.barLineData.Success[time] = data.count;
+          state.barLineData.Success[time] += data.count;
         } else if (data.status === "FAILURE") {
-          state.barLineData.Failure[time] = data.count;
+          state.barLineData.Failure[time] += data.count;
         } else {
-          state.barLineData.Pending[time] = data.count;
+          state.barLineData.Pending[time] += data.count;
         }
-        state.barLineData.Total[time] = data.count;
+        state.barLineData.Total[time] += data.count;
       }
       state.barlineType = "monthly";
     });

@@ -50,13 +50,6 @@ export default function HistoryTableHead() {
       return;
     }
   };
-  function initializeProject() {
-    const projectList: tuple[] = [];
-    projects.forEach((project) => {
-      projectList.push({ object: project.name, checked: true });
-    });
-    setSelectedProjects(projectList);
-  }
 
   const [anchorElType, setAnchorElType] = useState<null | HTMLElement>(null);
   const openType = Boolean(anchorElType);
@@ -148,18 +141,25 @@ export default function HistoryTableHead() {
       return;
     }
   };
-  function initializeTarget() {
-    const targetList: tuple[] = [];
-    targets.forEach((target) => {
-      targetList.push({ object: target.name, checked: true });
-    });
-    setSelectedTargets(targetList);
-  }
 
   useEffect(() => {
+    function initializeProject() {
+      const projectList: tuple[] = [];
+      projects.forEach((project) => {
+        projectList.push({ object: project.name, checked: true });
+      });
+      setSelectedProjects(projectList);
+    }
+    function initializeTarget() {
+      const targetList: tuple[] = [];
+      targets.forEach((target) => {
+        targetList.push({ object: target.name, checked: true });
+      });
+      setSelectedTargets(targetList);
+    }
     initializeProject();
     initializeTarget();
-  }, []);
+  }, [projects, targets]);
 
   return (
     <TableHead>
