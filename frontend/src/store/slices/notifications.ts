@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { RootState } from "..";
 import { EnumNotificationStatus } from "../../Enums";
-import { NotificationHistoryType, NotificationType } from "../../types";
+import { NotificationType } from "../../types";
 
 export const fetchNotifications = createAsyncThunk(
   "notifications/fetchNotifications",
@@ -23,7 +23,7 @@ export const fetchAllNotifications = createAsyncThunk(
 
 export const createNotification = createAsyncThunk(
   "notifications/createNotification",
-  async(notification: {id: number, status: EnumNotificationStatus, message: string, reservedAt: string, type: string, history?: NotificationHistoryType[]}) => {
+  async(notification: {id: number, status: EnumNotificationStatus, message: string, reservedAt: string, type: string}) => {
     const response = await axios.post<NotificationType>("/api/notification/", notification);
     return response.data;
   }

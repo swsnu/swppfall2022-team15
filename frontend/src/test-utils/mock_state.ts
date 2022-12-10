@@ -29,14 +29,13 @@ const preloadedState: RootState = {
         message: "test",
         reservedAt: "2021-10-10T00:00:00Z",
         type: "test",
-        history: [],
       },
     ],
     selectedNotification: null,
   },
   notificationConfig: {
-    notificationConfigs: [
-    ],
+    notificationConfigs: [],
+    notificationConfigs_project: [],
     selectedNotificationConfig: null,
   },
   target: {
