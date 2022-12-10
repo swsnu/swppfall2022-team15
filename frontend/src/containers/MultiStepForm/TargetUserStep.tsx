@@ -10,7 +10,7 @@ import {
 import TargetUserMultiSelect from "../../components/TargetUserMultiSelect/TargetUserMultiSelect";
 import { TargetUserForm } from "../../components/Targets/TargetUserForm";
 import { FormWrapper } from "./FormWrapper";
-import { TargetType, TargetUserIdNameDto } from "../../types";
+import { TargetUserIdNameDto } from "../../types";
 import { EnumNotificationType } from "../../Enums";
 
 interface IProps {
@@ -60,7 +60,7 @@ export default function TargetUserStep(props: IProps) {
   const handleClickConfirm = async () => {
     if (
       (targetName && notificationType && endpoint) || // NON SLACK
-      (notificationType == EnumNotificationType.SLACK.toString() &&
+      (notificationType === EnumNotificationType.SLACK.toString() &&
         targetName &&
         "api_key" in data) // SLACK
     ) {
@@ -110,7 +110,7 @@ export default function TargetUserStep(props: IProps) {
       <TargetUserMultiSelect
         selected={targetUserIdNameList}
         setSelected={setTargetUserIdNameList}
-        targetUsers={targetState.targets.filter((target) => target.notification_type == notificationType)}
+        targetUsers={targetState.targets.filter((target) => target.notification_type === notificationType)}
       />
     </FormWrapper>
   );
