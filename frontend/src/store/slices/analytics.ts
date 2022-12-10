@@ -29,7 +29,10 @@ function initializeWeeklyData() {
   for (let i = 15; i >= 0; i--) {
     //TODO: fix this to YYYY-MM-(firstdayofweek)
     const today = moment();
-    const date = moment().subtract(i, "weeks").subtract(today.weekday()-1, "days").format("YYYY-MM-DD");
+    const date = moment()
+      .subtract(i, "weeks")
+      .subtract(today.weekday() - 1, "days")
+      .format("YYYY-MM-DD");
     weeklyData[date] = 0;
   }
 
@@ -56,7 +59,6 @@ export const getDailyData = createAsyncThunk(
         interval: "day",
       },
     });
-    console.log(response);
     return response.data;
   }
 );
@@ -71,7 +73,6 @@ export const getWeeklyData = createAsyncThunk(
         interval: "week",
       },
     });
-    console.log(response);
     return response.data;
   }
 );
@@ -86,7 +87,51 @@ export const getMonthlyData = createAsyncThunk(
         interval: "month",
       },
     });
-    console.log(response);
+    return response.data;
+  }
+);
+
+export const getDailyDataByProject = createAsyncThunk(
+  "analytics/getDailyDataByProject",
+  async (projectId: number) => {
+    const response = await axios.get("/api/notification/metrics/", {
+      params: {
+        start: moment().subtract(14, "days").format("YYYY-MM-DD"),
+        end: moment().format("YYYY-MM-DD"),
+        interval: "day",
+        projectId: projectId,
+      },
+    });
+    return response.data;
+  }
+);
+
+export const getWeeklyDataByProject = createAsyncThunk(
+  "analytics/getWeeklyDataByProject",
+  async (projectId: number) => {
+    const response = await axios.get("/api/notification/metrics/", {
+      params: {
+        start: moment().subtract(15, "weeks").format("YYYY-MM-DD"),
+        end: moment().format("YYYY-MM-DD"),
+        interval: "week",
+        projectId: projectId,
+      },
+    });
+    return response.data;
+  }
+);
+
+export const getMonthlyDataByProject = createAsyncThunk(
+  "analytics/getMonthlyDataByProject",
+  async (projectId: number) => {
+    const response = await axios.get("/api/notification/metrics/", {
+      params: {
+        start: moment().subtract(12, "months").format("YYYY-MM-01"),
+        end: moment().format("YYYY-MM-DD"),
+        interval: "month",
+        projectId: projectId,
+      },
+    });
     return response.data;
   }
 );
@@ -117,7 +162,25 @@ export const AnalyticsSlice = createSlice({
       for (let i = 0; i < action.payload.length; i++) {
         const data = action.payload[i];
         const time = action.payload[i].time.split(" ")[0];
-        console.log(time);
+        if (data.status === "SUCCESS") {
+          state.barLineData.Success[time] += data.count;
+        } else if (data.status === "FAILURE") {
+          state.barLineData.Failure[time] += data.count;
+        } else {
+          state.barLineData.Pending[time] += data.count;
+        }
+        state.barLineData.Total[time] += data.count;
+      }
+      state.barlineType = "daily";
+    });
+    builder.addCase(getDailyDataByProject.fulfilled, (state, action) => {
+      state.barLineData.Success = initializeDailyData();
+      state.barLineData.Failure = initializeDailyData();
+      state.barLineData.Pending = initializeDailyData();
+      state.barLineData.Total = initializeDailyData();
+      for (let i = 0; i < action.payload.length; i++) {
+        const data = action.payload[i];
+        const time = action.payload[i].time.split(" ")[0];
         if (data.status === "SUCCESS") {
           state.barLineData.Success[time] += data.count;
         } else if (data.status === "FAILURE") {
@@ -148,7 +211,45 @@ export const AnalyticsSlice = createSlice({
       }
       state.barlineType = "weekly";
     });
+    builder.addCase(getWeeklyDataByProject.fulfilled, (state, action) => {
+      state.barLineData.Success = initializeWeeklyData();
+      state.barLineData.Failure = initializeWeeklyData();
+      state.barLineData.Pending = initializeWeeklyData();
+      state.barLineData.Total = initializeWeeklyData();
+      for (let i = 0; i < action.payload.length; i++) {
+        const data = action.payload[i];
+        const time = action.payload[i].time.split(" ")[0];
+        if (data.status === "SUCCESS") {
+          state.barLineData.Success[time] += data.count;
+        } else if (data.status === "FAILURE") {
+          state.barLineData.Failure[time] += data.count;
+        } else {
+          state.barLineData.Pending[time] += data.count;
+        }
+        state.barLineData.Total[time] += data.count;
+      }
+      state.barlineType = "weekly";
+    });
     builder.addCase(getMonthlyData.fulfilled, (state, action) => {
+      state.barLineData.Success = initializeMonthlyData();
+      state.barLineData.Failure = initializeMonthlyData();
+      state.barLineData.Pending = initializeMonthlyData();
+      state.barLineData.Total = initializeMonthlyData();
+      for (let i = 0; i < action.payload.length; i++) {
+        const data = action.payload[i];
+        const time = action.payload[i].time.split(" ")[0];
+        if (data.status === "SUCCESS") {
+          state.barLineData.Success[time] += data.count;
+        } else if (data.status === "FAILURE") {
+          state.barLineData.Failure[time] += data.count;
+        } else {
+          state.barLineData.Pending[time] += data.count;
+        }
+        state.barLineData.Total[time] += data.count;
+      }
+      state.barlineType = "monthly";
+    });
+    builder.addCase(getMonthlyDataByProject.fulfilled, (state, action) => {
       state.barLineData.Success = initializeMonthlyData();
       state.barLineData.Failure = initializeMonthlyData();
       state.barLineData.Pending = initializeMonthlyData();

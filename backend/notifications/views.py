@@ -61,10 +61,21 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
         end_time = request.query_params.get('end')
 
         interval = request.query_params.get('interval')
+        
+        projectId = request.query_params.get('projectId')
+        noti_type = request.query_params.get('type')
 
         metrics = Notification.objects.select_related('reservation__notification_config').filter(
             updated_at__range=(start_time, end_time)
-        ).annotate(
+        )
+
+        if projectId:
+            metrics = metrics.filter(reservation__notification_config__project_id=projectId)
+            
+        if noti_type:
+            metrics = metrics.filter(reservation__notification_config__type=noti_type)
+
+        metrics.annotate(
             time=Trunc('updated_at', interval),
             project=F('reservation__notification_config__project_id'),
         ).values('status', 'time', 'project').annotate(
