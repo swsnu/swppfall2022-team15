@@ -54,7 +54,6 @@ describe("Charts", () => {
                 message: "test",
                 reservedAt: "2022-12-01T00:00:00.000Z",
                 type: "SLACK",
-                history: [],
               },
               {
                 id: 2,
@@ -62,7 +61,7 @@ describe("Charts", () => {
                 message: "test",
                 reservedAt: "2022-12-01T00:00:00.000Z",
                 type: "SLACK",
-                history: [],
+
               },
               {
                 id: 3,
@@ -70,7 +69,6 @@ describe("Charts", () => {
                 message: "test",
                 reservedAt: "2022-12-01T00:00:00.000Z",
                 type: "SLACK",
-                history: [],
               },
             ],
             selectedNotification: null,

@@ -8,12 +8,12 @@ export type ProjectType = {
 };
 
 export type NotificationConfigType = {
-    id: number;
-    project: number;
-    message: number
-    type: string;
-    rrule: string;
-}
+  id: number;
+  project: number;
+  message: number;
+  type: string;
+  rrule: string;
+};
 
 export type NotificationType = {
   id: number;
@@ -21,27 +21,19 @@ export type NotificationType = {
   message: string; // FIXME(Given) : rename to data?
   reservedAt: string;
   type: string;
-  history?: NotificationHistoryType[];
 };
 
 export type NotificationConfigCreateDto = {
-      project: number,
-      type: string
-      rrule: string,
-      message: number
-      target_users: number[]
-    };
+  project: number;
+  type: string;
+  rrule: string;
+  message: number;
+  target_users: number[];
+};
 
 export type ReservationType = {
   id: number;
   reservation: string;
-};
-
-export type NotificationHistoryType = {
-  id: number;
-  endpoint: string;
-  date: string;
-  status: EnumNotificationStatus;
 };
 
 export interface TargetType {
