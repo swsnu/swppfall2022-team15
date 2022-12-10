@@ -1,4 +1,5 @@
 import { Table, TableBody, TableCell, TableRow, Card } from "@mui/material";
+import { Grid } from "@material-ui/core";
 import { Container } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -8,6 +9,7 @@ import { fetchAllNotifications, notificationListSelector } from "../../store/sli
 import { useEffect } from "react";
 import { AppDispatch } from "../../store";
 
+import "./HistoryTable.css"
 
 const fakeData = [
   {
@@ -115,6 +117,11 @@ export default function HistoryTable() {
   return (
     <>
       <Container>
+        <Grid container justifyContent="space-between" className="HistoryTitle">
+          <Grid item>
+            <h2>History</h2>
+          </Grid>
+        </Grid>
         <Card>
           <Scrollbar>
             <Table>

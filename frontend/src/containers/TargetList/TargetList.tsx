@@ -1,5 +1,5 @@
 import { Box, Button, MenuItem, Popover, Tab, Tabs } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
+import { Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Iconify from "../../components/Iconify/Iconify";
@@ -112,7 +112,7 @@ export default function TargetListTable() {
           columns={getTargetColumns(notificationType)}
           keys={getTargetKeys(notificationType)}
           rows={targets.filter(
-            (target) => target.notification_type == notificationType
+            (target) => target.notification_type === notificationType
           )}
           handleOpenMenu={handleOpenMenu}
           onClickRow={handleRowClick}
@@ -131,12 +131,20 @@ export default function TargetListTable() {
           setCreateModalOpen(false);
         }}
         targetId={targetId}
-      ></TargetCreateModal>
-      <Container maxWidth="xl">
-        <Grid container justifyContent="flex-end" className="targetButton">
-          <Button data-testid="create-button" onClick={handleClickCreateButton}>
-            New Target
-          </Button>
+      />
+      <Container maxWidth="xl" className="targetList">
+        <Grid container justifyContent="space-between">
+          <Grid item>
+            <h2>{"Targets"}</h2>
+          </Grid>
+          <Grid item className="targetButton">
+            <Button
+              data-testid="create-button"
+              onClick={handleClickCreateButton}
+            >
+              New Target
+            </Button>
+          </Grid>
         </Grid>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
