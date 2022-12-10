@@ -54,6 +54,9 @@ export default function ProjectDetail() {
             NEW RESERVATION
           </Button>
         </Grid>
+        <h1>Notification Config</h1>
+        <br/>
+        <br/>
         <CollapsibleTable notificationConfigs={notificationConfigList} />
       </Container>
     </>

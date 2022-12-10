@@ -1,6 +1,6 @@
 import { Box, Button, MenuItem, Popover, Tab, Tabs } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Iconify from "../../components/Iconify/Iconify";
 
@@ -103,6 +103,9 @@ export default function MessageListTable() {
             New Message
           </Button>
         </Grid>
+        <h1>Messages</h1>
+        <br/>
+        <br/>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={selectedTab}

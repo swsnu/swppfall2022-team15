@@ -138,6 +138,9 @@ export default function TargetListTable() {
             New Target
           </Button>
         </Grid>
+        <h1>Targets</h1>
+        <br/>
+        <br/>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={selectedTab}
