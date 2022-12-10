@@ -21,6 +21,7 @@ export default function TargetListTable() {
   const [selectedTab, setSelectedTab] = useState(0);
   const [notificationType, setNotificationType] = useState("");
   const [showState, setShowState] = useState<number[]>([]);
+  const [targetId, setTargetId]: any = useState(null);
 
   useEffect(() => {
     const getNotificationType = (type: number) => {
