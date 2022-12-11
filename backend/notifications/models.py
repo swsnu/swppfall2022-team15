@@ -70,7 +70,6 @@ class Notification(TimeStampedModel):
 
 
 class Reservation(TimeStampedModel):
-    notification_config = \
-        models.ForeignKey('notifications.NotificationConfig', on_delete=models.CASCADE)
+    notification_config = models.ForeignKey('notifications.NotificationConfig', on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=EnumReservationStatus.choices)
     reserved_at = models.DateTimeField()
