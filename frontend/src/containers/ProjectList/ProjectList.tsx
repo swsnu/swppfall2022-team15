@@ -9,6 +9,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  TablePagination,
   Link,
 } from "@mui/material";
 import { Grid, TableContainer } from "@material-ui/core";
@@ -28,12 +29,10 @@ import "./ProjectList.css";
 export default function ProjectListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
   const [createModalopen, setCreateModalOpen] = useState(false);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const navigate = useNavigate();
-
-  const handleOpenMenu = (event: any) => {
-    setOpen(event.currentTarget);
-  };
 
   const handleCloseMenu = () => {
     setOpen(null);
@@ -46,6 +45,16 @@ export default function ProjectListTable() {
     dispatch(fetchProjects());
   };
 
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(fetchProjects());
+  }, [dispatch]);
+  const projects = useSelector(projectListSelector);
+
+  const handleOpenMenu = (event: any) => {
+    setOpen(event.currentTarget);
+  };
+
   const handleClickCreateButton = (event: React.MouseEvent) => {
     setCreateModalOpen(true);
   };
@@ -54,11 +63,16 @@ export default function ProjectListTable() {
     navigate(`/projects/${id}`);
   };
 
-  const dispatch = useDispatch<AppDispatch>();
-  useEffect(() => {
-    dispatch(fetchProjects());
-  }, [dispatch]);
-  const projects = useSelector(projectListSelector);
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
   return (
     <>
@@ -84,7 +98,7 @@ export default function ProjectListTable() {
           <Scrollbar>
             <TableContainer
               style={{
-                maxHeight: "calc(100vh - 200px)",
+                maxHeight: "calc(90vh - 200px)",
               }}
             >
               <Table>
@@ -103,49 +117,60 @@ export default function ProjectListTable() {
                 </TableHead>
 
                 <TableBody>
-                  {projects.map((row) => {
-                    const { id, name } = row;
-                    return (
-                      <TableRow hover key={id} tabIndex={-1}>
-                        <TableCell>
-                          <Container>
-                            <Link
-                              href="#"
-                              underline="hover"
-                              onClick={() => handleClickRow(id)}
-                            >
-                              {name}
-                            </Link>
-                          </Container>
-                        </TableCell>
-                        <TableCell>
-                          <Container>
-                            {"NEED API: Number of Requests"}
-                          </Container>
-                        </TableCell>
-                        <TableCell>
-                          <Container>
-                            {"NEED API: Most Recently Sent Notification"}
-                          </Container>
-                        </TableCell>
+                  {projects
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row) => {
+                      const { id, name } = row;
+                      return (
+                        <TableRow hover key={id} tabIndex={-1}>
+                          <TableCell>
+                            <Container>
+                              <Link
+                                href="#"
+                                underline="hover"
+                                onClick={() => handleClickRow(id)}
+                              >
+                                {name}
+                              </Link>
+                            </Container>
+                          </TableCell>
+                          <TableCell>
+                            <Container>
+                              {"NEED API: Number of Requests"}
+                            </Container>
+                          </TableCell>
+                          <TableCell>
+                            <Container>
+                              {"NEED API: Most Recently Sent Notification"}
+                            </Container>
+                          </TableCell>
 
-                        <TableCell align="right">
-                          <IconButton
-                            size="large"
-                            color="inherit"
-                            onClick={handleOpenMenu}
-                            data-id={id}
-                            data-testid="icon-button"
-                          >
-                            <Iconify icon={"eva:more-vertical-fill"} />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                          <TableCell align="right">
+                            <IconButton
+                              size="large"
+                              color="inherit"
+                              onClick={handleOpenMenu}
+                              data-id={id}
+                              data-testid="icon-button"
+                            >
+                              <Iconify icon={"eva:more-vertical-fill"} />
+                            </IconButton>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
                 </TableBody>
               </Table>
             </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={projects.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
           </Scrollbar>
         </Card>
       </Container>
