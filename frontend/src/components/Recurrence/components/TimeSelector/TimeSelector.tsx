@@ -28,7 +28,7 @@ const TimeSelector = () => {
         endTime: null
       })
     }
-  }, [recurrence.isAllDay])
+  }, [recurrence.isAllDay, onFieldsChange])
 
   return (
     <div>

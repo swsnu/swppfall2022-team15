@@ -1,4 +1,4 @@
-import { Box, Card, CardHeader, Paper, Typography } from "@mui/material";
+import { Box, Card, CardHeader, Typography } from "@mui/material";
 import ReactApexChart from "react-apexcharts";
 
 interface IProps {

@@ -3,7 +3,6 @@ import React, { useState } from "react";
 
 export default function User() {
     const [username, setUsername] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
 
     const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(event.target.value);

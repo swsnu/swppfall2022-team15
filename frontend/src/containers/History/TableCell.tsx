@@ -1,13 +1,12 @@
 import {
   TableCell,
   Container,
-  Grid,
   Menu,
   Checkbox,
   MenuItem,
 } from "@mui/material";
 
-import { Icon, InlineIcon } from "@iconify/react";
+import { InlineIcon } from "@iconify/react";
 
 interface tuple {
   object: string;

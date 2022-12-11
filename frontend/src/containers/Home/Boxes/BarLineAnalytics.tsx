@@ -92,7 +92,7 @@ export default function BarLineAnalytics(props: IProps) {
       }
     };
     handleTypeChange();
-  }, [type, dispatch, props]);
+  }, [type, dispatch, projectState, props.noti_type, props.type]);
   useEffect(() => {
     function getData() {
       let success = [];

@@ -1,11 +1,19 @@
 import { Grid } from '@material-ui/core';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { green, red, blue } from "@mui/material/colors";
+import { useEffect, useState } from "react";
+import moment from "moment";
 
 import BarLineChart from "./BarLineAnalytics";
 import PieChart from "./PieChart";
-import { projectListSelector, projectSelect } from "../../../store/slices/project";
-import { notificationListSelector } from '../../../store/slices/notifications';
+import { projectSelect } from "../../../store/slices/project";
+import {
+  analyticsSelector,
+  getMonthlyData,
+  getMonthlyDataByProject,
+  getMonthlyDataByType
+} from "../../../store/slices/analytics";
+import { AppDispatch } from '../../../store';
 
 interface IProps {
   selectedTab: number;
@@ -16,42 +24,73 @@ interface IProps {
 const types = ["WEBHOOK", "Email", "SMS", "SLACK"];
 
 export default function Charts(props: IProps) {
-  const projects = useSelector(projectListSelector);
-  const selectedProject = useSelector(projectSelect);
-  const notifications = useSelector(notificationListSelector);
+  const projectState = useSelector(projectSelect).selectedProject;
+  const analyticsData = useSelector(analyticsSelector);
 
-  function getSuccess() {
-    var count = 0;
-    for(let i = 0; i < notifications.length; i++) {
-      if (notifications[i].status === "SUCCESS") {
-        count++;
+  const [Success, setSuccess] = useState(0);
+  const [Failure, setFailure] = useState(0);
+  const [Upcoming, setUpcoming] = useState(0);
+  const [Total, setTotal] = useState(0);
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    const handleTabChange = async () => {
+      //일단 getMonthly로 함
+      if (props.selectedTab === 0) {
+        await dispatch(getMonthlyData());
+      } else if (props.selectedTab === 1) {
+        if(projectState) {
+          await dispatch(getMonthlyDataByProject(projectState.id));
+        }
+      } else {
+        await dispatch(getMonthlyDataByType(types[props.selectedType]));
       }
     }
+    handleTabChange();
+  }, [dispatch, props.selectedTab, props.selectedType, projectState])
+  useEffect(() => {
+    function getData() {
+      let success = 0;
+      let failure = 0;
+      let upcoming = 0;
+      let total = 0;
 
-    return count;
-  }
-
-  function getFailure() {
-    var count = 0;
-    for(let i = 0; i < notifications.length; i++) {
-      if (notifications[i].status === "FAILURE") {
-        count++;
+      if (analyticsData.barlineType === "daily") {
+        for (let i = 14; i >= 0; i--) {
+          const date = moment().subtract(i, "days").format("YYYY-MM-DD");
+          success += analyticsData.barLineData.Success[date];
+          failure += analyticsData.barLineData.Failure[date];
+          upcoming += analyticsData.barLineData.Pending[date];
+          total += analyticsData.barLineData.Total[date];
+        }
+      } else if (analyticsData.barlineType === "weekly") {
+        for (let i = 15; i >= 0; i--) {
+          const today = moment();
+          const date = moment().subtract(i, "weeks").subtract(today.weekday()-1, "days").format("YYYY-MM-DD");
+          success += analyticsData.barLineData.Success[date];
+          failure += analyticsData.barLineData.Failure[date];
+          upcoming += analyticsData.barLineData.Pending[date];
+          total += analyticsData.barLineData.Total[date];
+        }
+      } else {
+        for (let i = 12; i >= 0; i--) {
+          const date = moment().subtract(i, "months").format("YYYY-MM-01");
+          success += analyticsData.barLineData.Success[date];
+          failure += analyticsData.barLineData.Failure[date];
+          upcoming += analyticsData.barLineData.Pending[date];
+          total += analyticsData.barLineData.Total[date];
+        }
       }
+
+      setSuccess(success);
+      setFailure(failure);
+      setUpcoming(upcoming);
+      setTotal(total);
     }
-
-    return count;
-  }
-
-  function getUpcoming() {
-    var count = 0;
-    for(let i = 0; i < notifications.length; i++) {
-      if (notifications[i].status === "PENDING") {
-        count++;
-      }
-    }
-
-    return count;
-  }
+    getData();
+  }, [analyticsData])
+  
 
   function getTitle() {
     if (props.selectedTab === 0) {
@@ -59,7 +98,7 @@ export default function Charts(props: IProps) {
     } else if (props.selectedTab === 1) {
       return (
         "Notification status (" +
-        projects[props.selectedProject]?.name +
+        projectState?.name +
         ")"
       );
     } else {
@@ -69,28 +108,12 @@ export default function Charts(props: IProps) {
 
   function getSubheader() {
     if (props.selectedTab === 0) {
-      return "Total notification requests: " + getAll();
+      return "Total notification requests: " + shortenNumber(Total);
     } else if (props.selectedTab === 1) {
-      return "Total notification requests: " + getNumberByProject();
+      return "Total notification requests: " + shortenNumber(Total);
     } else {
-      return "Total notification requests: " + getNumberByType();
+      return "Total notification requests: " + shortenNumber(Total);
     }
-  }
-
-  function getAll() {
-    return shortenNumber(getTotal());
-  }
-
-  function getNumberByProject() {
-    return shortenNumber(0);
-  }
-
-  function getNumberByType() {
-    return shortenNumber(0);
-  }
-
-  function getTotal() {
-    return getSuccess() + getFailure() + getUpcoming();
   }
 
   function shortenNumber(value: number) {
@@ -107,7 +130,7 @@ export default function Charts(props: IProps) {
     if (props.selectedTab === 0) {
       return "Notification requests by time";
     } else if (props.selectedTab === 1) {
-      return projects[props.selectedProject]?.name + " notification requests by time"
+      return projectState?.name + " notification requests by time"
     } else {
       return types[props.selectedType] + " notification requests by time"
     }
@@ -122,10 +145,10 @@ export default function Charts(props: IProps) {
         <PieChart
           title={getTitle()}
           subheader={getSubheader()}
-          series={[getSuccess(), getFailure(), getUpcoming()]}
+          series={[Success, Failure, Upcoming]}
           labels={["Success", "Failure", "Pending"]}
           colors={[green[300], red[300], blue[300]]}
-          total={getTotal()}
+          total={Total}
         />
       </Grid>
     </>

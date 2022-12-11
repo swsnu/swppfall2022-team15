@@ -54,7 +54,7 @@ export default function MessageStep(props: IProps) {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(fetchMessages());
-  }, []);
+  }, [dispatch]);
 
   const messageState = useSelector(messageSelect);
   const messages = messageState.messages;
