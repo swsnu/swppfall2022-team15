@@ -1,5 +1,7 @@
 import { createStyles } from "@material-ui/core";
 
-export default () => {
+const dropdownStyle = () => {
   return createStyles({});
 };
+
+export default dropdownStyle;

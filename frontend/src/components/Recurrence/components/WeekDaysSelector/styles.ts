@@ -1,6 +1,6 @@
 import { createStyles, Theme } from "@material-ui/core";
 
-export default (theme: Theme) => {
+const WeekDayStyle = (theme: Theme) => {
   return createStyles({
     daysContainer: {
       display: "inline-flex",
@@ -33,3 +33,5 @@ export default (theme: Theme) => {
     },
   });
 };
+
+export default WeekDayStyle;

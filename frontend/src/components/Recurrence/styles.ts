@@ -1,6 +1,6 @@
 import { createStyles, Theme } from "@material-ui/core";
 
-export default (theme: Theme) => {
+const recurrenceStyle = (theme: Theme) => {
   return createStyles({
     root: {
       margin: theme.spacing(2),
@@ -10,3 +10,5 @@ export default (theme: Theme) => {
     },
   });
 };
+
+export default recurrenceStyle;

@@ -1,5 +1,7 @@
 import { createStyles } from "@material-ui/core";
 
-export default () => {
+const numberInputStyle = () => {
   return createStyles({});
 };
+
+export default numberInputStyle;

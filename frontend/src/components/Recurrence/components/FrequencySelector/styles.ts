@@ -1,6 +1,6 @@
 import { createStyles } from "@mui/material";
 
-export default () => {
+const FrequencyStyle = () => {
   return createStyles({
     frequency: {
       marginBottom: 10,
@@ -12,3 +12,5 @@ export default () => {
     weekDaysSelector: {},
   });
 };
+
+export default FrequencyStyle;

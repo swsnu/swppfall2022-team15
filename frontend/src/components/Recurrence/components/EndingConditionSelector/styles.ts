@@ -1,6 +1,6 @@
 import { createStyles } from "@material-ui/core";
 
-export default () => {
+const EndConditionStyle = () => {
   return createStyles({
     occurrencesNumber: {
       "& p": {
@@ -12,3 +12,5 @@ export default () => {
     endDate: {},
   });
 };
+
+export default EndConditionStyle;
