@@ -7,14 +7,13 @@ from typing import TypedDict
 import requests
 from django.utils import timezone
 
-from core.exceptions import NotificationServiceException
 from noti_manager.celery import app
 from notifications.models import (
     Notification,
     EnumNotificationStatus,
     EnumNotificationType,
     Reservation,
-    EnumReservationStatus, 
+    EnumReservationStatus,
     EnumNotificationMode,
 )
 from notifications.slack.serializers import SlackNotificationSerializer

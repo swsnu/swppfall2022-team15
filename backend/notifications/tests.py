@@ -57,8 +57,17 @@ class NotificationAPITestCase(APITestCase):
         start = timezone.now()
         end = start + timezone.timedelta(hours=1)
 
-        baker.make(Notification, status=EnumNotificationStatus.SUCCESS, updated_at=start, _quantity=2)
-        baker.make(Notification, status=EnumNotificationStatus.FAILURE, updated_at=end)
+        baker.make(
+            Notification,
+            status=EnumNotificationStatus.SUCCESS,
+            updated_at=start,
+            _quantity=2
+        )
+        baker.make(
+            Notification,
+            status=EnumNotificationStatus.FAILURE,
+            updated_at=end
+        )
 
         start_str = start.strftime('%Y-%m-%d')
         end_str = end.strftime('%Y-%m-%d')
