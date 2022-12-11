@@ -11,15 +11,15 @@
     height: 100%;
 }
 
+.titleBox {
+    background-color: #f9fafb;
+}
+
 .Icon {
     display: inline-block;
     margin-top: 20px;
     margin-bottom: 10px;
     color: #0080ff
-}
-
-.titleBox {
-    background-color: #f9fafb;
 }
 
 .userInfo {

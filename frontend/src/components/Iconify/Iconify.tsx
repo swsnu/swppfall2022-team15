@@ -14,7 +14,6 @@ const Iconify = forwardRef<any, any>(
     />
   )
 );
-
 Iconify.propTypes = {
   sx: PropTypes.object,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

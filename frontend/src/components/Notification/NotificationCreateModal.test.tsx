@@ -47,7 +47,6 @@ describe("NotificationCreateModal", () => {
     });
 
     const button = screen.getByTestId("confirm-button");
-
     act(() => {
       button.click();
     });

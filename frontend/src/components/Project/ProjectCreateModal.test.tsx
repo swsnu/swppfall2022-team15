@@ -31,7 +31,6 @@ describe("<ProjectCreateModal />", () => {
     fireEvent.change(typeInput, {
       target: { value: EnumProjectType.ORGANIZATION },
     });
-
     fireEvent.click(confirmButton);
   });
 });

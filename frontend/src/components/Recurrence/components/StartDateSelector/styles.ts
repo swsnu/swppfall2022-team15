@@ -1,5 +1,5 @@
-import { createStyles } from '@material-ui/core'
+import { createStyles } from "@material-ui/core";
 
 export default () => {
-  return createStyles({})
-}
+  return createStyles({});
+};

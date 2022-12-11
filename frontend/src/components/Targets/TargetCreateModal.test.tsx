@@ -31,6 +31,7 @@ describe("TargetCreateModal", () => {
     renderWithProviders(
       <TargetCreateModal open={true} handleClose={handleClick} />
     );
+    
     const select = screen.getByTestId("type-input");
     fireEvent.change(select, { target: { value: "SLACK" } });
 

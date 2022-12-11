@@ -26,6 +26,5 @@ describe("MessageTable", () => {
     );
 
     fireEvent.click(screen.getByText("col1"));
-
   });
 });

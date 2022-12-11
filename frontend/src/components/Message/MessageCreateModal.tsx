@@ -50,6 +50,16 @@ export default function MessageCreateModal(props: IProps) {
     setContent({});
   };
 
+  const form = MessageCreateForm({
+    notificationType,
+    name,
+    setName,
+    data: content,
+    setData: setContent,
+    fieldErrors,
+    setFieldErrors,
+  });
+
   const handleClickConfirm = async () => {
     if (notificationType && name && content) {
       const errorField = await messageCreateService(
@@ -67,16 +77,6 @@ export default function MessageCreateModal(props: IProps) {
       dispatch(fetchMessages());
     }
   };
-
-  const form = MessageCreateForm({
-    notificationType,
-    name,
-    setName,
-    data: content,
-    setData: setContent,
-    fieldErrors,
-    setFieldErrors,
-  });
 
   return (
     <div>

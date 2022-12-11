@@ -22,5 +22,4 @@ describe("<TargetUserMultiSelect />", () => {
       />
     );
   });
-
 });

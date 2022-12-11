@@ -50,6 +50,5 @@ export default function GlobalStyles() {
       }}
     />
   );
-
   return inputGlobalStyles;
 }

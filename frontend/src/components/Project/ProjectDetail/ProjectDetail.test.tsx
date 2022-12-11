@@ -1,10 +1,9 @@
-import { render, screen } from "@testing-library/react";
-import { Provider } from "react-redux";
-import ProjectDetail from "./ProjectDetail";
-import { store } from "../../../store";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { renderWithProviders } from "../../../test-utils/mocks";
 import { MemoryRouter } from "react-router";
+
+import ProjectDetail from "./ProjectDetail";
+import { renderWithProviders } from "../../../test-utils/mocks";
 
 describe("ProjectDetail", () => {
   it("should handle create notification button click", () => {
@@ -15,7 +14,6 @@ describe("ProjectDetail", () => {
     );
 
     userEvent.click(screen.getByTestId("createNotificationButton"));
-    
   });
 
   it("should handle close multi step form button click", () => {
@@ -28,5 +26,4 @@ describe("ProjectDetail", () => {
     userEvent.click(screen.getByTestId("createNotificationButton"));
     userEvent.keyboard("{esc}");
   });
-
 });

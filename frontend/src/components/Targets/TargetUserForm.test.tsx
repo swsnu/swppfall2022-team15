@@ -128,7 +128,6 @@ describe("TargetCreateForm", () => {
 
     const passwordInput = screen.getByTestId("password-input");
     fireEvent.change(passwordInput, { target: { value: "test" } });
-
   });
 
   it("should handle apiAuth: bearer", () => {
@@ -144,8 +143,7 @@ describe("TargetCreateForm", () => {
       />
     );
     const apiAuthInput = screen.getByTestId("type-input");
-    fireEvent.change(apiAuthInput, { target: { value: "bearer" }
-    });
+    fireEvent.change(apiAuthInput, { target: { value: "bearer" } });
   });
 
   it("should handle apiAuth: bearer, data change", () => {
@@ -195,7 +193,7 @@ describe("TargetCreateForm", () => {
         setData={() => {}}
       />
     );
-    
+
     const apiAuthInput = screen.getByTestId("type-input");
     fireEvent.change(apiAuthInput, { target: { value: "api_key" } });
 

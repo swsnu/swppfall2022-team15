@@ -1,4 +1,3 @@
-import { EnumNotificationType } from "../../Enums";
 import {
   InputLabel,
   MenuItem,
@@ -7,7 +6,9 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
+
 import { phoneNumberAutoFormat } from "./PhoneNumberAutoFormat";
+import { EnumNotificationType } from "../../Enums";
 
 interface IProps {
   notificationType: string;

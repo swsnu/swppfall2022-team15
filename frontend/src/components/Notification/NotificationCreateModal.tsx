@@ -164,9 +164,6 @@ export default function NotificationCreateModal(props: IProps) {
 
             fullWidth
           >
-            {/* { messageState.messages &&
-                  messageState.messages.map(message => <MenuItem key={message.id} value={message.id}>{message.id}</MenuItem> )
-              } */}
           </Select>
           <br />
           <br />

@@ -22,7 +22,6 @@ export default function DynamicTable(props: {
   parser?: (field: string, item: any) => any;
 }) {
   const { parser } = props;
-
   const inDepthFieldParser = (key: string, row: any) => {
     if (!parser) {
       return defaultInDepthFieldParser(key, row);

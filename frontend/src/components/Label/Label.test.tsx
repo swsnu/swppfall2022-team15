@@ -1,29 +1,33 @@
-import {render} from "@testing-library/react";
+import { render } from "@testing-library/react";
 import Label from "./Label";
-import {MockTheme} from "../../test-utils/mocks";
+import { MockTheme } from "../../test-utils/mocks";
 
 describe("Label", () => {
-    it("should render", () => {
+  it("should render", () => {
     render(<Label />);
   });
 
-    it("should render - start and end icon", () => {
+  it("should render - start and end icon", () => {
     render(<Label startIcon={true} endIcon={true} />);
   });
 
-    it("should render - filled variant", () => {
+  it("should render - filled variant", () => {
     render(<Label variant={"filled"} />);
   });
 
-    it("should render - outlined variant", () => {
+  it("should render - outlined variant", () => {
     render(<Label variant={"outlined"} />);
   });
 
   it("should render - soft variant", () => {
-    render(<Label variant={"soft"}/>);
+    render(<Label variant={"soft"} />);
   });
 
   it("should render - ghost variant", () => {
-      render(<MockTheme><Label variant={"soft"}/></MockTheme>);
-    });
+    render(
+      <MockTheme>
+        <Label variant={"soft"} />
+      </MockTheme>
+    );
+  });
 });
