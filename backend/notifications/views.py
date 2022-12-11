@@ -67,6 +67,7 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
         noti_type = request.query_params.get('type')
 
         q=Q()
+        q &= Q(reservation__notification_config__project__user=request.user)
         q &= Q(updated_at__range=(start_time, end_time))
         if projectId:
             q &= Q(reservation__notification_config__project_id=projectId)
