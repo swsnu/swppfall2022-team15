@@ -1,13 +1,16 @@
 import { TableContainer } from "@material-ui/core";
 import {
   Card,
+  Box,
   IconButton,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
+  TablePagination,
 } from "@mui/material";
+import { useState } from "react";
 import { Container } from "@mui/system";
 import Iconify from "../Iconify/Iconify";
 import Scrollbar from "../Scrollbar/Scrollbar";
@@ -22,6 +25,21 @@ export default function DynamicTable(props: {
   parser?: (field: string, item: any) => any;
 }) {
   const { parser } = props;
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
   const inDepthFieldParser = (key: string, row: any) => {
     if (!parser) {
       return defaultInDepthFieldParser(key, row);
@@ -40,15 +58,10 @@ export default function DynamicTable(props: {
       <Scrollbar>
         <TableContainer
           style={{
-            maxHeight: "calc(100vh - 200px)",
+            maxHeight: "calc(90vh - 200px)",
           }}
         >
-          <Table
-            sx={{
-              maxHeight: "calc(100vh - 200px)",
-            }}
-            stickyHeader
-          >
+          <Table stickyHeader>
             <TableHead>
               <TableRow>
                 {props.columns.map((col) => {
@@ -61,41 +74,52 @@ export default function DynamicTable(props: {
               </TableRow>
             </TableHead>
             <TableBody>
-              {props.rows.map((row: any) => {
-                return (
-                  <TableRow
-                    hover
-                    key={row.id}
-                    tabIndex={-1}
-                    onClick={() => handleClickRow(row.id)}
-                  >
-                    {props.keys.map((key: string) => {
-                      let value = inDepthFieldParser(key, row);
-                      return (
-                        <TableCell align="left">
-                          <Container>{value}</Container>
-                        </TableCell>
-                      );
-                    })}
-                    <TableCell align="right">
-                      {props.handleOpenMenu && (
-                        <IconButton
-                          size="large"
-                          color="inherit"
-                          data-testid="open-menu-button"
-                          onClick={props.handleOpenMenu}
-                          data-id={row.id}
-                        >
-                          <Iconify icon={"eva:more-vertical-fill"} />
-                        </IconButton>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+              {props.rows
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row: any) => {
+                  return (
+                    <TableRow
+                      hover
+                      key={row.id}
+                      tabIndex={-1}
+                      onClick={() => handleClickRow(row.id)}
+                    >
+                      {props.keys.map((key: string) => {
+                        let value = inDepthFieldParser(key, row);
+                        return (
+                          <TableCell align="left">
+                            <Container>{value}</Container>
+                          </TableCell>
+                        );
+                      })}
+                      <TableCell align="right">
+                        {props.handleOpenMenu && (
+                          <IconButton
+                            size="large"
+                            color="inherit"
+                            data-testid="open-menu-button"
+                            onClick={props.handleOpenMenu}
+                            data-id={row.id}
+                          >
+                            <Iconify icon={"eva:more-vertical-fill"} />
+                          </IconButton>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
             </TableBody>
           </Table>
         </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={props.rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </Scrollbar>
     </Card>
   );
