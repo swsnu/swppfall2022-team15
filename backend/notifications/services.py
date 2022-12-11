@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 from datetime import timedelta
 from logging import getLogger
 from typing import TypedDict
@@ -15,7 +14,8 @@ from notifications.models import (
     EnumNotificationStatus,
     EnumNotificationType,
     Reservation,
-    EnumReservationStatus, EnumNotificationMode,
+    EnumReservationStatus, 
+    EnumNotificationMode,
 )
 from notifications.slack.serializers import SlackNotificationSerializer
 from notifications.slack.services import task_send_slack_notification
@@ -44,12 +44,24 @@ def task_send_api_notification(notification: NotificationTaskDto):
     except requests.exceptions.RequestException:
         logger.info(response.text)
         notification = Notification.objects.get(id=notification['id'])
-        notification.update_result(EnumNotificationStatus.FAILURE, response.status_code, response.text, started_at, finished_at)
+        notification.update_result(
+            EnumNotificationStatus.FAILURE,
+            response.status_code,
+            response.text,
+            started_at,
+            finished_at
+        )
 
         return
 
     notification = Notification.objects.get(id=notification['id'])
-    notification.update_result(EnumNotificationStatus.SUCCESS, response.status_code, response.text, started_at, finished_at)
+    notification.update_result(
+        EnumNotificationStatus.SUCCESS,
+        response.status_code,
+        response.text,
+        started_at,
+        finished_at
+    )
 
     return
 
