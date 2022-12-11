@@ -1,3 +1,4 @@
+import { TableContainer } from "@material-ui/core";
 import {
   Card,
   IconButton,
@@ -10,7 +11,7 @@ import {
 import { Container } from "@mui/system";
 import Iconify from "../Iconify/Iconify";
 import Scrollbar from "../Scrollbar/Scrollbar";
-import {defaultInDepthFieldParser} from "./utils/dyanamicTableUtils";
+import { defaultInDepthFieldParser } from "./utils/dyanamicTableUtils";
 
 export default function DynamicTable(props: {
   columns: string[];
@@ -21,8 +22,6 @@ export default function DynamicTable(props: {
   parser?: (field: string, item: any) => any;
 }) {
   const { parser } = props;
-
-
 
   const inDepthFieldParser = (key: string, row: any) => {
     if (!parser) {
@@ -40,58 +39,64 @@ export default function DynamicTable(props: {
   return (
     <Card>
       <Scrollbar>
-        <Table
-          sx={{
+        <TableContainer
+          style={{
             maxHeight: "calc(100vh - 200px)",
           }}
-          stickyHeader
         >
-          <TableHead>
-            <TableRow>
-              {props.columns.map((col) => {
+          <Table
+            sx={{
+              maxHeight: "calc(100vh - 200px)",
+            }}
+            stickyHeader
+          >
+            <TableHead>
+              <TableRow>
+                {props.columns.map((col) => {
+                  return (
+                    <TableCell>
+                      <Container>{col}</Container>
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {props.rows.map((row: any) => {
                 return (
-                  <TableCell>
-                    <Container>{col}</Container>
-                  </TableCell>
+                  <TableRow
+                    hover
+                    key={row.id}
+                    tabIndex={-1}
+                    onClick={() => handleClickRow(row.id)}
+                  >
+                    {props.keys.map((key: string) => {
+                      let value = inDepthFieldParser(key, row);
+                      return (
+                        <TableCell align="left">
+                          <Container>{value}</Container>
+                        </TableCell>
+                      );
+                    })}
+                    <TableCell align="right">
+                      {props.handleOpenMenu && (
+                        <IconButton
+                          size="large"
+                          color="inherit"
+                          data-testid="open-menu-button"
+                          onClick={props.handleOpenMenu}
+                          data-id={row.id}
+                        >
+                          <Iconify icon={"eva:more-vertical-fill"} />
+                        </IconButton>
+                      )}
+                    </TableCell>
+                  </TableRow>
                 );
               })}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {props.rows.map((row: any) => {
-              return (
-                <TableRow
-                  hover
-                  key={row.id}
-                  tabIndex={-1}
-                  onClick={() => handleClickRow(row.id)}
-                >
-                  {props.keys.map((key: string) => {
-                    let value = inDepthFieldParser(key, row);
-                    return (
-                      <TableCell align="left">
-                        <Container>{value}</Container>
-                      </TableCell>
-                    );
-                  })}
-                  <TableCell align="right">
-                    {props.handleOpenMenu && (
-                      <IconButton
-                        size="large"
-                        color="inherit"
-                        data-testid="open-menu-button"
-                        onClick={props.handleOpenMenu}
-                        data-id={row.id}
-                      >
-                        <Iconify icon={"eva:more-vertical-fill"} />
-                      </IconButton>
-                    )}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Scrollbar>
     </Card>
   );
