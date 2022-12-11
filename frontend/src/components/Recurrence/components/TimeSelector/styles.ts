@@ -1,5 +1,7 @@
-import { createStyles } from '@material-ui/core'
+import { createStyles } from "@material-ui/core";
 
-export default () => {
-  return createStyles({})
-}
+const TimeStyle = () => {
+  return createStyles({});
+};
+
+export default TimeStyle;

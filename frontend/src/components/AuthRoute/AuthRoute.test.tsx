@@ -44,6 +44,7 @@ describe("<AuthRoute />", () => {
         </Routes>
       </MemoryRouter>
     );
+
     expect(mockNavigate).toHaveBeenCalled();
   });
 

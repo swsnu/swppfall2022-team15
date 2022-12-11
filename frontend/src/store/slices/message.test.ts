@@ -76,9 +76,7 @@ describe("message reducer", () => {
       return Promise.resolve({
         data: [fakeMessages[0]],
       });
-    }
-    );
+    });
     await store.dispatch(fetchSlackMessages());
   });
-
 });

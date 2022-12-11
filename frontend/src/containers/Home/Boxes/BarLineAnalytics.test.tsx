@@ -1,7 +1,5 @@
 import { renderWithProviders } from "../../../test-utils/mocks";
 import BarLineAnalytics from "./BarLineAnalytics";
-import { fireEvent, screen, waitFor } from "@testing-library/react";
-import axios from "axios";
 
 jest.mock("react-apexcharts", () => {
   return {

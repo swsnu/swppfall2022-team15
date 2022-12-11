@@ -1,10 +1,9 @@
-import * as React from 'react'
-import { MenuItem, TextFieldProps, withStyles } from '@material-ui/core'
-import TextField from '@material-ui/core/TextField/TextField'
-import { Option } from '../../../types'
-import styles from './styles'
+import { MenuItem, TextFieldProps, withStyles } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField/TextField";
+import { Option } from "../../../types";
+import styles from "./styles";
 
-type DropDownProps = TextFieldProps & { options: Array<Option> }
+type DropDownProps = TextFieldProps & { options: Array<Option> };
 
 const DropDown = ({
   name,
@@ -29,6 +28,6 @@ const DropDown = ({
         </MenuItem>
       ))}
     </TextField>
-  )
-}
-export default withStyles(styles)(DropDown)
+  );
+};
+export default withStyles(styles)(DropDown);

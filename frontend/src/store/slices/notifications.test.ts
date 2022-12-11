@@ -2,14 +2,21 @@ import { AnyAction, configureStore, EnhancedStore } from "@reduxjs/toolkit";
 import axios from "axios";
 import { ThunkMiddleware } from "redux-thunk";
 
+import reducer, {
+  fetchNotifications,
+  fetchAllNotifications,
+} from "./notifications";
 import { EnumNotificationStatus } from "../../Enums";
 import { NotificationType } from "../../types";
-import reducer, { fetchNotifications, fetchAllNotifications, createNotification } from "./notifications";
 
 describe("notification reducer", () => {
   let store: EnhancedStore<
     {
-      notification: { notifications: NotificationType[]; selectedNotification: NotificationType | null };
+      notification: {
+        notifications: NotificationType[];
+        selectedNotification: NotificationType | null;
+        notifications_selectedProject: NotificationType[] | null;
+      };
     },
     AnyAction,
     [
@@ -18,6 +25,7 @@ describe("notification reducer", () => {
           notification: {
             notifications: NotificationType[];
             selectedNotification: NotificationType | null;
+            notifications_selectedProject: NotificationType[] | null;
           };
         },
         AnyAction,
@@ -32,21 +40,21 @@ describe("notification reducer", () => {
       status: EnumNotificationStatus.SUCCESS,
       message: "test",
       reservedAt: "2021-01-01",
-      type: "API",
+      type: "SLACK",
     },
     {
       id: 2,
       status: EnumNotificationStatus.FAILURE,
       message: "test",
       reservedAt: "2021-01-01",
-      type: "API",
+      type: "SMS",
     },
     {
       id: 3,
-      status: EnumNotificationStatus.PARTIAL_SUCCESS,
+      status: EnumNotificationStatus.PENDING,
       message: "test",
       reservedAt: "2021-01-01",
-      type: "API",
+      type: "EMAIL",
     },
   ];
 
@@ -58,17 +66,20 @@ describe("notification reducer", () => {
     expect(reducer(undefined, { type: "unknown" })).toEqual({
       notifications: [],
       selectedNotification: null,
+      notifications_selectedProject: null,
     });
   });
-
 
   it("should handle fetch notifications", async () => {
     jest.spyOn(axios, "get").mockImplementation((url: string) => {
       return Promise.resolve({
-        data: fakeNotifications,
+        data: fakeNotifications[0],
       });
     });
     await store.dispatch(fetchNotifications(1));
+    expect(store.getState().notification.notifications_selectedProject).toEqual(
+      fakeNotifications[0]
+    );
   });
 
   it("should handle fetch all notifications", async () => {
@@ -78,23 +89,9 @@ describe("notification reducer", () => {
       });
     });
     await store.dispatch(fetchAllNotifications());
-  });
 
-  it("should handle create notification", async () => {
-    jest.spyOn(axios, "post").mockResolvedValue({ data: fakeNotifications[0] });
-
-    await store.dispatch(
-      createNotification({
-        id: 1,
-        status: EnumNotificationStatus.SUCCESS,
-        message: "test",
-        reservedAt: "2021-01-01",
-        type: "API",
-      })
-    );
-    expect(store.getState().notification.notifications[0]).toEqual(
-      fakeNotifications[0]
+    expect(store.getState().notification.notifications).toEqual(
+      fakeNotifications
     );
   });
-
 });

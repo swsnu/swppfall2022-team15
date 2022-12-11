@@ -1,15 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+
 import { RecurrentReservationType, ReservationType } from "../../types";
 import { RecurrenceType } from "../../components/Recurrence";
 
 export const postRecurrentReservation = createAsyncThunk(
   "reservation/postRecurrentReservation",
   async (data: { reservation: RecurrenceType }) => {
-    const response = await axios.post<RecurrentReservationType>(
-      "/api/reservation/",
-      data
-    );
+    await axios.post<RecurrentReservationType>("/api/reservation/", data);
   }
 );
 

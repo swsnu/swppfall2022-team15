@@ -64,20 +64,18 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
     def metrics(self, request):
         def convert(metric):
             result = dict()
-            
             result['status'] = metric['status']
             result['time'] = datetime.datetime.strftime(metric['time'], '%Y-%m-%d %H:%M:%S')
             result['count'] = metric['count']
             result['project'] = metric['project']
             result['type'] = metric['type']
-            
             return result
 
         start_time = request.query_params.get('start')
         end_time = request.query_params.get('end')
-
-        interval = request.query_params.get('interval')
         
+        interval = request.query_params.get('interval')
+
         projectId = request.query_params.get('projectId')
         noti_type = request.query_params.get('type')
 

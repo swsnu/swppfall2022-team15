@@ -1,3 +1,3 @@
-import FrequencySelector from './FrequencySelector'
+import FrequencySelector from "./FrequencySelector";
 
-export default FrequencySelector
+export default FrequencySelector;
