@@ -59,6 +59,7 @@ export const getDailyData = createAsyncThunk(
         interval: "day",
       },
     });
+    console.log(response);
     return response.data;
   }
 );

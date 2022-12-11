@@ -84,7 +84,6 @@ export default function ProjectListTable() {
           <Scrollbar>
             <Table
               sx={{
-                minHeight: 800,
                 maxHeight: "calc(100vh - 200px)",
               }}
             >

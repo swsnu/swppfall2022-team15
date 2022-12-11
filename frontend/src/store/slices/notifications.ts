@@ -17,7 +17,7 @@ export const fetchAllNotifications = createAsyncThunk(
   "notifications/fetchAllNotifications",
   async () => {
     const response = await axios.get<NotificationType[]>(`/api/notification/`);
-    console.log(response);
+
     return response.data;
   }
 );

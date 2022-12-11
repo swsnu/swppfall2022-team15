@@ -20,6 +20,10 @@ import {
   getMonthlyData,
   getDailyDataByProject,
   getDailyDataByType,
+  getWeeklyDataByProject,
+  getWeeklyDataByType,
+  getMonthlyDataByProject,
+  getMonthlyDataByType
 } from "../../../store/slices/analytics";
 import moment from "moment";
 import { projectSelect } from "../../../store/slices/project";
@@ -61,13 +65,34 @@ export default function BarLineAnalytics(props: IProps) {
         }
         
       } else if (type === 20) {
-        await dispatch(getWeeklyData());
+        if(props.type === 0) {
+          await dispatch(getWeeklyData());
+        }
+        else if(props.type === 1) {
+          if(projectState) {
+            await dispatch(getWeeklyDataByProject(projectState.id));
+          }
+        }
+        else {
+          await dispatch(getWeeklyDataByType(props.noti_type));
+        }
+        
       } else {
-        await dispatch(getMonthlyData());
+        if(props.type === 0) {
+          await dispatch(getMonthlyData());
+        }
+        else if(props.type === 1) {
+          if(projectState) {
+            await dispatch(getMonthlyDataByProject(projectState.id));
+          }
+        }
+        else {
+          await dispatch(getMonthlyDataByType(props.noti_type));
+        }
       }
     };
     handleTypeChange();
-  }, [type, dispatch]);
+  }, [type, dispatch, props]);
   useEffect(() => {
     function getData() {
       let success = [];
@@ -161,33 +186,7 @@ export default function BarLineAnalytics(props: IProps) {
           series={data}
           height={350}
           options={{
-            labels: [
-              "Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec",
-            ],
             chart: {
-              toolbar: {
-                tools: {
-                  zoomin: true,
-                  zoomout: true,
-                  reset: true,
-                  download: false,
-                  zoom: false,
-                  customIcons: [],
-                  selection: true,
-                  pan: true,
-                },
-              },
               stacked: true,
             },
             plotOptions: {

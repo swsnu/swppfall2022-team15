@@ -1,6 +1,6 @@
 import datetime
 
-from django.db.models import Count, F
+from django.db.models import Count, F, Q
 from django.db.models.functions import Trunc
 from rest_framework import status
 from rest_framework.decorators import action
@@ -54,6 +54,7 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
             result['time'] = datetime.datetime.strftime(metric['time'], '%Y-%m-%d %H:%M:%S')
             result['count'] = metric['count']
             result['project'] = metric['project']
+            result['type'] = metric['type']
             
             return result
 
@@ -65,17 +66,14 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
         projectId = request.query_params.get('projectId')
         noti_type = request.query_params.get('type')
 
-        metrics = Notification.objects.select_related('reservation__notification_config').filter(
-            updated_at__range=(start_time, end_time)
-        )
-
+        q=Q()
+        q &= Q(updated_at__range=(start_time, end_time))
         if projectId:
-            metrics = metrics.filter(reservation__notification_config__project_id=projectId)
-            
+            q &= Q(reservation__notification_config__project_id=projectId)
         if noti_type:
-            metrics = metrics.filter(reservation__notification_config__type=noti_type)
+            q &= Q(reservation__notification_config__type=noti_type)
 
-        metrics.annotate(
+        metrics = Notification.objects.select_related('reservation__notification_config').filter(q).annotate(
             time=Trunc('updated_at', interval),
             project=F('reservation__notification_config__project_id'),
             type=F('reservation__notification_config__type'),

@@ -22,7 +22,7 @@ export default function Analytics() {
     if (projectId) {
       dispatch(fetchProject(projectId));
     }
-  }, [selectedProject]);
+  }, [selectedProject, selectedTab]);
 
   function renderTabs() {
     if (selectedTab === 0) {
