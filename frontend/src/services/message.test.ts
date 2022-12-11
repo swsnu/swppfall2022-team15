@@ -2,12 +2,14 @@ import {
   deleteMessage,
   createMessage,
   fetchMessagesWithNotificationType,
+  getMessage,
+  updateMessage,
 } from "./message";
 import axios from "axios";
 import { EnumNotificationType } from "../Enums";
 
 describe("message", () => {
-  it("should delete message -success", () => {
+  it("should delete message - success", () => {
     jest
       .spyOn(axios, "delete")
       .mockImplementation(() => Promise.resolve({ data: { id: 1 } }));
@@ -58,5 +60,53 @@ describe("message", () => {
         data: "test",
        } }));
     fetchMessagesWithNotificationType(EnumNotificationType.SLACK);
+  });
+
+  it("should get message - success", () => {
+    jest
+      .spyOn(axios, "get")
+      .mockImplementation(() => Promise.resolve({ data: { 
+        notification_type: EnumNotificationType.SLACK,
+        name: "test",
+        data: "test",
+       } }));
+    getMessage(1);
+  });
+
+  it("should get message - failure", () => {
+    jest
+      .spyOn(axios, "get")
+      .mockImplementation(() =>
+        Promise.reject({ response: { data: { 
+            notification_type: EnumNotificationType.SLACK,
+            name: "test",
+            data: "test",
+           } } })
+      );
+    getMessage(1);
+  });
+
+  it("should update message - success", () => {
+    jest
+      .spyOn(axios, "put")
+      .mockImplementation(() => Promise.resolve({ data: { 
+        notification_type: EnumNotificationType.SLACK,
+        name: "test",
+        data: "test",
+       } }));
+    updateMessage(1, EnumNotificationType.SLACK, "test", "test");
+  });
+
+  it("should update message - failure", () => {
+    jest
+      .spyOn(axios, "put")
+      .mockImplementation(() =>
+        Promise.reject({ response: { data: { 
+            notification_type: EnumNotificationType.SLACK,
+            name: "test",
+            data: "test",
+           } } })
+      );
+    updateMessage(1, EnumNotificationType.SLACK, "test", "test");
   });
 });
