@@ -18,7 +18,6 @@ import {
 import { getData, todaySelect } from "../../store/slices/today";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
 import MultiStepFormDialog from "../MultiStepFormDialog/MultiStepFormDialog";
-import moment from "moment";
 
 import "./Home.css"
 
