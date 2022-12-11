@@ -71,21 +71,5 @@ describe("<ProjectList />", () => {
     userEvent.keyboard("{esc}");
   });
 
-  it("should handle click row", () => {
-    renderWithProviders(<ProjectList />, {
-      preloadedState: {
-        project: {
-          projects: [
-            { name: "name", project_type: EnumProjectType.INDIVIDUAL, id: 1 },
-          ],
-          selectedProject: null,
-        },
-      },
-    });
-    const cell = screen.getByText("1");
-    fireEvent.click(cell);
 
-    const cell2 = screen.getByText("name");
-    fireEvent.click(cell2);
-  });
 });

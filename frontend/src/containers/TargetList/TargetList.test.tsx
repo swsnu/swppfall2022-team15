@@ -107,56 +107,6 @@ describe("TargetList", () => {
     fireEvent.click(screen.getByTestId("tab-1"));
   });
 
-  it("should handle open and close menu", () => {
-    renderWithProviders(<TargetListTable />, {
-      preloadedState: {
-        target: {
-          targets: [
-            {
-              id: 1,
-              name: "test",
-              notification_type: "SLACK",
-              endpoint: "test",
-              data: {
-                channel: "test",
-                message: "test",
-              },
-            },
-          ],
-          selectedTarget: null,
-        },
-      },
-    });
-
-    fireEvent.click(screen.getByTestId("open-menu-button"));
-    userEvent.keyboard("{esc}");
-  });
-
-  it("should handle delete target", async () => {
-    renderWithProviders(<TargetListTable />, {
-      preloadedState: {
-        target: {
-          targets: [
-            {
-              id: 1,
-              name: "test",
-              notification_type: "SLACK",
-              endpoint: "test",
-              data: {
-                channel: "test",
-                message: "test",
-              },
-            },
-          ],
-          selectedTarget: null,
-        },
-      },
-    });
-
-    fireEvent.click(screen.getByTestId("open-menu-button"));
-    fireEvent.click(screen.getByTestId("delete-button"));
-  });
-
   it("should handle click button", () => {
     renderWithProviders(<TargetListTable />);
     fireEvent.click(screen.getByTestId("create-button"));

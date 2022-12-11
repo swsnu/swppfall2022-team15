@@ -7,12 +7,4 @@ describe("CollapsibleTable", () => {
         const notificationConfigs = preloadedState.notificationConfig.notificationConfigs;
         render(<CollapsibleTable notificationConfigs={notificationConfigs} /> );
     });
-
-    it("should handle expand-button", () => {
-        const notificationConfigs = preloadedState.notificationConfig.notificationConfigs;
-        render(<CollapsibleTable notificationConfigs={notificationConfigs} /> );
-
-        const expandButton = screen.getByTestId("expand-button");
-        fireEvent.click(expandButton);
-    });
 });
