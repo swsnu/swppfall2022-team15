@@ -1,7 +1,6 @@
 import { fireEvent, screen } from "@testing-library/react";
 import TargetListTable from "./TargetList";
 import { renderWithProviders } from "../../test-utils/mocks";
-import axios from "axios";
 import userEvent from "@testing-library/user-event";
 
 describe("TargetList", () => {

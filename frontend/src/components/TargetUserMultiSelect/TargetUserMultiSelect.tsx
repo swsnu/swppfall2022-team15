@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
 import Iconify from "../Iconify/Iconify";
 import { TargetType, TargetUserIdNameDto } from "../../types";
-import { Box } from "@material-ui/core";
 
 interface IProps {
   selected: TargetUserIdNameDto[];
