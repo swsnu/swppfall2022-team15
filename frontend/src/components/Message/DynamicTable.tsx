@@ -82,6 +82,7 @@ export default function DynamicTable(props: {
                       key={row.id}
                       tabIndex={-1}
                       onClick={() => handleClickRow(row.id)}
+                      data-testid={`table-row-${row.id}`}
                     >
                       {props.keys.map((key: string) => {
                         let value = inDepthFieldParser(key, row);

@@ -17,7 +17,6 @@ import TargetListTable from "./containers/TargetList/TargetList";
 import MessageListTable from "./containers/MessageList/MessageList";
 import AuthRoute from "./components/AuthRoute/AuthRoute";
 import HistoryTable from "./containers/History/HistoryTable";
-import User from "./containers/User/User";
 
 export const SidebarLayout = () => (
   <>
@@ -86,14 +85,6 @@ function App() {
               </AuthRoute>
             }
           />
-          <Route
-            path="/user"
-            element={
-              <AuthRoute>
-                <User />
-              </AuthRoute>
-            }
-            />
         </Route>
         <Route path="*" element={<Navigate replace to={"/home"} />} />
       </Routes>

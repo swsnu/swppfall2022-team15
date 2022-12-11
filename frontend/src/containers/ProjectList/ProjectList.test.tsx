@@ -71,5 +71,21 @@ describe("<ProjectList />", () => {
     userEvent.keyboard("{esc}");
   });
 
+  it("should handle click row", () => {
+    renderWithProviders(<ProjectList />, {
+      preloadedState: {
+        project: {
+          projects: [
+            { name: "name", project_type: EnumProjectType.INDIVIDUAL, id: 1 },
+          ],
+          selectedProject: null,
+        },
+      },
+    });
 
+    const row = screen.getByText("name");
+    fireEvent.click(row);
+  });
+
+  
 });
