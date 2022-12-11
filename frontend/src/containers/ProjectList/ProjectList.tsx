@@ -9,9 +9,9 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Link,
+  Link
 } from "@mui/material";
-import { Grid, TableContainer } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -82,12 +82,11 @@ export default function ProjectListTable() {
         </Grid>
         <Card>
           <Scrollbar>
-            <TableContainer
-              style={{
+            <Table
+              sx={{
                 maxHeight: "calc(100vh - 200px)",
               }}
             >
-              <Table>
                 <TableHead>
                   <TableRow>
                     <TableCell>
@@ -108,15 +107,7 @@ export default function ProjectListTable() {
                     return (
                       <TableRow hover key={id} tabIndex={-1}>
                         <TableCell>
-                          <Container>
-                            <Link
-                              href="#"
-                              underline="hover"
-                              onClick={() => handleClickRow(id)}
-                            >
-                              {name}
-                            </Link>
-                          </Container>
+                          <Container><Link href="#" underline="hover" onClick={() => handleClickRow(id)}>{name}</Link></Container>
                         </TableCell>
                         <TableCell>
                           <Container>
@@ -124,9 +115,7 @@ export default function ProjectListTable() {
                           </Container>
                         </TableCell>
                         <TableCell>
-                          <Container>
-                            {"NEED API: Most Recently Sent Notification"}
-                          </Container>
+                          <Container>{"NEED API: Most Recently Sent Notification"}</Container>
                         </TableCell>
 
                         <TableCell align="right">
@@ -144,8 +133,7 @@ export default function ProjectListTable() {
                     );
                   })}
                 </TableBody>
-              </Table>
-            </TableContainer>
+            </Table>
           </Scrollbar>
         </Card>
       </Container>
