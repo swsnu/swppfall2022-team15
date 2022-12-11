@@ -7,7 +7,7 @@ interface DataHash {
   [date: string]: number;
 }
 
-type AnalyticsStatus = {
+export type AnalyticsStatus = {
   Success: DataHash;
   Failure: DataHash;
   Pending: DataHash;
