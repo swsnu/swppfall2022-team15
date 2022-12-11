@@ -1,53 +1,80 @@
 import { Box } from "@mui/material";
 import ReactApexChart from "react-apexcharts";
-import { slackSeries } from "./FakeData";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { green, red, blue, grey } from "@mui/material/colors";
+import { AppDispatch } from "../../../store";
+import { getData, todaySelect } from "../../../store/slices/today";
+
+interface ChartDataType {
+  name: string;
+  type: string;
+  fill: string;
+  data: { x: string; y: number }[];
+}
 
 export default function BarLineToday() {
+  const [data, setData] = useState<ChartDataType[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const todayState = useSelector(todaySelect).data;
+
+  useEffect(() => {
+    dispatch(getData());
+  }, [dispatch]);
+  useEffect(() => {
+    function getData() {
+let success = [];
+    let fail = [];
+    let pending = [];
+    let total = [];
+
+    for(let i = 0; i < 24; i++) {
+      const time = i < 10 ? `0${i} hr` : `${i} hr`;
+      success.push({x: time, y: todayState.Success[time]});
+      fail.push({x: time, y: todayState.Failure[time]});
+      pending.push({x: time, y: todayState.Pending[time]});
+      total.push({x: time, y: todayState.Total[time]});
+    }
+
+    const data = [
+      {
+        name: "Success",
+          type: "column",
+          fill: green[300],
+          data: success,
+        },
+        {
+          name: "Failure",
+          type: "column",
+          fill: red[300],
+          data: fail,
+        },
+        {
+          name: "Pending",
+          type: "column",
+          fill: blue[300],
+          data: pending,
+        },
+        {
+          name: "Total",
+          type: "line",
+          fill: grey[300],
+          data: total,
+        },
+      ];
+    setData(data);
+    }
+    getData();
+
+  }, [todayState])
+
   return (
     <Box sx={{ p: 3, pb: 1}} dir="ltr">
       <ReactApexChart
         type="line"
-        series={slackSeries}
+        series={data}
         options={{
-          labels: [
-            "00h",
-            "01h",
-            "02h",
-            "03h",
-            "04h",
-            "05h",
-            "06h",
-            "07h",
-            "08h",
-            "09h",
-            "10h",
-            "11h",
-            "12h",
-            "13h",
-            "14h",
-            "15h",
-            "16h",
-            "17h",
-            "18h",
-            "19h",
-            "20h",
-            "21h",
-            "22h",
-            "23h",
-          ],
           chart: {
-              toolbar: {
-                tools: {
-                  zoomin: true,
-                  zoomout: true,
-                  reset: true,
-                  download: false,
-                  zoom: false,
-                  customIcons: [],
-                  selection: true,
-                  pan: true,
-                },
-              },
               stacked: true,
             },
             plotOptions: {

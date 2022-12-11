@@ -81,6 +81,17 @@ const preloadedState: RootState = {
     },
     barlineType: "daily",
   },
+  today: {
+    data: {
+        Success: {},
+    Failure: {},
+    Pending: {},
+    Total: {},
+  },
+    successTotal: 0,
+    failureTotal: 0,
+     mostActive: {time: -1, count: 0},
+  }
 };
 
 export default preloadedState;

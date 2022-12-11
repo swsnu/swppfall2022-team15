@@ -16,6 +16,7 @@ import {
   fetchAllNotifications,
   notificationListSelector,
 } from "../../store/slices/notifications";
+import { getData, todaySelect } from "../../store/slices/today";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
 import MultiStepFormDialog from "../MultiStepFormDialog/MultiStepFormDialog";
 import moment from "moment";
@@ -26,16 +27,15 @@ export default function Home() {
   const projects = useSelector(projectListSelector);
   const notifications = useSelector(notificationListSelector);
   const user = useSelector(authSelector);
+  const today = useSelector(todaySelect);
   const dispatch = useDispatch<AppDispatch>();
-
-  const [successfulNotifications, setSuccessfulNotifications] = useState(0);
-  const [failedNotifications, setFailedNotifications] = useState(0);
 
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchProjects());
     dispatch(fetchAllNotifications());
+    dispatch(getData());
   }, [user, dispatch]);
 
   const handleClickCreateButton = (event: React.MouseEvent) => {
@@ -49,33 +49,6 @@ export default function Home() {
   const getTodayEnd = () => {
     return moment().format("YYYY-MM-DD 23:59:59");
   };
-
-  const getNotifications = useCallback(async () => {
-    try {
-      await axios
-        .get("/api/notification/metrics/", {
-          params: {
-            start: getTodayStart(),
-            end: getTodayEnd(),
-            interval: "hour",
-          },
-        })
-        .then((response) => {
-          if (response.data.length === 0) {
-            return;
-          } else {
-            setSuccessfulNotifications(response.data.status.success);
-            setFailedNotifications(response.data.status.failed);
-          }
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
-  useEffect(() => {
-    getNotifications();
-  }, [getNotifications]);
 
   return (
     <>
@@ -129,7 +102,7 @@ export default function Home() {
                 icon="mdi:check"
                 title="Success"
                 subtitle="Successful notification requests today"
-                value={successfulNotifications}
+                value={today.successTotal}
                 color_main={green[500]}
                 color_dark={green[600]}
                 color_light={green[400]}
@@ -143,7 +116,7 @@ export default function Home() {
                 icon="mdi:exclamation-thick"
                 title="Failure"
                 subtitle="Failed notification requests today"
-                value={failedNotifications}
+                value={today.failureTotal}
                 color_main={red[500]}
                 color_dark={red[600]}
                 color_light={red[400]}

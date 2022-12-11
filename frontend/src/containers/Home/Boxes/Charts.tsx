@@ -48,7 +48,7 @@ export default function Charts(props: IProps) {
       }
     }
     handleTabChange();
-  }, [dispatch, props.selectedTab, props.selectedType, projectState])
+  }, [dispatch, projectState, props.selectedTab, props.selectedType])
   useEffect(() => {
     function getData() {
       let success = 0;

@@ -59,7 +59,6 @@ export const getDailyData = createAsyncThunk(
         interval: "day",
       },
     });
-    console.log(response);
     return response.data;
   }
 );
@@ -103,7 +102,6 @@ export const getDailyDataByProject = createAsyncThunk(
         projectId: projectId,
       },
     });
-    console.log(response);
     return response.data;
   }
 );
@@ -149,7 +147,6 @@ export const getDailyDataByType = createAsyncThunk(
         type: type,
       },
     });
-    console.log(response);
     return response.data;
   }
 );
@@ -165,6 +162,7 @@ export const getWeeklyDataByType = createAsyncThunk(
         type: type,
       },
     });
+    console.log(response.data)
     return response.data;
   }
 );

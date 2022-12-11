@@ -92,7 +92,7 @@ export default function BarLineAnalytics(props: IProps) {
       }
     };
     handleTypeChange();
-  }, [type, dispatch, projectState, props.noti_type, props.type]);
+  }, [dispatch, projectState, type, props.type, props.noti_type]);
   useEffect(() => {
     function getData() {
       let success = [];
@@ -188,6 +188,19 @@ export default function BarLineAnalytics(props: IProps) {
           options={{
             chart: {
               stacked: true,
+              toolbar: {
+                show: true,
+                tools: {
+                  download: true,
+                  selection: true,
+                  zoom: true,
+                  zoomin: true,
+                  zoomout: true,
+                  pan: true,
+                  reset: true,
+                  customIcons: [],
+                },
+              },
             },
             plotOptions: {
               bar: {
