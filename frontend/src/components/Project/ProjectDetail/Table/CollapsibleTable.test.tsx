@@ -1,6 +1,6 @@
 import {fireEvent, screen, render} from "@testing-library/react";
 import CollapsibleTable from "./CollapsibleTable";
-import preloadedState from "../../test-utils/mock_state";
+import preloadedState from "../../../../test-utils/mock_state";
 
 describe("CollapsibleTable", () => {
     it("should render", () => {

@@ -24,7 +24,7 @@ describe("BarLineAnalytics", () => {
 
   it("should render correctly", () => {
     renderWithProviders(
-      <BarLineAnalytics title="test" subtitle="test_subtitle" />
+      <BarLineAnalytics title="test" subtitle="test_subtitle" type={0} noti_type={"SLACK"} />
     );
   });
 

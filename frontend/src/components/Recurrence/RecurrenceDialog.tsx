@@ -14,7 +14,7 @@ interface IProps {
 
 const RecurrenceDialog = (props: IProps) => {
     const {open, onClose, recurrence, handleRecurrenceChange, setRrule} = props;
-    const [errorField, setErrorField] = useState<any>();
+    const [errorField] = useState<any>();
 
     const handleClickConfirm = () => {
         let frequency;
@@ -39,7 +39,7 @@ const RecurrenceDialog = (props: IProps) => {
                 break;
         }
         let byweekday;
-        if (frequency == RRule.WEEKLY) {
+        if (frequency === RRule.WEEKLY) {
             byweekday = recurrence.weekDaysRepetition;
         }
 

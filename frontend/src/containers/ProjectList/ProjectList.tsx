@@ -7,9 +7,9 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
+  Link
 } from "@mui/material";
 import { Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
@@ -84,17 +84,13 @@ export default function ProjectListTable() {
           <Scrollbar>
             <Table
               sx={{
-                minHeight: 800,
                 maxHeight: "calc(100vh - 200px)",
               }}
             >
                 <TableHead>
                   <TableRow>
                     <TableCell>
-                      <Container>Id</Container>
-                    </TableCell>
-                    <TableCell>
-                      <Container>Name</Container>
+                      <Container>Project Name</Container>
                     </TableCell>
                     <TableCell>
                       <Container>Number of Requests</Container>
@@ -111,15 +107,15 @@ export default function ProjectListTable() {
                     return (
                       <TableRow hover key={id} tabIndex={-1}>
                         <TableCell>
-                          <Container>{id}</Container>
-                        </TableCell>
-                        <TableCell onClick={() => handleClickRow(id)}>
-                          <Container>{name}</Container>
+                          <Container><Link href="#" underline="hover" onClick={() => handleClickRow(id)}>{name}</Link></Container>
                         </TableCell>
                         <TableCell>
                           <Container>
-                            {"NEED FIX: Number of Requests"}
+                            {"NEED API: Number of Requests"}
                           </Container>
+                        </TableCell>
+                        <TableCell>
+                          <Container>{"NEED API: Most Recently Sent Notification"}</Container>
                         </TableCell>
 
                         <TableCell align="right">
@@ -137,7 +133,6 @@ export default function ProjectListTable() {
                     );
                   })}
                 </TableBody>
-\
             </Table>
           </Scrollbar>
         </Card>

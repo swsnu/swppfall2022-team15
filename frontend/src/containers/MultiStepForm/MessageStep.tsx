@@ -54,7 +54,7 @@ export default function MessageStep(props: IProps) {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(fetchMessages());
-  }, []);
+  }, [dispatch]);
 
   const messageState = useSelector(messageSelect);
   const messages = messageState.messages;
@@ -154,7 +154,7 @@ export default function MessageStep(props: IProps) {
       </Button>
       {form}
       <Button data-testid="confirm-button" onClick={handleClickConfirm}>
-        Confirm
+        Create Message
       </Button>
     </FormWrapper>
   );

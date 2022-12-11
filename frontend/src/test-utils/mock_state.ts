@@ -18,7 +18,7 @@ const preloadedState: RootState = {
         id: 2,
         project_type: "ORGANIZATION",
         name: "test2",
-      }
+      },
     ],
   },
   notification: {
@@ -57,8 +57,8 @@ const preloadedState: RootState = {
           id: 1,
           name: "test",
           notification_type: "SLACK",
-          data: { channel: 'test', message: 'test' },
-       },
+          data: { channel: "test", message: "test" },
+        },
       ],
       EMAIL: [],
       WEBHOOK: [],
@@ -72,6 +72,26 @@ const preloadedState: RootState = {
       username: "test",
     },
   },
+  analytics: {
+    barLineData: {
+      Success: {},
+      Failure: {},
+      Pending: {},
+      Total: {},
+    },
+    barlineType: "daily",
+  },
+  today: {
+    data: {
+        Success: {},
+    Failure: {},
+    Pending: {},
+    Total: {},
+  },
+    successTotal: 0,
+    failureTotal: 0,
+     mostActive: {time: -1, count: 0},
+  }
 };
 
 export default preloadedState;

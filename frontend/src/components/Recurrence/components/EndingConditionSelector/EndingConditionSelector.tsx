@@ -47,7 +47,7 @@ const EndingConditionSelector: FunctionComponent<WithStyles<typeof styles>> = ({
         onFieldChange('endDate', null)
         break
     }
-  }, [recurrence.endingCondition])
+  }, [recurrence.endingCondition, onFieldChange, onFieldsChange])
 
   return (
     <div>

@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
 import {AppDispatch} from "../../../store";
 import {fetchProject, projectSelect} from "../../../store/slices/project";
-import CollapsibleTable from "../../Table/CollapsibleTable";
+import CollapsibleTable from "./Table/CollapsibleTable";
 import {Container} from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import MultiStepFormDialog from "../../../containers/MultiStepFormDialog/MultiStepFormDialog";
@@ -26,8 +26,7 @@ export default function ProjectDetail() {
     dispatch(fetchProject(projectId));
     dispatch(fetchNotificationConfigs(projectId));
   }, [dispatch, projectId]);
-  const notificationConfigState = useSelector(notificationConfigSelect);
-  const notificationConfigList = notificationConfigState.notificationConfigs;
+  const notificationConfigList = useSelector(notificationConfigSelect).notificationConfigs_project;
   const selectedProject = useSelector(projectSelect);
 
   // event handlers

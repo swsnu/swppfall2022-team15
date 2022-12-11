@@ -101,7 +101,7 @@ const FrequencySelector: FunctionComponent<WithStyles<typeof styles>> = ({
       }
       onFieldsChange(toClear)
     }
-  }, [recurrence.frequency])
+  }, [recurrence.frequency, onFieldsChange])
 
   return (
     <div>

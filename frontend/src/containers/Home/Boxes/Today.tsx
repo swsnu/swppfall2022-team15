@@ -6,10 +6,13 @@ import BarLineToday from "./BarLineToday";
 import { useSelector } from "react-redux";
 import { notificationListSelector } from "../../../store/slices/notifications";
 import { projectListSelector } from "../../../store/slices/project";
+import { todaySelect } from "../../../store/slices/today";
 
 export default function Today() {
   const notifications = useSelector(notificationListSelector);
   const projects = useSelector(projectListSelector);
+  const today = useSelector(todaySelect);
+
   function getRate() {
     if (notifications.length === 0) {
       return "0%";
@@ -43,7 +46,7 @@ export default function Today() {
         return "No notifications yet";
       } else {
         //TODO
-        return "Project 1";
+        return "TODO";
       }
     }
   }
@@ -52,7 +55,7 @@ export default function Today() {
     if (notifications.length === 0) {
       return "No notifications yet";
     } else {
-      return "Slack";
+      return "TODO";
     }
   }
 
@@ -60,8 +63,10 @@ export default function Today() {
     if (notifications.length === 0) {
       return "No notifications yet";
     } else {
-      //TODO
-      return "7PM ~ 8PM";
+      const start = Number(today.mostActive.time);
+      const end = start + 1;
+      const format = `${start}h ~ ${end}h`;
+      return format;
     }
   }
 
@@ -70,13 +75,13 @@ export default function Today() {
       return "No notifications yet";
     } else {
       //TODO
-      return "Failed Message";
+      return "TODO";
     }
   }
 
   return (
     <Grid container spacing={2} className="Today">
-      <Grid item xs={12} sm={12} md={12} lg={4}>
+      <Grid item xs={12} sm={12} md={12} lg={5}>
         <Card>
           <CardHeader title="Requests Today" subheader="00:00 ~ 23:59 KST" />
           <Box dir="ltr">
@@ -84,7 +89,7 @@ export default function Today() {
           </Box>
         </Card>
       </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={8}>
+      <Grid item xs={12} sm={12} md={12} lg={7}>
         <Card>
           <CardHeader title="Daily Statistics" />
 

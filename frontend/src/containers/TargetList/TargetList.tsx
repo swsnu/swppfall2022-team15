@@ -1,6 +1,6 @@
 import { Box, Button, MenuItem, Popover, Tab, Tabs } from "@mui/material";
 import { Grid } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Iconify from "../../components/Iconify/Iconify";
 import TargetCreateModal from "../../components/Targets/TargetCreateModal";
@@ -11,6 +11,7 @@ import { Container } from "@mui/system";
 import "./TargetList.css";
 import DynamicTable from "../../components/Message/DynamicTable";
 import {
+  defaultInDepthFieldParser,
   getTargetColumns,
   getTargetKeys,
 } from "../../components/Message/utils/dyanamicTableUtils";
@@ -27,13 +28,13 @@ export default function TargetListTable() {
     const getNotificationType = (type: number) => {
       switch (type) {
         case 0:
-          return "SLACK";
+          return "WEBHOOK";
         case 1:
           return "EMAIL";
         case 2:
-          return "WEBHOOK";
-        default:
           return "SMS";
+        default:
+          return "SLACK";
       }
     };
     setNotificationType(getNotificationType(selectedTab));
@@ -101,7 +102,7 @@ export default function TargetListTable() {
           return "No Authentication";
       }
     }
-    return target[fieldName];
+    return defaultInDepthFieldParser(fieldName, target);
   };
 
   function renderTable() {
@@ -145,7 +146,7 @@ export default function TargetListTable() {
             </Button>
           </Grid>
         </Grid>
-        <Box>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={selectedTab}
             onChange={(e, newValue) => {
@@ -153,28 +154,30 @@ export default function TargetListTable() {
             }}
           >
             <Tab
-              icon={<Iconify icon={"la:slack"} />}
-              label="Slack"
+              icon={<Iconify icon={"material-symbols:webhook"} />}
               iconPosition="start"
-              {...a11yProps(0)}
+              label="Webhook"
+              {...a11yProps(2)}
             />
+
             <Tab
               icon={<Iconify icon={"ic:outline-email"} />}
               iconPosition="start"
               label="Email"
               {...a11yProps(1)}
             />
-            <Tab
-              icon={<Iconify icon={"material-symbols:webhook"} />}
-              iconPosition="start"
-              label="Webhook"
-              {...a11yProps(2)}
-            />
+
             <Tab
               icon={<Iconify icon={"material-symbols:sms-outline"} />}
               iconPosition="start"
               label="SMS"
               {...a11yProps(3)}
+            />
+            <Tab
+              icon={<Iconify icon={"la:slack"} />}
+              label="Slack"
+              iconPosition="start"
+              {...a11yProps(0)}
             />
           </Tabs>
         </Box>
