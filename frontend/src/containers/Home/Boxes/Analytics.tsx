@@ -18,7 +18,7 @@ export default function Analytics() {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    const projectId = projects[selectedProject].id;
+    const projectId = projects[selectedProject]?.id;
     if (projectId) {
       dispatch(fetchProject(projectId));
     }
