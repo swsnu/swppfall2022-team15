@@ -1,8 +1,8 @@
 import reducer, { fetchTargets, fetchTarget, createTarget } from "./target";
 import { TargetType } from "../../types";
 
-import { configureStore, EnhancedStore, AnyAction } from "@reduxjs/toolkit";
 import { ThunkMiddleware } from "redux-thunk";
+import { configureStore, EnhancedStore, AnyAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 describe("targetSlice", () => {

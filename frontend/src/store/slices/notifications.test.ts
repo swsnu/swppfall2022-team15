@@ -2,12 +2,12 @@ import { AnyAction, configureStore, EnhancedStore } from "@reduxjs/toolkit";
 import axios from "axios";
 import { ThunkMiddleware } from "redux-thunk";
 
-import { EnumNotificationStatus } from "../../Enums";
-import { NotificationType } from "../../types";
 import reducer, {
   fetchNotifications,
   fetchAllNotifications,
 } from "./notifications";
+import { EnumNotificationStatus } from "../../Enums";
+import { NotificationType } from "../../types";
 
 describe("notification reducer", () => {
   let store: EnhancedStore<

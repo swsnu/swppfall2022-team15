@@ -8,7 +8,7 @@ import projectReducer from "./project";
 import notificationReducer from "./notifications";
 import targetReducer from "./target";
 import messageReducer from "./message";
-import notificationConfigReducer  from "./notificationConfig";
+import notificationConfigReducer from "./notificationConfig";
 import authReducer from "./auth";
 import analyticsReducer from "./analytics";
 import todayReducer from "./today";

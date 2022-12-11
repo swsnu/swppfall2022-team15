@@ -6,16 +6,14 @@ describe("notifications", () => {
     jest
       .spyOn(axios, "post")
       .mockImplementation(() => Promise.resolve({ data: { id: 1 } }));
-    createNotificationConfig(
-        {
-            project: 1,
-            type: "test",
-            rrule: "test",
-            message: 1,
-            target_users: [1],
-            mode: "test"
-        }
-    );
+    createNotificationConfig({
+      project: 1,
+      type: "test",
+      rrule: "test",
+      message: 1,
+      target_users: [1],
+      mode: "test",
+    });
   });
 
   it("should create notification config - failure", () => {
@@ -33,5 +31,4 @@ describe("notifications", () => {
       mode: "test",
     });
   });
-
 });

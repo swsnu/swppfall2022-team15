@@ -5,8 +5,7 @@ export async function createNotificationConfig(
   notificationConfig: NotificationConfigCreateDto
 ) {
   const response = await axios.post(
-    "/api/notification_config/",
-    notificationConfig
+    "/api/notification_config/", notificationConfig
   );
   return response.data.id;
 }

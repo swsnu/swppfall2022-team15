@@ -21,8 +21,7 @@ export async function getTarget(targetId: number) {
 export async function updateTarget(targetId: number, requestData: any) {
   try {
     const resp = await axios.patch<TargetType>(
-      `/api/targetuser/${targetId}/`,
-      requestData
+      `/api/targetuser/${targetId}/`, requestData
     );
     return resp.data;
   } catch (e: any) {

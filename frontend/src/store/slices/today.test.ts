@@ -85,7 +85,6 @@ describe("todaySlice", () => {
 
   beforeAll(() => {
     store = configureStore({ reducer: { today: reducer } });
-
     jest.useFakeTimers();
     jest.setSystemTime(new Date("2022-12-01T00:00:00.000Z").getTime());
   });

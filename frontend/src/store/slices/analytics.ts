@@ -162,7 +162,7 @@ export const getWeeklyDataByType = createAsyncThunk(
         type: type,
       },
     });
-    console.log(response.data)
+    console.log(response.data);
     return response.data;
   }
 );

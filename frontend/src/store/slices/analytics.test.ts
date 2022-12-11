@@ -1,6 +1,22 @@
-import { AnyAction, EnhancedStore, ThunkMiddleware, configureStore } from "@reduxjs/toolkit";
+import {
+  AnyAction,
+  EnhancedStore,
+  ThunkMiddleware,
+  configureStore,
+} from "@reduxjs/toolkit";
 import axios from "axios";
-import reducer, { AnalyticsStatus, getDailyData, getDailyDataByProject, getDailyDataByType, getMonthlyData, getMonthlyDataByProject, getMonthlyDataByType, getWeeklyData, getWeeklyDataByProject, getWeeklyDataByType } from "./analytics";
+import reducer, {
+  AnalyticsStatus,
+  getDailyData,
+  getDailyDataByProject,
+  getDailyDataByType,
+  getMonthlyData,
+  getMonthlyDataByProject,
+  getMonthlyDataByType,
+  getWeeklyData,
+  getWeeklyDataByProject,
+  getWeeklyDataByType,
+} from "./analytics";
 
 describe("analytics slice", () => {
   let store: EnhancedStore<

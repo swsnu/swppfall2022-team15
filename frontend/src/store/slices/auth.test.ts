@@ -6,8 +6,8 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
-import { AuthUser } from "../../types";
 import reducer, { authenticate, getToken, setToken } from "./auth";
+import { AuthUser } from "../../types";
 
 describe("auth reducer", () => {
   let store: EnhancedStore<

@@ -7,7 +7,10 @@ import {
 import axios from "axios";
 
 import { NotificationConfigType } from "../../types";
-import reducer, { fetchAllNotificationConfigs, fetchNotificationConfigs } from "./notificationConfig";
+import reducer, {
+  fetchAllNotificationConfigs,
+  fetchNotificationConfigs,
+} from "./notificationConfig";
 
 describe("notificationConfigSlice", () => {
   let store: EnhancedStore<

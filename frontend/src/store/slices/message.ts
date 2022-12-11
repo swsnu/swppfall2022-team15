@@ -58,7 +58,6 @@ export const fetchMessage = createAsyncThunk(
   }
 );
 
-
 const initialState: {
   messages: { [key: string]: MessageType[] };
   selectedMessage: MessageType | null;
