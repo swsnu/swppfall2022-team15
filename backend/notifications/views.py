@@ -5,17 +5,19 @@ from django.db.models.functions import Trunc
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.mixins import ListModelMixin
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
+from core.paginator import CustomPageNumberPagination
 from core.permissions import IsOwner
 from notifications.models import NotificationConfig, Notification
 from notifications.models import Reservation
 from notifications.serializers import (
     NotificationConfigCreateSerializer,
     ReservationSerializer,
-    NotificationConfigSerializer, NotificationSerializer,
+    NotificationConfigSerializer, NotificationSerializer, NotificationListSerializer,
 )
 
 
@@ -38,6 +40,19 @@ class NotificationConfigViewSet(ModelViewSet):
 class NotificationViewSet(ListModelMixin, GenericViewSet):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
+    pagination_class = CustomPageNumberPagination
+    permission_classes = (IsAuthenticated, )
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return NotificationListSerializer
+        return self.serializer_class
+
+    def get_queryset(self):
+        return self.queryset.filter(
+            reservation__notification_config__project__user=self.request.user
+        )
+
     @action(detail=True, methods=['get'], permission_classes=[AllowAny, IsAuthenticated, IsOwner])
     def getAll(self, request):
         notifications = Notification.objects.filter(
