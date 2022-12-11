@@ -1,9 +1,6 @@
 import { renderWithProviders } from "../../test-utils/mocks";
 import TargetCreateModal from "./TargetCreateModal";
 import { fireEvent, screen } from "@testing-library/react";
-import preloadedState from "../../test-utils/mock_state";
-import { EnumNotificationType } from "../../Enums";
-import axios from "axios";
 
 describe("TargetCreateModal", () => {
   it("should render", () => {

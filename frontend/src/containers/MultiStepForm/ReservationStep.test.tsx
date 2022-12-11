@@ -34,9 +34,4 @@ describe("ReservationStep", () => {
     expect(screen.getByTestId("message-input")).toBeInTheDocument();
   });
 
-  it("should handle recurrence open", () => {
-    renderWithProviders(reservationStep);
-    const recurrenceButton = screen.getByText("Fire Immediately");
-    //fireEvent.click(recurrenceButton);
-  });
 });

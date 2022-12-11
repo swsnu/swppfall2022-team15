@@ -1,6 +1,4 @@
 import { renderWithProviders } from "../../test-utils/mocks";
-import { fireEvent, screen } from "@testing-library/react";
-import preloadedState from "../../test-utils/mock_state";
 import NotificationTypeStep from "./NotificationTypeStep";
 
 describe("NotificationTypeStep", () => {

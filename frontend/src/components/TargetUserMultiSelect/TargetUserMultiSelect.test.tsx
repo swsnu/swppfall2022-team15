@@ -1,6 +1,5 @@
 import { renderWithProviders } from "../../test-utils/mocks";
 import TargetUserMultiSelect from "./TargetUserMultiSelect";
-import { fireEvent, screen } from "@testing-library/react";
 
 describe("<TargetUserMultiSelect />", () => {
   it("should render", () => {
