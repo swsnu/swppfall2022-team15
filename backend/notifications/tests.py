@@ -74,7 +74,9 @@ class NotificationAPITestCase(APITestCase):
 
         # When
         self.client.force_authenticate(user=self.user)
-        response = self.client.get(f'/api/notification/metrics/?start={start_str}&end={end_str}&interval=hour')
+        response = self.client.get(
+            f'/api/notification/metrics/?start={start_str}&end={end_str}&interval=hour'
+        )
 
         # Then
         self.assertEqual(response.status_code, 200)
