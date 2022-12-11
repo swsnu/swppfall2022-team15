@@ -16,7 +16,7 @@ const root = ReactDOM.createRoot(
 );
 
 if (process.env.NODE_ENV === "production") {
-  axios.defaults.baseURL = "43.201.145.62:8000";
+  axios.defaults.baseURL = "https://noti-manager.site:8000";
 }
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.interceptors.request.use(function (config: any) {
