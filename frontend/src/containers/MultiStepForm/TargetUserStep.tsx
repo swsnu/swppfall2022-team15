@@ -105,12 +105,16 @@ export default function TargetUserStep(props: IProps) {
         </Grid>
       </Dialog>
       <Button variant="contained" onClick={() => setDialogOpen(true)}>
-        Add now
+        Add User
       </Button>
+      <br />
+      <br />
       <TargetUserMultiSelect
         selected={targetUserIdNameList}
         setSelected={setTargetUserIdNameList}
-        targetUsers={targetState.targets.filter((target) => target.notification_type === notificationType)}
+        targetUsers={targetState.targets.filter(
+          (target) => target.notification_type === notificationType
+        )}
       />
     </FormWrapper>
   );
