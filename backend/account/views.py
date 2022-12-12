@@ -47,7 +47,7 @@ class GmailView(GenericAPIView):
         response = requests.post(
             url=settings.OAUTH['token_uri'],
             data=json.dumps({
-                "code":  code,
+                "code": code,
                 "client_id": settings.OAUTH['client_id'],
                 "client_secret": settings.OAUTH['client_secret'],
                 "redirect_uri": "https://noti-manager.site:8000/api/gmail/",
