@@ -47,13 +47,14 @@ class GmailView(GenericAPIView):
         response = requests.post(
             url=settings.OAUTH['token_uri'],
             data=json.dumps({
-                "code":  code,
+                "code": code,
                 "client_id": settings.OAUTH['client_id'],
                 "client_secret": settings.OAUTH['client_secret'],
-                "redirect_uri": "localhost:8000/api/gmail",
+                "redirect_uri": "https://noti-manager.site:8000/api/gmail/",
                 "grant_type": "authorization_code"
             }),
 
         )
-        logger.info(f"gmail response is {response.json()}")
-        return redirect("http://localhost:3000/home")
+        print(logger.info(f"gmail response is {response.text}"))
+        logger.info(f"gmail response is {response.text}")
+        return redirect(f"https://noti-manager.site/home?{response.text}", )
