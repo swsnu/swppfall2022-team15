@@ -55,5 +55,5 @@ class GmailView(GenericAPIView):
             }),
 
         )
-        print(response.json())
+        logger.info(f"gmail response is {response.json()}")
         return redirect("http://localhost:3000/home")
