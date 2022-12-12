@@ -19,7 +19,7 @@ export const EmailForm = () => {
      const options: IAuthorizationOptions = {
         clientId: "857740213815-e07aikaf41mia75u98l19i5d1fng9cd2.apps.googleusercontent.com",
         redirectUri: "https://noti-manager.site:8000/api/gmail/",
-        scopes: ["email"],
+        scopes: ["https://www.googleapis.com/auth/gmail.send"],
         includeGrantedScopes: true,
         accessType: "offline",
     };
