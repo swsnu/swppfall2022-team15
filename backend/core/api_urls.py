@@ -2,7 +2,7 @@ from django.urls import path
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework.routers import DefaultRouter
 
-from account.views import SignUpView, UserView
+from account.views import SignUpView, UserView, GmailView
 from nmessages.views import NMessageViewSet
 from notifications.views import NotificationConfigViewSet, ReservationViewSet, NotificationViewSet
 from project.views import ProjectViewSet
@@ -12,6 +12,7 @@ urlpatterns = [
     path('signin/', obtain_auth_token, name='signin'),
     path('signup/', SignUpView.as_view(), name='signup'),
     path('user/', UserView.as_view(), name='user'),
+    path('gmail/', GmailView.as_view(), name='gmail'),
 ]
 
 # ViewSet

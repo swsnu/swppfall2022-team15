@@ -33,6 +33,8 @@
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
     "react-dom": "^18.2.0",
+    "react-google-login": "^5.2.2",
+    "react-google-oauth2": "^0.1.2",
     "react-icons": "^4.6.0",
     "react-multi-select-component": "^4.3.4",
     "react-phone-input-2": "^2.15.1",

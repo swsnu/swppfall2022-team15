@@ -18,6 +18,8 @@ import MessageListTable from "./containers/MessageList/MessageList";
 import AuthRoute from "./components/AuthRoute/AuthRoute";
 import HistoryTable from "./containers/History/HistoryTable";
 import User from "./containers/User/User";
+import {Email} from "@mui/icons-material";
+import {EmailForm} from "./components/Email/Email";
 
 export const SidebarLayout = () => (
   <>
@@ -91,6 +93,14 @@ function App() {
             element={
               <AuthRoute>
                 <User />
+              </AuthRoute>
+            }
+            />
+          <Route
+            path="/email"
+            element={
+              <AuthRoute>
+                <EmailForm />
               </AuthRoute>
             }
             />
