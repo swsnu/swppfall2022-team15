@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
 import Iconify from "../Iconify/Iconify";
 import { TargetType, TargetUserIdNameDto } from "../../types";
+import "./index.css";
 
 interface IProps {
   selected: TargetUserIdNameDto[];
@@ -33,7 +34,8 @@ export default function TargetUserMultiSelect(props: IProps) {
       <List
         sx={{
           width: "100%",
-          bgcolor: "background.paper",
+          bgcolor: "#F5F5F5",
+          borderRadius: 3,
           position: "relative",
           overflow: "auto",
           maxHeight: 300,
@@ -42,27 +44,29 @@ export default function TargetUserMultiSelect(props: IProps) {
         }}
         subheader={<li />}
       >
-        <ListSubheader>Selected users</ListSubheader>
+        <ListSubheader sx={{ bgcolor: "#F5F5F5" }}>
+          Selected users
+        </ListSubheader>
         {selected.map((e: any) => {
           const labelId = `checkbox-list-secondary-label-${e.value}`;
           return (
             <ListItem
-              sx={{ borderBottom: 0.1 }}
               key={e.value}
-              secondaryAction={
-                <ListItemButton
-                  onClick={() => {
-                    setSelected(
-                      selected.filter((s: any) => s.value !== e.value)
-                    );
-                  }}
-                >
-                  <Iconify
-                    icon={"system-uicons:cross"}
-                    sx={{ mr: 2, color: "error.main" }}
-                  />
-                </ListItemButton>
-              }
+              // UI상 이 부분은 빼는게 더 낫지 않을까 해서 주석처리 했습니다
+              // secondaryAction={
+              //   <ListItemButton
+              //     onClick={() => {
+              //       setSelected(
+              //         selected.filter((s: any) => s.value !== e.value)
+              //       );
+              //     }}
+              //   >
+              //     <Iconify
+              //       icon={"system-uicons:cross"}
+              //       sx={{ mr: 2, color: "error.main" }}
+              //     />
+              //   </ListItemButton>
+              // }
             >
               <ListItemButton
                 onClick={() => {
@@ -70,6 +74,10 @@ export default function TargetUserMultiSelect(props: IProps) {
                 }}
               >
                 <ListItemText id={labelId} primary={e.label} />
+                <Iconify
+                  icon={"system-uicons:cross"}
+                  sx={{ mr: 2, color: "error.main" }}
+                />
               </ListItemButton>
             </ListItem>
           );
@@ -81,7 +89,7 @@ export default function TargetUserMultiSelect(props: IProps) {
         value={selected}
         onChange={setSelected}
         labelledBy="Select"
-      ></MultiSelect>
+      />
     </>
   );
 }
