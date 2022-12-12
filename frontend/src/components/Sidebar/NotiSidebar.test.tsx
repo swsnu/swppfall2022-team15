@@ -29,7 +29,7 @@ describe("Sidebar Testing", () => {
   });
 
   it("should render user state correctly", () => {
-    renderWithProviders(sidebar, {preloadedState});
+    renderWithProviders(sidebar, { preloadedState });
   });
 
   it("should handle buttons", async () => {
@@ -46,7 +46,6 @@ describe("Sidebar Testing", () => {
     fireEvent.click(targetsButton);
     fireEvent.click(messagesButton);
     fireEvent.click(historyButton);
-
   });
 
   it("should handle logout", async () => {

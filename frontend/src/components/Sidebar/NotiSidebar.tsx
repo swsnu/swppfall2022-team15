@@ -12,12 +12,11 @@ import logo from "../../assets/NotiLogo.png";
 import { authSelector, logout } from "../../store/slices/auth";
 import { AppDispatch } from "../../store";
 
-
 export default function NotiSidebar() {
   const location = useLocation();
 
   const userState = useSelector(authSelector);
-  const [ username, setUsername ] = useState("");
+  const [username, setUsername] = useState("");
 
   const homeClass = location.pathname === "/home" ? "active" : "item";
   const projectsClass = location.pathname === "/projects" ? "active" : "item";
@@ -37,11 +36,14 @@ export default function NotiSidebar() {
 
   const logoutHandler = () => {
     dispatch(logout());
-  }
-  
+  };
+
   useEffect(() => {
-    if(userState.user) {
-      setUsername(userState.user.username.charAt(0).toUpperCase() + userState.user.username.slice(1));
+    if (userState.user) {
+      setUsername(
+        userState.user.username.charAt(0).toUpperCase() +
+          userState.user.username.slice(1)
+      );
     }
   }, [userState.user]);
 
@@ -52,7 +54,7 @@ export default function NotiSidebar() {
           <img className="Icon" src={logo} alt="" />
         </div>
         <Menu>
-          <MenuItem 
+          <MenuItem
             className="userInfo"
             icon={userIcon}
             routerLink={<Link to="/email" />}
@@ -108,7 +110,12 @@ export default function NotiSidebar() {
           </MenuItem>
         </Menu>
         <Menu className="logout">
-          <MenuItem className="item" icon={logoutIcon} data-testid={"logout-button"} onClick={logoutHandler}>
+          <MenuItem
+            className="item"
+            icon={logoutIcon}
+            data-testid={"logout-button"}
+            onClick={logoutHandler}
+          >
             {" "}
             Log Out{" "}
           </MenuItem>
@@ -117,4 +124,3 @@ export default function NotiSidebar() {
     </div>
   );
 }
-

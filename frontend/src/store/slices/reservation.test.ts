@@ -3,7 +3,10 @@ import axios from "axios";
 import { ThunkMiddleware } from "redux-thunk";
 
 import { ReservationType, RecurrentReservationType } from "../../types";
-import { EndingConditionType, FrequencyType } from "../../components/Recurrence";
+import {
+  EndingConditionType,
+  FrequencyType,
+} from "../../components/Recurrence";
 import reducer, { postRecurrentReservation } from "./reservation";
 
 describe("reservation reducer", () => {

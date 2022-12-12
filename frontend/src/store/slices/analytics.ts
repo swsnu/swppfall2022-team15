@@ -7,7 +7,7 @@ interface DataHash {
   [date: string]: number;
 }
 
-type AnalyticsStatus = {
+export type AnalyticsStatus = {
   Success: DataHash;
   Failure: DataHash;
   Pending: DataHash;
@@ -162,7 +162,7 @@ export const getWeeklyDataByType = createAsyncThunk(
         type: type,
       },
     });
-    console.log(response.data)
+    console.log(response.data);
     return response.data;
   }
 );

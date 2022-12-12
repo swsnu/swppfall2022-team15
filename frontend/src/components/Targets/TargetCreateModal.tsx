@@ -11,10 +11,11 @@ import {
 } from "@mui/material";
 import { useEffect, useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
+
+import { TargetUserForm } from "./TargetUserForm";
 import { AppDispatch } from "../../store";
 import { createTarget, fetchTargets } from "../../store/slices/target";
 import { EnumNotificationType } from "../../Enums";
-import { TargetUserForm } from "./TargetUserForm";
 import { getTarget, updateTarget } from "../../services/target";
 
 interface IProps {

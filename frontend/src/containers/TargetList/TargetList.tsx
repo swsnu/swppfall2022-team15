@@ -75,9 +75,9 @@ export default function TargetListTable() {
 
   function a11yProps(index: number) {
     return {
-      id: `simple-tab-${index}`,
+      //id: `simple-tab-${index}`,
       "data-testid": `tab-${index}`,
-      "aria-controls": `simple-tabpanel-${index}`,
+      //"aria-controls": `simple-tabpanel-${index}`,
     };
   }
 
@@ -208,6 +208,7 @@ export default function TargetListTable() {
             await setTargetId(targetId);
             setCreateModalOpen(true);
           }}
+          data-testid="edit-button"
         >
           <Iconify icon={"eva:edit-fill"} sx={{ mr: 2 }} />
           Edit

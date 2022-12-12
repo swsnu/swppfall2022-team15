@@ -36,7 +36,9 @@ class NotificationConfig(TimeStampedModel):
     nmessage = models.ForeignKey('nmessages.NMessage', on_delete=models.CASCADE)
     type = models.CharField(max_length=20, choices=EnumNotificationType.choices)
     mode = models.CharField(
-        max_length=20, choices=EnumNotificationMode.choices, default=EnumNotificationMode.RESERVATION
+        max_length=20,
+        choices=EnumNotificationMode.choices,
+        default=EnumNotificationMode.RESERVATION
     )
     rrule = models.TextField(null=True)
 
@@ -70,7 +72,9 @@ class Notification(TimeStampedModel):
 
 
 class Reservation(TimeStampedModel):
-    notification_config = \
-        models.ForeignKey('notifications.NotificationConfig', on_delete=models.CASCADE)
+    notification_config = models.ForeignKey(
+        'notifications.NotificationConfig',
+        on_delete=models.CASCADE
+    )
     status = models.CharField(max_length=20, choices=EnumReservationStatus.choices)
     reserved_at = models.DateTimeField()

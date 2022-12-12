@@ -19,7 +19,7 @@ class ProjectViewSet(ModelViewSet):
         return super().get_queryset().filter(user=self.request.user)
 
     @action(detail=True, methods=['get'], permission_classes=[AllowAny, IsAuthenticated, IsOwner])
-    def notification_config(self, request, pk):
+    def notification_config(self, request):
         project = self.get_object()
         notifications = project.notificationconfig_set.all()
         serializer = NotificationConfigSerializer(notifications, many=True)

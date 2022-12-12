@@ -32,6 +32,7 @@ const preloadedState: RootState = {
       },
     ],
     selectedNotification: null,
+    notifications_selectedProject: null,
   },
   notificationConfig: {
     notificationConfigs: [],
@@ -83,15 +84,15 @@ const preloadedState: RootState = {
   },
   today: {
     data: {
-        Success: {},
-    Failure: {},
-    Pending: {},
-    Total: {},
-  },
+      Success: {},
+      Failure: {},
+      Pending: {},
+      Total: {},
+    },
     successTotal: 0,
     failureTotal: 0,
-     mostActive: {time: -1, count: 0},
-  }
+    mostActive: { time: -1, count: 0 },
+  },
 };
 
 export default preloadedState;

@@ -11,15 +11,15 @@
     height: 100%;
 }
 
+.titleBox {
+    background-color: #f9fafb;
+}
+
 .Icon {
     display: inline-block;
     margin-top: 20px;
     margin-bottom: 10px;
     color: #0080ff
-}
-
-.titleBox {
-    background-color: #f9fafb;
 }
 
 .userInfo {
@@ -33,7 +33,7 @@
     text-transform: capitalize;
     text-align: left;
     font-size: 1rem;
-    font-family: "Inter";
+    font-family: 'Inter', sans-serif;
     font-weight: bold;
 }
 .userInfo:hover {
@@ -58,7 +58,7 @@
     text-transform: capitalize;
     text-align: left;
     font-size: 1rem;
-    font-family: "Inter";
+    font-family: 'Inter', sans-serif;
     font-weight: 400;
 }
 .item:hover {
@@ -76,7 +76,7 @@
     text-transform: capitalize;
     text-align: left;
     font-size: 1rem;
-    font-family: "Inter";
+    font-family: 'Inter', sans-serif;
     font-weight: bold;
 }
 .active:hover {

@@ -2,12 +2,10 @@ from datetime import datetime
 
 from django.conf import settings
 from rest_framework import serializers
+from dateutil.rrule import rrulestr
 
 from notifications.models import NotificationConfig, Reservation, EnumNotificationMode, Notification
 from notifications.services import task_bulk_create_notification
-
-from dateutil.rrule import rrulestr
-
 
 class NotificationConfigSerializer(serializers.ModelSerializer):
     message = serializers.CharField(source='nmessage_id')
@@ -40,7 +38,12 @@ class NotificationConfigCreateSerializer(serializers.ModelSerializer):
             reservation_time += [datetime.now()]
 
         for time in reservation_time:
-            task_bulk_create_notification.delay(time, target_users, notification_config.id, notification_config.mode)
+            task_bulk_create_notification.delay(
+                time,
+                target_users,
+                notification_config.id,
+                notification_config.mode
+            )
 
         return notification_config
 
@@ -59,3 +62,12 @@ class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = ('id', 'reservation', 'target', 'status', 'request', 'response',)
+
+
+class NotificationListSerializer(serializers.ModelSerializer):
+    target = serializers.CharField(source='target_user.name')
+    project = serializers.CharField(source='reservation.notification_config.project.name')
+
+    class Meta:
+        model = Notification
+        fields = ('id', 'project', 'target', 'status', 'created_at')

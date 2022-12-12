@@ -36,18 +36,5 @@
 //     const fireImmediatelyButton = screen.getByText("Fire Immediately");
 //     fireImmediatelyButton.click();
 //   });
-//
-//   it("should handle toggle", () => {
-//     render(
-//       <SplitButton
-//         options={["Reserve", "Fire Immediately"]}
-//         setOpen={() => {}}
-//       />
-//     );
-//
-//     const toggleButton = screen.getByTestId("toggle-button");
-//     toggleButton.click();
-//   });
-//
 // });
-export {}
+export {};

@@ -38,6 +38,7 @@ export async function fetchMessagesWithNotificationType(
 
 export async function getMessage(messageId: number) {
   const response = await axios.get<MessageType>(`/api/message/${messageId}/`);
+  
   return response.data;
 }
 
