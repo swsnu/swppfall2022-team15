@@ -17,6 +17,7 @@ import TargetListTable from "./containers/TargetList/TargetList";
 import MessageListTable from "./containers/MessageList/MessageList";
 import AuthRoute from "./components/AuthRoute/AuthRoute";
 import HistoryTable from "./containers/History/HistoryTable";
+import {EmailForm} from "./components/Email/Email";
 
 export const SidebarLayout = () => (
   <>
@@ -85,6 +86,14 @@ function App() {
               </AuthRoute>
             }
           />
+          <Route
+            path="/email"
+            element={
+              <AuthRoute>
+                <EmailForm />
+              </AuthRoute>
+            }
+            />
         </Route>
         <Route path="*" element={<Navigate replace to={"/home"} />} />
       </Routes>

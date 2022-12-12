@@ -29,3 +29,4 @@ CELERY_BROKER_URL = 'redis://noti-manager.wwlvtt.ng.0001.apn2.cache.amazonaws.co
 CELERY_RESULT_BACKEND = 'redis://noti-manager.wwlvtt.ng.0001.apn2.cache.amazonaws.com:6379'
 
 REDIS_HOST = 'noti-manager.wwlvtt.ng.0001.apn2.cache.amazonaws.com'
+
