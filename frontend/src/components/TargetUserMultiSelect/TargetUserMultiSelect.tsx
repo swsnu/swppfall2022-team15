@@ -1,9 +1,14 @@
-import {List, ListItem, ListItemButton, ListItemText, ListSubheader,} from "@mui/material";
-import {useEffect, useState} from "react";
-import {MultiSelect} from "react-multi-select-component";
+import {
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  ListSubheader,
+} from "@mui/material";
+import { useEffect, useState } from "react";
+import { MultiSelect } from "react-multi-select-component";
 import Iconify from "../Iconify/Iconify";
-import {TargetType, TargetUserIdNameDto} from "../../types";
-import { Box } from "@material-ui/core";
+import { TargetType, TargetUserIdNameDto } from "../../types";
 
 interface IProps {
   selected: TargetUserIdNameDto[];
@@ -12,15 +17,14 @@ interface IProps {
 }
 
 export default function TargetUserMultiSelect(props: IProps) {
-  const {targetUsers, selected, setSelected} = props;
+  const { targetUsers, selected, setSelected } = props;
   const [options, setOptions]: any = useState([]);
 
   useEffect(() => {
     setOptions(
-        targetUsers.map((target) => {
-          return { label: target.name, value: target.id };
-        }
-      )
+      targetUsers.map((target) => {
+        return { label: target.name, value: target.id };
+      })
     );
   }, [targetUsers]);
 
@@ -43,7 +47,7 @@ export default function TargetUserMultiSelect(props: IProps) {
           const labelId = `checkbox-list-secondary-label-${e.value}`;
           return (
             <ListItem
-              sx={{ borderBottom: 0.1,  }}
+              sx={{ borderBottom: 0.1 }}
               key={e.value}
               secondaryAction={
                 <ListItemButton
@@ -68,8 +72,6 @@ export default function TargetUserMultiSelect(props: IProps) {
                 <ListItemText id={labelId} primary={e.label} />
               </ListItemButton>
             </ListItem>
-
-            
           );
         })}
       </List>
@@ -79,7 +81,6 @@ export default function TargetUserMultiSelect(props: IProps) {
         value={selected}
         onChange={setSelected}
         labelledBy="Select"
-
       ></MultiSelect>
     </>
   );

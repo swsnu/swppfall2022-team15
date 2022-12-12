@@ -3,13 +3,10 @@ import { InputLabel, TextField } from "@mui/material";
 
 interface IProps {
   notificationType: string;
-
   name: string;
   setName: (name: string) => void;
-
   data: any;
   setData: (content: any) => void;
-
   fieldErrors: any;
   setFieldErrors: (error: any) => void;
 }

@@ -39,9 +39,7 @@ const Label = forwardRef<any, any>(
         {...other}
       >
         {startIcon && <Box sx={{ mr: 0.75, ...iconStyle }}> {startIcon} </Box>}
-
         {children}
-
         {endIcon && <Box sx={{ ml: 0.75, ...iconStyle }}> {endIcon} </Box>}
       </StyledLabel>
     );

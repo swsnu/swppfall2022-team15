@@ -82,10 +82,10 @@ describe("<ProjectList />", () => {
         },
       },
     });
-    const cell = screen.getByText("1");
-    fireEvent.click(cell);
 
-    const cell2 = screen.getByText("name");
-    fireEvent.click(cell2);
+    const row = screen.getByText("name");
+    fireEvent.click(row);
   });
+
+  
 });

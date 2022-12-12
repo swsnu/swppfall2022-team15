@@ -33,14 +33,6 @@ describe("Charts", () => {
     );
   });
 
-  it("should handle tabs correctly: 2", () => {
-    renderWithProviders(
-      <Charts selectedTab={2} selectedProject={0} selectedType={0} />
-    );
-
-    screen.getByText("Notification status (Slack)");
-  });
-
   it("should handle getting notifications", () => {
     renderWithProviders(
       <Charts selectedTab={0} selectedProject={0} selectedType={0} />,
@@ -61,7 +53,6 @@ describe("Charts", () => {
                 message: "test",
                 reservedAt: "2022-12-01T00:00:00.000Z",
                 type: "SLACK",
-
               },
               {
                 id: 3,
@@ -72,6 +63,7 @@ describe("Charts", () => {
               },
             ],
             selectedNotification: null,
+            notifications_selectedProject: null,
           },
         },
       }

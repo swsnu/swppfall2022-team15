@@ -1,3 +1,3 @@
-import NumberInput from './NumberInput'
+import NumberInput from "./NumberInput";
 
-export default NumberInput
+export default NumberInput;

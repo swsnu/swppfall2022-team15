@@ -1,10 +1,9 @@
 import "./Home.css";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Button } from "@mui/material";
 import { Grid } from "@material-ui/core";
 import { green, grey, red, indigo } from "@mui/material/colors";
-import axios from "axios";
 
 import Widget from "./Boxes/Widget";
 import Analytics from "./Boxes/Analytics";
@@ -19,7 +18,6 @@ import {
 import { getData, todaySelect } from "../../store/slices/today";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
 import MultiStepFormDialog from "../MultiStepFormDialog/MultiStepFormDialog";
-import moment from "moment";
 
 import "./Home.css"
 
@@ -40,14 +38,6 @@ export default function Home() {
 
   const handleClickCreateButton = (event: React.MouseEvent) => {
     setOpen(true);
-  };
-
-  const getTodayStart = () => {
-    return moment().format("YYYY-MM-DD 00:00:00");
-  };
-
-  const getTodayEnd = () => {
-    return moment().format("YYYY-MM-DD 23:59:59");
   };
 
   return (

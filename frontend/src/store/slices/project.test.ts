@@ -56,12 +56,10 @@ describe("project reducer", () => {
     jest.spyOn(axios, "get").mockImplementation((url: string) => {
       return Promise.resolve({
         data: fakeProjects[0],
-        
       });
     });
 
     await store.dispatch(fetchProject(1));
     expect(store.getState().project.selectedProject).toEqual(fakeProjects[0]);
   });
-
 });

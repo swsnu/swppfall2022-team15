@@ -79,8 +79,6 @@ describe("MessageCreateModal", () => {
       target: { value: "name" },
     });
 
-
-
     const slackMessageInput = screen.getByTestId("slack-message-input");
     fireEvent.change(slackMessageInput, {
       target: { value: "message" },
@@ -110,6 +108,4 @@ describe("MessageCreateModal", () => {
     const button = screen.getByTestId("create-button");
     fireEvent.click(button);
   });
-
-
 });

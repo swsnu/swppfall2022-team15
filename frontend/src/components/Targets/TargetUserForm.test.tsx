@@ -76,22 +76,6 @@ describe("TargetCreateForm", () => {
     fireEvent.change(apiKeyInput, { target: { value: "test" } });
   });
 
-  it("should handle change: webhook endpoint", () => {
-    renderWithProviders(
-      <TargetUserForm
-        notificationType={EnumNotificationType.WEBHOOK}
-        targetName={"test"}
-        setTargetName={() => {}}
-        endpoint={"test"}
-        setEndpoint={() => {}}
-        data={{}}
-        setData={() => {}}
-      />
-    );
-    const endpointInput = screen.getByTestId("endpoint-input");
-    fireEvent.change(endpointInput, { target: { value: "somethingelse" } });
-  });
-
   it("should handle change: webhook api auth", () => {
     renderWithProviders(
       <TargetUserForm
@@ -144,7 +128,6 @@ describe("TargetCreateForm", () => {
 
     const passwordInput = screen.getByTestId("password-input");
     fireEvent.change(passwordInput, { target: { value: "test" } });
-
   });
 
   it("should handle apiAuth: bearer", () => {
@@ -160,8 +143,7 @@ describe("TargetCreateForm", () => {
       />
     );
     const apiAuthInput = screen.getByTestId("type-input");
-    fireEvent.change(apiAuthInput, { target: { value: "bearer" }
-    });
+    fireEvent.change(apiAuthInput, { target: { value: "bearer" } });
   });
 
   it("should handle apiAuth: bearer, data change", () => {
@@ -211,7 +193,7 @@ describe("TargetCreateForm", () => {
         setData={() => {}}
       />
     );
-    
+
     const apiAuthInput = screen.getByTestId("type-input");
     fireEvent.change(apiAuthInput, { target: { value: "api_key" } });
 

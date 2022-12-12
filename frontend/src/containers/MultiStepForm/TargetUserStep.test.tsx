@@ -1,7 +1,6 @@
 import TargetUserStep from "./TargetUserStep";
 import { renderWithProviders } from "../../test-utils/mocks";
-import { fireEvent, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+
 
 describe("TargetUserStep", () => {
   it("should render correctly", () => {

@@ -1,34 +1,34 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { useState, Fragment } from "react";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
-import {NotificationConfigType} from '../../../../types';
-// TODO(Given) 
+import { NotificationConfigType } from "../../../../types";
+// TODO(Given)
 // Notification Status Implementation Issue
-// 1) get data on api call 
+// 1) get data on api call
 // 2) just get in advance before rendering
 interface IProps {
-  notificationConfigs: NotificationConfigType[]
+  notificationConfigs: NotificationConfigType[];
 }
 
 function Row(props: { row: NotificationConfigType }) {
   const { row } = props;
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
-    <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+    <Fragment>
+      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -82,14 +82,16 @@ function Row(props: { row: NotificationConfigType }) {
           </Collapse>
         </TableCell>
       </TableRow>
-    </React.Fragment>
+    </Fragment>
   );
 }
 
-
 export default function CollapsibleTable(props: IProps) {
   return (
-    <TableContainer sx={{ minHeight: 800, maxHeight: "calc(100vh-150px)" }} component={Paper}>
+    <TableContainer
+      sx={{ minHeight: 800, maxHeight: "calc(100vh-150px)" }}
+      component={Paper}
+    >
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>

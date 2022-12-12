@@ -1,3 +1,3 @@
-import TimeSelector from './TimeSelector'
+import TimeSelector from "./TimeSelector";
 
-export default TimeSelector
+export default TimeSelector;
