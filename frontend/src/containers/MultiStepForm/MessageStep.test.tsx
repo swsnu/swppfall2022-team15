@@ -142,40 +142,6 @@ describe("MessageStep", () => {
     );
   });
 
-  it("should handle import mode", async () => {
-    renderWithProviders(
-      <MessageStep
-        notificationType="SLACK"
-        name="test"
-        setName={() => {}}
-        data={{
-          channel: "test",
-          message: "test",
-        }}
-        setData={() => {}}
-        fieldErrors="test"
-        setFieldErrors={() => {}}
-        message={{
-          id: 1,
-          name: "test",
-          notification_type: "SLACK",
-          data: {
-            channel: "test",
-            message: "test",
-          },
-        }}
-        setMessage={() => {}}
-      />,
-      { preloadedState }
-    );
-    fireEvent.click(screen.getByLabelText("Import"));
-
-    fireEvent.click(screen.getByTestId("importMessageButton"));
-    userEvent.keyboard("{esc}");
-    fireEvent.click(screen.getByTestId("importMessageButton"));
-    fireEvent.click(screen.getByText("Close"))
-  });
-
   it("should handle create mode", async () => {
     renderWithProviders(
       <MessageStep
