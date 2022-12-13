@@ -53,6 +53,6 @@ class User(AbstractBaseUser):
     def oauth(self):
         if self.token and 'expires_at' in self.token:
             expires_at = datetime.strptime(self.token['expires_at'], "%Y-%m-%d %H:%M:%S")
-            return expires_at < datetime.now()
+            return expires_at > datetime.now()
 
         return False

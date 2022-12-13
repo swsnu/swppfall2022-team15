@@ -85,8 +85,6 @@ class GmailNotificationTaskDto(TypedDict):
 @app.task
 def task_spawn_notification_by_chunk(reservation_id: int):
     reservation = Reservation.objects.select_related('notification_config').get(id=reservation_id)
-    print(reservation)
-    print(reservation.notification_config)
     notification_ids = reservation.notification_set.values_list('id', flat=True)
 
     def split_notification_ids_by_chunk_size(ids: list[int], chunk_size) -> list[list[int]]:
@@ -99,7 +97,6 @@ def task_spawn_notification_by_chunk(reservation_id: int):
     notification_ids_by_chunk_size = \
         split_notification_ids_by_chunk_size(notification_ids, CHUNK_SIZE)
     for notification_ids in notification_ids_by_chunk_size:
-        print(notification_ids)
         task_handle_chunk_notification.delay(notification_ids)
 
     reservation.status = EnumReservationStatus.SENDING
@@ -135,11 +132,11 @@ def task_handle_chunk_notification(notification_ids: list[int]):
                 data=notification.reservation.notification_config.nmessage.data.get('message'),
             )
             task_send_sms_notification.delay(data)
-        elif notification.reservation.notification_config.type == EnumNotificationType.SMS:
+        elif notification.reservation.notification_config.type == EnumNotificationType.EMAIL:
             token = notification.reservation.notification_config.project.user.token,
             data = GmailNotificationTaskDto(
                 id=notification.id,
-                token=token,
+                token=token[0],
                 endpoint=notification.target_user.endpoint,
                 subject=notification.reservation.notification_config.nmessage.data.get('title'),
                 content=notification.reservation.notification_config.nmessage.data.get('message'),
