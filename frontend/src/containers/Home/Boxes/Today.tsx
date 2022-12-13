@@ -7,27 +7,37 @@ import { useSelector } from "react-redux";
 import { notificationListSelector } from "../../../store/slices/notifications";
 import { projectListSelector } from "../../../store/slices/project";
 import { todaySelect } from "../../../store/slices/today";
+import { useEffect, useState } from "react";
+import { fetchStat } from "../../../services/notifications";
 
 export default function Today() {
   const notifications = useSelector(notificationListSelector);
   const projects = useSelector(projectListSelector);
   const today = useSelector(todaySelect);
+  const [stat, setStat]: any = useState();
 
+  const initStat = async () => {
+    setStat(await fetchStat());
+  };
+
+  useEffect(() => {
+    initStat();
+  }, []);
   function getRate() {
     if (notifications.length === 0) {
       return "0%";
     } else {
       let success = 0;
       let fail = 0;
-      
+
       var i;
-      for(i = 0; i < notifications.length; i++) {
+      for (i = 0; i < notifications.length; i++) {
         if (notifications[i].status === "SUCCESS") {
           success++;
         } else {
           fail++;
         }
-      };
+      }
       return `${Math.round((success / (success + fail)) * 100)}%`;
     }
   }
@@ -45,8 +55,7 @@ export default function Today() {
       if (notifications.length === 0) {
         return "No notifications yet";
       } else {
-        //TODO
-        return "TODO";
+        return stat.most_requests;
       }
     }
   }
@@ -55,7 +64,7 @@ export default function Today() {
     if (notifications.length === 0) {
       return "No notifications yet";
     } else {
-      return "TODO";
+      return stat.most_used_channel;
     }
   }
 
@@ -75,7 +84,7 @@ export default function Today() {
       return "No notifications yet";
     } else {
       //TODO
-      return "TODO";
+      return stat.most_recent_failure;
     }
   }
 
