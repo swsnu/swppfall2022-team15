@@ -52,7 +52,7 @@ class User(AbstractBaseUser):
     @property
     def oauth(self):
         if self.token and 'expires_at' in self.token:
-            expires_at = datetime.strftime(self.token['expires_at'], "%Y-%m-%d %H:%M:%S")
+            expires_at = datetime.strptime(self.token['expires_at'], "%Y-%m-%d %H:%M:%S")
             return expires_at < timezone.now()
 
         return False
