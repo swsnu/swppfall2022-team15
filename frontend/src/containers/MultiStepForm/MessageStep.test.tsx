@@ -30,7 +30,7 @@ describe("MessageStep", () => {
       />,
       { preloadedState }
     );
-    fireEvent.click(screen.getByTestId("importMessageButton"));
+    fireEvent.click(screen.getByTestId("loadMessageButton"));
   });
 
   it("should handle errorfield", () => {

@@ -16,7 +16,10 @@ import MessageCreateForm from "../../components/Message/MessageForm";
 import { MessageType } from "../../types";
 import DynamicTable from "../../components/Message/DynamicTable";
 import { messageCreateService } from "../../components/Message/utils/MessageRequestService";
-import {getMessageColumns, getMessageKeys} from "../../components/Message/utils/dyanamicTableUtils";
+import {
+  getMessageColumns,
+  getMessageKeys,
+} from "../../components/Message/utils/dyanamicTableUtils";
 
 interface IProps {
   notificationType: string;
@@ -81,27 +84,22 @@ export default function MessageStep(props: IProps) {
 
   const form = MessageCreateForm(props, mode !== "create");
 
-
   return (
     <FormWrapper>
       <FormControl>
         <RadioGroup
           aria-label="notificationType"
           onChange={(e) => {
-            if (e.target.value === "import" && message) {
+            if (e.target.value === "load" && message) {
               setName(message?.name);
               setData(message?.data);
             }
             setMode(e.target.value);
           }}
-          defaultValue="Import"
+          defaultValue="Load"
           name="radio-buttons-group"
         >
-          <FormControlLabel
-            value={"import"}
-            control={<Radio />}
-            label={"Import"}
-          />
+          <FormControlLabel value={"load"} control={<Radio />} label={"Load"} />
           <FormControlLabel
             value={"create"}
             control={<Radio />}
@@ -146,11 +144,11 @@ export default function MessageStep(props: IProps) {
         <Button onClick={() => setDialogOpen(false)}>Close</Button>
       </Dialog>
       <Button
-        data-testid="importMessageButton"
+        data-testid="loadMessageButton"
         variant="contained"
         onClick={handleImportButton}
       >
-        Import
+        Load
       </Button>
       {form}
       <Button data-testid="confirm-button" onClick={handleClickConfirm}>
