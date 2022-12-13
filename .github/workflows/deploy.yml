@@ -68,7 +68,7 @@ jobs:
             sh deploy.sh ${{ github.sha }}
       - name: Deploy celery
         uses: appleboy/ssh-action@v0.1.4
-        id: deploy celery
+        id: deploy-celery
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
