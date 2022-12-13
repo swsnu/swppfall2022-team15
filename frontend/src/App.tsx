@@ -18,6 +18,7 @@ import MessageListTable from "./containers/MessageList/MessageList";
 import AuthRoute from "./components/AuthRoute/AuthRoute";
 import HistoryTable from "./containers/History/HistoryTable";
 import {EmailForm} from "./components/Email/Email";
+import OAuth from "./components/OAuth";
 
 export const SidebarLayout = () => (
   <>
@@ -91,6 +92,14 @@ function App() {
             element={
               <AuthRoute>
                 <EmailForm />
+              </AuthRoute>
+            }
+            />
+          <Route
+            path="/oauth-callback"
+            element={
+              <AuthRoute>
+                <OAuth/>
               </AuthRoute>
             }
             />
