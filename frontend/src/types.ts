@@ -7,6 +7,14 @@ export type ProjectType = {
   name: string;
 };
 
+export type ProjectListItemType = {
+  id: number;
+  project_type: string;
+  name: string;
+  number_of_requests: number;
+  most_recently_sent_notification: string;
+};
+
 export type NotificationConfigType = {
   id: number;
   project: number;
