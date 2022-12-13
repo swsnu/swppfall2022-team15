@@ -48,6 +48,7 @@ def task_send_gmail_notification(notification_task_dto):
         timeout=5,
         headers=headers,
     )
+    print(response.text)
     finished_at = timezone.now()
     notification = Notification.objects.get(id=notification_task_dto['id'])
     try:
