@@ -4,10 +4,12 @@ import logging
 from django.conf import settings
 from django.shortcuts import redirect
 from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.generics import CreateAPIView, GenericAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 
+from account.models import User
 from account.serializers import SignUpSerializer, UserSerializer
 
 logger = logging.getLogger(__name__)
@@ -34,15 +36,15 @@ class UserView(GenericAPIView):
 
 
 class GmailView(GenericAPIView):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
     def get_serializer_class(self):
         return UserSerializer
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         import requests
-        logger.info(f"request_query_parmas {request.query_params}")
 
+        user = request.user
         code = request.query_params.get('code')
         response = requests.post(
             url=settings.OAUTH['token_uri'],
@@ -50,11 +52,15 @@ class GmailView(GenericAPIView):
                 "code": code,
                 "client_id": settings.OAUTH['client_id'],
                 "client_secret": settings.OAUTH['client_secret'],
-                "redirect_uri": "https://noti-manager.site:8000/api/gmail/",
+                "redirect_uri": "https://noti-manager.site/oauth-callback",
                 "grant_type": "authorization_code"
             }),
 
         )
+        user.token = response.json()
+        user.save()
+
         print(logger.info(f"gmail response is {response.text}"))
         logger.info(f"gmail response is {response.text}")
+
         return redirect(f"https://noti-manager.site/home?{response.text}", )
