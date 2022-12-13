@@ -85,4 +85,4 @@ class NotificationListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Notification
-        fields = ('id', 'project', 'target', 'status', 'created_at')
+        fields = ('id', 'project', 'target', 'status', 'created_at', 'elapsed_time', 'status_code', 'started_at',)
