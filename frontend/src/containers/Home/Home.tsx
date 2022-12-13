@@ -19,7 +19,7 @@ import { getData, todaySelect } from "../../store/slices/today";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
 import MultiStepFormDialog from "../MultiStepFormDialog/MultiStepFormDialog";
 
-import "./Home.css"
+import "./Home.css";
 
 export default function Home() {
   const projects = useSelector(projectListSelector);
@@ -28,34 +28,19 @@ export default function Home() {
   const today = useSelector(todaySelect);
   const dispatch = useDispatch<AppDispatch>();
 
-  const [open, setOpen] = useState(false);
-
   useEffect(() => {
     dispatch(fetchProjects());
     dispatch(fetchAllNotifications());
     dispatch(getData());
   }, [user, dispatch]);
 
-  const handleClickCreateButton = (event: React.MouseEvent) => {
-    setOpen(true);
-  };
-
   return (
     <>
-      <MultiStepFormDialog open={open} onClose={() => setOpen(false)} />
       <Scrollbar>
         <Container maxWidth="xl" className="Home_Title">
           <Grid container justifyContent="space-between">
             <Grid item>
               <h2>{"Overview"}</h2>
-            </Grid>
-            <Grid item className="Home_button">
-              <Button
-                data-testid="create-button"
-                onClick={handleClickCreateButton}
-              >
-                Send Notification
-              </Button>
             </Grid>
           </Grid>
 
