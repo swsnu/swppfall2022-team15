@@ -19,7 +19,7 @@ import { getData, todaySelect } from "../../store/slices/today";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
 import MultiStepFormDialog from "../MultiStepFormDialog/MultiStepFormDialog";
 
-import "./Home.css"
+import "./Home.css";
 
 export default function Home() {
   const projects = useSelector(projectListSelector);
@@ -48,14 +48,6 @@ export default function Home() {
           <Grid container justifyContent="space-between">
             <Grid item>
               <h2>{"Overview"}</h2>
-            </Grid>
-            <Grid item className="Home_button">
-              <Button
-                data-testid="create-button"
-                onClick={handleClickCreateButton}
-              >
-                Send Notification
-              </Button>
             </Grid>
           </Grid>
 
