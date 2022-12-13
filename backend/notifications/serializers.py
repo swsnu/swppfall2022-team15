@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 
 from dateutil.rrule import rrulestr
 from django.conf import settings
+from django.utils import timezone
 from rest_framework import serializers
 
 from notifications.models import NotificationConfig, Reservation, EnumNotificationMode, Notification, \
@@ -38,11 +39,11 @@ class NotificationConfigCreateSerializer(serializers.ModelSerializer):
             rrule = validated_data.get('rrule')
             reservation_time += rrulestr(rrule)[:settings.MAX_RESERVATION_COUNT]
             if notification_config.type == EnumNotificationType.EMAIL:
-                last_reservation_time = datetime.now() + timedelta(minutes=59)
+                last_reservation_time = timezone.now() + timedelta(minutes=59)
                 reservation_time = [reservation for reservation in reservation_time if
                                     reservation < last_reservation_time]
         elif notification_config.mode == EnumNotificationMode.IMMEDIATE:
-            reservation_time += [datetime.now()]
+            reservation_time += [timezone.now()]
             if notification_config.type == EnumNotificationType.EMAIL:
                 token = notification_config.project.user.token
                 if token is None:
