@@ -28,21 +28,14 @@ export default function Home() {
   const today = useSelector(todaySelect);
   const dispatch = useDispatch<AppDispatch>();
 
-  const [open, setOpen] = useState(false);
-
   useEffect(() => {
     dispatch(fetchProjects());
     dispatch(fetchAllNotifications());
     dispatch(getData());
   }, [user, dispatch]);
 
-  const handleClickCreateButton = (event: React.MouseEvent) => {
-    setOpen(true);
-  };
-
   return (
     <>
-      <MultiStepFormDialog open={open} onClose={() => setOpen(false)} />
       <Scrollbar>
         <Container maxWidth="xl" className="Home_Title">
           <Grid container justifyContent="space-between">
