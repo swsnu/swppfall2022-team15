@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
+from django.utils import timezone
 
 
 class UserManager(BaseUserManager):
@@ -45,3 +46,7 @@ class User(AbstractBaseUser):
     # pylint: disable=W0613
     def has_perm(self, perm, obj=None):
         return True
+
+    @property
+    def oauth(self):
+        return self.token is not None and self.token.get('expired_at') < timezone.now()
