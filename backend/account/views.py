@@ -62,6 +62,7 @@ class GmailView(GenericAPIView):
         expires_at = timezone.now() + timedelta(seconds=token_data['expires_in'])
         expires_at = expires_at.strftime('%Y-%m-%d %H:%M:%S')
         token_data['expires_at'] = expires_at
+
         user.token = token_data
 
         user.save()
