@@ -19,6 +19,7 @@ from notifications.models import (
 from notifications.slack.serializers import SlackNotificationSerializer
 from notifications.slack.services import task_send_slack_notification
 from notifications.sms.services import task_send_sms_notification
+from notifications.email.services import task_send_gmail_notification
 
 logger = getLogger(__name__)
 
@@ -70,6 +71,15 @@ class NotificationTaskDto(TypedDict):
     endpoint: str
     headers: dict
     data: str
+
+
+class GmailNotificationTaskDto(TypedDict):
+    """Data transfer object for notifications."""
+    id: int
+    token: dict
+    endpoint: str
+    subject: str
+    content: str
 
 
 @app.task
@@ -125,6 +135,16 @@ def task_handle_chunk_notification(notification_ids: list[int]):
                 data=notification.reservation.notification_config.nmessage.data.get('message'),
             )
             task_send_sms_notification.delay(data)
+        elif notification.reservation.notification_config.type == EnumNotificationType.SMS:
+            token = notification.reservation.notification_config.project.user.token,
+            data = GmailNotificationTaskDto(
+                id=notification.id,
+                token=token,
+                endpoint=notification.target_user.endpoint,
+                subject=notification.reservation.notification_config.nmessage.data.get('title'),
+                content=notification.reservation.notification_config.nmessage.data.get('message'),
+            )
+            task_send_gmail_notification.delay(data)
 
 
 @app.task
