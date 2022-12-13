@@ -10,16 +10,20 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-
-import { createProject } from "../../services/project";
+import {
+  createProject,
+  fetchProject,
+  updateProject,
+} from "../../services/project";
 import { AppDispatch } from "../../store";
 import { fetchProjects } from "../../store/slices/project";
 
 interface IProps {
   open: any;
   handleClose?: any;
+  projectid?: number | null;
 }
 
 export default function ProjectCreateModal(props: IProps) {
@@ -27,9 +31,30 @@ export default function ProjectCreateModal(props: IProps) {
   const [projectName, setProjectName] = useState("");
   const dispatch = useDispatch<AppDispatch>();
 
+  const clearForm = () => {
+    setProjectType("");
+    setProjectName("");
+  };
+  const initializeFields = async () => {
+    const project = await fetchProject(props.projectid!);
+    setProjectType(project.project_type);
+    setProjectName(project.name);
+  };
+
+  useEffect(() => {
+    if (props.projectid) {
+      initializeFields();
+    }
+  }, [props.projectid]);
+
   const handleClickConfirm = async () => {
     if (projectName && projectType) {
-      await createProject(projectName, projectType);
+      if (props.projectid) {
+        await updateProject(props.projectid, projectName, projectType);
+      } else {
+        await createProject(projectName, projectType);
+      }
+      clearForm();
       props.handleClose();
       await dispatch(fetchProjects());
     }
@@ -39,7 +64,12 @@ export default function ProjectCreateModal(props: IProps) {
     <div>
       <Dialog
         open={props.open}
-        onClose={props.handleClose}
+        onClose={() => {
+          if (props.projectid) {
+            clearForm();
+          }
+          props.handleClose();
+        }}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
         fullWidth

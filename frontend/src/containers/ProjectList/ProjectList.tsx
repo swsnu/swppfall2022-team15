@@ -31,6 +31,7 @@ export default function ProjectListTable() {
   const [createModalopen, setCreateModalOpen] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [projectId, setProjectId]: any = useState(null);
 
   const navigate = useNavigate();
 
@@ -78,7 +79,11 @@ export default function ProjectListTable() {
     <>
       <ProjectCreateModal
         open={createModalopen}
-        handleClose={() => setCreateModalOpen(false)}
+        handleClose={() => {
+          setCreateModalOpen(false);
+          setProjectId(null);
+        }}
+        projectid={projectId}
       />
       <Container maxWidth="xl" className="projectList">
         <Grid container justifyContent="space-between">
@@ -192,7 +197,14 @@ export default function ProjectListTable() {
           },
         }}
       >
-        <MenuItem>
+        <MenuItem
+          onClick={async () => {
+            handleCloseMenu();
+            const projectId = open!.dataset.id;
+            await setProjectId(projectId);
+            setCreateModalOpen(true);
+          }}
+        >
           <Iconify icon={"eva:edit-fill"} sx={{ mr: 2 }} />
           Edit
         </MenuItem>
