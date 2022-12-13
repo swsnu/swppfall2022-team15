@@ -72,10 +72,12 @@ class ReservationSerializer(serializers.ModelSerializer):
 
 class NotificationSerializer(serializers.ModelSerializer):
     target = serializers.CharField(source='target_user')
+    type = serializers.CharField(source='reservation__notification_config__type')
 
     class Meta:
         model = Notification
-        fields = ('id', 'reservation', 'target', 'status', 'request', 'response',)
+        fields = ('id', 'reservation', 'target', 'status', 'request', 'response',
+                  'type')
 
 
 class NotificationListSerializer(serializers.ModelSerializer):
