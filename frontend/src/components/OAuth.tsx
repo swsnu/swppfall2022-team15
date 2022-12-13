@@ -7,6 +7,7 @@ import {useEffect} from "react";
 export default function OAuth() {
     const [searchParams, setSearchParams] = useSearchParams();
     const code = searchParams.get("code");
+    console.log(code)
 
     const sendCode = async () => {
         try {

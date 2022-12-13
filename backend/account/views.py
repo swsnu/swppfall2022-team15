@@ -45,7 +45,7 @@ class GmailView(GenericAPIView):
         import requests
 
         user = request.user
-        code = request.query_params.get('code')
+        code = request.data.get('code')
         response = requests.post(
             url=settings.OAUTH['token_uri'],
             data=json.dumps({
