@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 from django.utils import timezone
@@ -50,6 +52,7 @@ class User(AbstractBaseUser):
     @property
     def oauth(self):
         if self.token and 'expires_at' in self.token:
-            return self.token.get('expires_at') < timezone.now()
+            expires_at = datetime.strftime(self.token['expires_at'], "%Y-%m-%d %H:%M:%S")
+            return expires_at < timezone.now()
 
         return False

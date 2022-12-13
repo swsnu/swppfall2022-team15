@@ -16,6 +16,7 @@ class NotificationConfigSerializer(serializers.ModelSerializer):
         model = NotificationConfig
         fields = ('id', 'message', 'project', 'type', 'rrule',)
 
+
 class NotificationConfigCreateSerializer(serializers.ModelSerializer):
     message = serializers.IntegerField(source='nmessage_id')
     target_users = serializers.ListField(child=serializers.IntegerField())
@@ -38,15 +39,16 @@ class NotificationConfigCreateSerializer(serializers.ModelSerializer):
             reservation_time += rrulestr(rrule)[:settings.MAX_RESERVATION_COUNT]
             if notification_config.type == EnumNotificationType.EMAIL:
                 last_reservation_time = datetime.now() + timedelta(minutes=59)
-                reservation_time = [reservation for reservation in reservation_time if reservation < last_reservation_time]
+                reservation_time = [reservation for reservation in reservation_time if
+                                    reservation < last_reservation_time]
         elif notification_config.mode == EnumNotificationMode.IMMEDIATE:
             reservation_time += [datetime.now()]
             if notification_config.type == EnumNotificationType.EMAIL:
                 token = notification_config.project.user.token
                 if token is None:
                     raise serializers.ValidationError('token is required')
-                if token.get('expires_at'):
-                    if token.get('expires_at') + timedelta(minutes=1) < datetime.now():
+                if expires_at := token.get('expires_at'):
+                    if datetime.strptime(expires_at, '%Y-%m-%d %H:%M:%S') + timedelta(minutes=1) < datetime.now():
                         raise serializers.ValidationError('token is expired')
 
         for time in reservation_time:
@@ -71,6 +73,7 @@ class ReservationSerializer(serializers.ModelSerializer):
 
 class NotificationSerializer(serializers.ModelSerializer):
     target = serializers.CharField(source='target_user')
+
     class Meta:
         model = Notification
         fields = ('id', 'reservation', 'target', 'status', 'request', 'response',)
