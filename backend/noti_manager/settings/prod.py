@@ -30,8 +30,8 @@ CELERY_RESULT_BACKEND = 'redis://noti-manager.wwlvtt.ng.0001.apn2.cache.amazonaw
 
 REDIS_HOST = 'noti-manager.wwlvtt.ng.0001.apn2.cache.amazonaws.com'
 
-SMS_SENDER = os.environ['SMS_SENDER']
-NCLOUD_ACCESS_KEY = os.environ['NCLOUD_ACCESS_KEY']
-NCLOUD_SECRET_KEY = os.environ['NCLOUD_SECRET_KEY']
-NCLOUD_SERVICE_ID = os.environ['NCLOUD_SECRET_KEY']
-NCLOUD_SMS_ENDPOINT = os.environ['NCLOUD_SMS_ENDPOINT']
+SMS_SENDER = os.environ.get('SMS_SENDER')
+NCLOUD_ACCESS_KEY = os.environ.get('NCLOUD_ACCESS_KEY')
+NCLOUD_SECRET_KEY = os.environ.get('NCLOUD_SECRET_KEY')
+NCLOUD_SERVICE_ID = os.environ.get('NCLOUD_SECRET_KEY')
+NCLOUD_SMS_ENDPOINT = os.environ.get('NCLOUD_SMS_ENDPOINT')
