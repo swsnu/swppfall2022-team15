@@ -41,6 +41,13 @@ class NotificationConfigCreateSerializer(serializers.ModelSerializer):
                 reservation_time = [reservation for reservation in reservation_time if reservation < last_reservation_time]
         elif notification_config.mode == EnumNotificationMode.IMMEDIATE:
             reservation_time += [datetime.now()]
+            if notification_config.type == EnumNotificationType.EMAIL:
+                token = notification_config.project.user.token
+                if token is None:
+                    raise serializers.ValidationError('token is required')
+                if token.get('expires_at'):
+                    if token.get('expires_at') + timedelta(minutes=1) < datetime.now():
+                        raise serializers.ValidationError('token is expired')
 
         for time in reservation_time:
             task_bulk_create_notification.delay(

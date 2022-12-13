@@ -1,22 +1,15 @@
 import {Button, Grid, InputLabel, TextField} from "@mui/material";
 import {useState} from "react";
 
-import {
-    GoogleButton,
-    IAuthorizationOptions,
-    isLoggedIn,
-    createOAuthHeaders,
-    logOutOAuthUser,
-    GoogleAuth,
-} from "react-google-oauth2";
+import {GoogleButton, IAuthorizationOptions,} from "react-google-oauth2";
+import {useSelector} from "react-redux";
+import {authSelector} from "../../store/slices/auth";
 
 
 export const EmailForm = () => {
-    const [name, setName] = useState("");
-    const [fieldErrors, setFieldErrors] = useState<any>();
-    const disabled = false;
+    const auth = useSelector(authSelector)
 
-     const options: IAuthorizationOptions = {
+    const options: IAuthorizationOptions = {
         clientId: "857740213815-e07aikaf41mia75u98l19i5d1fng9cd2.apps.googleusercontent.com",
         redirectUri: "https://noti-manager.site/oauth-callback",
         scopes: ["https://www.googleapis.com/auth/gmail.send"],
@@ -42,56 +35,40 @@ export const EmailForm = () => {
     const form = (
         <>
           <Grid>
-          <InputLabel id="demo-simple-select-label">Name</InputLabel>
+          <InputLabel id="demo-simple-select-label">Email</InputLabel>
           <TextField
             id="outlined-multiline-static"
             fullWidth
             multiline
             inputProps={{ "data-testid": "email-name-input" }}
-            onChange={(event) => {
-              setName(event.target.value);
-            }}
-            value={name}
-            rows={1}
-            disabled={disabled}
+            value={auth.user?.email}
+            disabled={true}
             required
           />
           <br />
           <br />
-          <InputLabel id="demo-simple-select-label">Title</InputLabel>
+          <InputLabel id="demo-simple-select-label">Username</InputLabel>
           <TextField
             id="outlined-multiline-static"
             fullWidth
             multiline
-            inputProps={{ "data-testid": "email-title-input" }}
-            onChange={(event: any) => {
-              setFieldErrors({ ...fieldErrors, title: undefined });
-            }}
-            value=""
-            helperText={fieldErrors}
-            error={Boolean(fieldErrors?.title)}
+            value={auth.user?.username}
             rows={1}
-            disabled={disabled}
+            disabled={true}
             required
           />
           <br />
           <br />
           <InputLabel id="demo-simple-select-label" margin="dense">
-            Message
+            Gmail Access
           </InputLabel>
           <TextField
             id="outlined-multiline-static"
             fullWidth
             multiline
             inputProps={{ "data-testid": "email-message-input" }}
-            onChange={(event: any) => {
-              setFieldErrors({ ...fieldErrors, message: undefined });
-            }}
-            value={""}
-            helperText={fieldErrors?.message}
-            error={Boolean(fieldErrors?.message)}
-            rows={8}
-            disabled={disabled}
+            value={auth.user?.oauth?.toString()}
+            disabled={true}
             required
           />
           <Button onClick={handleEmailClick}>Register Email</Button>
