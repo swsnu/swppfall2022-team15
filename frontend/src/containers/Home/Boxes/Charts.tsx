@@ -49,48 +49,6 @@ export default function Charts(props: IProps) {
     }
     handleTabChange();
   }, [dispatch, projectState, props.selectedTab, props.selectedType])
-  useEffect(() => {
-    function getData() {
-      let success = 0;
-      let failure = 0;
-      let upcoming = 0;
-      let total = 0;
-
-      if (analyticsData.barlineType === "daily") {
-        for (let i = 14; i >= 0; i--) {
-          const date = moment().subtract(i, "days").format("YYYY-MM-DD");
-          success += analyticsData.barLineData.Success[date];
-          failure += analyticsData.barLineData.Failure[date];
-          upcoming += analyticsData.barLineData.Pending[date];
-          total += analyticsData.barLineData.Total[date];
-        }
-      } else if (analyticsData.barlineType === "weekly") {
-        for (let i = 15; i >= 0; i--) {
-          const today = moment();
-          const date = moment().subtract(i, "weeks").subtract(today.weekday()-1, "days").format("YYYY-MM-DD");
-          success += analyticsData.barLineData.Success[date];
-          failure += analyticsData.barLineData.Failure[date];
-          upcoming += analyticsData.barLineData.Pending[date];
-          total += analyticsData.barLineData.Total[date];
-        }
-      } else {
-        for (let i = 12; i >= 0; i--) {
-          const date = moment().subtract(i, "months").format("YYYY-MM-01");
-          success += analyticsData.barLineData.Success[date];
-          failure += analyticsData.barLineData.Failure[date];
-          upcoming += analyticsData.barLineData.Pending[date];
-          total += analyticsData.barLineData.Total[date];
-        }
-      }
-
-      setSuccess(success);
-      setFailure(failure);
-      setUpcoming(upcoming);
-      setTotal(total);
-    }
-    getData();
-  }, [analyticsData])
-  
 
   function getTitle() {
     if (props.selectedTab === 0) {

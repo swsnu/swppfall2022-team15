@@ -100,30 +100,30 @@ export default function BarLineAnalytics(props: IProps) {
       let pending = [];
       let total = [];
 
-      if (analyticsData.barlineType === "daily") {
+      if (type === 10) {
         for (let i = 14; i >= 0; i--) {
           const date = moment().subtract(i, "days").format("YYYY-MM-DD");
-          success.push({ x: date, y: analyticsData.barLineData.Success[date] });
-          fail.push({ x: date, y: analyticsData.barLineData.Failure[date] });
-          pending.push({ x: date, y: analyticsData.barLineData.Pending[date] });
-          total.push({ x: date, y: analyticsData.barLineData.Total[date] });
+          success.push({ x: date, y: analyticsData.barLineDataDaily.Success[date] });
+          fail.push({ x: date, y: analyticsData.barLineDataDaily.Failure[date] });
+          pending.push({ x: date, y: analyticsData.barLineDataDaily.Pending[date] });
+          total.push({ x: date, y: analyticsData.barLineDataDaily.Total[date] });
         }
-      } else if (analyticsData.barlineType === "weekly") {
+      } else if (type === 20) {
         for (let i = 15; i >= 0; i--) {
           const today = moment();
           const date = moment().subtract(i, "weeks").subtract(today.weekday()-1, "days").format("YYYY-MM-DD");
-          success.push({ x: date, y: analyticsData.barLineData.Success[date] });
-          fail.push({ x: date, y: analyticsData.barLineData.Failure[date] });
-          pending.push({ x: date, y: analyticsData.barLineData.Pending[date] });
-          total.push({ x: date, y: analyticsData.barLineData.Total[date] });
+          success.push({ x: date, y: analyticsData.barLineDataWeekly.Success[date] });
+          fail.push({ x: date, y: analyticsData.barLineDataWeekly.Failure[date] });
+          pending.push({ x: date, y: analyticsData.barLineDataWeekly.Pending[date] });
+          total.push({ x: date, y: analyticsData.barLineDataWeekly.Total[date] });
         }
       } else {
         for (let i = 12; i >= 0; i--) {
           const date = moment().subtract(i, "months").format("YYYY-MM-01");
-          success.push({ x: date, y: analyticsData.barLineData.Success[date] });
-          fail.push({ x: date, y: analyticsData.barLineData.Failure[date] });
-          pending.push({ x: date, y: analyticsData.barLineData.Pending[date] });
-          total.push({ x: date, y: analyticsData.barLineData.Total[date] });
+          success.push({ x: date, y: analyticsData.barLineDataMonthly.Success[date] });
+          fail.push({ x: date, y: analyticsData.barLineDataMonthly.Failure[date] });
+          pending.push({ x: date, y: analyticsData.barLineDataMonthly.Pending[date] });
+          total.push({ x: date, y: analyticsData.barLineDataMonthly.Total[date] });
         }
       }
 

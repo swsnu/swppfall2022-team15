@@ -33,40 +33,4 @@ describe("Charts", () => {
     );
   });
 
-  it("should handle getting notifications", () => {
-    renderWithProviders(
-      <Charts selectedTab={0} selectedProject={0} selectedType={0} />,
-      {
-        preloadedState: {
-          notification: {
-            notifications: [
-              {
-                id: 1,
-                status: EnumNotificationStatus.SUCCESS,
-                message: "test",
-                reservedAt: "2022-12-01T00:00:00.000Z",
-                type: "SLACK",
-              },
-              {
-                id: 2,
-                status: EnumNotificationStatus.FAILURE,
-                message: "test",
-                reservedAt: "2022-12-01T00:00:00.000Z",
-                type: "SLACK",
-              },
-              {
-                id: 3,
-                status: EnumNotificationStatus.PENDING,
-                message: "test",
-                reservedAt: "2022-12-01T00:00:00.000Z",
-                type: "SLACK",
-              },
-            ],
-            selectedNotification: null,
-            notifications_selectedProject: null,
-          },
-        },
-      }
-    );
-  });
 });

@@ -10,8 +10,8 @@ import Analytics from "./Boxes/Analytics";
 import Today from "./Boxes/Today";
 import { AppDispatch } from "../../store";
 import { authSelector } from "../../store/slices/auth";
+import { notificationSelect, getTotal } from "../../store/slices/notifications";
 import { fetchProjects, projectListSelector } from "../../store/slices/project";
-import { fetchAllNotifications, notificationListSelector } from "../../store/slices/notifications";
 import { getData, todaySelect } from "../../store/slices/today";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
 
@@ -19,14 +19,14 @@ import "./Home.css";
 
 export default function Home() {
   const projects = useSelector(projectListSelector);
-  const notifications = useSelector(notificationListSelector);
   const user = useSelector(authSelector);
   const today = useSelector(todaySelect);
+  const notifications = useSelector(notificationSelect);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchProjects());
-    dispatch(fetchAllNotifications());
+    dispatch(getTotal());
     dispatch(getData());
   }, [user, dispatch]);
 
@@ -59,7 +59,7 @@ export default function Home() {
                 icon="wpf:sent"
                 title="Total"
                 subtitle="Total notification requests"
-                value={notifications.length}
+                value={notifications.totalNumber}
                 color_main={indigo[500]}
                 color_dark={indigo[600]}
                 color_light={indigo[400]}

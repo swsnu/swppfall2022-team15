@@ -1,25 +1,51 @@
 import { Table, TableBody, TableCell, TableRow, Card } from "@mui/material";
-import { Grid } from "@material-ui/core";
+import { Grid, TableContainer, TablePagination } from "@material-ui/core";
 import { Container } from "@mui/system";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
 import HistoryTableHead from "./TableHead";
-import {
-  fetchAllNotifications,
-  notificationListSelector,
-} from "../../store/slices/notifications";
-import { useEffect } from "react";
-import { AppDispatch } from "../../store";
+import Label from "../../components/Label/Label";
 
+import { AppDispatch } from "../../store";
 import "./HistoryTable.css"
 
+interface HistoryType {
+  id: number,
+  project: string,
+  target: string,
+  status: string,
+  created_at: string,
+}
+
+interface HistoryData {
+  count: number,
+  next: string,
+  previous: string,
+  results: HistoryType[]
+}
+
 export default function HistoryTable() {
-  const notificationConfigs = useSelector(notificationListSelector);
+  const [page, setPage] = useState(0);
   const dispatch = useDispatch<AppDispatch>();
-  useEffect(() => {
-    dispatch(fetchAllNotifications());
-  }, [dispatch])
+
+  const handlePageChange = (event: unknown, newPage: number) => {
+    setPage(newPage);
+    
+  };
+
+  const getColor = (status: string) => {
+    if (status === "SUCCESS") {
+      return "success";
+    } else if (status === "PENDING") {
+      return "warning";
+    } else {
+      return "error";
+    }
+  };
+
+
 
   return (
     <>
@@ -31,35 +57,26 @@ export default function HistoryTable() {
         </Grid>
         <Card>
           <Scrollbar>
-            <Table
-              sx={{
-                minHeight: 800,
+            <TableContainer
+              style={{
                 maxHeight: "calc(100vh - 200px)",
-              }}
-            >
+              }}>
+                <Table>
               <HistoryTableHead />
               <TableBody>
-                {notificationConfigs.map((notification, index) => (
-                  <TableRow key={index}>
-                    <TableCell>
-                      <Container>{"NEED API TO GET PROJECT"}</Container>
-                    </TableCell>
-                    <TableCell>
-                      <Container>{notification.type}</Container>
-                    </TableCell>
-                    <TableCell>
-                      <Container>{"NEED API TO GET TARGET"}</Container>
-                    </TableCell>
-                    <TableCell>
-                      <Container>{notification.reservedAt}</Container>
-                    </TableCell>
-                    <TableCell>
-                      <Container>{notification.status}</Container>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {}
               </TableBody>
             </Table>
+            </TableContainer>
+            
+            <TablePagination
+              rowsPerPageOptions={[25]}
+              component="div"
+              count={100}
+              rowsPerPage={25}
+              page={page}
+              onPageChange={handlePageChange}
+            />
           </Scrollbar>
         </Card>
       </Container>

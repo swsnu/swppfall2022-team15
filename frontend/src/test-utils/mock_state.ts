@@ -26,15 +26,9 @@ const preloadedState: RootState = {
     ],
   },
   notification: {
-    notifications: [
-      {
-        id: 1,
-        status: EnumNotificationStatus.SUCCESS,
-        message: "test",
-        reservedAt: "2021-10-10T00:00:00Z",
-        type: "test",
-      },
-    ],
+    totalNumber: 0,
+    totalSuccess: 0,
+    totalFailure: 0,
     selectedNotification: null,
     notifications_selectedProject: null,
   },
@@ -78,13 +72,24 @@ const preloadedState: RootState = {
     },
   },
   analytics: {
-    barLineData: {
-      Success: {},
-      Failure: {},
-      Pending: {},
-      Total: {},
-    },
-    barlineType: "daily",
+    barLineDataDaily: {
+    Success: {},
+    Failure: {},
+    Pending: {},
+    Total: {},
+  },
+  barLineDataWeekly: {
+    Success: {},
+    Failure: {},
+    Pending: {},
+    Total: {},
+  },
+  barLineDataMonthly: {
+    Success: {},
+    Failure: {},
+    Pending: {},
+    Total: {},
+  },
   },
   today: {
     data: {

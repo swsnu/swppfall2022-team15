@@ -183,16 +183,28 @@ export const getMonthlyDataByType = createAsyncThunk(
 );
 
 const initialState: {
-  barLineData: AnalyticsStatus;
-  barlineType: string;
+  barLineDataDaily: AnalyticsStatus;
+  barLineDataWeekly: AnalyticsStatus;
+  barLineDataMonthly: AnalyticsStatus;
 } = {
-  barLineData: {
+  barLineDataDaily: {
     Success: {},
     Failure: {},
     Pending: {},
     Total: {},
   },
-  barlineType: "daily",
+  barLineDataWeekly: {
+    Success: {},
+    Failure: {},
+    Pending: {},
+    Total: {},
+  },
+  barLineDataMonthly: {
+    Success: {},
+    Failure: {},
+    Pending: {},
+    Total: {},
+  },
 };
 
 export const AnalyticsSlice = createSlice({
@@ -201,175 +213,167 @@ export const AnalyticsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getDailyData.fulfilled, (state, action) => {
-      state.barLineData.Success = initializeDailyData();
-      state.barLineData.Failure = initializeDailyData();
-      state.barLineData.Pending = initializeDailyData();
-      state.barLineData.Total = initializeDailyData();
+      state.barLineDataDaily.Success = initializeDailyData();
+      state.barLineDataDaily.Failure = initializeDailyData();
+      state.barLineDataDaily.Pending = initializeDailyData();
+      state.barLineDataDaily.Total = initializeDailyData();
       for (let i = 0; i < action.payload.length; i++) {
         const data = action.payload[i];
         const time = action.payload[i].time.split(" ")[0];
         if (data.status === "SUCCESS") {
-          state.barLineData.Success[time] += data.count;
+          state.barLineDataDaily.Success[time] += data.count;
         } else if (data.status === "FAILURE") {
-          state.barLineData.Failure[time] += data.count;
+          state.barLineDataDaily.Failure[time] += data.count;
         } else {
-          state.barLineData.Pending[time] += data.count;
+          state.barLineDataDaily.Pending[time] += data.count;
         }
-        state.barLineData.Total[time] += data.count;
+        state.barLineDataDaily.Total[time] += data.count;
       }
-      state.barlineType = "daily";
     });
     builder.addCase(getDailyDataByProject.fulfilled, (state, action) => {
-      state.barLineData.Success = initializeDailyData();
-      state.barLineData.Failure = initializeDailyData();
-      state.barLineData.Pending = initializeDailyData();
-      state.barLineData.Total = initializeDailyData();
+      state.barLineDataDaily.Success = initializeDailyData();
+      state.barLineDataDaily.Failure = initializeDailyData();
+      state.barLineDataDaily.Pending = initializeDailyData();
+      state.barLineDataDaily.Total = initializeDailyData();
       for (let i = 0; i < action.payload.length; i++) {
         const data = action.payload[i];
         const time = action.payload[i].time.split(" ")[0];
         if (data.status === "SUCCESS") {
-          state.barLineData.Success[time] += data.count;
+          state.barLineDataDaily.Success[time] += data.count;
         } else if (data.status === "FAILURE") {
-          state.barLineData.Failure[time] += data.count;
+          state.barLineDataDaily.Failure[time] += data.count;
         } else {
-          state.barLineData.Pending[time] += data.count;
+          state.barLineDataDaily.Pending[time] += data.count;
         }
-        state.barLineData.Total[time] += data.count;
+        state.barLineDataDaily.Total[time] += data.count;
       }
-      state.barlineType = "daily";
     });
     builder.addCase(getDailyDataByType.fulfilled, (state, action) => {
-      state.barLineData.Success = initializeDailyData();
-      state.barLineData.Failure = initializeDailyData();
-      state.barLineData.Pending = initializeDailyData();
-      state.barLineData.Total = initializeDailyData();
+      state.barLineDataDaily.Success = initializeDailyData();
+      state.barLineDataDaily.Failure = initializeDailyData();
+      state.barLineDataDaily.Pending = initializeDailyData();
+      state.barLineDataDaily.Total = initializeDailyData();
       for (let i = 0; i < action.payload.length; i++) {
         const data = action.payload[i];
         const time = action.payload[i].time.split(" ")[0];
         if (data.status === "SUCCESS") {
-          state.barLineData.Success[time] += data.count;
+          state.barLineDataDaily.Success[time] += data.count;
         } else if (data.status === "FAILURE") {
-          state.barLineData.Failure[time] += data.count;
+          state.barLineDataDaily.Failure[time] += data.count;
         } else {
-          state.barLineData.Pending[time] += data.count;
+          state.barLineDataDaily.Pending[time] += data.count;
         }
-        state.barLineData.Total[time] += data.count;
+        state.barLineDataDaily.Total[time] += data.count;
       }
-      state.barlineType = "daily";
     });
     builder.addCase(getWeeklyData.fulfilled, (state, action) => {
-      state.barLineData.Success = initializeWeeklyData();
-      state.barLineData.Failure = initializeWeeklyData();
-      state.barLineData.Pending = initializeWeeklyData();
-      state.barLineData.Total = initializeWeeklyData();
+      state.barLineDataWeekly.Success = initializeWeeklyData();
+      state.barLineDataWeekly.Failure = initializeWeeklyData();
+      state.barLineDataWeekly.Pending = initializeWeeklyData();
+      state.barLineDataWeekly.Total = initializeWeeklyData();
       for (let i = 0; i < action.payload.length; i++) {
         const data = action.payload[i];
         const time = action.payload[i].time.split(" ")[0];
         if (data.status === "SUCCESS") {
-          state.barLineData.Success[time] += data.count;
+          state.barLineDataWeekly.Success[time] += data.count;
         } else if (data.status === "FAILURE") {
-          state.barLineData.Failure[time] += data.count;
+          state.barLineDataWeekly.Failure[time] += data.count;
         } else {
-          state.barLineData.Pending[time] += data.count;
+          state.barLineDataWeekly.Pending[time] += data.count;
         }
-        state.barLineData.Total[time] += data.count;
+        state.barLineDataWeekly.Total[time] += data.count;
       }
-      state.barlineType = "weekly";
     });
     builder.addCase(getWeeklyDataByProject.fulfilled, (state, action) => {
-      state.barLineData.Success = initializeWeeklyData();
-      state.barLineData.Failure = initializeWeeklyData();
-      state.barLineData.Pending = initializeWeeklyData();
-      state.barLineData.Total = initializeWeeklyData();
+      state.barLineDataWeekly.Success = initializeWeeklyData();
+      state.barLineDataWeekly.Failure = initializeWeeklyData();
+      state.barLineDataWeekly.Pending = initializeWeeklyData();
+      state.barLineDataWeekly.Total = initializeWeeklyData();
       for (let i = 0; i < action.payload.length; i++) {
         const data = action.payload[i];
         const time = action.payload[i].time.split(" ")[0];
         if (data.status === "SUCCESS") {
-          state.barLineData.Success[time] += data.count;
+          state.barLineDataWeekly.Success[time] += data.count;
         } else if (data.status === "FAILURE") {
-          state.barLineData.Failure[time] += data.count;
+          state.barLineDataWeekly.Failure[time] += data.count;
         } else {
-          state.barLineData.Pending[time] += data.count;
+          state.barLineDataWeekly.Pending[time] += data.count;
         }
-        state.barLineData.Total[time] += data.count;
+        state.barLineDataWeekly.Total[time] += data.count;
       }
-      state.barlineType = "weekly";
     });
     builder.addCase(getWeeklyDataByType.fulfilled, (state, action) => {
-      state.barLineData.Success = initializeWeeklyData();
-      state.barLineData.Failure = initializeWeeklyData();
-      state.barLineData.Pending = initializeWeeklyData();
-      state.barLineData.Total = initializeWeeklyData();
+      state.barLineDataWeekly.Success = initializeWeeklyData();
+      state.barLineDataWeekly.Failure = initializeWeeklyData();
+      state.barLineDataWeekly.Pending = initializeWeeklyData();
+      state.barLineDataWeekly.Total = initializeWeeklyData();
       for (let i = 0; i < action.payload.length; i++) {
         const data = action.payload[i];
         const time = action.payload[i].time.split(" ")[0];
         if (data.status === "SUCCESS") {
-          state.barLineData.Success[time] += data.count;
+          state.barLineDataWeekly.Success[time] += data.count;
         } else if (data.status === "FAILURE") {
-          state.barLineData.Failure[time] += data.count;
+          state.barLineDataWeekly.Failure[time] += data.count;
         } else {
-          state.barLineData.Pending[time] += data.count;
+          state.barLineDataWeekly.Pending[time] += data.count;
         }
-        state.barLineData.Total[time] += data.count;
+        state.barLineDataWeekly.Total[time] += data.count;
       }
-      state.barlineType = "weekly";
     });
     builder.addCase(getMonthlyData.fulfilled, (state, action) => {
-      state.barLineData.Success = initializeMonthlyData();
-      state.barLineData.Failure = initializeMonthlyData();
-      state.barLineData.Pending = initializeMonthlyData();
-      state.barLineData.Total = initializeMonthlyData();
+      state.barLineDataWeekly.Success = initializeMonthlyData();
+      state.barLineDataWeekly.Failure = initializeMonthlyData();
+      state.barLineDataWeekly.Pending = initializeMonthlyData();
+      state.barLineDataWeekly.Total = initializeMonthlyData();
       for (let i = 0; i < action.payload.length; i++) {
         const data = action.payload[i];
         const time = action.payload[i].time.split(" ")[0];
         if (data.status === "SUCCESS") {
-          state.barLineData.Success[time] += data.count;
+          state.barLineDataWeekly.Success[time] += data.count;
         } else if (data.status === "FAILURE") {
-          state.barLineData.Failure[time] += data.count;
+          state.barLineDataWeekly.Failure[time] += data.count;
         } else {
-          state.barLineData.Pending[time] += data.count;
+          state.barLineDataWeekly.Pending[time] += data.count;
         }
-        state.barLineData.Total[time] += data.count;
+        state.barLineDataWeekly.Total[time] += data.count;
       }
-      state.barlineType = "monthly";
+
     });
     builder.addCase(getMonthlyDataByProject.fulfilled, (state, action) => {
-      state.barLineData.Success = initializeMonthlyData();
-      state.barLineData.Failure = initializeMonthlyData();
-      state.barLineData.Pending = initializeMonthlyData();
-      state.barLineData.Total = initializeMonthlyData();
+      state.barLineDataWeekly.Success = initializeMonthlyData();
+      state.barLineDataWeekly.Failure = initializeMonthlyData();
+      state.barLineDataWeekly.Pending = initializeMonthlyData();
+      state.barLineDataWeekly.Total = initializeMonthlyData();
       for (let i = 0; i < action.payload.length; i++) {
         const data = action.payload[i];
         const time = action.payload[i].time.split(" ")[0];
         if (data.status === "SUCCESS") {
-          state.barLineData.Success[time] += data.count;
+          state.barLineDataWeekly.Success[time] += data.count;
         } else if (data.status === "FAILURE") {
-          state.barLineData.Failure[time] += data.count;
+          state.barLineDataWeekly.Failure[time] += data.count;
         } else {
-          state.barLineData.Pending[time] += data.count;
+          state.barLineDataWeekly.Pending[time] += data.count;
         }
-        state.barLineData.Total[time] += data.count;
+        state.barLineDataWeekly.Total[time] += data.count;
       }
-      state.barlineType = "monthly";
     });
     builder.addCase(getMonthlyDataByType.fulfilled, (state, action) => {
-      state.barLineData.Success = initializeMonthlyData();
-      state.barLineData.Failure = initializeMonthlyData();
-      state.barLineData.Pending = initializeMonthlyData();
-      state.barLineData.Total = initializeMonthlyData();
+      state.barLineDataWeekly.Success = initializeMonthlyData();
+      state.barLineDataWeekly.Failure = initializeMonthlyData();
+      state.barLineDataWeekly.Pending = initializeMonthlyData();
+      state.barLineDataWeekly.Total = initializeMonthlyData();
       for (let i = 0; i < action.payload.length; i++) {
         const data = action.payload[i];
         const time = action.payload[i].time.split(" ")[0];
         if (data.status === "SUCCESS") {
-          state.barLineData.Success[time] += data.count;
+          state.barLineDataWeekly.Success[time] += data.count;
         } else if (data.status === "FAILURE") {
-          state.barLineData.Failure[time] += data.count;
+          state.barLineDataWeekly.Failure[time] += data.count;
         } else {
-          state.barLineData.Pending[time] += data.count;
+          state.barLineDataWeekly.Pending[time] += data.count;
         }
-        state.barLineData.Total[time] += data.count;
+        state.barLineDataWeekly.Total[time] += data.count;
       }
-      state.barlineType = "monthly";
     });
   },
 });
