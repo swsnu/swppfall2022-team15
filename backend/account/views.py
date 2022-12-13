@@ -41,10 +41,8 @@ class GmailView(GenericAPIView):
     def get_serializer_class(self):
         return UserSerializer
 
-    @action(detail=True, methods=["get"])
-    def get(self, request, pk, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         import requests
-        logger.info(f"request_query_parmas {request.query_params}")
 
         user = request.user
         code = request.query_params.get('code')
