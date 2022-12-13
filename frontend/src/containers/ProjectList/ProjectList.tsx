@@ -140,13 +140,11 @@ export default function ProjectListTable() {
                             </Container>
                           </TableCell>
                           <TableCell>
-                            <Container>
-                              {"NEED API: Number of Requests"}
-                            </Container>
+                            <Container>{row.number_of_requests}</Container>
                           </TableCell>
                           <TableCell>
                             <Container>
-                              {"NEED API: Most Recently Sent Notification"}
+                              {row.most_recently_sent_notification}
                             </Container>
                           </TableCell>
 

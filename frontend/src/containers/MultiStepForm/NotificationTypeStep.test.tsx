@@ -51,6 +51,8 @@ describe("NotificationTypeStep", () => {
                 id: 1,
                 name: "test",
                 project_type: "ORGANIZATION",
+                number_of_requests: 1,
+                most_recently_sent_notification: "",
               },
             ],
             selectedProject: {

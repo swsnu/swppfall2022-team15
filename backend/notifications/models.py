@@ -70,6 +70,20 @@ class Notification(TimeStampedModel):
         self.finished_at = finished_at
         self.save(update_fields=['status', 'response', 'updated_at', 'started_at', 'finished_at'])
 
+    @property
+    def elapsed_time(self):
+        if self.finished_at:
+            elapsed = self.finished_at - self.started_at
+            return elapsed.total_seconds()
+
+        return None
+
+    @property
+    def status_code(self):
+        if self.response and 'status_code' in self.response:
+            return self.response['status_code']
+
+        return None
 
 class Reservation(TimeStampedModel):
     notification_config = models.ForeignKey(

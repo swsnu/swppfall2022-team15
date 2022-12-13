@@ -32,8 +32,20 @@ describe("<ProjectList />", () => {
       preloadedState: {
         project: {
           projects: [
-            { name: "name", project_type: EnumProjectType.INDIVIDUAL, id: 1 },
-            { name: "name", project_type: EnumProjectType.ORGANIZATION, id: 2 },
+            {
+              name: "name",
+              project_type: EnumProjectType.INDIVIDUAL,
+              id: 1,
+              number_of_requests: 1,
+              most_recently_sent_notification: "",
+            },
+            {
+              name: "name",
+              project_type: EnumProjectType.ORGANIZATION,
+              id: 2,
+              number_of_requests: 1,
+              most_recently_sent_notification: "",
+            },
           ],
           selectedProject: null,
         },
@@ -49,7 +61,13 @@ describe("<ProjectList />", () => {
       preloadedState: {
         project: {
           projects: [
-            { name: "name", project_type: EnumProjectType.INDIVIDUAL, id: 1 },
+            {
+              name: "name",
+              project_type: EnumProjectType.INDIVIDUAL,
+              id: 1,
+              number_of_requests: 1,
+              most_recently_sent_notification: "",
+            },
           ],
           selectedProject: null,
         },
@@ -76,7 +94,13 @@ describe("<ProjectList />", () => {
       preloadedState: {
         project: {
           projects: [
-            { name: "name", project_type: EnumProjectType.INDIVIDUAL, id: 1 },
+            {
+              name: "name",
+              project_type: EnumProjectType.INDIVIDUAL,
+              id: 1,
+              number_of_requests: 1,
+              most_recently_sent_notification: "",
+            },
           ],
           selectedProject: null,
         },
@@ -86,6 +110,4 @@ describe("<ProjectList />", () => {
     const row = screen.getByText("name");
     fireEvent.click(row);
   });
-
-  
 });

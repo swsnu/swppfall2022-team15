@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "..";
-import { ProjectType } from "../../types";
+import { ProjectListItemType, ProjectType } from "../../types";
 
 export const fetchProjects = createAsyncThunk(
   "project/fetchProjects",
   async () => {
-    const response = await axios.get<ProjectType[]>("/api/project/");
+    const response = await axios.get<ProjectListItemType[]>("/api/project/");
     return response.data;
   }
 );
@@ -21,7 +21,7 @@ export const fetchProject = createAsyncThunk(
 
 const initialState: {
   selectedProject: ProjectType | null;
-  projects: ProjectType[];
+  projects: ProjectListItemType[];
 } = {
   selectedProject: null,
   projects: [],
