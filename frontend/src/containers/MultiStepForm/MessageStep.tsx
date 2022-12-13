@@ -68,7 +68,7 @@ export default function MessageStep(props: IProps) {
   };
 
   const handleClickConfirm = async () => {
-    if (notificationType && name && data) {
+    if (notificationType) {
       const errorField = await messageCreateService(
         notificationType,
         name,
