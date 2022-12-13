@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - develop
+     pull_request:
+      types: [opened, synchronize, reopened]
+
 
 env:
   AWS_REGION: ap-northeast-2
@@ -54,6 +57,20 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         with:
           host: 43.201.145.62
+          username: ec2-user
+          key: ${{ secrets.SSH_KEY }}
+          env: ECR_REGISTRY,BACKEND_ECR_REPOSITORY,FRONTEND_ECR_REPOSITORY
+          script: |
+            sh deploy.sh ${{ github.sha }}
+
+      - name: Deploy celery
+        uses: appleboy/ssh-action@v0.1.4
+        id: deploy celery
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        with:
+          host: ec2-3-34-97-20.ap-northeast-2.compute.amazonaws.com
           username: ec2-user
           key: ${{ secrets.SSH_KEY }}
           env: ECR_REGISTRY,BACKEND_ECR_REPOSITORY,FRONTEND_ECR_REPOSITORY
