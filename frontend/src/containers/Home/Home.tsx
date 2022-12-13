@@ -1,7 +1,7 @@
 import "./Home.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Button } from "@mui/material";
+import { Container } from "@mui/material";
 import { Grid } from "@material-ui/core";
 import { green, grey, red, indigo } from "@mui/material/colors";
 
@@ -11,13 +11,9 @@ import Today from "./Boxes/Today";
 import { AppDispatch } from "../../store";
 import { authSelector } from "../../store/slices/auth";
 import { fetchProjects, projectListSelector } from "../../store/slices/project";
-import {
-  fetchAllNotifications,
-  notificationListSelector,
-} from "../../store/slices/notifications";
+import { fetchAllNotifications, notificationListSelector } from "../../store/slices/notifications";
 import { getData, todaySelect } from "../../store/slices/today";
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
-import MultiStepFormDialog from "../MultiStepFormDialog/MultiStepFormDialog";
 
 import "./Home.css";
 
