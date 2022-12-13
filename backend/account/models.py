@@ -49,4 +49,7 @@ class User(AbstractBaseUser):
 
     @property
     def oauth(self):
-        return self.token is not None and self.token.get('expired_at') < timezone.now()
+        if self.token and 'expires_at' in self.token:
+            return self.token.get('expires_at') < timezone.now()
+
+        return False

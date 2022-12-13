@@ -45,8 +45,8 @@ class NotificationConfigCreateSerializer(serializers.ModelSerializer):
                 token = notification_config.project.user.token
                 if token is None:
                     raise serializers.ValidationError('token is required')
-                if token.get('expired_at'):
-                    if token.get('expired_at') + timedelta(minutes=1) < datetime.now():
+                if token.get('expires_at'):
+                    if token.get('expires_at') + timedelta(minutes=1) < datetime.now():
                         raise serializers.ValidationError('token is expired')
 
         for time in reservation_time:

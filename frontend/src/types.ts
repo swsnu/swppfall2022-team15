@@ -92,4 +92,5 @@ export interface RecurrentReservationType {
 export interface AuthUser {
   email: string;
   username: string;
+  oauth?: boolean;
 }
