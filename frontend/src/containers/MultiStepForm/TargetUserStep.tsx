@@ -1,4 +1,4 @@
-import { Button, Dialog, Grid } from "@mui/material";
+import { Button, Dialog, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
@@ -27,6 +27,9 @@ interface IProps {
 
   targetUserIdNameList: TargetUserIdNameDto[];
   setTargetUserIdNameList: (targetUser: TargetUserIdNameDto[]) => void;
+
+  error: string | null;
+  setError: (error: string) => void;
 }
 
 export default function TargetUserStep(props: IProps) {
@@ -116,6 +119,11 @@ export default function TargetUserStep(props: IProps) {
           (target) => target.notification_type === notificationType
         )}
       />
+      {props.error && (
+        <Typography color="error" variant="body2">
+          {props.error}
+        </Typography>
+      )}
     </FormWrapper>
   );
 }

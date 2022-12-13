@@ -15,6 +15,8 @@ describe("TargetUserStep", () => {
         setData={() => {}}
         targetUserIdNameList={[]}
         setTargetUserIdNameList={() => {}}
+        error=""
+        setError={() => {}}
       />
     );
   });

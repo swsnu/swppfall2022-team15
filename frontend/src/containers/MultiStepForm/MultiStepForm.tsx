@@ -1,8 +1,8 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MessageStep from "./MessageStep";
 import TargetUserStep from "./TargetUserStep";
 import ReservationStep from "./ReservationStep";
-import {useState, Fragment} from "react";
+import { useState, Fragment } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stepper from "@mui/material/Stepper";
@@ -10,7 +10,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 
-import {MessageType, TargetUserIdNameDto} from "../../types";
+import { MessageType, TargetUserIdNameDto } from "../../types";
 import NotificationTypeForm from "./NotificationTypeStep";
 
 const steps = ["Notification Type", "Message", "Target", "Reservaton"];
@@ -34,9 +34,7 @@ export default function MultiStepForm() {
   const [fieldErrors, setFieldErrors] = useState<any>({});
 
   // Target
-  const [targetUsers, setTargetUsers] = useState<TargetUserIdNameDto[]>(
-    []
-  );
+  const [targetUsers, setTargetUsers] = useState<TargetUserIdNameDto[]>([]);
   // for create
   const [targetName, setTargetName] = useState("");
   const [endpoint, setEndpoint] = useState("");
@@ -49,7 +47,12 @@ export default function MultiStepForm() {
   const handleNext = () => {
     if (!notificationType) {
       setError("Notification Type is required");
-      return
+      return;
+    }
+
+    if (activeStep === 2 && targetUsers.length === 0) {
+      setError("This field is required");
+      return;
     }
 
     let newSkipped = skipped;
@@ -77,7 +80,7 @@ export default function MultiStepForm() {
   return (
     <Grid
       container
-      style={{ minHeight: "100vh"}}
+      style={{ minHeight: "100vh" }}
       alignItems="top"
       justifyContent="top"
       marginTop={4}
@@ -135,6 +138,8 @@ export default function MultiStepForm() {
               setData={setData}
               targetUserIdNameList={targetUsers}
               setTargetUserIdNameList={setTargetUsers}
+              error={error}
+              setError={setError}
             />
           ) : null}
           {activeStep === 3 ? (
