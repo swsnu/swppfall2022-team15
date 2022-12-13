@@ -2,7 +2,7 @@ import os
 
 from noti_manager.settings.base import *  # pylint: disable=W0401,W0614
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
