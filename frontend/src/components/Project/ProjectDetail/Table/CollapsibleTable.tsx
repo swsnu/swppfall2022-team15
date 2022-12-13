@@ -14,6 +14,9 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 import { NotificationConfigType } from "../../../../types";
+import { rrulestr } from "rrule";
+import { fetchReservations } from "../../../../services/reservation";
+import Scrollbar from "../../../Scrollbar/Scrollbar";
 // TODO(Given)
 // Notification Status Implementation Issue
 // 1) get data on api call
@@ -25,6 +28,7 @@ interface IProps {
 function Row(props: { row: NotificationConfigType }) {
   const { row } = props;
   const [open, setOpen] = useState(false);
+  const [reservations, setReservations]: any = useState([]);
 
   return (
     <Fragment>
@@ -34,7 +38,10 @@ function Row(props: { row: NotificationConfigType }) {
             aria-label="expand row"
             size="small"
             data-testid="expand-button"
-            onClick={() => setOpen(!open)}
+            onClick={async () => {
+              setReservations(await fetchReservations(row.id));
+              setOpen(!open);
+            }}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -45,7 +52,9 @@ function Row(props: { row: NotificationConfigType }) {
         <TableCell align="right">{row.type}</TableCell>
         {/*<TableCell align="right">{row.status}</TableCell>*/}
         <TableCell align="right">{row.message}</TableCell>
-        <TableCell align="right">{row.rrule}</TableCell>
+        <TableCell align="right">
+          {row.rrule ? rrulestr(row.rrule).toText() : "once"}
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -58,12 +67,20 @@ function Row(props: { row: NotificationConfigType }) {
                 <TableHead>
                   <TableRow>
                     <TableCell>id</TableCell>
-                    <TableCell></TableCell>
+                    <TableCell>reserved_at</TableCell>
                     {/*<TableCell align="right">Amount</TableCell>*/}
                     {/*<TableCell align="right">Total price ($)</TableCell>*/}
                   </TableRow>
                 </TableHead>
                 <TableBody>
+                  {reservations.map((reservation: any) => (
+                    <TableRow key={reservation.id}>
+                      <TableCell component="th" scope="row">
+                        {reservation.id}
+                      </TableCell>
+                      <TableCell>{reservation.reserved_at}</TableCell>
+                    </TableRow>
+                  ))}
                   {/*{row.history?.map((historyRow) => (
                     <TableRow key={historyRow.date}>
                       <TableCell component="th" scope="row">
@@ -88,26 +105,28 @@ function Row(props: { row: NotificationConfigType }) {
 
 export default function CollapsibleTable(props: IProps) {
   return (
-    <TableContainer
-      sx={{ minHeight: 800, maxHeight: "calc(100vh-150px)" }}
-      component={Paper}
-    >
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>Id</TableCell>
-            <TableCell align="right">Notification Type</TableCell>
-            <TableCell align="right">Message</TableCell>
-            <TableCell align="right">Rrule</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {props.notificationConfigs.map((notification) => (
-            <Row key={notification.id} row={notification} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Scrollbar>
+      <TableContainer
+        style={{ minHeight: 800, maxHeight: "calc(100vh-150px)" }}
+        component={Paper}
+      >
+        <Table aria-label="collapsible table" stickyHeader>
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell>Id</TableCell>
+              <TableCell align="right">Notification Type</TableCell>
+              <TableCell align="right">Message</TableCell>
+              <TableCell align="right">Rrule</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {props.notificationConfigs.map((notification) => (
+              <Row key={notification.id} row={notification} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Scrollbar>
   );
 }
