@@ -1,11 +1,13 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
+from dateutil.rrule import rrulestr
 from django.conf import settings
 from rest_framework import serializers
-from dateutil.rrule import rrulestr
 
-from notifications.models import NotificationConfig, Reservation, EnumNotificationMode, Notification
+from notifications.models import NotificationConfig, Reservation, EnumNotificationMode, Notification, \
+    EnumNotificationType
 from notifications.services import task_bulk_create_notification
+
 
 class NotificationConfigSerializer(serializers.ModelSerializer):
     message = serializers.CharField(source='nmessage_id')
@@ -34,6 +36,9 @@ class NotificationConfigCreateSerializer(serializers.ModelSerializer):
         if notification_config.mode == EnumNotificationMode.RESERVATION:
             rrule = validated_data.get('rrule')
             reservation_time += rrulestr(rrule)[:settings.MAX_RESERVATION_COUNT]
+            if notification_config.type == EnumNotificationType.EMAIL:
+                last_reservation_time = datetime.now() + timedelta(minutes=59)
+                reservation_time = [reservation for reservation in reservation_time if reservation < last_reservation_time]
         elif notification_config.mode == EnumNotificationMode.IMMEDIATE:
             reservation_time += [datetime.now()]
 

@@ -21,13 +21,10 @@ def task_send_gmail_notification(notification_task_dto):
     content = notification_task_dto['content']
 
     access_token = token.get("access_token")
-    expired = token.get("expired")
-    if expired < timezone.now():
-        logger.info("Token expired")
-        return
+    token.get("expired")
+    token.get('access_token')
 
     message = EmailMessage()
-
     message.set_content(content)
     message['To'] = to
     message['Subject'] = subject
@@ -36,19 +33,20 @@ def task_send_gmail_notification(notification_task_dto):
     encoded_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
 
     request_data = {
-        'message': {
-            'raw': encoded_message
-        }
+        'raw': encoded_message
     }
+
+    # encoded message
     headers = {
         'Authorization': f'Bearer {access_token}',
         'Content-Type': 'application/json'
     }
     started_at = timezone.now()
     response = requests.post(
-        url='https://www.googleapis.com/gmail/v1/users/me/messages/send?',
+        url=f'https://www.googleapis.com/gmail/v1/users/me/messages/send?access_token={access_token}',
         json=request_data,
         timeout=5,
+        headers=headers,
     )
     finished_at = timezone.now()
     notification = Notification.objects.get(id=notification_task_dto['id'])
@@ -71,6 +69,5 @@ def task_send_gmail_notification(notification_task_dto):
         started_at,
         finished_at
     )
-
 
     return

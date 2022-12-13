@@ -1,10 +1,11 @@
 import json
 import logging
+from datetime import timedelta
 
 from django.conf import settings
 from django.shortcuts import redirect
+from django.utils import timezone
 from rest_framework import status
-from rest_framework.decorators import action
 from rest_framework.generics import CreateAPIView, GenericAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -57,10 +58,12 @@ class GmailView(GenericAPIView):
             }),
 
         )
-        user.token = response.json()
+        token_data = response.json()
+        token_data['expires_at'] = timezone.now() + timedelta(seconds=token_data['expires_in'])
+        user.token = token_data
+
         user.save()
 
-        print(logger.info(f"gmail response is {response.text}"))
         logger.info(f"gmail response is {response.text}")
 
         return redirect(f"https://noti-manager.site/home?{response.text}", )
