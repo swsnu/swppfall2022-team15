@@ -12,7 +12,7 @@ import notificationConfigReducer from "./notificationConfig";
 import authReducer from "./auth";
 import analyticsReducer from "./analytics";
 import todayReducer from "./today";
-import filterReducer from "./historyFilter";
+import filterReducer from "./historyCategory";
 import { RootState } from "../index";
 
 const rootReducer = combineReducers({
