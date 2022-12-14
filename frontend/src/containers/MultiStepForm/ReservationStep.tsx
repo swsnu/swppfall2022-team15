@@ -8,7 +8,7 @@ import {
   RecurrenceType,
 } from "../../components/Recurrence";
 import MessageForm from "../../components/Message/MessageForm";
-import { Button, Grid, TextField } from "@mui/material";
+import {Button, Grid, TextField, Typography} from "@mui/material";
 import { useSelector } from "react-redux";
 import { targetSelect } from "../../store/slices/target";
 import { RRule } from "rrule";
@@ -19,6 +19,7 @@ import {
   getTargetColumns,
   getTargetKeys,
 } from "../../components/Message/utils/dyanamicTableUtils";
+import {EnumNotificationType} from "../../Enums";
 
 interface IProps {
   notificationType: string;
@@ -124,6 +125,19 @@ export default function ReservationStep(props: IProps) {
     };
     await createNotificationConfig(config);
   };
+  const reservationWarning = () => {
+      let text = "Reservations can be made as many as 100 at most."
+      if (notificationType == EnumNotificationType.EMAIL.toString()) {
+          text = text.concat( " Emails can only be reserved up to one hour from now.")
+      }
+      return (
+        <Typography color="error" variant="body2">
+          {text}
+          <br/>
+          <br/>
+        </Typography>
+      )
+  }
 
   const reservation = (
     <>
@@ -182,7 +196,7 @@ export default function ReservationStep(props: IProps) {
       <br />
 
       <h2>Reservation</h2>
-      <h4>Reservations can be made as many as 100 at most.</h4>
+      {reservationWarning()}
       {reservation}
       <Grid>
         <SplitButton
