@@ -38,7 +38,7 @@ interface IProps {
 interface ChartDataType {
   name: string;
   type: string;
-  fill: string;
+  fill: { colors: string };
   data: { x: string; y: number }[];
 }
 
@@ -162,25 +162,25 @@ export default function BarLineAnalytics(props: IProps) {
         {
           name: "Success",
           type: "column",
-          fill: green[300],
+          fill: {colors: green[300]},
           data: success,
         },
         {
           name: "Failure",
           type: "column",
-          fill: red[300],
+          fill: {colors: red[300]},
           data: fail,
         },
         {
           name: "Pending",
           type: "column",
-          fill: blue[300],
+          fill: {colors: blue[300]},
           data: pending,
         },
         {
           name: "Total",
           type: "line",
-          fill: grey[300],
+          fill: {colors: grey[300]},
           data: total,
         },
       ];
@@ -242,7 +242,19 @@ export default function BarLineAnalytics(props: IProps) {
               curve: "smooth",
               width: 2,
             },
+            fill: {
+              colors: [green[300], red[300], blue[300], grey[300]],
+            },
+            dataLabels: {
+              style: {
+                colors: [green[300], red[300], blue[300], grey[300]],
+              }
+            },
+            markers: {
+              colors: [green[300], red[300], blue[300], grey[300]],
+            },
           }}
+          fill={[green[300], red[300], blue[300], grey[300]]}
         />
       </Box>
     </Card>
