@@ -99,7 +99,7 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
             ).order_by('-count').first().notification_config.type,
             'most_recent_failure': most_recent_failure.reservation.notification_config.nmessage.name
             if most_recent_failure else None,
-            'most_requests': Project.objects.get(pk=most_request_project['project']).name
+            'most_request_project': Project.objects.get(pk=most_request_project['project']).name
             if most_request_project else None
         }
         return Response(data)
