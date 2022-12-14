@@ -1,10 +1,4 @@
-import {
-  TableCell,
-  Container,
-  Menu,
-  Checkbox,
-  MenuItem,
-} from "@mui/material";
+import { TableCell, Container, Menu, Checkbox, MenuItem } from "@mui/material";
 
 import { InlineIcon } from "@iconify/react";
 
@@ -33,7 +27,11 @@ export default function HistoryTableHeadCell(props: IProps) {
   function render() {
     if (props.selectedObjects !== null) {
       return props.selectedObjects?.map((selected) => (
-        <MenuItem onClick={props.handleClick} data-testid={`click ${props.title} ${selected.object}`} disableRipple>
+        <MenuItem
+          onClick={props.handleClick}
+          data-testid={`click ${props.title} ${selected.object}`}
+          disableRipple
+        >
           <Checkbox checked={selected.checked} />
           <span>{selected.object}</span>
         </MenuItem>
@@ -45,9 +43,12 @@ export default function HistoryTableHeadCell(props: IProps) {
 
   return (
     <>
-      <TableCell onClick={props.handleOpen} data-testid={`click ${props.title}`}>
+      <TableCell
+        onClick={props.handleOpen}
+        data-testid={`click ${props.title}`}
+      >
         <Container>
-          {props.title} <InlineIcon icon="material-symbols:filter-list"/>
+          {props.title} <InlineIcon icon="material-symbols:filter-list" />
         </Container>
       </TableCell>
       <Menu

@@ -63,7 +63,9 @@ export default function DynamicTable(props: {
           <Table stickyHeader>
             <TableHead>
               <TableRow>
-                <TableCell><Container>Index</Container></TableCell>
+                <TableCell>
+                  <Container>Index</Container>
+                </TableCell>
                 {props.columns.map((col) => {
                   return (
                     <TableCell>
@@ -85,7 +87,9 @@ export default function DynamicTable(props: {
                       onClick={() => handleClickRow(row.id)}
                       data-testid={`table-row-${row.id}`}
                     >
-                      <TableCell><Container>{index+1}</Container></TableCell>
+                      <TableCell>
+                        <Container>{index + 1}</Container>
+                      </TableCell>
                       {props.keys.map((key: string) => {
                         let value = inDepthFieldParser(key, row);
                         return (

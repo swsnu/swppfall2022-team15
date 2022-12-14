@@ -336,7 +336,6 @@ export const AnalyticsSlice = createSlice({
         }
         state.barLineDataMonthly.Total[time] += data.count;
       }
-
     });
     builder.addCase(getMonthlyDataByProject.fulfilled, (state, action) => {
       state.barLineDataMonthly.Success = initializeMonthlyData();

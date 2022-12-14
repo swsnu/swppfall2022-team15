@@ -23,7 +23,7 @@ import {
   getWeeklyDataByProject,
   getWeeklyDataByType,
   getMonthlyDataByProject,
-  getMonthlyDataByType
+  getMonthlyDataByType,
 } from "../../../store/slices/analytics";
 import moment from "moment";
 import { projectSelect } from "../../../store/slices/project";
@@ -52,47 +52,39 @@ export default function BarLineAnalytics(props: IProps) {
   useEffect(() => {
     const handleTypeChange = async () => {
       if (type === 10) {
-        if(props.type === 0) {
+        if (props.type === 0) {
           await dispatch(getDailyData());
-        }
-        else if (props.type === 1) {
-          if(projectState) {
+        } else if (props.type === 1) {
+          if (projectState) {
             await dispatch(getDailyDataByProject(projectState.id));
           }
-        }
-        else {
+        } else {
           await dispatch(getDailyDataByType(props.noti_type));
         }
-        
       } else if (type === 20) {
-        if(props.type === 0) {
+        if (props.type === 0) {
           await dispatch(getWeeklyData());
-        }
-        else if(props.type === 1) {
-          if(projectState) {
+        } else if (props.type === 1) {
+          if (projectState) {
             await dispatch(getWeeklyDataByProject(projectState.id));
           }
-        }
-        else {
+        } else {
           await dispatch(getWeeklyDataByType(props.noti_type));
         }
-        
       } else {
-        if(props.type === 0) {
+        if (props.type === 0) {
           await dispatch(getMonthlyData());
-        }
-        else if(props.type === 1) {
-          if(projectState) {
+        } else if (props.type === 1) {
+          if (projectState) {
             await dispatch(getMonthlyDataByProject(projectState.id));
           }
-        }
-        else {
+        } else {
           await dispatch(getMonthlyDataByType(props.noti_type));
         }
       }
     };
     handleTypeChange();
-  }, [type, projectState]);
+  }, [type, projectState, props.type]);
   useEffect(() => {
     function getData() {
       let success = [];
@@ -103,27 +95,66 @@ export default function BarLineAnalytics(props: IProps) {
       if (type === 10) {
         for (let i = 14; i >= 0; i--) {
           const date = moment().subtract(i, "days").format("YYYY-MM-DD");
-          success.push({ x: date, y: analyticsData.barLineDataDaily.Success[date] });
-          fail.push({ x: date, y: analyticsData.barLineDataDaily.Failure[date] });
-          pending.push({ x: date, y: analyticsData.barLineDataDaily.Pending[date] });
-          total.push({ x: date, y: analyticsData.barLineDataDaily.Total[date] });
+          success.push({
+            x: date,
+            y: analyticsData.barLineDataDaily.Success[date],
+          });
+          fail.push({
+            x: date,
+            y: analyticsData.barLineDataDaily.Failure[date],
+          });
+          pending.push({
+            x: date,
+            y: analyticsData.barLineDataDaily.Pending[date],
+          });
+          total.push({
+            x: date,
+            y: analyticsData.barLineDataDaily.Total[date],
+          });
         }
       } else if (type === 20) {
         for (let i = 15; i >= 0; i--) {
           const today = moment();
-          const date = moment().subtract(i, "weeks").subtract(today.weekday()-1, "days").format("YYYY-MM-DD");
-          success.push({ x: date, y: analyticsData.barLineDataWeekly.Success[date] });
-          fail.push({ x: date, y: analyticsData.barLineDataWeekly.Failure[date] });
-          pending.push({ x: date, y: analyticsData.barLineDataWeekly.Pending[date] });
-          total.push({ x: date, y: analyticsData.barLineDataWeekly.Total[date] });
+          const date = moment()
+            .subtract(i, "weeks")
+            .subtract(today.weekday() - 1, "days")
+            .format("YYYY-MM-DD");
+          success.push({
+            x: date,
+            y: analyticsData.barLineDataWeekly.Success[date],
+          });
+          fail.push({
+            x: date,
+            y: analyticsData.barLineDataWeekly.Failure[date],
+          });
+          pending.push({
+            x: date,
+            y: analyticsData.barLineDataWeekly.Pending[date],
+          });
+          total.push({
+            x: date,
+            y: analyticsData.barLineDataWeekly.Total[date],
+          });
         }
       } else {
         for (let i = 12; i >= 0; i--) {
           const date = moment().subtract(i, "months").format("YYYY-MM-01");
-          success.push({ x: date, y: analyticsData.barLineDataMonthly.Success[date] });
-          fail.push({ x: date, y: analyticsData.barLineDataMonthly.Failure[date] });
-          pending.push({ x: date, y: analyticsData.barLineDataMonthly.Pending[date] });
-          total.push({ x: date, y: analyticsData.barLineDataMonthly.Total[date] });
+          success.push({
+            x: date,
+            y: analyticsData.barLineDataMonthly.Success[date],
+          });
+          fail.push({
+            x: date,
+            y: analyticsData.barLineDataMonthly.Failure[date],
+          });
+          pending.push({
+            x: date,
+            y: analyticsData.barLineDataMonthly.Pending[date],
+          });
+          total.push({
+            x: date,
+            y: analyticsData.barLineDataMonthly.Total[date],
+          });
         }
       }
 
@@ -157,7 +188,7 @@ export default function BarLineAnalytics(props: IProps) {
       setData(data);
     }
     getData();
-  }, [analyticsData])
+  }, [analyticsData]);
 
   return (
     <Card>
