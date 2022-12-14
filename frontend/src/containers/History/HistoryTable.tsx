@@ -44,7 +44,6 @@ export default function HistoryTable() {
             params: {
               page: page + 1,
               page_size: 25,
-              status: "SUCCESS",
             },
           })
           .then((response) => {

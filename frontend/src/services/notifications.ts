@@ -13,6 +13,5 @@ export async function createNotificationConfig(
 
 export async function fetchStat() {
   const resp = await axios.get("/api/notification/stat/");
-  console.log(resp.data);
   return resp.data;
 }
