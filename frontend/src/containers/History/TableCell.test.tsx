@@ -16,7 +16,7 @@ describe("HistoryTableHeadCell", () => {
         handleClick={handleProjectClick}
         open={openProject}
         anchorEl={anchorElProject}
-        selectedObjects={[]}
+        objects={{}}
         selectedRange={null}
       />
     );

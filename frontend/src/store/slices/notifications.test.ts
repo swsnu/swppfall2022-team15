@@ -67,7 +67,9 @@ describe("notification reducer", () => {
 
   it("should handle initial state", () => {
     expect(reducer(undefined, { type: "unknown" })).toEqual({
-      notifications: [],
+      totalNumber: 0,
+      totalSuccess: 0,
+      totalFailure: 0,
       selectedNotification: null,
       notifications_selectedProject: null,
     });

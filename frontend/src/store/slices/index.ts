@@ -12,6 +12,7 @@ import notificationConfigReducer from "./notificationConfig";
 import authReducer from "./auth";
 import analyticsReducer from "./analytics";
 import todayReducer from "./today";
+import filterReducer from "./historyFilter";
 import { RootState } from "../index";
 
 const rootReducer = combineReducers({
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   analytics: analyticsReducer,
   today: todayReducer,
+  filter: filterReducer,
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
