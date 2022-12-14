@@ -4,7 +4,7 @@
   "private": true,
   "proxy": "http://127.0.0.1:8000",
   "dependencies": {
-    "@date-io/date-fns": "^2.16.0",
+    "@date-io/date-fns": "1.x",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@iconify/react": "^4.0.0",
