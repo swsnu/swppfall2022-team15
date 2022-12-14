@@ -44,7 +44,7 @@ export default function Today() {
       if (notifications.totalNumber === 0) {
         return "No notifications yet";
       } else {
-        return stat.most_requests;
+        return stat.most_request_project;
       }
     }
   }

@@ -87,7 +87,6 @@ export const getMonthlyData = createAsyncThunk(
         interval: "month",
       },
     });
-    console.log(response.data)
     return response.data;
   }
 );
@@ -163,7 +162,6 @@ export const getWeeklyDataByType = createAsyncThunk(
         type: type,
       },
     });
-    console.log(response.data);
     return response.data;
   }
 );
