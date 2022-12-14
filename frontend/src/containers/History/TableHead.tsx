@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { TableHead, TableCell, TableRow, Container } from "@mui/material";
 
 import HistoryTableHeadCell from "./TableCell";
 import { changeProject, changeStatus, changeTarget, changeType } from "../../store/slices/historyCategory";
 import { projectListSelector } from "../../store/slices/project";
 import { targetListSelector } from "../../store/slices/target";
+import { AppDispatch } from "../../store";
 
 export default function HistoryTableHead() {
   const projects = useSelector(projectListSelector);
   const targets = useSelector(targetListSelector);
+
+  const dispatch = useDispatch<AppDispatch>();
 
   const [projectList, setProjectList] = useState(["All"]);
   const [targetList, setTargetList] = useState(["All"]);
@@ -48,7 +51,7 @@ export default function HistoryTableHead() {
   const handleProjectClick = (event: React.MouseEvent<HTMLElement>) => {
     const clickedProject = event.currentTarget.textContent as string;
     setSelectedProject(clickedProject);
-    changeProject(selectedProject);
+    dispatch(changeProject(clickedProject));
   };
 
   const [selectedType, setSelectedType] = useState("All");
@@ -63,7 +66,7 @@ export default function HistoryTableHead() {
   const handleTypeClick = (event: React.MouseEvent<HTMLElement>) => {
     const clickedType = event.currentTarget.textContent as string;
     setSelectedType(clickedType);
-    changeType(selectedType);
+    dispatch(changeType(clickedType));
   };
   
   const [selectedTarget, setSelectedTarget] = useState("All");
@@ -80,7 +83,7 @@ export default function HistoryTableHead() {
   const handleTargetClick = (event: React.MouseEvent<HTMLElement>) => {
     const clickedTarget = event.currentTarget.textContent as string;
     setSelectedTarget(clickedTarget);
-    changeTarget(selectedTarget);
+    dispatch(changeTarget(clickedTarget));
   };
 
   const [selectedStatus, setSelectedStatus] = useState("All");
@@ -97,7 +100,7 @@ export default function HistoryTableHead() {
   const handleStatusClick = (event: React.MouseEvent<HTMLElement>) => {
     const clickedStatus = event.currentTarget.textContent as string;
     setSelectedStatus(clickedStatus);
-    changeStatus(selectedStatus);
+    dispatch(changeStatus(clickedStatus));
   };
 
   return (

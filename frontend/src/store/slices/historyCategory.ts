@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "..";
 
 const initialState: {
@@ -17,20 +17,20 @@ export const filterSlice = createSlice({
   name: "filter",
   initialState,
   reducers: {
-    changeProject: (state, action) => {
+    changeProject: (state, action: PayloadAction<string>) => {
       state.project = action.payload;
     },
-    changeType: (state, action) => {
+    changeType: (state, action: PayloadAction<string>) => {
       state.type = action.payload;
     },
-    changeTarget: (state, action) => {
+    changeTarget: (state, action: PayloadAction<string>) => {
       state.target = action.payload;
     },
-    changeStatus: (state, action) => {
+    changeStatus: (state, action: PayloadAction<string>) => {
       state.status = action.payload;
     },
   },
-})
+});
 
 export const { changeProject, changeStatus, changeTarget, changeType } = filterSlice.actions;
 export const selectFilter = (state: RootState) => state.filter;
