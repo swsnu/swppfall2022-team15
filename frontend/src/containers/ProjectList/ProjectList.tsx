@@ -208,6 +208,7 @@ export default function ProjectListTable() {
             await setProjectId(projectId);
             setCreateModalOpen(true);
           }}
+          data-testid="edit-button"
         >
           <Iconify icon={"eva:edit-fill"} sx={{ mr: 2 }} />
           Edit
