@@ -51,7 +51,7 @@ export default function MessageStep(props: IProps) {
   } = props;
 
   // ui
-  const [mode, setMode] = useState(""); // import , create
+  const [mode, setMode] = useState("load"); // import , create
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -63,7 +63,7 @@ export default function MessageStep(props: IProps) {
   const messages = messageState.messages;
 
   // handler
-  const handleImportButton = () => {
+  const handleLoadButton = () => {
     setDialogOpen(true);
   };
 
@@ -96,7 +96,7 @@ export default function MessageStep(props: IProps) {
             }
             setMode(e.target.value);
           }}
-          defaultValue="Load"
+          defaultValue="load"
           name="radio-buttons-group"
         >
           <FormControlLabel value={"load"} control={<Radio />} label={"Load"} />
@@ -146,14 +146,16 @@ export default function MessageStep(props: IProps) {
       <Button
         data-testid="loadMessageButton"
         variant="contained"
-        onClick={handleImportButton}
+        onClick={handleLoadButton}
       >
-        Import
+        Load
       </Button>
       {form}
-      <Button data-testid="confirm-button" onClick={handleClickConfirm}>
-        Create Message
-      </Button>
+      {mode === "create" ? (
+        <Button data-testid="confirm-button" onClick={handleClickConfirm}>
+          Create Message
+        </Button>
+      ) : null}
     </FormWrapper>
   );
 }
