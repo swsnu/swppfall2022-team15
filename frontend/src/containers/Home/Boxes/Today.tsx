@@ -14,7 +14,7 @@ export default function Today() {
   const notifications = useSelector(notificationSelect);
   const projects = useSelector(projectListSelector);
   const today = useSelector(todaySelect);
-  const [stat, setStat]: any = useState();
+  const [stat, setStat]: any = useState({});
 
   const initStat = async () => {
     setStat(await fetchStat());
