@@ -18,7 +18,6 @@ export const getTotal = createAsyncThunk(
   "notifications/getTotal",
   async () => {
     const response = await axios.get<NotificationType[]>("/api/notification/");
-    console.log(response.data);
     return response.data;
   }
 );

@@ -1,7 +1,7 @@
 import { Table, TableBody, TableCell, TableRow, Card } from "@mui/material";
 import { Grid, TableContainer, TablePagination } from "@material-ui/core";
 import { Container } from "@mui/system";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
@@ -10,6 +10,8 @@ import Label from "../../components/Label/Label";
 
 import { AppDispatch } from "../../store";
 import "./HistoryTable.css"
+import axios from "axios";
+import { notificationSelect } from "../../store/slices/notifications";
 
 interface HistoryType {
   id: number,
@@ -28,11 +30,68 @@ interface HistoryData {
 
 export default function HistoryTable() {
   const [page, setPage] = useState(0);
-  const dispatch = useDispatch<AppDispatch>();
+  const [results, setResults] = useState<HistoryType[]>([]);
+  const [next, setNext] = useState<string>("");
+  const [previous, setPrevious] = useState<string>("");
+
+  const notifications = useSelector(notificationSelect);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await axios.get("/api/notification/", {
+          params: {
+            page: page+1,
+            page_size: 25,
+            status: "SUCCESS",
+          }
+        }).then(response => {
+          const data = response.data;
+          setResults(data.results);
+          setNext(data.next);
+          setPrevious(data.previous);
+        })
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchData();
+  }, [])
 
   const handlePageChange = (event: unknown, newPage: number) => {
+    const getNext = async () => {
+      try {
+        await axios.get(next).then(response => {
+          const data = response.data;
+          setResults(data.results);
+          setNext(data.next);
+          setPrevious(data.previous);
+        })
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    const getPrevious = async () => {
+      try {
+        await axios.get(previous).then(response => {
+        const data = response.data;
+        setResults(data.results);
+        setNext(data.next);
+        setPrevious(data.previous);
+      })
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    if(newPage > page) {
+      getNext();
+    } else {
+      getPrevious();
+    }
     setPage(newPage);
-    
   };
 
   const getColor = (status: string) => {
@@ -45,7 +104,12 @@ export default function HistoryTable() {
     }
   };
 
+  const formatDateTime = (dateTime: string) => {
+    const date = dateTime.split("T")[0];
+    const time = dateTime.split("T")[1].split(".")[0];
 
+    return `${date} ${time}`;
+  };
 
   return (
     <>
@@ -64,7 +128,20 @@ export default function HistoryTable() {
                 <Table>
               <HistoryTableHead />
               <TableBody>
-                {}
+                {results.map((row) => (
+                  <TableRow
+                    hover
+                    key={row.id}
+                  >
+                    <TableCell><Container>{row.project}</Container></TableCell>
+                    <TableCell><Container>{"TODO: TYPE"}</Container></TableCell>
+                    <TableCell><Container>{row.target}</Container></TableCell>
+                    <TableCell><Container>{formatDateTime(row.created_at)}</Container></TableCell>
+                    <TableCell><Container>
+                      <Label color={getColor(row.status)}>{row.status}</Label></Container>
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
             </TableContainer>
@@ -72,7 +149,7 @@ export default function HistoryTable() {
             <TablePagination
               rowsPerPageOptions={[25]}
               component="div"
-              count={100}
+              count={notifications.totalNumber}
               rowsPerPage={25}
               page={page}
               onPageChange={handlePageChange}

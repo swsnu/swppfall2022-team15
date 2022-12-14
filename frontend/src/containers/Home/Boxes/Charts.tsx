@@ -48,7 +48,7 @@ export default function Charts(props: IProps) {
       }
     }
     handleTabChange();
-  }, [dispatch, projectState, props.selectedTab, props.selectedType])
+  }, [props.selectedTab, props.selectedProject, props.selectedType, dispatch])
 
   function getTitle() {
     if (props.selectedTab === 0) {
