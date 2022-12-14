@@ -32,7 +32,7 @@ export async function updateProject(
   projectName: string,
   projectType: string
 ) {
-  const resp = await axios.patch(`/api/project/${projectId}/`, {
+  await axios.patch(`/api/project/${projectId}/`, {
     name: projectName,
     project_type: projectType,
   });

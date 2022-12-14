@@ -47,7 +47,7 @@ export default function HistoryTableHeadCell(props: IProps) {
     <>
       <TableCell onClick={props.handleOpen} data-testid={`click ${props.title}`}>
         <Container>
-          <p>{props.title} <InlineIcon icon="material-symbols:filter-list"/></p>
+          {props.title} <InlineIcon icon="material-symbols:filter-list"/>
         </Container>
       </TableCell>
       <Menu

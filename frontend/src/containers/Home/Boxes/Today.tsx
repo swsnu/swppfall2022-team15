@@ -4,14 +4,14 @@ import "./Today.css";
 import Iconify from "../../../components/Iconify/Iconify";
 import BarLineToday from "./BarLineToday";
 import { useSelector } from "react-redux";
-import { notificationListSelector } from "../../../store/slices/notifications";
+import { notificationSelect } from "../../../store/slices/notifications";
 import { projectListSelector } from "../../../store/slices/project";
 import { todaySelect } from "../../../store/slices/today";
 import { useEffect, useState } from "react";
 import { fetchStat } from "../../../services/notifications";
 
 export default function Today() {
-  const notifications = useSelector(notificationListSelector);
+  const notifications = useSelector(notificationSelect);
   const projects = useSelector(projectListSelector);
   const today = useSelector(todaySelect);
   const [stat, setStat]: any = useState();
@@ -24,21 +24,10 @@ export default function Today() {
     initStat();
   }, []);
   function getRate() {
-    if (notifications.length === 0) {
+    if (notifications.totalNumber === 0) {
       return "0%";
     } else {
-      let success = 0;
-      let fail = 0;
-
-      var i;
-      for (i = 0; i < notifications.length; i++) {
-        if (notifications[i].status === "SUCCESS") {
-          success++;
-        } else {
-          fail++;
-        }
-      }
-      return `${Math.round((success / (success + fail)) * 100)}%`;
+      return `${Math.round((notifications.totalSuccess / (notifications.totalSuccess + notifications.totalFailure)) * 100)}%`;
     }
   }
 
@@ -52,7 +41,7 @@ export default function Today() {
     if (projects.length === 0) {
       return "No Projects yet";
     } else {
-      if (notifications.length === 0) {
+      if (notifications.totalNumber === 0) {
         return "No notifications yet";
       } else {
         return stat.most_requests;
@@ -61,7 +50,7 @@ export default function Today() {
   }
 
   function getMostUsedChannel() {
-    if (notifications.length === 0) {
+    if (notifications.totalNumber === 0) {
       return "No notifications yet";
     } else {
       return stat.most_used_channel;
@@ -69,7 +58,7 @@ export default function Today() {
   }
 
   function getMostActiveTime() {
-    if (notifications.length === 0) {
+    if (notifications.totalNumber === 0) {
       return "No notifications yet";
     } else {
       const start = Number(today.mostActive.time);
@@ -80,7 +69,7 @@ export default function Today() {
   }
 
   function getMostRecentFailure() {
-    if (notifications.length === 0) {
+    if (notifications.totalNumber === 0) {
       return "No notifications yet";
     } else {
       //TODO

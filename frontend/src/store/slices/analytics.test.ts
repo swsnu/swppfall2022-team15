@@ -22,8 +22,9 @@ describe("analytics slice", () => {
   let store: EnhancedStore<
     {
       analytics: {
-        barLineData: AnalyticsStatus;
-        barlineType: string;
+        barLineDataDaily: AnalyticsStatus;
+        barLineDataWeekly: AnalyticsStatus;
+        barLineDataMonthly: AnalyticsStatus;
       };
     },
     AnyAction,
@@ -31,8 +32,9 @@ describe("analytics slice", () => {
       ThunkMiddleware<
         {
           analytics: {
-            barLineData: AnalyticsStatus;
-            barlineType: string;
+            barLineDataDaily: AnalyticsStatus;
+            barLineDataWeekly: AnalyticsStatus;
+            barLineDataMonthly: AnalyticsStatus;
           };
         },
         AnyAction,

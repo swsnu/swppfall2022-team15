@@ -52,9 +52,23 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
         return self.serializer_class
 
     def get_queryset(self):
-        return self.queryset.filter(
-            reservation__notification_config__project__user=self.request.user
-        )
+        projectId = self.request.query_params.get('projectId')
+        ##noti_type = self.request.query_params.get('type')
+        ##target = self.request.query_params.get('target')
+        status = self.request.query_params.get('status')
+
+        q=Q()
+        q &= Q(reservation__notification_config__project__user=self.request.user)
+        ##if projectId:
+        ##    q &= Q(reservation__notification_config__project__id=projectId)
+        ##if noti_type:
+        ##    q &= Q(reservation__notification_config__type=noti_type)
+        ##if target:
+        ##    q &= Q(reservation__notification_config__target=target)
+        if status:
+            q &= Q(status=status)
+
+        return self.queryset.filter(q)
 
     @action(detail=True, methods=['get'], permission_classes=[AllowAny, IsAuthenticated, IsOwner])
     def getAll(self, request):

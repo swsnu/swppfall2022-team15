@@ -4,7 +4,6 @@ import { ThunkMiddleware } from "redux-thunk";
 
 import reducer, {
   fetchNotifications,
-  fetchAllNotifications,
 } from "./notifications";
 import { EnumNotificationStatus } from "../../Enums";
 import { NotificationType } from "../../types";
@@ -13,7 +12,9 @@ describe("notification reducer", () => {
   let store: EnhancedStore<
     {
       notification: {
-        notifications: NotificationType[];
+        totalNumber: number;
+        totalSuccess: number;
+        totalFailure: number;
         selectedNotification: NotificationType | null;
         notifications_selectedProject: NotificationType[] | null;
       };
@@ -23,7 +24,9 @@ describe("notification reducer", () => {
       ThunkMiddleware<
         {
           notification: {
-            notifications: NotificationType[];
+            totalNumber: number;
+            totalSuccess: number;
+            totalFailure: number;
             selectedNotification: NotificationType | null;
             notifications_selectedProject: NotificationType[] | null;
           };
@@ -82,16 +85,4 @@ describe("notification reducer", () => {
     );
   });
 
-  it("should handle fetch all notifications", async () => {
-    jest.spyOn(axios, "get").mockImplementation((url: string) => {
-      return Promise.resolve({
-        data: fakeNotifications,
-      });
-    });
-    await store.dispatch(fetchAllNotifications());
-
-    expect(store.getState().notification.notifications).toEqual(
-      fakeNotifications
-    );
-  });
 });
