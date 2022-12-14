@@ -1,13 +1,13 @@
 import { Card, CardHeader, Box, Grid, Paper, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 import "./Today.css";
-import Iconify from "../../../components/Iconify/Iconify";
 import BarLineToday from "./BarLineToday";
-import { useSelector } from "react-redux";
+import Iconify from "../../../components/Iconify/Iconify";
 import { notificationSelect } from "../../../store/slices/notifications";
 import { projectListSelector } from "../../../store/slices/project";
 import { todaySelect } from "../../../store/slices/today";
-import { useEffect, useState } from "react";
 import { fetchStat } from "../../../services/notifications";
 
 export default function Today() {
@@ -28,8 +28,8 @@ export default function Today() {
       return "0%";
     } else {
       return `${Math.round(
-        (notifications.totalSuccess /
-          (notifications.totalSuccess + notifications.totalFailure)) *
+        (today.successTotal /
+          (today.successTotal + today.failureTotal)) *
           100
       )}%`;
     }

@@ -103,17 +103,10 @@ const preloadedState: RootState = {
     mostActive: { time: -1, count: 0 },
   },
   filter: {
-    typeFilters: {
-      Email: true,
-      SMS: true,
-      Webhook: true,
-      Slack: true,
-    },
-    statusFilters: {
-      Success: true,
-      Failure: true,
-      Pending: true,
-    },
+    project: "",
+    type: "",
+    target: "",
+    status: "",
   },
 };
 

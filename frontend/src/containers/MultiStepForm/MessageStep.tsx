@@ -148,7 +148,7 @@ export default function MessageStep(props: IProps) {
         variant="contained"
         onClick={handleImportButton}
       >
-        Load
+        Import
       </Button>
       {form}
       <Button data-testid="confirm-button" onClick={handleClickConfirm}>

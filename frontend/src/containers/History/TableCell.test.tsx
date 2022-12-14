@@ -16,8 +16,8 @@ describe("HistoryTableHeadCell", () => {
         handleClick={handleProjectClick}
         open={openProject}
         anchorEl={anchorElProject}
-        objects={{}}
-        selectedRange={null}
+        objects={["All", "Project 1", "Project 2"]}
+        selectedObject={"All"}
       />
     );
   });
