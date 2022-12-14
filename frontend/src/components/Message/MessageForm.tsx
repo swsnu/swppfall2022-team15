@@ -184,6 +184,7 @@ export default function MessageCreateForm(
             error={Boolean(fieldErrors?.message)}
             rows={9}
             required
+            disabled={disabled}
           />
         </>
       );
