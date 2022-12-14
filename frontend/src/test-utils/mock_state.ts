@@ -73,23 +73,23 @@ const preloadedState: RootState = {
   },
   analytics: {
     barLineDataDaily: {
-    Success: {},
-    Failure: {},
-    Pending: {},
-    Total: {},
-  },
-  barLineDataWeekly: {
-    Success: {},
-    Failure: {},
-    Pending: {},
-    Total: {},
-  },
-  barLineDataMonthly: {
-    Success: {},
-    Failure: {},
-    Pending: {},
-    Total: {},
-  },
+      Success: {},
+      Failure: {},
+      Pending: {},
+      Total: {},
+    },
+    barLineDataWeekly: {
+      Success: {},
+      Failure: {},
+      Pending: {},
+      Total: {},
+    },
+    barLineDataMonthly: {
+      Success: {},
+      Failure: {},
+      Pending: {},
+      Total: {},
+    },
   },
   today: {
     data: {
@@ -101,6 +101,19 @@ const preloadedState: RootState = {
     successTotal: 0,
     failureTotal: 0,
     mostActive: { time: -1, count: 0 },
+  },
+  filter: {
+    typeFilters: {
+      Email: true,
+      SMS: true,
+      Webhook: true,
+      Slack: true,
+    },
+    statusFilters: {
+      Success: true,
+      Failure: true,
+      Pending: true,
+    },
   },
 };
 

@@ -48,6 +48,9 @@ export default function Today() {
       if (notifications.totalNumber === 0) {
         return "No notifications yet";
       } else {
+        if(stat.most_request_project === "undefined") {
+          return "ERROR";
+        }
         return stat.most_request_project;
       }
     }

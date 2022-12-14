@@ -22,6 +22,86 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch,
 }));
 
+const projects = [
+  {
+    name: "name",
+    project_type: EnumProjectType.INDIVIDUAL,
+    id: 1,
+    number_of_requests: 1,
+    most_recently_sent_notification: "",
+  },
+  {
+    name: "name",
+    project_type: EnumProjectType.INDIVIDUAL,
+    id: 2,
+    number_of_requests: 1,
+    most_recently_sent_notification: "",
+  },
+  {
+    name: "name",
+    project_type: EnumProjectType.INDIVIDUAL,
+    id: 3,
+    number_of_requests: 1,
+    most_recently_sent_notification: "",
+  },
+  {
+    name: "name",
+    project_type: EnumProjectType.INDIVIDUAL,
+    id: 4,
+    number_of_requests: 1,
+    most_recently_sent_notification: "",
+  },
+  {
+    name: "name",
+    project_type: EnumProjectType.INDIVIDUAL,
+    id: 5,
+    number_of_requests: 1,
+    most_recently_sent_notification: "",
+  },
+  {
+    name: "name",
+    project_type: EnumProjectType.INDIVIDUAL,
+    id: 6,
+    number_of_requests: 1,
+    most_recently_sent_notification: "",
+  },
+  {
+    name: "name",
+    project_type: EnumProjectType.INDIVIDUAL,
+    id: 7,
+    number_of_requests: 1,
+    most_recently_sent_notification: "",
+  },
+  {
+    name: "name",
+    project_type: EnumProjectType.INDIVIDUAL,
+    id: 8,
+    number_of_requests: 1,
+    most_recently_sent_notification: "",
+  },
+  {
+    name: "name",
+    project_type: EnumProjectType.INDIVIDUAL,
+    id: 9,
+    number_of_requests: 1,
+    most_recently_sent_notification: "",
+  },
+  {
+    name: "name",
+    project_type: EnumProjectType.INDIVIDUAL,
+    id: 10,
+    number_of_requests: 1,
+    most_recently_sent_notification: "",
+  },
+  {
+    name: "name",
+    project_type: EnumProjectType.INDIVIDUAL,
+    id: 11,
+    number_of_requests: 1,
+    most_recently_sent_notification: "",
+  },
+];
+
 describe("<ProjectList />", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -109,5 +189,46 @@ describe("<ProjectList />", () => {
 
     const row = screen.getByText("name");
     fireEvent.click(row);
+  });
+
+  it("should handle change page", () => {
+    renderWithProviders(<ProjectList />, {
+      preloadedState: {
+        project: {
+          projects: projects,
+          selectedProject: null,
+        },
+      },
+    });
+
+    const pageButton = screen.getByTitle("Go to next page");
+    fireEvent.click(pageButton);
+  });
+
+  it("should handle click edit button", () => {
+    jest.spyOn(axios, "patch").mockImplementation((url: string) => {
+      return Promise.resolve();
+    });
+    renderWithProviders(<ProjectList />, {
+      preloadedState: {
+        project: {
+          projects: [
+            {
+              name: "name",
+              project_type: EnumProjectType.INDIVIDUAL,
+              id: 1,
+              number_of_requests: 1,
+              most_recently_sent_notification: "",
+            },
+          ],
+          selectedProject: null,
+        },
+      },
+    });
+    const iconButton = screen.getByTestId("icon-button");
+    fireEvent.click(iconButton);
+
+    const deleteButton = screen.getByTestId("edit-button");
+    fireEvent.click(deleteButton);
   });
 });

@@ -1,17 +1,17 @@
 import { Table, TableBody, TableCell, TableRow, Card } from "@mui/material";
 import { Grid, TableContainer, TablePagination } from "@material-ui/core";
 import { Container } from "@mui/system";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 import Scrollbar from "../../components/Scrollbar/Scrollbar";
 import HistoryTableHead from "./TableHead";
 import Label from "../../components/Label/Label";
 
-import { AppDispatch } from "../../store";
 import "./HistoryTable.css";
 import axios from "axios";
 import { notificationSelect } from "../../store/slices/notifications";
+import { selectFilter } from "../../store/slices/historyFilter";
 
 interface HistoryType {
   id: number;
@@ -21,13 +21,6 @@ interface HistoryType {
   created_at: string;
 }
 
-interface HistoryData {
-  count: number;
-  next: string;
-  previous: string;
-  results: HistoryType[];
-}
-
 export default function HistoryTable() {
   const [page, setPage] = useState(0);
   const [results, setResults] = useState<HistoryType[]>([]);
@@ -35,6 +28,7 @@ export default function HistoryTable() {
   const [previous, setPrevious] = useState<string>("");
 
   const notifications = useSelector(notificationSelect);
+  const filters = useSelector(selectFilter);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +38,6 @@ export default function HistoryTable() {
             params: {
               page: page + 1,
               page_size: 25,
-              status: "SUCCESS",
             },
           })
           .then((response) => {
@@ -60,6 +53,10 @@ export default function HistoryTable() {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    console.log(filters);
+  }, [filters]);
 
   const handlePageChange = (event: unknown, newPage: number) => {
     const getNext = async () => {
