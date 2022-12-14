@@ -7,12 +7,22 @@ import { useSelector } from "react-redux";
 import { notificationSelect } from "../../../store/slices/notifications";
 import { projectListSelector } from "../../../store/slices/project";
 import { todaySelect } from "../../../store/slices/today";
+import { useEffect, useState } from "react";
+import { fetchStat } from "../../../services/notifications";
 
 export default function Today() {
   const notifications = useSelector(notificationSelect);
   const projects = useSelector(projectListSelector);
   const today = useSelector(todaySelect);
+  const [stat, setStat]: any = useState();
 
+  const initStat = async () => {
+    setStat(await fetchStat());
+  };
+
+  useEffect(() => {
+    initStat();
+  }, []);
   function getRate() {
     if (notifications.totalNumber === 0) {
       return "0%";
@@ -34,8 +44,7 @@ export default function Today() {
       if (notifications.totalNumber === 0) {
         return "No notifications yet";
       } else {
-        //TODO
-        return "TODO";
+        return stat.most_requests;
       }
     }
   }
@@ -44,7 +53,7 @@ export default function Today() {
     if (notifications.totalNumber === 0) {
       return "No notifications yet";
     } else {
-      return "TODO";
+      return stat.most_used_channel;
     }
   }
 
@@ -64,7 +73,7 @@ export default function Today() {
       return "No notifications yet";
     } else {
       //TODO
-      return "TODO";
+      return stat.most_recent_failure;
     }
   }
 

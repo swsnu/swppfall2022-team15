@@ -117,7 +117,7 @@ export default function ReservationStep(props: IProps) {
     const config = {
       project: projectId,
       type: notificationType,
-      rrule: rrule?.toText(),
+      rrule: rrule?.toString(),
       message: message.id,
       target_users: targetUsers.map((target) => target.id),
       mode: mode,
