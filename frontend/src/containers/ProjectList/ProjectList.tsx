@@ -109,7 +109,9 @@ export default function ProjectListTable() {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell><Container>Index</Container></TableCell>
+                    <TableCell>
+                      <Container>Index</Container>
+                    </TableCell>
                     <TableCell>
                       <Container>Project Name</Container>
                     </TableCell>
@@ -129,7 +131,9 @@ export default function ProjectListTable() {
                       const { id, name } = row;
                       return (
                         <TableRow hover key={id} tabIndex={-1}>
-                          <TableCell><Container>{index+1}</Container></TableCell>
+                          <TableCell>
+                            <Container>{index + 1}</Container>
+                          </TableCell>
                           <TableCell>
                             <Container>
                               <Link

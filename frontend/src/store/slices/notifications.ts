@@ -14,13 +14,10 @@ export const fetchNotifications = createAsyncThunk(
   }
 );
 
-export const getTotal = createAsyncThunk(
-  "notifications/getTotal",
-  async () => {
-    const response = await axios.get<NotificationType[]>("/api/notification/");
-    return response.data;
-  }
-);
+export const getTotal = createAsyncThunk("notifications/getTotal", async () => {
+  const response = await axios.get<NotificationType[]>("/api/notification/");
+  return response.data;
+});
 
 const initialState: {
   totalNumber: number;

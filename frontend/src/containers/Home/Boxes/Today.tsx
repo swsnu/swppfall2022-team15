@@ -27,7 +27,11 @@ export default function Today() {
     if (notifications.totalNumber === 0) {
       return "0%";
     } else {
-      return `${Math.round((notifications.totalSuccess / (notifications.totalSuccess + notifications.totalFailure)) * 100)}%`;
+      return `${Math.round(
+        (notifications.totalSuccess /
+          (notifications.totalSuccess + notifications.totalFailure)) *
+          100
+      )}%`;
     }
   }
 

@@ -9,23 +9,23 @@ import HistoryTableHead from "./TableHead";
 import Label from "../../components/Label/Label";
 
 import { AppDispatch } from "../../store";
-import "./HistoryTable.css"
+import "./HistoryTable.css";
 import axios from "axios";
 import { notificationSelect } from "../../store/slices/notifications";
 
 interface HistoryType {
-  id: number,
-  project: string,
-  target: string,
-  status: string,
-  created_at: string,
+  id: number;
+  project: string;
+  target: string;
+  status: string;
+  created_at: string;
 }
 
 interface HistoryData {
-  count: number,
-  next: string,
-  previous: string,
-  results: HistoryType[]
+  count: number;
+  next: string;
+  previous: string;
+  results: HistoryType[];
 }
 
 export default function HistoryTable() {
@@ -39,54 +39,56 @@ export default function HistoryTable() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await axios.get("/api/notification/", {
-          params: {
-            page: page+1,
-            page_size: 25,
-            status: "SUCCESS",
-          }
-        }).then(response => {
-          const data = response.data;
-          setResults(data.results);
-          setNext(data.next);
-          setPrevious(data.previous);
-        })
+        await axios
+          .get("/api/notification/", {
+            params: {
+              page: page + 1,
+              page_size: 25,
+              status: "SUCCESS",
+            },
+          })
+          .then((response) => {
+            const data = response.data;
+            setResults(data.results);
+            setNext(data.next);
+            setPrevious(data.previous);
+          });
       } catch (error) {
         console.log(error);
       }
-    }
+    };
 
     fetchData();
-  }, [])
+  }, []);
 
   const handlePageChange = (event: unknown, newPage: number) => {
     const getNext = async () => {
       try {
-        await axios.get(next).then(response => {
+        await axios.get(next).then((response) => {
           const data = response.data;
           setResults(data.results);
           setNext(data.next);
           setPrevious(data.previous);
-        })
+        });
       } catch (error) {
         console.log(error);
       }
-    }
+    };
 
     const getPrevious = async () => {
       try {
-        await axios.get(previous).then(response => {
-        const data = response.data;
-        setResults(data.results);
-        setNext(data.next);
-        setPrevious(data.previous);
-      })
+        await axios.get(previous).then((response) => {
+          const data = response.data;
+          setResults(data.results);
+          setNext(data.next);
+          setPrevious(data.previous);
+        });
       } catch (error) {
         console.log(error);
       }
-    }
+    };
 
-    if(newPage > page) {
+    if (newPage > page) {
       getNext();
     } else {
       getPrevious();
@@ -124,28 +126,38 @@ export default function HistoryTable() {
             <TableContainer
               style={{
                 maxHeight: "calc(100vh - 200px)",
-              }}>
-                <Table>
-              <HistoryTableHead />
-              <TableBody>
-                {results.map((row) => (
-                  <TableRow
-                    hover
-                    key={row.id}
-                  >
-                    <TableCell><Container>{row.project}</Container></TableCell>
-                    <TableCell><Container>{"TODO: TYPE"}</Container></TableCell>
-                    <TableCell><Container>{row.target}</Container></TableCell>
-                    <TableCell><Container>{formatDateTime(row.created_at)}</Container></TableCell>
-                    <TableCell><Container>
-                      <Label color={getColor(row.status)}>{row.status}</Label></Container>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+              }}
+            >
+              <Table>
+                <HistoryTableHead />
+                <TableBody>
+                  {results.map((row) => (
+                    <TableRow hover key={row.id}>
+                      <TableCell>
+                        <Container>{row.project}</Container>
+                      </TableCell>
+                      <TableCell>
+                        <Container>{"TODO: TYPE"}</Container>
+                      </TableCell>
+                      <TableCell>
+                        <Container>{row.target}</Container>
+                      </TableCell>
+                      <TableCell>
+                        <Container>{formatDateTime(row.created_at)}</Container>
+                      </TableCell>
+                      <TableCell>
+                        <Container>
+                          <Label color={getColor(row.status)}>
+                            {row.status}
+                          </Label>
+                        </Container>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </TableContainer>
-            
+
             <TablePagination
               rowsPerPageOptions={[25]}
               component="div"
