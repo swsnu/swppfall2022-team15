@@ -48,7 +48,30 @@ export default function Charts(props: IProps) {
       }
     }
     handleTabChange();
-  }, [props.selectedTab, props.selectedProject, props.selectedType, dispatch])
+  }, [dispatch, projectState, props.selectedTab, props.selectedType])
+  useEffect(() => {
+    function getData() {
+      let success = 0;
+      let failure = 0;
+      let upcoming = 0;
+      let total = 0;
+
+      for (let i = 12; i >= 0; i--) {
+        const date = moment().subtract(i, "months").format("YYYY-MM-01");
+        success += analyticsData.barLineDataMonthly.Success[date];
+        failure += analyticsData.barLineDataMonthly.Failure[date];
+        upcoming += analyticsData.barLineDataMonthly.Pending[date];
+        total += analyticsData.barLineDataMonthly.Total[date];
+      }
+
+      setSuccess(success);
+      setFailure(failure);
+      setUpcoming(upcoming);
+      setTotal(total);
+    }
+    getData();
+  }, [analyticsData])
+  
 
   function getTitle() {
     if (props.selectedTab === 0) {
