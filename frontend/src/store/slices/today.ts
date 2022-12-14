@@ -27,9 +27,8 @@ function initializeData() {
 export const getData = createAsyncThunk("today/getData", async () => {
   const response = await axios.get("/api/notification/metrics/", {
     params: {
-      //TODO: FIX THIS BEFORE DEMO
-      start: moment().subtract(1, "day").format("YYYY-MM-DD 00:00:00"),
-      end: moment().subtract(1, "day").format("YYYY-MM-DD 23:59:59"),
+      start: moment().format("YYYY-MM-DD 00:00:00"),
+      end: moment().format("YYYY-MM-DD 23:59:59"),
       interval: "hour",
     },
   });
