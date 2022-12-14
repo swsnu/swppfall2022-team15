@@ -4,7 +4,13 @@ import { TableHead, TableCell, TableRow, Container } from "@mui/material";
 
 import HistoryTableHeadCell from "./TableCell";
 import { projectListSelector } from "../../store/slices/project";
-import { addStatusFilter, addTypeFilter, removeStatusFilter, removeTypeFilter, selectFilter } from "../../store/slices/historyFilter";
+import {
+  addStatusFilter,
+  addTypeFilter,
+  removeStatusFilter,
+  removeTypeFilter,
+  selectFilter,
+} from "../../store/slices/historyFilter";
 import { targetListSelector } from "../../store/slices/target";
 import { AppDispatch } from "../../store";
 
@@ -24,14 +30,13 @@ export default function HistoryTableHead() {
   };
   const handleTypeClick = (event: React.MouseEvent<HTMLElement>) => {
     const clickedType = event.currentTarget.textContent;
-    if(clickedType === null) {
+    if (clickedType === null) {
       return;
     }
 
-    if(filterState.typeFilters[clickedType]) {
+    if (filterState.typeFilters[clickedType]) {
       dispatch(removeTypeFilter(clickedType));
-    }
-    else {
+    } else {
       dispatch(addTypeFilter(clickedType));
     }
   };
@@ -48,14 +53,13 @@ export default function HistoryTableHead() {
   };
   const handleStatusClick = (event: React.MouseEvent<HTMLElement>) => {
     const clickedStatus = event.currentTarget.textContent;
-    if(clickedStatus === null) {
+    if (clickedStatus === null) {
       return;
     }
 
-    if(filterState.statusFilters[clickedStatus]) {
+    if (filterState.statusFilters[clickedStatus]) {
       dispatch(removeStatusFilter(clickedStatus));
-    }
-    else {
+    } else {
       dispatch(addStatusFilter(clickedStatus));
     }
   };

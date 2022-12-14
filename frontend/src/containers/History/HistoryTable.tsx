@@ -18,7 +18,9 @@ interface HistoryType {
   project: string;
   target: string;
   status: string;
+  type: string;
   created_at: string;
+  reserved_at: string;
 }
 
 export default function HistoryTable() {
@@ -134,7 +136,7 @@ export default function HistoryTable() {
                         <Container>{row.project}</Container>
                       </TableCell>
                       <TableCell>
-                        <Container>{"TODO: TYPE"}</Container>
+                        <Container>{row.type}</Container>
                       </TableCell>
                       <TableCell>
                         <Container>{row.target}</Container>
