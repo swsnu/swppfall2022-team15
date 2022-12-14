@@ -57,7 +57,7 @@ export default function HistoryTable() {
   }, []);
 
   useEffect(() => {
-    console.log(filters);
+    //Todo: apply filters
   }, [filters]);
 
   const handlePageChange = (event: unknown, newPage: number) => {
