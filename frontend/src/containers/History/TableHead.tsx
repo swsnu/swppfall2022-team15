@@ -106,16 +106,9 @@ export default function HistoryTableHead() {
   return (
     <TableHead>
       <TableRow>
-        <HistoryTableHeadCell
-          title={"Project"}
-          handleOpen={handleProjectOpen}
-          handleClose={handleProjectClose}
-          handleClick={handleProjectClick}
-          open={openProject}
-          anchorEl={anchorElProject}
-          objects={projectList}
-          selectedObject={selectedProject}  
-        />
+        <TableCell>
+          <Container>Project</Container>
+        </TableCell>
         <HistoryTableHeadCell
           title={"Type"}
           handleOpen={handleTypeOpen}
@@ -126,16 +119,9 @@ export default function HistoryTableHead() {
           objects={["All", "Slack", "Email", "SMS", "Webhook"]}
           selectedObject={selectedType}
         />
-        <HistoryTableHeadCell
-          title={"Target"}
-          handleOpen={handleTargetOpen}
-          handleClose={handleTargetClose}
-          handleClick={handleTargetClick}
-          open={openTarget}
-          anchorEl={anchorElTarget}
-          objects={targetList}
-          selectedObject={selectedTarget}
-        />
+        <TableCell>
+          <Container>Target</Container>
+        </TableCell>
         <TableCell>
           <Container>Created</Container>
         </TableCell>

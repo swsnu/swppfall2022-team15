@@ -56,6 +56,30 @@ export default function HistoryTable() {
   }, []);
 
   useEffect(() => {
+    let statusQuery = "";
+    if(filter.status === "All") {
+      statusQuery = "";
+    } else if(filter.status === "Success") {
+      statusQuery = "SUCCESS";
+    } else if(filter.status === "Failure") {
+      statusQuery = "FAILURE";
+    } else {
+      statusQuery = "PENDING";
+    }
+    let typeQuery = "";
+    if(filter.type === "All") {
+      typeQuery = "";
+    } else if(filter.type === "Email") {
+      typeQuery = "EMAIL";
+    } else if(filter.type === "Webhook") {
+      typeQuery = "WEBHOOK";
+    } else if(filter.type === "SMS") {
+      typeQuery = "SMS";
+    }
+    else {
+      typeQuery = "SLACK";
+    }
+
     const fetchData = async () => {
       try {
         await axios
@@ -63,10 +87,8 @@ export default function HistoryTable() {
             params: {
               page: page + 1,
               page_size: 25,
-              status: filter.status,
-              type: filter.type,
-              project: filter.project,
-              target: filter.target,
+              status: statusQuery,
+              type: typeQuery,
             },
           })
           .then((response) => {
