@@ -44,15 +44,15 @@ export default function HistoryTableHeadCell(props: IProps) {
         {Object.keys(props.objects).map((key, value) => {
           return (
             <MenuItem
-              key={key}
               onClick={props.handleClick}
               data-testid={`click ${key}`}
+              disableRipple
             >
               <Checkbox
                 checked={props.objects[key]}
                 data-testid={`checkbox ${key}`}
               />
-              {key}
+              <span>{key}</span>
             </MenuItem>
           );
         })}
