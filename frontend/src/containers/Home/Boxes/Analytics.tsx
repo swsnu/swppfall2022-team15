@@ -4,7 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Grid } from "@material-ui/core";
 
 import Iconify from "../../../components/Iconify/Iconify";
-import { fetchProject, projectListSelector } from "../../../store/slices/project";
+import {
+  fetchProject,
+  projectListSelector,
+} from "../../../store/slices/project";
 import Charts from "./Charts";
 import { AppDispatch } from "../../../store";
 
@@ -22,7 +25,7 @@ export default function Analytics() {
     if (projectId) {
       dispatch(fetchProject(projectId));
     }
-  }, [selectedProject, selectedTab, dispatch, projects]);
+  }, [selectedProject, projects, dispatch]);
 
   function renderTabs() {
     if (selectedTab === 0) {

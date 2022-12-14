@@ -63,6 +63,9 @@ export default function DynamicTable(props: {
           <Table stickyHeader>
             <TableHead>
               <TableRow>
+                <TableCell>
+                  <Container>Index</Container>
+                </TableCell>
                 {props.columns.map((col) => {
                   return (
                     <TableCell>
@@ -75,7 +78,7 @@ export default function DynamicTable(props: {
             <TableBody>
               {props.rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: any) => {
+                .map((row: any, index: number) => {
                   return (
                     <TableRow
                       hover
@@ -84,6 +87,9 @@ export default function DynamicTable(props: {
                       onClick={() => handleClickRow(row.id)}
                       data-testid={`table-row-${row.id}`}
                     >
+                      <TableCell>
+                        <Container>{index + 1}</Container>
+                      </TableCell>
                       {props.keys.map((key: string) => {
                         let value = inDepthFieldParser(key, row);
                         return (

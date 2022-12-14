@@ -1,21 +1,14 @@
-import {
-  TableCell,
-  Container,
-  Menu,
-  Checkbox,
-  MenuItem,
-} from "@mui/material";
+import { TableCell, Container, Menu, Checkbox, MenuItem } from "@mui/material";
 
 import { InlineIcon } from "@iconify/react";
-
-interface tuple {
-  object: string;
-  checked: boolean;
-}
 
 interface range {
   start: string;
   end: string;
+}
+
+interface Hash {
+  [key: string]: boolean;
 }
 
 interface IProps {
@@ -25,31 +18,22 @@ interface IProps {
   handleClick: (event: React.MouseEvent<HTMLElement>) => void;
   open: boolean;
   anchorEl: null | HTMLElement;
-  selectedObjects: tuple[] | null;
+  objects: Hash;
   selectedRange: range | null;
 }
 
 export default function HistoryTableHeadCell(props: IProps) {
-  function render() {
-    if (props.selectedObjects !== null) {
-      return props.selectedObjects?.map((selected) => (
-        <MenuItem onClick={props.handleClick} data-testid={`click ${props.title} ${selected.object}`} disableRipple>
-          <Checkbox checked={selected.checked} />
-          <span>{selected.object}</span>
-        </MenuItem>
-      ));
-    } else {
-      return <></>;
-    }
-  }
-
   return (
     <>
-      <TableCell onClick={props.handleOpen} data-testid={`click ${props.title}`}>
+      <TableCell
+        onClick={props.handleOpen}
+        data-testid={`click ${props.title}`}
+      >
         <Container>
-          <p>{props.title} <InlineIcon icon="material-symbols:filter-list"/></p>
+          {props.title} <InlineIcon icon="material-symbols:filter-list" />
         </Container>
       </TableCell>
+
       <Menu
         open={props.open}
         anchorEl={props.anchorEl}
@@ -57,7 +41,21 @@ export default function HistoryTableHeadCell(props: IProps) {
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         transformOrigin={{ vertical: "top", horizontal: "left" }}
       >
-        {render()}
+        {Object.keys(props.objects).map((key, value) => {
+          return (
+            <MenuItem
+              key={key}
+              onClick={props.handleClick}
+              data-testid={`click ${key}`}
+            >
+              <Checkbox
+                checked={props.objects[key]}
+                data-testid={`checkbox ${key}`}
+              />
+              {key}
+            </MenuItem>
+          );
+        })}
       </Menu>
     </>
   );

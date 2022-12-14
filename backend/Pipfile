@@ -18,6 +18,7 @@ model-bakery = "*"
 uwsgi = "*"
 mysqlclient = "*"
 limitlion = "==1.0.0"
+flower = "*"
 
 [dev-packages]
 pylint = "*"

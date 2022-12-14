@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Grid } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { green, red, blue } from "@mui/material/colors";
 import { useEffect, useState } from "react";
@@ -11,9 +11,9 @@ import {
   analyticsSelector,
   getMonthlyData,
   getMonthlyDataByProject,
-  getMonthlyDataByType
+  getMonthlyDataByType,
 } from "../../../store/slices/analytics";
-import { AppDispatch } from '../../../store';
+import { AppDispatch } from "../../../store";
 
 interface IProps {
   selectedTab: number;
@@ -40,15 +40,15 @@ export default function Charts(props: IProps) {
       if (props.selectedTab === 0) {
         await dispatch(getMonthlyData());
       } else if (props.selectedTab === 1) {
-        if(projectState) {
+        if (projectState) {
           await dispatch(getMonthlyDataByProject(projectState.id));
         }
       } else {
         await dispatch(getMonthlyDataByType(types[props.selectedType]));
       }
-    }
+    };
     handleTabChange();
-  }, [dispatch, projectState, props.selectedTab, props.selectedType])
+  }, [dispatch, projectState, props.selectedTab, props.selectedType]);
   useEffect(() => {
     function getData() {
       let success = 0;
@@ -56,31 +56,12 @@ export default function Charts(props: IProps) {
       let upcoming = 0;
       let total = 0;
 
-      if (analyticsData.barlineType === "daily") {
-        for (let i = 14; i >= 0; i--) {
-          const date = moment().subtract(i, "days").format("YYYY-MM-DD");
-          success += analyticsData.barLineData.Success[date];
-          failure += analyticsData.barLineData.Failure[date];
-          upcoming += analyticsData.barLineData.Pending[date];
-          total += analyticsData.barLineData.Total[date];
-        }
-      } else if (analyticsData.barlineType === "weekly") {
-        for (let i = 15; i >= 0; i--) {
-          const today = moment();
-          const date = moment().subtract(i, "weeks").subtract(today.weekday()-1, "days").format("YYYY-MM-DD");
-          success += analyticsData.barLineData.Success[date];
-          failure += analyticsData.barLineData.Failure[date];
-          upcoming += analyticsData.barLineData.Pending[date];
-          total += analyticsData.barLineData.Total[date];
-        }
-      } else {
-        for (let i = 12; i >= 0; i--) {
-          const date = moment().subtract(i, "months").format("YYYY-MM-01");
-          success += analyticsData.barLineData.Success[date];
-          failure += analyticsData.barLineData.Failure[date];
-          upcoming += analyticsData.barLineData.Pending[date];
-          total += analyticsData.barLineData.Total[date];
-        }
+      for (let i = 12; i >= 0; i--) {
+        const date = moment().subtract(i, "months").format("YYYY-MM-01");
+        success += analyticsData.barLineDataMonthly.Success[date];
+        failure += analyticsData.barLineDataMonthly.Failure[date];
+        upcoming += analyticsData.barLineDataMonthly.Pending[date];
+        total += analyticsData.barLineDataMonthly.Total[date];
       }
 
       setSuccess(success);
@@ -89,18 +70,13 @@ export default function Charts(props: IProps) {
       setTotal(total);
     }
     getData();
-  }, [analyticsData])
-  
+  }, [analyticsData]);
 
   function getTitle() {
     if (props.selectedTab === 0) {
       return "Notification status";
     } else if (props.selectedTab === 1) {
-      return (
-        "Notification status (" +
-        projectState?.name +
-        ")"
-      );
+      return "Notification status (" + projectState?.name + ")";
     } else {
       return "Notification status (" + types[props.selectedType] + ")";
     }
@@ -130,16 +106,21 @@ export default function Charts(props: IProps) {
     if (props.selectedTab === 0) {
       return "Notification requests by time";
     } else if (props.selectedTab === 1) {
-      return projectState?.name + " notification requests by time"
+      return projectState?.name + " notification requests by time";
     } else {
-      return types[props.selectedType] + " notification requests by time"
+      return types[props.selectedType] + " notification requests by time";
     }
   }
 
   return (
     <>
       <Grid item xs={12} sm={12} md={12} lg={5}>
-        <BarLineChart title="Notification requests" subtitle={getSubtitle()} type={props.selectedTab} noti_type={types[props.selectedType]}/>
+        <BarLineChart
+          title="Notification requests"
+          subtitle={getSubtitle()}
+          type={props.selectedTab}
+          noti_type={types[props.selectedType]}
+        />
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={7}>
         <PieChart

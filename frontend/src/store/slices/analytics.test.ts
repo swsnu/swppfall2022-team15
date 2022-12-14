@@ -22,8 +22,9 @@ describe("analytics slice", () => {
   let store: EnhancedStore<
     {
       analytics: {
-        barLineData: AnalyticsStatus;
-        barlineType: string;
+        barLineDataDaily: AnalyticsStatus;
+        barLineDataWeekly: AnalyticsStatus;
+        barLineDataMonthly: AnalyticsStatus;
       };
     },
     AnyAction,
@@ -31,8 +32,9 @@ describe("analytics slice", () => {
       ThunkMiddleware<
         {
           analytics: {
-            barLineData: AnalyticsStatus;
-            barlineType: string;
+            barLineDataDaily: AnalyticsStatus;
+            barLineDataWeekly: AnalyticsStatus;
+            barLineDataMonthly: AnalyticsStatus;
           };
         },
         AnyAction,
@@ -72,13 +74,24 @@ describe("analytics slice", () => {
 
   it("should handle initial state", () => {
     expect(reducer(undefined, { type: "unknown" })).toEqual({
-      barLineData: {
-        Success: {},
-        Failure: {},
-        Pending: {},
-        Total: {},
-      },
-      barlineType: "daily",
+      barLineDataDaily: {
+    Success: {},
+    Failure: {},
+    Pending: {},
+    Total: {},
+  },
+  barLineDataWeekly: {
+    Success: {},
+    Failure: {},
+    Pending: {},
+    Total: {},
+  },
+  barLineDataMonthly: {
+    Success: {},
+    Failure: {},
+    Pending: {},
+    Total: {},
+  },
     });
   });
 

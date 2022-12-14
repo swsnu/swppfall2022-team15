@@ -1,7 +1,9 @@
 import datetime
 
+import pytz
 from django.db.models import Count, F, Q
 from django.db.models.functions import Trunc
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.mixins import ListModelMixin
@@ -12,13 +14,14 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from core.paginator import CustomPageNumberPagination
 from core.permissions import IsOwner
-from notifications.models import NotificationConfig, Notification
+from notifications.models import NotificationConfig, Notification, EnumNotificationStatus
 from notifications.models import Reservation
 from notifications.serializers import (
     NotificationConfigCreateSerializer,
     ReservationSerializer,
     NotificationConfigSerializer, NotificationSerializer, NotificationListSerializer,
 )
+from project.models import Project
 
 
 class NotificationConfigViewSet(ModelViewSet):
@@ -49,9 +52,23 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
         return self.serializer_class
 
     def get_queryset(self):
-        return self.queryset.filter(
-            reservation__notification_config__project__user=self.request.user
-        )
+        projectId = self.request.query_params.get('projectId')
+        ##noti_type = self.request.query_params.get('type')
+        ##target = self.request.query_params.get('target')
+        status = self.request.query_params.get('status')
+
+        q=Q()
+        q &= Q(reservation__notification_config__project__user=self.request.user)
+        ##if projectId:
+        ##    q &= Q(reservation__notification_config__project__id=projectId)
+        ##if noti_type:
+        ##    q &= Q(reservation__notification_config__type=noti_type)
+        ##if target:
+        ##    q &= Q(reservation__notification_config__target=target)
+        if status:
+            q &= Q(status=status)
+
+        return self.queryset.filter(q)
 
     @action(detail=True, methods=['get'], permission_classes=[AllowAny, IsAuthenticated, IsOwner])
     def getAll(self, request):
@@ -59,6 +76,33 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
             notification_config__notification__project__user=request.user
         )
         return Response(data=notifications, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
+    def stat(self, request):
+        tz = pytz.timezone('Asia/Seoul')
+        today = timezone.now().astimezone(tz).replace(hour=0, minute=0, second=0, microsecond=0)
+        most_recent_failure = Notification.objects.filter(
+                reservation__reserved_at__range=[today, today + timezone.timedelta(days=1)],
+                status=EnumNotificationStatus.FAILURE,
+            ).order_by('-created_at').first()
+        most_request_project = Reservation.objects.filter(
+                reserved_at__range=[today, today + timezone.timedelta(days=1)]
+            ).annotate(project=F('notification_config__project_id')
+                       ).values('project').annotate(
+                count=Count('notification')
+            ).order_by('-count').first()
+        data = {
+            'most_used_channel': Reservation.objects.filter(
+                reserved_at__range=[today, today + timezone.timedelta(days=1)]
+            ).annotate(
+                count=Count('notification')
+            ).order_by('-count').first().notification_config.type,
+            'most_recent_failure': most_recent_failure.reservation.notification_config.nmessage.name
+            if most_recent_failure else None,
+            'most_request_project': Project.objects.get(pk=most_request_project['project']).name
+            if most_request_project else None
+        }
+        return Response(data)
 
     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
     def metrics(self, request):
@@ -103,3 +147,18 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
 class ReservationViewSet(ModelViewSet):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
+
+    def list(self, request, notification_config_id):
+        queryset = self.filter_queryset(self.get_queryset().filter(
+            notification_config_id=notification_config_id
+        ))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+

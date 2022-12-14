@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createNotificationConfig } from "./notifications";
+import { createNotificationConfig, fetchStat } from "./notifications";
 
 describe("notifications", () => {
   it("should create notification config - success", () => {
@@ -30,5 +30,12 @@ describe("notifications", () => {
       target_users: [1],
       mode: "test",
     });
+  });
+
+  it("should fetch stat - success", () => {
+    jest
+      .spyOn(axios, "get")
+      .mockImplementation(() => Promise.resolve({ data: { id: 1 } }));
+    fetchStat();
   });
 });

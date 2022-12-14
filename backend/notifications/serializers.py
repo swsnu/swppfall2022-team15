@@ -65,19 +65,19 @@ class NotificationConfigCreateSerializer(serializers.ModelSerializer):
 
 class ReservationSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
-    notification_config = serializers.IntegerField()
-
     class Meta:
         model = Reservation
-        fields = ('id', 'notification_config', 'rrule', 'target_users',)
+        fields = ('id', 'reserved_at', )
 
 
 class NotificationSerializer(serializers.ModelSerializer):
     target = serializers.CharField(source='target_user')
+    type = serializers.CharField(source='reservation__notification_config__type')
 
     class Meta:
         model = Notification
-        fields = ('id', 'reservation', 'target', 'status', 'request', 'response',)
+        fields = ('id', 'reservation', 'target', 'status', 'request', 'response',
+                  'type')
 
 
 class NotificationListSerializer(serializers.ModelSerializer):
