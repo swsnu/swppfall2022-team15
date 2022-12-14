@@ -182,6 +182,7 @@ export default function ReservationStep(props: IProps) {
       <br />
 
       <h2>Reservation</h2>
+      <h4>Reservations can be made as many as 100 at most.</h4>
       {reservation}
       <Grid>
         <SplitButton
