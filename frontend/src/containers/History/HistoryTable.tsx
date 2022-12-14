@@ -3,15 +3,14 @@ import { Grid, TableContainer, TablePagination } from "@material-ui/core";
 import { Container } from "@mui/system";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-
-import Scrollbar from "../../components/Scrollbar/Scrollbar";
-import HistoryTableHead from "./TableHead";
-import Label from "../../components/Label/Label";
+import axios from "axios";
 
 import "./HistoryTable.css";
-import axios from "axios";
+import HistoryTableHead from "./TableHead";
+import Scrollbar from "../../components/Scrollbar/Scrollbar";
+import Label from "../../components/Label/Label";
 import { notificationSelect } from "../../store/slices/notifications";
-import { selectFilter } from "../../store/slices/historyFilter";
+import { selectFilter } from "../../store/slices/historyCategory";
 
 interface HistoryType {
   id: number;
@@ -30,7 +29,7 @@ export default function HistoryTable() {
   const [previous, setPrevious] = useState<string>("");
 
   const notifications = useSelector(notificationSelect);
-  const filters = useSelector(selectFilter);
+  const filter = useSelector(selectFilter);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,8 +56,32 @@ export default function HistoryTable() {
   }, []);
 
   useEffect(() => {
-    //Todo: apply filters
-  }, [filters]);
+    const fetchData = async () => {
+      try {
+        await axios
+          .get("/api/notification/", {
+            params: {
+              page: page + 1,
+              page_size: 25,
+              status: filter.status,
+              type: filter.type,
+              project: filter.project,
+              target: filter.target,
+            },
+          })
+          .then((response) => {
+            const data = response.data;
+            setResults(data.results);
+            setNext(data.next);
+            setPrevious(data.previous);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [filter]);
 
   const handlePageChange = (event: unknown, newPage: number) => {
     const getNext = async () => {
