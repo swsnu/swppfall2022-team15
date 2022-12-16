@@ -14,7 +14,7 @@ from notifications.models import (
     NotificationConfig,
     Reservation,
     Notification,
-    EnumNotificationStatus, EnumReservationStatus,
+    EnumNotificationStatus, EnumReservationStatus, EnumNotificationMode,
 )
 from notifications.services import (
     task_send_api_notification,
@@ -31,26 +31,6 @@ class NotificationAPITestCase(APITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = baker.make(User)
-
-    def test_create_notification(self):
-        # Given
-        project = baker.make(Project)
-        message = baker.make(NMessage)
-        target = baker.make(TargetUser)
-
-        # When
-        response = self.client.post(
-            '/api/notification/',
-            data={
-                'message': message.id,
-                'target': target.id,
-                'project': project.id,
-                'type': EnumNotificationType.WEBHOOK,
-            }
-        )
-
-        # Then
-        self.assertEqual(response.status_code, 201)
 
     def test_metrics(self):
         # Given
@@ -82,52 +62,20 @@ class NotificationAPITestCase(APITestCase):
         self.assertEqual(response.status_code, 200)
 
 
-class ReservationAPITestCase(APITestCase):
-
-    @classmethod
-    def setUpTestData(cls):
-        cls.user = baker.make(User)
-
-    @mock.patch('notifications.services.task_bulk_create_notification.delay')
-    def test_create(self, mocked_task_bulk_create_notification):
-        # Given
-        notification_config = baker.make(NotificationConfig, type=EnumNotificationType.WEBHOOK)
-        target_users = baker.make(
-            TargetUser, notification_type=EnumNotificationType.WEBHOOK, _quantity=10
-        )
-
-        # When
-        target_user_ids = [target_user.id for target_user in target_users]
-        reserved_at_data = [
-            timezone.now() + timezone.timedelta(minutes=minute)
-            for minute in range(10)
-        ]
-        data = [
-            {
-                'notification_config': notification_config.id,
-                'target_users': target_user_ids,
-                'reserved_at': reserved_at.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
-            }
-            for reserved_at in reserved_at_data
-        ]
-        self.client.force_authenticate(user=self.user)
-        response = self.client.post(
-            '/api/reservation/',
-            data=json.dumps(data),
-            content_type='application/json',
-        )
-
-        # Then
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(mocked_task_bulk_create_notification.call_count, 10)
-
-
 class TaskSendApiNotificationTest(TestCase):
 
-    @mock.patch('requests.post', return_value=mock.Mock(status_code=200))
+    @mock.patch('requests.post', return_value=mock.Mock(status_code=200, text=''))
     def test_task_send_api_notification(self, _):
         # Given
+        target_user = baker.make(
+            TargetUser, notification_type=EnumNotificationType.SLACK
+        )
+        notification = baker.make(
+            Notification,
+            target_user=target_user
+        )
         notification = {
+            'id': notification.id,
             'endpoint': 'http://localhost:8000/api/message/',
             'headers': {
                 'Content-Type': 'application/json',
@@ -253,7 +201,8 @@ class TaskBulkCreateNotification(TestCase):
         # When
         reserved_at = timezone.now()
         target_user_ids = [target_user.id for target_user in target_users]
-        task_bulk_create_notification(reserved_at, target_user_ids, notification_config.id)
+        task_bulk_create_notification(reserved_at, target_user_ids, notification_config.id,
+                                      EnumNotificationMode.RESERVATION)
 
         # Then
         self.assertTrue(Reservation.objects.exists())
