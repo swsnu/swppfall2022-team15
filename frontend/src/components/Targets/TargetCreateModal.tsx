@@ -56,7 +56,6 @@ export default function TargetCreateModal(props: IProps) {
   };
 
   const handleClickConfirm = async () => {
-    console.log(targetName, notificationType, endpoint);
     if (
       (targetName && notificationType && endpoint) || // NON SLACK
       (notificationType === EnumNotificationType.SLACK.toString() &&

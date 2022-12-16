@@ -215,7 +215,7 @@ export const TargetUserForm = (props: IProps) => {
             value={apiAuth}
             // label="project type"
             inputProps={{
-              "data-testid": "type-input",
+              "data-testid": "type-input-webhook",
             }}
             onChange={(event: SelectChangeEvent) => {
               setApiAuth(event.target.value);

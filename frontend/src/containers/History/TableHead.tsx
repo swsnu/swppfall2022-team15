@@ -36,24 +36,6 @@ export default function HistoryTableHead() {
     initializeTarget();
   }, [projects, targets]);
 
-
-  const [selectedProject, setSelectedProject] = useState("All");
-  const [anchorElProject, setAnchorElProject] = useState<null | HTMLElement>(
-    null
-  );
-  const openProject = Boolean(anchorElProject);
-  const handleProjectOpen = (event: React.MouseEvent<HTMLTableCellElement>) => {
-    setAnchorElProject(event.currentTarget);
-  };
-  const handleProjectClose = () => {
-    setAnchorElProject(null);
-  };
-  const handleProjectClick = (event: React.MouseEvent<HTMLElement>) => {
-    const clickedProject = event.currentTarget.textContent as string;
-    setSelectedProject(clickedProject);
-    dispatch(changeProject(clickedProject));
-  };
-
   const [selectedType, setSelectedType] = useState("All");
   const [anchorElType, setAnchorElType] = useState<null | HTMLElement>(null);
   const openType = Boolean(anchorElType);
@@ -67,23 +49,6 @@ export default function HistoryTableHead() {
     const clickedType = event.currentTarget.textContent as string;
     setSelectedType(clickedType);
     dispatch(changeType(clickedType));
-  };
-  
-  const [selectedTarget, setSelectedTarget] = useState("All");
-  const [anchorElTarget, setAnchorElTarget] = useState<null | HTMLElement>(
-    null
-  );
-  const openTarget = Boolean(anchorElTarget);
-  const handleTargetOpen = (event: React.MouseEvent<HTMLTableCellElement>) => {
-    setAnchorElTarget(event.currentTarget);
-  };
-  const handleTargetClose = () => {
-    setAnchorElTarget(null);
-  };
-  const handleTargetClick = (event: React.MouseEvent<HTMLElement>) => {
-    const clickedTarget = event.currentTarget.textContent as string;
-    setSelectedTarget(clickedTarget);
-    dispatch(changeTarget(clickedTarget));
   };
 
   const [selectedStatus, setSelectedStatus] = useState("All");

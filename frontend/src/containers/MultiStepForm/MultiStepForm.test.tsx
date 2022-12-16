@@ -1,4 +1,4 @@
-/*
+
 import MultiStepForm from "./MultiStepForm";
 import { Provider } from "react-redux";
 import React from "react";
@@ -99,6 +99,3 @@ describe("MultiStepForm", () => {
     }
   });
 });
-*/
-
-export {};
