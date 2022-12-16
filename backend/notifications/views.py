@@ -7,13 +7,11 @@ from django.utils import timezone
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.mixins import ListModelMixin
-from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from core.paginator import CustomPageNumberPagination
-from core.permissions import IsOwner
 from notifications.models import NotificationConfig, Notification, EnumNotificationStatus
 from notifications.models import Reservation
 from notifications.serializers import (
@@ -44,7 +42,7 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
     pagination_class = CustomPageNumberPagination
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
 
     def get_serializer_class(self):
         if self.action == 'list':
@@ -57,7 +55,7 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
         target = self.request.query_params.get('target')
         status = self.request.query_params.get('status')
 
-        q=Q()
+        q = Q()
         q &= Q(reservation__notification_config__project__user=self.request.user)
         ##if projectId:
         ##    q &= Q(reservation__notification_config__project__id=projectId)
@@ -70,33 +68,28 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
 
         return self.queryset.filter(q)
 
-    @action(detail=True, methods=['get'], permission_classes=[AllowAny, IsAuthenticated, IsOwner])
-    def getAll(self, request):
-        notifications = Notification.objects.filter(
-            notification_config__notification__project__user=request.user
-        )
-        return Response(data=notifications, status=status.HTTP_200_OK)
-
     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
     def stat(self, request):
         tz = pytz.timezone('Asia/Seoul')
         today = timezone.now().astimezone(tz).replace(hour=0, minute=0, second=0, microsecond=0)
         most_recent_failure = Notification.objects.filter(
-                reservation__reserved_at__range=[today, today + timezone.timedelta(days=1)],
-                status=EnumNotificationStatus.FAILURE,
-            ).order_by('-created_at').first()
+            reservation__reserved_at__range=[today, today + timezone.timedelta(days=1)],
+            status=EnumNotificationStatus.FAILURE,
+        ).order_by('-created_at').first()
         most_request_project = Reservation.objects.filter(
-                reserved_at__range=[today, today + timezone.timedelta(days=1)]
-            ).annotate(project=F('notification_config__project_id')
-                       ).values('project').annotate(
-                count=Count('notification')
-            ).order_by('-count').first()
+            reserved_at__range=[today, today + timezone.timedelta(days=1)]
+        ).annotate(project=F('notification_config__project_id')
+                   ).values('project').annotate(
+            count=Count('notification')
+        ).order_by('-count').first()
+        most_used_notification = Reservation.objects.filter(
+            reserved_at__range=[today, today + timezone.timedelta(days=1)]
+        ).annotate(
+            count=Count('notification')
+        ).order_by('-count').first()
         data = {
-            'most_used_channel': Reservation.objects.filter(
-                reserved_at__range=[today, today + timezone.timedelta(days=1)]
-            ).annotate(
-                count=Count('notification')
-            ).order_by('-count').first().notification_config.type,
+            'most_used_channel': most_used_notification.notification_config.type if
+            most_used_notification else None,
             'most_recent_failure': most_recent_failure.reservation.notification_config.nmessage.name
             if most_recent_failure else None,
             'most_request_project': Project.objects.get(pk=most_request_project['project']).name
@@ -117,13 +110,13 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
 
         start_time = request.query_params.get('start')
         end_time = request.query_params.get('end')
-        
+
         interval = request.query_params.get('interval')
 
         projectId = request.query_params.get('projectId')
         noti_type = request.query_params.get('type')
 
-        q=Q()
+        q = Q()
         q &= Q(reservation__notification_config__project__user=request.user)
         q &= Q(updated_at__range=(start_time, end_time))
         if projectId:
@@ -131,7 +124,8 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
         if noti_type:
             q &= Q(reservation__notification_config__type=noti_type)
 
-        metrics = Notification.objects.select_related('reservation__notification_config').filter(q).annotate(
+        metrics = Notification.objects.select_related('reservation__notification_config').filter(
+            q).annotate(
             time=Trunc('updated_at', interval),
             project=F('reservation__notification_config__project_id'),
             type=F('reservation__notification_config__type'),
@@ -160,5 +154,3 @@ class ReservationViewSet(ModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
-
-

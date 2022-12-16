@@ -15,20 +15,16 @@ class NMessagesAPITestCase(APITestCase):
     def test_create(self):
         # When
         self.client.force_authenticate(user=self.user)
-        request_data = {
-            'name': 'name',
-            'data': {'channel': 'channel', 'message': 'message'},
-            'notification_type': EnumNotificationType.SLACK
-        }
-        response = self.client.post('/api/message/', data=request_data, format='json')
+        for nt in EnumNotificationType:
+            request_data = {
+                'name': 'name',
+                'data': {'channel': 'channel', 'message': 'message'},
+                'notification_type': nt.value
+            }
+            response = self.client.post('/api/message/', data=request_data, format='json')
 
-        # Then
-        self.assertEqual(response.status_code, 201)
-        responded_channel = NMessage.objects.filter(
-            notification_type=EnumNotificationType.SLACK
-        ).last().data['channel']
-        expected = request_data['data']['channel']
-        self.assertEqual(responded_channel, expected)
+            # Then
+            self.assertEqual(response.status_code, 201)
 
     def test_invalid_type_create(self):
         self.client.force_authenticate(user=self.user)
@@ -46,6 +42,11 @@ class NMessagesAPITestCase(APITestCase):
         # When
         self.client.force_authenticate(user=self.user)
         response = self.client.get('/api/message/?projectId=1')
+
+        # Then
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get('/api/message/?notification_type=sms')
 
         # Then
         self.assertEqual(response.status_code, 200)
