@@ -32,6 +32,18 @@ class TargetUserAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(TargetUser.objects.last().name, request_data['name'])
 
+        request_data = {
+            'notification_type': EnumNotificationType.WEBHOOK,
+            'name': 'name',
+            'data': {
+                'auth': 'bearer',
+                'token': 'api-key',
+            }
+        }
+        response = self.client.post(reverse('targetuser-list'), data=request_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(TargetUser.objects.last().name, request_data['name'])
+
     def test_invalid_type_create(self):
         self.client.force_login(self.user)
         data = {'notification_type': '.',

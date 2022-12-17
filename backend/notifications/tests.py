@@ -61,11 +61,48 @@ class NotificationAPITestCase(APITestCase):
         # Then
         self.assertEqual(response.status_code, 200)
 
+    def test_list(self):
+        self.client.force_authenticate(user=self.user)
+        response = self.client.get(
+            f'/api/notification/'
+        )
+        self.assertEqual(response.status_code, 200)
+
+    def test_stat(self):
+        self.client.force_authenticate(user=self.user)
+        response = self.client.get(
+            f'/api/notification/stat/'
+        )
+        self.assertEqual(response.status_code, 200)
+
 
 class TaskSendApiNotificationTest(TestCase):
 
     @mock.patch('requests.post', return_value=mock.Mock(status_code=200, text=''))
     def test_task_send_api_notification(self, _):
+        # Given
+        target_user = baker.make(
+            TargetUser, notification_type=EnumNotificationType.SLACK
+        )
+        notification = baker.make(
+            Notification,
+            target_user=target_user
+        )
+        notification = {
+            'id': notification.id,
+            'endpoint': 'http://localhost:8000/api/message/',
+            'headers': {
+                'Content-Type': 'application/json',
+            },
+            'data': '{"project": 1, "content": "test"}',
+        }
+
+        response = task_send_api_notification(notification)
+
+        self.assertEqual(response, None)
+
+    @mock.patch('requests.post', return_value=mock.Mock(status_code=400, text=''))
+    def test_task_send_api_notification_fail(self, _):
         # Given
         target_user = baker.make(
             TargetUser, notification_type=EnumNotificationType.SLACK
@@ -138,23 +175,26 @@ class TaskHandleReservationTestCase(TestCase):
 class TaskHandleChunkNotificationTestCase(TestCase):
     @mock.patch('notifications.services.task_send_api_notification.delay')
     def test_task_handle_chunk_notification(self, mocked_task_send_api_notification):
-        # Given
-        target_user = baker.make(TargetUser, notification_type=EnumNotificationType.WEBHOOK)
-        notification_config = baker.make(NotificationConfig, type=EnumNotificationType.WEBHOOK)
-        reservation = baker.make(Reservation, notification_config=notification_config)
-        notifications = baker.make(
-            Notification,
-            reservation=reservation,
-            target_user=target_user,
-            status=EnumNotificationStatus.PENDING,
-            _quantity=2,
-        )
+        for nt in EnumNotificationType:
+            # Given
+            target_user = baker.make(TargetUser, notification_type=nt, data={'api_key': ''})
+            nmessage = baker.make(NMessage, notification_type=nt,
+                                  data={'message': '', 'channel': '', 'api_key': ''})
+            notification_config = baker.make(NotificationConfig, type=nt, nmessage=nmessage)
+            reservation = baker.make(Reservation, notification_config=notification_config)
+            notifications = baker.make(
+                Notification,
+                reservation=reservation,
+                target_user=target_user,
+                status=EnumNotificationStatus.PENDING,
+                _quantity=2,
+            )
 
-        # When
-        task_handle_chunk_notification([notification.id for notification in notifications])
+            # When
+            task_handle_chunk_notification([notification.id for notification in notifications])
 
-        # Then
-        self.assertEqual(mocked_task_send_api_notification.call_count, 2)
+            # Then
+            self.assertEqual(mocked_task_send_api_notification.call_count, 2)
 
     @mock.patch('notifications.services.task_send_slack_notification.delay')
     def test_task_handle_chunk_slack_notification(self, mocked_task_send_slack_notification):
