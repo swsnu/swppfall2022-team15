@@ -31,12 +31,13 @@ export default function ProjectCreateModal(props: IProps) {
   const clearForm = () => {
     setProjectName("");
   };
-  const initializeFields = async () => {
-    const project = await fetchProject(props.projectid!);
-    setProjectName(project.name);
-  };
+  
 
   useEffect(() => {
+    const initializeFields = async () => {
+      const project = await fetchProject(props.projectid!);
+      setProjectName(project.name);
+    };
     if (props.projectid) {
       initializeFields();
     }

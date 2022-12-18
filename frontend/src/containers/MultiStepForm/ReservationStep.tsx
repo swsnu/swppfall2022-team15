@@ -113,7 +113,7 @@ export default function ReservationStep(props: IProps) {
   };
   const reservationWarning = () => {
     let text = "Reservations can be made as many as 100 at most.";
-    if (notificationType == EnumNotificationType.EMAIL.toString()) {
+    if (notificationType === EnumNotificationType.EMAIL.toString()) {
       text = text.concat(
         " Emails can only be reserved up to one hour from now."
       );

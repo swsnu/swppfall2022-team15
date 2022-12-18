@@ -1,4 +1,4 @@
-import { Box, Stack, Grid, InputLabel, TextField } from "@mui/material";
+import { Stack, Grid, InputLabel, TextField } from "@mui/material";
 import "./email.css";
 import { GoogleButton, IAuthorizationOptions } from "react-google-oauth2";
 import { useSelector } from "react-redux";
@@ -97,6 +97,7 @@ export const EmailForm = () => {
               <div className="google-btn">
                 <div className="google-icon-wrapper">
                   <img
+                    alt="Google sign-in"
                     className="google-icon"
                     src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
                   />

@@ -53,7 +53,7 @@ export default function HistoryTable() {
     };
 
     fetchData();
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     let statusQuery = "";
@@ -103,7 +103,7 @@ export default function HistoryTable() {
     };
 
     fetchData();
-  }, [filter]);
+  }, [filter, page]);
 
   const handlePageChange = (event: unknown, newPage: number) => {
     const getNext = async () => {

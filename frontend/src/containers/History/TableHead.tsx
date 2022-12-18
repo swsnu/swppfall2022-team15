@@ -1,40 +1,14 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { TableHead, TableCell, TableRow, Container } from "@mui/material";
 
 import HistoryTableHeadCell from "./TableCell";
-import { changeProject, changeStatus, changeTarget, changeType } from "../../store/slices/historyCategory";
-import { projectListSelector } from "../../store/slices/project";
-import { targetListSelector } from "../../store/slices/target";
+import { changeStatus, changeType } from "../../store/slices/historyCategory";
 import { AppDispatch } from "../../store";
 
 export default function HistoryTableHead() {
-  const projects = useSelector(projectListSelector);
-  const targets = useSelector(targetListSelector);
 
   const dispatch = useDispatch<AppDispatch>();
-
-  const [projectList, setProjectList] = useState(["All"]);
-  const [targetList, setTargetList] = useState(["All"]);
-
-  useEffect(() => {
-    function initializeProject() {
-      const projectList = ["All"];
-      projects.forEach((project) => {
-        projectList.push(project.name);
-      });
-      setProjectList(projectList);
-    }
-    function initializeTarget() {
-      const targetList = ["All"];
-      targets.forEach((target) => {
-        targetList.push(target.name);
-      });
-      setTargetList(targetList);
-    }
-    initializeProject();
-    initializeTarget();
-  }, [projects, targets]);
 
   const [selectedType, setSelectedType] = useState("All");
   const [anchorElType, setAnchorElType] = useState<null | HTMLElement>(null);

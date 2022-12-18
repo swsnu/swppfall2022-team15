@@ -84,7 +84,7 @@ export default function BarLineAnalytics(props: IProps) {
       }
     };
     handleTypeChange();
-  }, [type, projectState, props.type]);
+  }, [type, projectState, props.type, props.noti_type, dispatch]);
   useEffect(() => {
     function getData() {
       let success = [];
@@ -188,7 +188,7 @@ export default function BarLineAnalytics(props: IProps) {
       setData(data);
     }
     getData();
-  }, [analyticsData]);
+  }, [analyticsData, type]);
 
   return (
     <Card>
