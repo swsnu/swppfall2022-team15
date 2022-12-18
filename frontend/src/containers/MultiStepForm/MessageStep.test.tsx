@@ -272,22 +272,22 @@ describe("MessageStep", () => {
     renderWithProviders(
       <MessageStep
         notificationType="SLACK"
-        name="test"
+        name=""
         setName={() => {}}
         data={{
-          channel: "test",
-          message: "test",
+          channel: "",
+          message: "",
         }}
         setData={() => {}}
         fieldErrors="test"
         setFieldErrors={() => {}}
         message={{
           id: 1,
-          name: "test",
-          notification_type: "SLACK",
+          name: "",
+          notification_type: "",
           data: {
-            channel: "test",
-            message: "test",
+            channel: "",
+            message: "",
           },
         }}
         setMessage={() => {}}
