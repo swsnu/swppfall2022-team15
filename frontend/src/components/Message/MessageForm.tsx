@@ -232,6 +232,8 @@ export default function MessageCreateForm(
       break;
     default:
       form = <></>;
+      break;
+      
   }
 
   return form;
