@@ -39,7 +39,7 @@ class NotificationConfigCreateSerializer(serializers.ModelSerializer):
             rrule = validated_data.get('rrule')
             reservation_time += rrulestr(rrule)[:settings.MAX_RESERVATION_COUNT]
             if notification_config.type == EnumNotificationType.EMAIL:
-                last_reservation_time = timezone.now() + timedelta(minutes=59)
+                last_reservation_time = datetime.now() + timedelta(minutes=59)
                 reservation_time = [reservation for reservation in reservation_time if
                                     reservation < last_reservation_time]
         elif notification_config.mode == EnumNotificationMode.IMMEDIATE:
