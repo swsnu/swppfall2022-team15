@@ -15,7 +15,8 @@ logger = get_task_logger(__name__)
 
 @app.task(bind=True)
 @rate_limit(maximum_allowed_per_minute=60)
-def task_send_slack_notification(notification_data):
+# pylint: disable=W0613
+def task_send_slack_notification(self, notification_data):
     url = urljoin(settings.SLACK_HOST, 'api/chat.postMessage')
     headers = {
         'Authorization': f'Bearer {notification_data["api_key"]}',
