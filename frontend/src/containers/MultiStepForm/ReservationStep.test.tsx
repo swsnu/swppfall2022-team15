@@ -1,6 +1,7 @@
 import ReservationStep from "./ReservationStep";
-import {renderWithProviders} from "../../test-utils/mocks";
-import {screen} from "@testing-library/react";
+import { renderWithProviders } from "../../test-utils/mocks";
+import { screen } from "@testing-library/react";
+import preloadedState from "../../test-utils/mock_state";
 
 describe("ReservationStep", () => {
   let reservationStep: JSX.Element;
@@ -30,8 +31,12 @@ describe("ReservationStep", () => {
   });
 
   it("renders", () => {
-    renderWithProviders(reservationStep);
+    renderWithProviders(reservationStep, { preloadedState });
     expect(screen.getByTestId("message-input")).toBeInTheDocument();
   });
 
+  it("renders without targets", () => {
+    renderWithProviders(reservationStep);
+    expect(screen.getByTestId("message-input")).toBeInTheDocument();
+  });
 });

@@ -20,7 +20,7 @@ export default function NotificationTypeForm(props: IProps) {
           props.setNotificationType(event.target.value as string);
           props.setError("");
         }}
-        data-testid="notification-type-select"
+        inputProps={{ "data-testid": "notification-type-select" }}
       >
         <MenuItem value={EnumNotificationType.WEBHOOK}>WEBHOOK</MenuItem>
         <MenuItem value={EnumNotificationType.EMAIL}>EMAIL</MenuItem>

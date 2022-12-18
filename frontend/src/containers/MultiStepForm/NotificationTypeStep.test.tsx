@@ -1,4 +1,5 @@
 import { renderWithProviders } from "../../test-utils/mocks";
+import { fireEvent, screen } from "@testing-library/react";
 import NotificationTypeStep from "./NotificationTypeStep";
 
 describe("NotificationTypeStep", () => {
@@ -63,6 +64,32 @@ describe("NotificationTypeStep", () => {
           },
         },
       }
+    );
+  });
+
+  it("should handle change", () => {
+    const setNotificationType = jest.fn();
+    renderWithProviders(
+      <NotificationTypeStep
+        notificationType="EMAIL"
+        setNotificationType={setNotificationType}
+        error=""
+        setError={() => {}}
+      />
+    );
+    fireEvent.change(screen.getByTestId("notification-type-select"), {
+      target: { value: "SMS" },
+    });
+  });
+
+  it("should render with error", () => {
+    renderWithProviders(
+      <NotificationTypeStep
+        notificationType="EMAIL"
+        setNotificationType={() => {}}
+        error="error"
+        setError={() => {}}
+      />
     );
   });
 });

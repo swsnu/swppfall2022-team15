@@ -22,7 +22,6 @@ export default function SplitButton(props: IProps) {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
 
   const handleClick = () => {
-    console.log(selectedIndex);
     if (selectedIndex === 0) {
       // Reserve
       props.setMode("RESERVATION");
