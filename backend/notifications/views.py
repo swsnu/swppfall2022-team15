@@ -45,14 +45,10 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
     permission_classes = (IsAuthenticated,)
 
     def get_serializer_class(self):
-        if self.action == 'list':
-            return NotificationListSerializer
-        return self.serializer_class
+        return NotificationListSerializer
 
     def get_queryset(self):
-        project = self.request.query_params.get('project')
         noti_type = self.request.query_params.get('type')
-        target = self.request.query_params.get('target')
         status = self.request.query_params.get('status')
 
         q = Q()

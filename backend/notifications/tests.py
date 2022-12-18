@@ -1,11 +1,12 @@
 import json
 from datetime import datetime, timedelta
 from unittest import mock
-from unittest.mock import call
+from unittest.mock import call, MagicMock
 
 from django.test import TestCase
 from django.utils import timezone
 from model_bakery import baker
+from requests import RequestException
 from rest_framework.test import APITestCase
 
 from account.models import User
@@ -38,26 +39,65 @@ class NotificationAPITestCase(APITestCase):
         # Given
         start = timezone.now()
         end = start + timezone.timedelta(hours=1)
+        project = baker.make(Project, user=self.user)
+        notification_config = baker.make(NotificationConfig, project=project)
+        reservation = baker.make(Reservation, notification_config=notification_config)
 
         baker.make(
             Notification,
+            reservation=reservation,
             status=EnumNotificationStatus.SUCCESS,
             updated_at=start,
             _quantity=2
         )
         baker.make(
             Notification,
+            reservation=reservation,
             status=EnumNotificationStatus.FAILURE,
             updated_at=end
         )
 
-        start_str = start.strftime('%Y-%m-%d')
-        end_str = end.strftime('%Y-%m-%d')
+        start_str = start.strftime('%Y-%m-%d %H:%M:%S')
+        end_str = end.strftime('%Y-%m-%d %H:%M:%S')
 
         # When
         self.client.force_authenticate(user=self.user)
         response = self.client.get(
             f'/api/notification/metrics/?start={start_str}&end={end_str}&interval=hour'
+        )
+
+        # Then
+        self.assertEqual(response.status_code, 200)
+
+    def test_metrics_optional_query_params(self):
+        # Given
+        start = timezone.now()
+        end = start + timezone.timedelta(hours=1)
+        project = baker.make(Project, user=self.user)
+        notification_config = baker.make(NotificationConfig, project=project)
+        reservation = baker.make(Reservation, notification_config=notification_config)
+
+        baker.make(
+            Notification,
+            reservation=reservation,
+            status=EnumNotificationStatus.SUCCESS,
+            updated_at=start,
+            _quantity=2
+        )
+        baker.make(
+            Notification,
+            reservation=reservation,
+            status=EnumNotificationStatus.FAILURE,
+            updated_at=end
+        )
+
+        start_str = start.strftime('%Y-%m-%d %H:%M:%S')
+        end_str = end.strftime('%Y-%m-%d %H:%M:%S')
+
+        # When
+        self.client.force_authenticate(user=self.user)
+        response = self.client.get(
+            f'/api/notification/metrics/?start={start_str}&end={end_str}&interval=hour&projectId={project.id}&type={EnumNotificationType.SLACK}'
         )
 
         # Then
@@ -70,6 +110,13 @@ class NotificationAPITestCase(APITestCase):
         )
         self.assertEqual(response.status_code, 200)
 
+    def test_list_query_string(self):
+        self.client.force_authenticate(user=self.user)
+        response = self.client.get(
+            f'/api/notification/?type=SLACK&status=PENDING'
+        )
+        self.assertEqual(response.status_code, 200)
+
     def test_stat(self):
         self.client.force_authenticate(user=self.user)
         response = self.client.get(
@@ -77,6 +124,17 @@ class NotificationAPITestCase(APITestCase):
         )
         self.assertEqual(response.status_code, 200)
 
+
+class ReservationAPITestCase(APITestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = baker.make(User)
+    def test_list(self):
+        notification_config = baker.make(NotificationConfig)
+
+        self.client.force_authenticate(user=self.user)
+        response = self.client.get(f'/api/notification_config/{notification_config.id}/reservation/')
 
 class NotificationConfigAPITestCase(APITestCase):
     @classmethod
@@ -243,6 +301,28 @@ class TaskSendSlackNotificationTest(TestCase):
         task_send_slack_notification(notification_data)
         notification.refresh_from_db()
         self.assertEqual(notification.status, EnumNotificationStatus.SUCCESS)
+        self.assertEqual(notification.status, EnumNotificationStatus.SUCCESS)
+
+    @mock.patch('requests.post', return_value=mock.Mock(
+        status_code=200, json=lambda: {'ok': False}))
+    def test_task_send_slack_notification_when_not_ok(self, _):
+        target_user = baker.make(
+            TargetUser, notification_type=EnumNotificationType.SLACK
+        )
+        notification = baker.make(
+            Notification,
+            target_user=target_user
+        )
+        notification_data = {
+            'id': notification.id,
+            'text': 'text',
+            'channel': 'channel',
+            'api_key': 'api_key'
+        }
+
+        task_send_slack_notification(notification_data)
+        notification.refresh_from_db()
+        self.assertEqual(notification.status, EnumNotificationStatus.FAILURE)
 
 
 class TaskHandleReservationTestCase(TestCase):
