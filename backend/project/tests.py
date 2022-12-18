@@ -50,3 +50,8 @@ class ProjectTestCase(APITestCase):
         })
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
         self.assertTrue(Project.objects.filter(user=self.user, name='new project').exists())
+
+    def test_notification_config(self):
+        self.client.force_login(self.user)
+
+        self.client.get(f'/api/project/{self.projects[0].id}/notification_config/')
