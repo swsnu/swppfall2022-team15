@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 from datetime import timedelta
 from logging import getLogger
 from typing import TypedDict
@@ -8,7 +7,6 @@ from typing import TypedDict
 import requests
 from django.utils import timezone
 
-from core.exceptions import NotificationServiceException
 from noti_manager.celery import app
 from notifications.models import (
     Notification,
@@ -16,33 +14,74 @@ from notifications.models import (
     EnumNotificationType,
     Reservation,
     EnumReservationStatus,
+    EnumNotificationMode,
 )
 from notifications.slack.serializers import SlackNotificationSerializer
 from notifications.slack.services import task_send_slack_notification
+from notifications.sms.services import task_send_sms_notification
+from notifications.email.services import task_send_gmail_notification
 
 logger = getLogger(__name__)
 
 
 @app.task
-def task_send_api_notification(notification: dict):
+def task_send_api_notification(notification: NotificationTaskDto):
     """Send a notification to the notification service."""
+    request_data = notification['data']
+    url = notification['endpoint']
+    headers = notification['headers']
+
+    started_at = timezone.now()
+    response = requests.post(
+        url=url,
+        json=request_data,
+        headers=headers,
+        timeout=5,
+    )
+    finished_at = timezone.now()
     try:
-        response = requests.post(
-            url=notification['endpoint'],
-            json=json.loads(notification['data']),
-            headers=notification['headers'],
-            timeout=5,
-        )
         response.raise_for_status()
-    except requests.exceptions.RequestException as e:
-        raise NotificationServiceException from e
+    except requests.exceptions.RequestException:
+        logger.info(response.text)
+        notification = Notification.objects.get(id=notification['id'])
+        # pylint: disable=R0801
+        notification.update_result(
+            EnumNotificationStatus.FAILURE,
+            response.status_code,
+            response.text,
+            started_at,
+            finished_at
+        )
 
+        return
 
-class ApiNotificationDto(TypedDict):
+    notification = Notification.objects.get(id=notification['id'])
+    # pylint: disable=R0801
+    notification.update_result(
+        EnumNotificationStatus.SUCCESS,
+        response.status_code,
+        response.text,
+        started_at,
+        finished_at
+    )
+
+    return
+
+class NotificationTaskDto(TypedDict):
     """Data transfer object for notifications."""
+    id: int
     endpoint: str
     headers: dict
     data: str
+
+
+class GmailNotificationTaskDto(TypedDict):
+    """Data transfer object for notifications."""
+    id: int
+    token: dict
+    endpoint: str
+    subject: str
+    content: str
 
 
 @app.task
@@ -75,19 +114,36 @@ def task_handle_chunk_notification(notification_ids: list[int]):
 
     for notification in notifications:
         # TODO 하나의 클래스로 추상화 해서 바로 던지는 게 좋을 듯
-        if notification.reservation.notification_config.type == EnumNotificationType.HTTP:
-            data = ApiNotificationDto(
+        if notification.reservation.notification_config.type == EnumNotificationType.WEBHOOK:
+            data = NotificationTaskDto(
+                id=notification.id,
                 endpoint=notification.target_user.endpoint,
                 headers=notification.target_user.data,
-                data=notification.request,
+                data=notification.reservation.notification_config.nmessage.data.get('message'),
             )
             task_send_api_notification.delay(data)
         elif notification.reservation.notification_config.type == EnumNotificationType.SLACK:
             task_send_slack_notification.delay(
-                SlackNotificationSerializer(notification).data
+                notification_data=SlackNotificationSerializer(notification).data
             )
-        # elif notification.notificaiton_group.type == EnumNotificationType.SMS:
-        #     pass
+        elif notification.reservation.notification_config.type == EnumNotificationType.SMS:
+            data = NotificationTaskDto(
+                id=notification.id,
+                endpoint=notification.target_user.endpoint,
+                headers=notification.target_user.data,
+                data=notification.reservation.notification_config.nmessage.data.get('message'),
+            )
+            task_send_sms_notification.delay(data)
+        elif notification.reservation.notification_config.type == EnumNotificationType.EMAIL:
+            token = notification.reservation.notification_config.project.user.token
+            data = GmailNotificationTaskDto(
+                id=notification.id,
+                token=token,
+                endpoint=notification.target_user.endpoint,
+                subject=notification.reservation.notification_config.nmessage.data.get('title'),
+                content=notification.reservation.notification_config.nmessage.data.get('message'),
+            )
+            task_send_gmail_notification.delay(data)
 
 
 @app.task
@@ -102,10 +158,11 @@ def cron_task_handle_reservation():
 
 
 @app.task
-def task_bulk_create_notification(reserved_at, target_user_ids, notification_config_id):
+def task_bulk_create_notification(reserved_at, target_user_ids, notification_config_id, mode):
     reservation = Reservation.objects.create(
         notification_config_id=notification_config_id,
         reserved_at=reserved_at,
+        status=EnumReservationStatus.PENDING
     )
 
     notifications = [
@@ -116,3 +173,6 @@ def task_bulk_create_notification(reserved_at, target_user_ids, notification_con
         ) for target_user_id in target_user_ids
     ]
     Notification.objects.bulk_create(notifications)
+
+    if mode == EnumNotificationMode.IMMEDIATE:
+        task_spawn_notification_by_chunk(reservation.id)

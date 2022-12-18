@@ -61,8 +61,17 @@ export default function SignUp() {
       return;
     }
 
+    const exp: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
+    const result = exp.test(email);
+
+    if (result === false) {
+      setError("Invalid email");
+      return;
+    }
+
     try {
-      const response = await axios.post(
+      await axios.post(
         "/api/signup/",
         JSON.stringify({
           email: email,
@@ -85,12 +94,9 @@ export default function SignUp() {
     } catch (error: any) {
       if (!error.response) {
         setError("Error connecting to server");
-      } else /*if (error.response.status === 400)*/ {
+      } else {
         setError("Email already exists");
       } 
-      // else {
-      //   setError("Error signing up");
-      // }
     }
   };
 

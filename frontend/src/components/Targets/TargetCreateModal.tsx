@@ -8,143 +8,164 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  TextField,
 } from "@mui/material";
-import {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch} from "../../store";
-import {createTarget, fetchTargets} from "../../store/slices/target";
-import {EnumNotificationType} from "../../Enums";
-import {fetchProjects, projectSelect} from "../../store/slices/project";
+import { useEffect, useState, useCallback } from "react";
+import { useDispatch } from "react-redux";
+
+import { TargetUserForm } from "./TargetUserForm";
+import { AppDispatch } from "../../store";
+import { createTarget, fetchTargets } from "../../store/slices/target";
+import { EnumNotificationType } from "../../Enums";
+import { getTarget, updateTarget } from "../../services/target";
 
 interface IProps {
   open: any;
   handleClose: any;
+  targetId?: number | null;
 }
 
 export default function TargetCreateModal(props: IProps) {
   const [targetName, setTargetName] = useState("");
   const [notificationType, setNotificationType] = useState("");
-  const [project, setProject] = useState("");
-  const [endPoint, setEndPoint] = useState("");
+  const [endpoint, setEndpoint] = useState("");
+  const [data, setData] = useState({});
 
   const dispatch = useDispatch<AppDispatch>();
-    useEffect(() => {
-    dispatch(fetchProjects());
-  }, []);
-  const projectState = useSelector(projectSelect);
+
+  const initializeFields = useCallback(async () => {
+    const target = await getTarget(props.targetId!);
+    if (target) {
+      setEndpoint(target.endpoint);
+      setData(target.data);
+      setNotificationType(target.notification_type);
+      setTargetName(target.name);
+    }
+  }, [props.targetId]);
+
+  useEffect(() => {
+    if (props.targetId) {
+      initializeFields();
+    }
+  }, [props.targetId, initializeFields]);
+
+  const clearForm = () => {
+    setTargetName("");
+    setNotificationType("");
+    setEndpoint("");
+    setData({});
+  };
 
   const handleClickConfirm = async () => {
-    if (targetName && notificationType && endPoint) {
-      const data = {
-        name: targetName,
-        notification_type: notificationType,
-        endpoint: endPoint,
-        data: {},
-        project: Number(project),
+    console.log(targetName, notificationType, endpoint);
+    if (
+      (targetName && notificationType && endpoint) || // NON SLACK
+      (notificationType === EnumNotificationType.SLACK.toString() &&
+        targetName &&
+        "api_key" in data) // SLACK
+    ) {
+      // validation check
+      switch (notificationType) {
+        case EnumNotificationType.WEBHOOK.toString():
+          try {
+            new URL(endpoint);
+          } catch (TypeError) {
+            console.log("Invalid URL");
+            return;
+          }
+          break;
+        case EnumNotificationType.EMAIL.toString():
+          // TODO
+          break;
+        case EnumNotificationType.SMS.toString():
+          // TODO
+          break;
       }
-      dispatch(createTarget(data));
+      if (props.targetId) {
+        const requestData = {
+          name: targetName,
+          endpoint: endpoint,
+          data: data,
+        };
+        await updateTarget(props.targetId, requestData);
+      } else {
+        const requestData = {
+          name: targetName,
+          notification_type: notificationType,
+          endpoint: endpoint,
+          data: data,
+        };
+        dispatch(createTarget(requestData));
+      }
+      clearForm();
       props.handleClose();
       dispatch(fetchTargets());
     }
   };
 
+  let form = TargetUserForm({
+    notificationType,
+    targetName,
+    setTargetName,
+    endpoint,
+    setEndpoint,
+    data,
+    setData,
+  });
+
   return (
     <div>
       <Dialog
         open={props.open}
-        onClose={props.handleClose}
+        onClose={() => {
+          if (props.targetId) {
+            clearForm();
+          }
+          props.handleClose();
+        }}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
         fullWidth
       >
-        <DialogTitle>New Target</DialogTitle>
+        <DialogTitle>
+          {props.targetId ? "Update Target" : "New Target"}
+        </DialogTitle>
         <DialogContent>
-          <InputLabel id="demo-simple-select-label">Target Name</InputLabel>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="target_name"
-            // label="target name"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={targetName}
-            inputProps={
-              {"data-testid" : "target-input"}
-            }
-            onChange={(event) => {
-              setTargetName(event.target.value);
-            }}
-            required
-          />
-          <br/>
-          <br/>
-          <br/>
-          <InputLabel id="demo-simple-select-label">Notification Type</InputLabel>
+          <InputLabel id="demo-simple-select-label">
+            Notification Type
+          </InputLabel>
           <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={notificationType}
-              label="project type"
-              onChange={(event: SelectChangeEvent) => {
-                setNotificationType(event.target.value);
-              }}
-              inputProps={{
-                "data-testid": "project-type"
-              }}
-              fullWidth
-            >
-                 {/*// TODO: change to enum*/}
-                <MenuItem value={EnumNotificationType.API.toString()}>API</MenuItem>
-                <MenuItem value={EnumNotificationType.EMAIL.toString()}>Email</MenuItem>
-                <MenuItem value={EnumNotificationType.SMS.toString()}>SMS</MenuItem>
-            </Select>
-          <br/>
-          <br/>
-          <br/>
-          <InputLabel id="demo-simple-select-label">End Point</InputLabel>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="end_point"
-            // label="end point"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={endPoint}
-            inputProps={{"data-testid" : "endpoint-input"}}
-            onChange={(event) => {
-              setEndPoint(event.target.value);
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={notificationType}
+            inputProps={{
+              "data-testid": "type-input",
             }}
-            required
-          />
-          <br/>
-          <br/>
-          <br/>
-          <InputLabel id="demo-simple-select-label">Project</InputLabel>
-          <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={project}
-              // label="project type"
-              onChange={(event: SelectChangeEvent) => {
-                setProject(event.target.value);
-              }}
-              inputProps={{"data-testid" : "project-id"}}
-              fullWidth
-            >
-            {/*// TODO : change to enum and add conditions (filerr) */}
-            {projectState.projects.map(project => <MenuItem key={project.id} value={project.id}>{project.name}</MenuItem>)}
-            </Select>
-          <br/>
-          <br/>
-          <br/>
+            onChange={(event: SelectChangeEvent) => {
+              setNotificationType(event.target.value);
+              setData({});
+            }}
+            fullWidth
+            disabled={Boolean(props.targetId)}
+          >
+            <MenuItem value={EnumNotificationType.SLACK}>SLACK</MenuItem>
+            <MenuItem value={EnumNotificationType.EMAIL}>EMAIL</MenuItem>
+            <MenuItem value={EnumNotificationType.WEBHOOK}>WEBHOOK</MenuItem>
+            <MenuItem value={EnumNotificationType.SMS}>SMS</MenuItem>
+          </Select>
+          <br />
+          <br />
+          {form}
         </DialogContent>
         <DialogActions>
-          <Button data-testid={"create-button"} onClick={handleClickConfirm}>Confirm</Button>
+          <Button data-testid={"create-button"} onClick={handleClickConfirm}>
+            Confirm
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
   );
 }
+
+TargetCreateModal.defaultProps = {
+  update: false,
+};

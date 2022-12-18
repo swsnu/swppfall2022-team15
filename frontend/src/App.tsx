@@ -16,7 +16,9 @@ import SignUp from "./containers/SignUp/SignUp";
 import TargetListTable from "./containers/TargetList/TargetList";
 import MessageListTable from "./containers/MessageList/MessageList";
 import AuthRoute from "./components/AuthRoute/AuthRoute";
-import {Recurrence} from "./components/Recurrence";
+import HistoryTable from "./containers/History/HistoryTable";
+import {EmailForm} from "./components/Email/Email";
+import OAuth from "./components/OAuth";
 
 export const SidebarLayout = () => (
   <>
@@ -77,7 +79,32 @@ function App() {
               </AuthRoute>
             }
           />
+          <Route
+            path="/history"
+            element={
+              <AuthRoute>
+                <HistoryTable />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="/email"
+            element={
+              <AuthRoute>
+                <EmailForm />
+              </AuthRoute>
+            }
+            />
+          <Route
+            path="/oauth-callback"
+            element={
+              <AuthRoute>
+                <OAuth/>
+              </AuthRoute>
+            }
+            />
         </Route>
+        <Route path="*" element={<Navigate replace to={"/home"} />} />
       </Routes>
     </BrowserRouter>
   );

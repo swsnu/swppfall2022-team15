@@ -1,3 +1,3 @@
-import WeekDaysSelector from './WeekDaysSelector'
+import WeekDaysSelector from "./WeekDaysSelector";
 
-export default WeekDaysSelector
+export default WeekDaysSelector;

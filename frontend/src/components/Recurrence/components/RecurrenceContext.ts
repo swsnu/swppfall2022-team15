@@ -1,12 +1,12 @@
-import React from 'react'
-import { EndingConditionType, FrequencyType, RecurrenceType } from '../types'
+import React from "react";
+import { EndingConditionType, FrequencyType, RecurrenceType } from "../types";
 
 interface RecurrenceContextType {
-  recurrence: RecurrenceType
-  onFieldChange: (key: string, value: any) => void
-  onFieldsChange: (object: any) => void
+  recurrence: RecurrenceType;
+  onFieldChange: (key: string, value: any) => void;
+  onFieldsChange: (object: any) => void;
 }
-const today = new Date()
+const today = new Date();
 export const contextInitValue: RecurrenceContextType = {
   recurrence: {
     startDate: today,
@@ -18,14 +18,13 @@ export const contextInitValue: RecurrenceContextType = {
     endingCondition: EndingConditionType.None,
     endingOccurrencesNumber: 1,
     startTime: today,
-    endTime: today
+    endTime: today,
   },
   onFieldChange: () => {},
-  onFieldsChange: () => {}
-}
+  onFieldsChange: () => {},
+};
 
-const RecurrenceContext = React.createContext<RecurrenceContextType>(
-  contextInitValue
-)
+const RecurrenceContext =
+  React.createContext<RecurrenceContextType>(contextInitValue);
 
-export default RecurrenceContext
+export default RecurrenceContext;

@@ -10,25 +10,49 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import projectService from "../../services/project";
+import {
+  createProject,
+  fetchProject,
+  updateProject,
+} from "../../services/project";
 import { AppDispatch } from "../../store";
 import { fetchProjects } from "../../store/slices/project";
 
 interface IProps {
   open: any;
   handleClose?: any;
+  projectid?: number | null;
 }
 
 export default function ProjectCreateModal(props: IProps) {
-  const [projectType, setProjectType] = useState("");
+  const [projectType, setProjectType] = useState("INDIVIDUAL");
   const [projectName, setProjectName] = useState("");
   const dispatch = useDispatch<AppDispatch>();
 
+  const clearForm = () => {
+    setProjectName("");
+  };
+  const initializeFields = async () => {
+    const project = await fetchProject(props.projectid!);
+    setProjectName(project.name);
+  };
+
+  useEffect(() => {
+    if (props.projectid) {
+      initializeFields();
+    }
+  }, [props.projectid]);
+
   const handleClickConfirm = async () => {
     if (projectName && projectType) {
-      await projectService.createProject(projectName, projectType);
+      if (props.projectid) {
+        await updateProject(props.projectid, projectName, projectType);
+      } else {
+        await createProject(projectName, projectType);
+      }
+      clearForm();
       props.handleClose();
       await dispatch(fetchProjects());
     }
@@ -38,12 +62,19 @@ export default function ProjectCreateModal(props: IProps) {
     <div>
       <Dialog
         open={props.open}
-        onClose={props.handleClose}
+        onClose={() => {
+          if (props.projectid) {
+            clearForm();
+          }
+          props.handleClose();
+        }}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
         fullWidth
       >
+        <br/>
         <DialogTitle>New Project</DialogTitle>
+          <br />
         <DialogContent>
           <InputLabel id="demo-simple-select-label">Name</InputLabel>
           <TextField
@@ -65,24 +96,8 @@ export default function ProjectCreateModal(props: IProps) {
           <br />
           <br />
           <br />
-
-          <InputLabel id="demo-simple-select-label">Project Type</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={projectType}
-            // label="project type"
-            inputProps={{
-              "data-testid": "type-input",
-            }}
-            onChange={(event: SelectChangeEvent) => {
-              setProjectType(event.target.value as string);
-            }}
-            fullWidth
-          >
-            <MenuItem value={"ORGANIZATION"}>ORGANIZATION</MenuItem>
-            <MenuItem value={"INDIVIDUAL"}>INDIVIDUAL</MenuItem>
-          </Select>
+          <br/>
+          <br/>
         </DialogContent>
         <DialogActions>
           <Button data-testid="confirm-button" onClick={handleClickConfirm}>

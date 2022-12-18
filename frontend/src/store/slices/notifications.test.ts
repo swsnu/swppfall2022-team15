@@ -2,22 +2,33 @@ import { AnyAction, configureStore, EnhancedStore } from "@reduxjs/toolkit";
 import axios from "axios";
 import { ThunkMiddleware } from "redux-thunk";
 
+import reducer, {
+  fetchNotifications, getTotal,
+} from "./notifications";
 import { EnumNotificationStatus } from "../../Enums";
 import { NotificationType } from "../../types";
-import reducer, { fetchNotifications, fetchAllNotifications, createNotification } from "./notifications";
 
 describe("notification reducer", () => {
   let store: EnhancedStore<
     {
-      notification: { notifications: NotificationType[]; selectedNotification: NotificationType | null };
+      notification: {
+        totalNumber: number;
+        totalSuccess: number;
+        totalFailure: number;
+        selectedNotification: NotificationType | null;
+        notifications_selectedProject: NotificationType[] | null;
+      };
     },
     AnyAction,
     [
       ThunkMiddleware<
         {
           notification: {
-            notifications: NotificationType[];
+            totalNumber: number;
+            totalSuccess: number;
+            totalFailure: number;
             selectedNotification: NotificationType | null;
+            notifications_selectedProject: NotificationType[] | null;
           };
         },
         AnyAction,
@@ -27,9 +38,27 @@ describe("notification reducer", () => {
   >;
 
   const fakeNotifications: NotificationType[] = [
-    { id: 1, status: EnumNotificationStatus.SUCCESS, message: "test", reservedAt: "2021-01-01", type: "API", history: [] },
-    { id: 2, status: EnumNotificationStatus.FAILURE, message: "test", reservedAt: "2021-01-01", type: "API", history: [] },
-    { id: 3, status: EnumNotificationStatus.PARTIAL_SUCCESS, message: "test", reservedAt: "2021-01-01", type: "API", history: [] },
+    {
+      id: 1,
+      status: EnumNotificationStatus.SUCCESS,
+      message: "test",
+      reservedAt: "2021-01-01",
+      type: "SLACK",
+    },
+    {
+      id: 2,
+      status: EnumNotificationStatus.FAILURE,
+      message: "test",
+      reservedAt: "2021-01-01",
+      type: "SMS",
+    },
+    {
+      id: 3,
+      status: EnumNotificationStatus.PENDING,
+      message: "test",
+      reservedAt: "2021-01-01",
+      type: "EMAIL",
+    },
   ];
 
   beforeAll(() => {
@@ -38,46 +67,47 @@ describe("notification reducer", () => {
 
   it("should handle initial state", () => {
     expect(reducer(undefined, { type: "unknown" })).toEqual({
-      notifications: [],
+      totalNumber: 0,
+      totalSuccess: 0,
+      totalFailure: 0,
       selectedNotification: null,
+      notifications_selectedProject: null,
     });
   });
-
 
   it("should handle fetch notifications", async () => {
     jest.spyOn(axios, "get").mockImplementation((url: string) => {
       return Promise.resolve({
-        data: fakeNotifications,
+        data: fakeNotifications[0],
       });
     });
     await store.dispatch(fetchNotifications(1));
-    expect(store.getState().notification.notifications).toEqual(fakeNotifications);
+    expect(store.getState().notification.notifications_selectedProject).toEqual(
+      fakeNotifications[0]
+    );
   });
 
-  it("should handle fetch all notifications", async () => {
+  it("should handle get total", async () => {
     jest.spyOn(axios, "get").mockImplementation((url: string) => {
       return Promise.resolve({
         data: fakeNotifications,
       });
     });
-    await store.dispatch(fetchAllNotifications());
-  });
-
-  it("should handle create notification", async () => {
-    jest.spyOn(axios, "post").mockResolvedValue({ data: fakeNotifications[0] });
-
-    await store.dispatch(
-      createNotification({
-        id: 1,
-        status: EnumNotificationStatus.SUCCESS,
-        message: "test",
-        reservedAt: "2021-01-01",
-        type: "API",
-        history: [],
-      })
+    await store.dispatch(getTotal());
+    expect(store.getState().notification.totalNumber).toEqual(
+      fakeNotifications.length
     );
-    expect(store.getState().notification.notifications[0]).toEqual(
-      fakeNotifications[0]
+    expect(store.getState().notification.totalSuccess).toEqual(
+      fakeNotifications.filter(
+        (notification) => notification.status === EnumNotificationStatus.SUCCESS
+      ).length
+    );
+    expect(store.getState().notification.totalFailure).toEqual(
+      fakeNotifications.filter(
+        (notification) => notification.status === EnumNotificationStatus.FAILURE
+      ).length
     );
   });
+
+
 });

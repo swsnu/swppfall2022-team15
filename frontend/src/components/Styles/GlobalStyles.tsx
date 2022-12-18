@@ -13,12 +13,14 @@ export default function GlobalStyles() {
           width: "100%",
           height: "100%",
           WebkitOverflowScrolling: "touch",
+          fontFamily: "Inter",
         },
         body: {
           margin: 0,
           padding: 0,
           width: "100%",
           height: "100%",
+          fontFamily: "Inter",
         },
         "#root": {
           width: "100%",
@@ -48,6 +50,5 @@ export default function GlobalStyles() {
       }}
     />
   );
-
   return inputGlobalStyles;
 }

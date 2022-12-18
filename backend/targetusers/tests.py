@@ -20,11 +20,100 @@ class TargetUserAPITestCase(APITestCase):
 
     def test_create(self):
         self.client.force_login(self.user)
-        data = {'notification_type': EnumNotificationType.SLACK,
-                'name': 'name', 'api_key': 'api-key'}
-        response = self.client.post(reverse('targetuser-list'), data=data)
+        request_data = {
+            'notification_type': EnumNotificationType.SLACK,
+            'name': 'name',
+            'data': {
+                'auth': 'api_key',
+                'api_key': 'api-key',
+            }
+        }
+        response = self.client.post(reverse('targetuser-list'), data=request_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(TargetUser.objects.last().name, data['name'])
+        self.assertEqual(TargetUser.objects.last().name, request_data['name'])
+
+        request_data = {
+            'notification_type': EnumNotificationType.SLACK,
+            'name': 'name',
+            'data': {
+            }
+        }
+        self.client.post(reverse('targetuser-list'), data=request_data, format='json')
+
+        request_data = {
+            'notification_type': EnumNotificationType.WEBHOOK,
+            'name': 'name',
+            'data': {
+                'auth': 'bearer',
+                'token': 'api-key',
+            }
+        }
+        response = self.client.post(reverse('targetuser-list'), data=request_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(TargetUser.objects.last().name, request_data['name'])
+
+    def test_create_webhook(self):
+        self.client.force_login(self.user)
+
+        request_data_list = [
+            {
+                'notification_type': EnumNotificationType.WEBHOOK,
+                'name': 'name',
+                'data': {
+                }
+            },
+            {
+                'notification_type': EnumNotificationType.WEBHOOK,
+                'name': 'name',
+                'data': {
+                    'auth': 'bearer',
+                    'token': 'token',
+                }
+            },
+            {
+                'notification_type': EnumNotificationType.WEBHOOK,
+                'name': 'name',
+                'data': {
+                    'auth': 'bearer',
+                }
+            }
+            ,
+            {
+                'notification_type': EnumNotificationType.WEBHOOK,
+                'name': 'name',
+                'data': {
+                    'auth': 'basic',
+                    'username': 'username',
+                    'password': 'password',
+                }
+            },
+            {
+                'notification_type': EnumNotificationType.WEBHOOK,
+                'name': 'name',
+                'data': {
+                    'auth': 'basic',
+                }
+            },
+            {
+                'notification_type': EnumNotificationType.WEBHOOK,
+                'name': 'name',
+                'data': {
+                    'auth': 'api_key',
+                }
+            },
+            {
+                'notification_type': EnumNotificationType.WEBHOOK,
+                'name': 'name',
+                'data': {
+                    'auth': 'api_key',
+                    'key': 'key',
+                    'value': 'value',
+                }
+            },
+        ]
+        for request_data in request_data_list:
+            with self.subTest(msg=request_data):
+                self.client.post(reverse('targetuser-list'), data=request_data, format='json')
 
     def test_invalid_type_create(self):
         self.client.force_login(self.user)

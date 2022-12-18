@@ -1,3 +1,3 @@
-import EndingConditionSelector from './EndingConditionSelector'
+import EndingConditionSelector from "./EndingConditionSelector";
 
-export default EndingConditionSelector
+export default EndingConditionSelector;

@@ -41,7 +41,7 @@ export const AuthSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(authenticate.fulfilled, (state, action) => {

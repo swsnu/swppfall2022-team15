@@ -1,12 +1,11 @@
+from datetime import datetime
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 
 
 class UserManager(BaseUserManager):
     def create_user(self, email, username, password=None):
-        if not email:
-            raise ValueError("Users must have an email address")
-
         user = self.model(email=self.normalize_email(email), username=username)
 
         user.set_password(password)
@@ -31,6 +30,7 @@ class User(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+    token = models.JSONField(null=True, blank=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
@@ -44,3 +44,11 @@ class User(AbstractBaseUser):
     # pylint: disable=W0613
     def has_perm(self, perm, obj=None):
         return True
+
+    @property
+    def oauth(self):
+        if self.token and 'expires_at' in self.token:
+            expires_at = datetime.strptime(self.token['expires_at'], "%Y-%m-%d %H:%M:%S")
+            return expires_at > datetime.now()
+
+        return False

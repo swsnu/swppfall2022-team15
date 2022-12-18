@@ -1,3 +1,3 @@
-import StartDateSelector from './StartDateSelector'
+import StartDateSelector from "./StartDateSelector";
 
-export default StartDateSelector
+export default StartDateSelector;

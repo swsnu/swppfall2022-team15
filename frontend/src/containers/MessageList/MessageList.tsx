@@ -1,6 +1,6 @@
 import { Box, Button, MenuItem, Popover, Tab, Tabs } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
-import React, { useEffect, useState } from "react";
+import { Grid } from "@material-ui/core";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Iconify from "../../components/Iconify/Iconify";
 
@@ -10,13 +10,35 @@ import { fetchMessages, messageListSelector } from "../../store/slices/message";
 
 import { AppDispatch } from "../../store";
 import { Container } from "@mui/system";
-import MessageTable from "../../components/Message/MessageTable";
-import { EnumNotificationType } from "../../Enums";
+import DynamicTable from "../../components/Message/DynamicTable";
+import "./MessageList.css";
+import {
+  getMessageColumns,
+  getMessageKeys,
+} from "../../components/Message/utils/dyanamicTableUtils";
 
 export default function MessageListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
   const [createModalopen, setCreateModalOpen] = useState(false);
-  const [selectedTab, setSelectedTab] = React.useState(0);
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [notificationType, setNotificationType] = useState("");
+  const [messageId, setMessageId]: any = useState(null);
+
+  useEffect(() => {
+    const getNotificationType = (type: number) => {
+      switch (type) {
+        case 0:
+          return "WEBHOOK";
+        case 1:
+          return "EMAIL";
+        case 2:
+          return "SMS";
+        default:
+          return "SLACK";
+      }
+    };
+    setNotificationType(getNotificationType(selectedTab));
+  }, [selectedTab]);
 
   const handleOpenMenu = (event: any) => {
     setOpen(event.currentTarget);
@@ -40,7 +62,7 @@ export default function MessageListTable() {
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(fetchMessages());
-  }, []);
+  }, [dispatch]);
   const messages = useSelector(messageListSelector);
 
   function a11yProps(index: number) {
@@ -52,77 +74,74 @@ export default function MessageListTable() {
   }
 
   function renderTable() {
-    switch (selectedTab) {
-      case 0:
-        return (
-          <Box sx={{ "margin-bottom": "20px" }}>
-            <h1>Slack</h1>
-            <MessageTable
-              columns={["channel", "message"]}
-              keys={["channel", "message"]}
-              rows={
-                EnumNotificationType.SLACK in messages ? messages.SLACK : []
-              }
-              handleOpenMenu={handleOpenMenu}
-            />
-          </Box>
-        );
-      default:
-        return (
-          <MessageTable
-            columns={["channel", "message"]}
-            keys={["channel", "message"]}
-            rows={EnumNotificationType.SMS in messages ? messages.SMS : []}
-            handleOpenMenu={handleOpenMenu}
-          />
-        );
-    }
+    return (
+      <Box>
+        <DynamicTable
+          columns={getMessageColumns(notificationType)}
+          keys={getMessageKeys(notificationType)}
+          rows={notificationType in messages ? messages[notificationType] : []}
+          handleOpenMenu={handleOpenMenu}
+        />
+      </Box>
+    );
   }
 
   return (
     <>
       <MessageCreateModal
         open={createModalopen}
-        handleClose={() => setCreateModalOpen(false)}
+        handleClose={() => {
+          setMessageId(null);
+          setCreateModalOpen(false);
+        }}
+        messageId={messageId}
       ></MessageCreateModal>
-      <Container>
-        <Grid container justifyContent="flex-end">
-          <Button data-testid="create-button" onClick={handleClickCreateButton}>
-            New Message
-          </Button>
+      <Container maxWidth="xl" className="messageList">
+        <Grid container justifyContent="space-between">
+          <Grid item>
+            <h2>{"Messages"}</h2>
+          </Grid>
+          <Grid item className="messageButton">
+            <Button
+              data-testid="create-button"
+              onClick={handleClickCreateButton}
+            >
+              New Message
+            </Button>
+          </Grid>
         </Grid>
-
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={selectedTab}
             onChange={(e, newValue) => {
               setSelectedTab(newValue);
             }}
-            aria-label="basic tabs example"
           >
             <Tab
-              icon={<Iconify icon={"la:slack"} />}
-              label="Slack"
+              icon={<Iconify icon={"material-symbols:webhook"} />}
               iconPosition="start"
-              {...a11yProps(0)}
+              label="Webhook"
+              {...a11yProps(2)}
             />
+
             <Tab
               icon={<Iconify icon={"ic:outline-email"} />}
               iconPosition="start"
               label="Email"
               {...a11yProps(1)}
             />
-            <Tab
-              icon={<Iconify icon={"material-symbols:webhook"} />}
-              iconPosition="start"
-              label="Http"
-              {...a11yProps(2)}
-            />
+
             <Tab
               icon={<Iconify icon={"material-symbols:sms-outline"} />}
               iconPosition="start"
-              label="Sms"
+              label="SMS"
               {...a11yProps(3)}
+            />
+            <Tab
+              icon={<Iconify icon={"la:slack"} />}
+              label="Slack"
+              iconPosition="start"
+              {...a11yProps(0)}
             />
           </Tabs>
         </Box>
@@ -146,7 +165,14 @@ export default function MessageListTable() {
           },
         }}
       >
-        <MenuItem>
+        <MenuItem
+          onClick={async () => {
+            handleCloseMenu();
+            const messageId = open!.dataset.id;
+            await setMessageId(messageId);
+            setCreateModalOpen(true);
+          }}
+        >
           <Iconify icon={"eva:edit-fill"} sx={{ mr: 2 }} />
           Edit
         </MenuItem>

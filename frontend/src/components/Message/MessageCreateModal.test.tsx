@@ -24,12 +24,17 @@ describe("MessageCreateModal", () => {
       { preloadedState }
     );
 
-    const contentInput = screen.getByTestId("type-input");
-    fireEvent.change(contentInput, {
+    const dataInput = screen.getByTestId("type-input");
+    fireEvent.change(dataInput, {
       target: { value: EnumNotificationType.SLACK },
     });
     const button = screen.getByTestId("create-button");
     fireEvent.click(button);
+
+    const slackNameInput = screen.getByTestId("slack-name-input");
+    fireEvent.change(slackNameInput, {
+      target: { value: "name" },
+    });
 
     const slackChannelInput = screen.getByTestId("slack-channel-input");
     fireEvent.change(slackChannelInput, {
@@ -43,15 +48,53 @@ describe("MessageCreateModal", () => {
 
     fireEvent.click(button);
 
-    fireEvent.change(contentInput, {
-      target: { value: EnumNotificationType.API },
+    fireEvent.change(dataInput, {
+      target: { value: EnumNotificationType.WEBHOOK },
     });
 
-    fireEvent.change(contentInput, {
+    fireEvent.change(dataInput, {
       target: { value: EnumNotificationType.EMAIL },
     });
 
-    fireEvent.change(contentInput, {
+    fireEvent.change(dataInput, {
+      target: { value: EnumNotificationType.SMS },
+    });
+  });
+
+  it("should handle create button correctly - error", () => {
+    renderWithProviders(
+      <MessageCreateModal open={true} handleClose={() => {}} />,
+      { preloadedState }
+    );
+
+    const dataInput = screen.getByTestId("type-input");
+    fireEvent.change(dataInput, {
+      target: { value: EnumNotificationType.SLACK },
+    });
+    const button = screen.getByTestId("create-button");
+    fireEvent.click(button);
+
+    const slackNameInput = screen.getByTestId("slack-name-input");
+    fireEvent.change(slackNameInput, {
+      target: { value: "name" },
+    });
+
+    const slackMessageInput = screen.getByTestId("slack-message-input");
+    fireEvent.change(slackMessageInput, {
+      target: { value: "message" },
+    });
+
+    fireEvent.click(button);
+
+    fireEvent.change(dataInput, {
+      target: { value: EnumNotificationType.WEBHOOK },
+    });
+
+    fireEvent.change(dataInput, {
+      target: { value: EnumNotificationType.EMAIL },
+    });
+
+    fireEvent.change(dataInput, {
       target: { value: EnumNotificationType.SMS },
     });
   });

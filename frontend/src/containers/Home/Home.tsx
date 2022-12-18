@@ -1,117 +1,111 @@
 import "./Home.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GridLayout from "./GridView/ProjectGridView";
-import NotiPieChart from "./PieChart/PieChart";
-import RecentThree from "./RecentThree/RecentThree";
-import Upcoming from "./Upcoming/Upcoming";
-import Scrollbar from "../../components/Scrollbar/Scrollbar";
-import { authSelector } from "../../store/slices/auth";
-import { fetchProjects } from "../../store/slices/project";
+import { Container } from "@mui/material";
+import { Grid } from "@material-ui/core";
+import { green, grey, red, indigo } from "@mui/material/colors";
+
+import Widget from "./Boxes/Widget";
+import Analytics from "./Boxes/Analytics";
+import Today from "./Boxes/Today";
 import { AppDispatch } from "../../store";
-import ProjectCreateModal from "../../components/Project/ProjectCreateModal";
-import List from "./ListView/ProjectListView";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
-import FormControl from "@mui/material/FormControl";
-import Typography from "@mui/material/Typography";
-import Switch from "@mui/material/Switch";
+import { authSelector } from "../../store/slices/auth";
+import { notificationSelect, getTotal } from "../../store/slices/notifications";
+import { fetchProjects, projectListSelector } from "../../store/slices/project";
+import { getData, todaySelect } from "../../store/slices/today";
+import Scrollbar from "../../components/Scrollbar/Scrollbar";
+
+import "./Home.css";
 
 export default function Home() {
+  const projects = useSelector(projectListSelector);
   const user = useSelector(authSelector);
+  const today = useSelector(todaySelect);
+  const notifications = useSelector(notificationSelect);
   const dispatch = useDispatch<AppDispatch>();
-
-  // Grid 아니면 List 형태로 Project List를 보여줌
-  const [isGridStyle, setIsGridStyle] = useState(true);
-
-  const [createModalopen, setCreateModalOpen] = useState(false);
-
-  const handleNewProjectClick = (event: React.MouseEvent) => {
-    setCreateModalOpen(true);
-  };
 
   useEffect(() => {
     dispatch(fetchProjects());
-    //Todo: fetch notifications
-    //dispatch(fetchNotifcations());
-  }, [user]);
+    dispatch(getTotal());
+    dispatch(getData());
+  }, [user, dispatch]);
 
   return (
     <>
-      {/* Project 생성 Modal (만약 New Project를 클릭하는 경우) */}
-      <ProjectCreateModal
-        open={createModalopen}
-        handleClose={() => setCreateModalOpen(false)}
-      ></ProjectCreateModal>
-      <div className="Home">
-        <Scrollbar>
-          <div className="container">
-            <div className="grid-column">
-              <div className="projects">
-                <div className="sublevel">
-                  <div className="title">
-                    <Stack
-                      direction="row"
-                      justifyContent="space-between"
-                      alignItems="center"
-                      spacing={3}
-                    >
-                      <h2>Projects</h2>
-                      <FormControl>
-                        <Stack direction="row" spacing={1} alignItems="center">
-                          <Typography>Grid</Typography>
-                          <Switch
-                            defaultChecked
-                            data-testid="switch"
-                          />
-                          <Typography>List</Typography>
-                        </Stack>
-                      </FormControl>
-                      <Button
-                        endIcon={<CreateNewFolderIcon />}
-                        data-testid="new-project-button"
-                        onClick={handleNewProjectClick}
-                      >
-                        New Project
-                      </Button>
-                    </Stack>
-                  </div>
-                  <div className="project">
-   
-                      <GridLayout data-testid="grid" />
-                    
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="grid-column">
-              <div className="upcoming">
-                <div className="sublevel">
-                  <div>
-                    <div className="upcomingNoti">
-                      <Upcoming upcomingNotifications={[]} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="sentNotis">
-                <div className="sublevel">
-                  <div className="titleNoti">Recently Sent Notifications</div>
-                  <div>
-                    <div className="noti">
-                      <NotiPieChart notifications={[]} />
-                    </div>
-                    <div className="recentThree">
-                      <RecentThree notifications={[]} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Scrollbar>
-      </div>
+      <Scrollbar>
+        <Container maxWidth="xl" className="Home_Title">
+          <Grid container justifyContent="space-between">
+            <Grid item>
+              <h2>{"Overview"}</h2>
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={3} className="widgetContainer">
+            <Grid item xs={12} sm={6} md={3}>
+              <Widget
+                icon="eos-icons:project"
+                title="Projects"
+                subtitle="Number of projects"
+                value={projects.length}
+                color_main={grey[500]}
+                color_dark={grey[600]}
+                color_light={grey[400]}
+                color_darker={grey[900]}
+                color_lighter={grey[200]}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Widget
+                icon="wpf:sent"
+                title="Total"
+                subtitle="Total notification requests"
+                value={notifications.totalNumber}
+                color_main={indigo[500]}
+                color_dark={indigo[600]}
+                color_light={indigo[400]}
+                color_darker={indigo[900]}
+                color_lighter={indigo[200]}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={3}>
+              <Widget
+                icon="mdi:check"
+                title="Success"
+                subtitle="Successful notification requests today"
+                value={today.successTotal}
+                color_main={green[500]}
+                color_dark={green[600]}
+                color_light={green[400]}
+                color_darker={green[900]}
+                color_lighter={green[200]}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={3}>
+              <Widget
+                icon="mdi:exclamation-thick"
+                title="Failure"
+                subtitle="Failed notification requests today"
+                value={today.failureTotal}
+                color_main={red[500]}
+                color_dark={red[600]}
+                color_light={red[400]}
+                color_darker={red[900]}
+                color_lighter={red[200]}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={3} className="widgetContainer">
+            <Grid item xs={12} sm={12} md={12}>
+              <Today />
+            </Grid>
+          </Grid>
+          <h2>Analytics</h2>
+          <Analytics />
+        </Container>
+      </Scrollbar>
     </>
   );
 }

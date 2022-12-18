@@ -1,9 +1,8 @@
-import {fireEvent, render, screen, waitFor} from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 
 import NotiSidebar from "./NotiSidebar";
 import { renderWithProviders } from "../../test-utils/mocks";
 import { MemoryRouter } from "react-router";
-import React from "react";
 import preloadedState from "../../test-utils/mock_state";
 
 describe("Sidebar Testing", () => {
@@ -26,12 +25,11 @@ describe("Sidebar Testing", () => {
     screen.getByText("Projects");
     screen.getByText("Targets");
     screen.getByText("Messages");
-    screen.getByText("Templates");
     screen.getByText("History");
   });
 
   it("should render user state correctly", () => {
-    renderWithProviders(sidebar, {preloadedState});
+    renderWithProviders(sidebar, { preloadedState });
   });
 
   it("should handle buttons", async () => {
@@ -41,16 +39,13 @@ describe("Sidebar Testing", () => {
     const projectsButton = screen.getByTestId("projectsButton");
     const targetsButton = screen.getByTestId("targetsButton");
     const messagesButton = screen.getByTestId("messagesButton");
-    const templatesButton = screen.getByTestId("templatesButton");
     const historyButton = screen.getByTestId("historyButton");
 
     fireEvent.click(homeButton);
     fireEvent.click(projectsButton);
     fireEvent.click(targetsButton);
     fireEvent.click(messagesButton);
-    fireEvent.click(templatesButton);
     fireEvent.click(historyButton);
-
   });
 
   it("should handle logout", async () => {

@@ -13,21 +13,29 @@ const preloadedState: RootState = {
         id: 1,
         project_type: "ORGANIZATION",
         name: "test",
+        number_of_requests: 1,
+        most_recently_sent_notification: "",
+      },
+      {
+        id: 2,
+        project_type: "ORGANIZATION",
+        name: "test2",
+        number_of_requests: 10,
+        most_recently_sent_notification: "",
       },
     ],
   },
   notification: {
-    notifications: [
-      {
-        id: 1,
-        status: EnumNotificationStatus.SUCCESS,
-        message: "test",
-        reservedAt: "2021-10-10T00:00:00Z",
-        type: "test",
-        history: [],
-      },
-    ],
+    totalNumber: 0,
+    totalSuccess: 0,
+    totalFailure: 0,
     selectedNotification: null,
+    notifications_selectedProject: null,
+  },
+  notificationConfig: {
+    notificationConfigs: [],
+    notificationConfigs_project: [],
+    selectedNotificationConfig: null,
   },
   target: {
     targets: [
@@ -36,7 +44,7 @@ const preloadedState: RootState = {
         name: "test target",
         notification_type: "EMAIL",
         endpoint: "email@email.com",
-        project: 1,
+        data: {},
       },
     ],
     selectedTarget: null,
@@ -46,9 +54,14 @@ const preloadedState: RootState = {
       SLACK: [
         {
           id: 1,
-          content: "test message",
+          name: "test",
+          notification_type: "SLACK",
+          data: { channel: "test", message: "test" },
         },
       ],
+      EMAIL: [],
+      WEBHOOK: [],
+      SMS: [],
     },
     selectedMessage: null,
   },
@@ -57,6 +70,43 @@ const preloadedState: RootState = {
       email: "test@test.com",
       username: "test",
     },
+  },
+  analytics: {
+    barLineDataDaily: {
+      Success: {},
+      Failure: {},
+      Pending: {},
+      Total: {},
+    },
+    barLineDataWeekly: {
+      Success: {},
+      Failure: {},
+      Pending: {},
+      Total: {},
+    },
+    barLineDataMonthly: {
+      Success: {},
+      Failure: {},
+      Pending: {},
+      Total: {},
+    },
+  },
+  today: {
+    data: {
+      Success: {},
+      Failure: {},
+      Pending: {},
+      Total: {},
+    },
+    successTotal: 0,
+    failureTotal: 0,
+    mostActive: { time: -1, count: 0 },
+  },
+  filter: {
+    project: "",
+    type: "",
+    target: "",
+    status: "",
   },
 };
 

@@ -2,56 +2,56 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 import { RootState } from "..";
-import { EnumNotificationStatus } from "../../Enums";
-import { NotificationHistoryType, NotificationType } from "../../types";
+import { NotificationType } from "../../types";
 
 export const fetchNotifications = createAsyncThunk(
   "notifications/fetchNotifications",
   async (projectId: number) => {
-    const response = await axios.get<NotificationType[]>(`/api/project/${projectId}/notification/`);
+    const response = await axios.get<NotificationType[]>(
+      `/api/project/${projectId}/notification/`
+    );
     return response.data;
   }
 );
 
-export const fetchAllNotifications = createAsyncThunk(
-  "notifications/fetchAllNotifications",
-  async () => {
-    const response = await axios.get<NotificationType[]>(`/api/notification/`);
-    return response.data;
-  }
-);
-
-export const createNotification = createAsyncThunk(
-  "notifications/createNotification",
-  async(notification: {id: number, status: EnumNotificationStatus, message: string, reservedAt: string, type: string, history?: NotificationHistoryType[]}) => {
-    const response = await axios.post<NotificationType>("/api/notification/", notification);
-    return response.data;
-  }
-)
-
-
-const initialState: {
-    notifications: NotificationType[];
-    selectedNotification: NotificationType | null;
-} = {
-    notifications: [],
-    selectedNotification: null,
-}
-
-export const notificationSlice = createSlice({
-    name: "notification",
-    initialState,
-    reducers: {},
-    extraReducers: (builder) => {
-      builder.addCase(fetchNotifications.fulfilled, (state, action) => {
-        state.notifications = action.payload;
-      });
-      builder.addCase(fetchAllNotifications.fulfilled, (state, action) => {
-        state.notifications = action.payload;
-      });
-    }
+export const getTotal = createAsyncThunk("notifications/getTotal", async () => {
+  const response = await axios.get<NotificationType[]>("/api/notification/");
+  return response.data;
 });
 
-export const notificationListSelector = (state: RootState) => state.notification.notifications;
+const initialState: {
+  totalNumber: number;
+  totalSuccess: number;
+  totalFailure: number;
+  selectedNotification: NotificationType | null;
+  notifications_selectedProject: NotificationType[] | null;
+} = {
+  totalNumber: 0,
+  totalSuccess: 0,
+  totalFailure: 0,
+  selectedNotification: null,
+  notifications_selectedProject: null,
+};
+
+export const notificationSlice = createSlice({
+  name: "notification",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchNotifications.fulfilled, (state, action) => {
+      state.notifications_selectedProject = action.payload;
+    });
+    builder.addCase(getTotal.fulfilled, (state, action) => {
+      state.totalNumber = action.payload.length;
+      state.totalSuccess = action.payload.filter(
+        (notification) => notification.status === "SUCCESS"
+      ).length;
+      state.totalFailure = action.payload.filter(
+        (notification) => notification.status === "FAILURE"
+      ).length;
+    });
+  },
+});
+
 export const notificationSelect = (state: RootState) => state.notification;
 export default notificationSlice.reducer;

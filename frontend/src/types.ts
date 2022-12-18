@@ -1,9 +1,27 @@
 import { EnumNotificationStatus } from "./Enums";
+import { RecurrenceType } from "./components/Recurrence";
 
 export type ProjectType = {
   id: number;
   project_type: string;
   name: string;
+};
+
+export type ProjectListItemType = {
+  id: number;
+  project_type: string;
+  name: string;
+  number_of_requests: number;
+  most_recently_sent_notification: string;
+};
+
+export type NotificationConfigType = {
+  id: number;
+  project: number;
+  message: number;
+  type: string;
+  rrule: string;
+  mode: string;
 };
 
 export type NotificationType = {
@@ -12,14 +30,20 @@ export type NotificationType = {
   message: string; // FIXME(Given) : rename to data?
   reservedAt: string;
   type: string;
-  history?: NotificationHistoryType[];
 };
 
-export type NotificationHistoryType = {
+export type NotificationConfigCreateDto = {
+  project: number;
+  type: string;
+  rrule?: string;
+  message: number;
+  target_users: number[];
+  mode: string;
+};
+
+export type ReservationType = {
   id: number;
-  endpoint: string;
-  date: string;
-  status: EnumNotificationStatus;
+  reservation: string;
 };
 
 export interface TargetType {
@@ -27,25 +51,54 @@ export interface TargetType {
   name: string;
   notification_type: string;
   endpoint: string;
-  project: number;
+  data: any;
 }
 
-// TODO: Message Type 내 attribute를 정하는 과정이 필요해 보입니다
-// (https://github.com/swsnu/swppfall2022-team15/issues/48)
+export interface TargetUserIdNameDto {
+  value: number;
+  label: string;
+}
+
+export interface TargetListType {
+  [key: string]: TargetType[];
+}
+
 export interface MessageType {
   id: number;
-  content: any;
+  name: string;
+  notification_type: string;
+  data: any;
 }
 
-export interface UserType {
-  id: number;
-  username: string;
-  email: string;
-  password: string;
-  is_active: boolean;
+export interface SlackData {
+  channel: string;
+  message: string;
+}
+
+export interface EmailData {
+  title: string;
+  content: string;
+}
+
+export interface WebhookData {
+  message: string;
+}
+
+export interface SmsData {
+  message: string;
+}
+
+export interface MessageListType {
+  [key: string]: MessageType[];
+}
+
+export interface RecurrentReservationType {
+  recurrence: RecurrenceType;
+  target: TargetType[];
 }
 
 export interface AuthUser {
   email: string;
   username: string;
+  oauth?: boolean;
 }

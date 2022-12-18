@@ -1,12 +1,12 @@
 import {
   KeyboardDatePicker,
-  KeyboardDatePickerProps
-} from '@material-ui/pickers'
-import * as React from 'react'
-import { withStyles } from '@material-ui/core'
-import styles from './styles'
+  KeyboardDatePickerProps,
+} from "@material-ui/pickers";
+import * as React from "react";
+import { withStyles } from "@material-ui/core";
+import styles from "./styles";
 
-const DEFAULT_DATE_FORMAT = 'MM/dd/yyyy'
+const DEFAULT_DATE_FORMAT = "MM/dd/yyyy";
 
 const DatePicker = ({
   name,
@@ -15,8 +15,8 @@ const DatePicker = ({
   onChange,
   disabled = false,
   disablePast = true,
-  variant = 'inline',
-  margin = 'normal',
+  variant = "inline",
+  margin = "normal",
   ...props
 }: KeyboardDatePickerProps) => {
   return (
@@ -33,6 +33,6 @@ const DatePicker = ({
       disabled={disabled}
       {...props}
     />
-  )
-}
-export default withStyles(styles)(DatePicker)
+  );
+};
+export default withStyles(styles)(DatePicker);

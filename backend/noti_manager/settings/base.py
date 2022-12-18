@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_extensions',
     'django_celery_beat',
+    'corsheaders',
 
     # project apps
     'account',
@@ -50,8 +51,9 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -76,17 +78,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'noti_manager.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 
 # Password validation
@@ -141,3 +132,26 @@ REST_FRAMEWORK = {
 
 
 SLACK_HOST = 'https://slack.com'
+
+MAX_RESERVATION_COUNT = 100
+
+APPEND_SLASH = True
+
+OAUTH = {
+    "client_id": "857740213815-e07aikaf41mia75u98l19i5d1fng9cd2.apps.googleusercontent.com",
+    "project_id": "linear-listener-371112",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": "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",
+    "redirect_uris": [
+        "http://localhost:8000/receive-code.html",
+        "http://localhost:8000/api/gmail/",
+        "http://localhost:3000/email",
+        "http://localhost:3000/user"
+    ],
+    "javascript_origins": [
+        "http://localhost:8000",
+        "http://localhost:3000",
+    ]
+}

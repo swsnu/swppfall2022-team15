@@ -7,6 +7,7 @@ import { LoadingButton } from "@mui/lab";
 import axios from "axios";
 
 import { setToken } from "../../store/slices/auth";
+import logo from "../../assets/notimanager-logo-transparent.png";
 
 export default function SignIn() {
   const [email, setEmail] = useState<string>("");
@@ -38,6 +39,15 @@ export default function SignIn() {
       return;
     }
 
+    const exp: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
+    const result = exp.test(email);
+
+    if (result === false) {
+      setError("Invalid email");
+      return;
+    }
+
     try {
       const response = await axios.post(
         "/api/signin/",
@@ -61,10 +71,8 @@ export default function SignIn() {
     } catch (error: any) {
       if (!error.response) {
         setError("Error connecting to server");
-      } else if (error.response.status === 401) {
-        setError("Invalid email or password");
       } else {
-        setError("Error logging in");
+        setError("Invalid email or password");
       }
     }
   };
@@ -75,27 +83,29 @@ export default function SignIn() {
 
   return (
     <div className="SignIn">
-      <h2>NotiManager</h2>
+      <img alt="" height="100px" width="400px" src={logo} />
+      <br />
+      <br />
       <form onSubmit={handleSignIn}>
         <Stack spacing={2}>
           {error && (
-            <div className="error" data-testid="error">
+            <div className="error" data-testid="error-message">
               {error}
             </div>
           )}
           <TextField
-            data-testid="email"
+            inputProps={{ "data-testid": "email-input" }}
             className="email"
             name="email"
-            label="Email address"
+            placeholder="Email address"
             value={email}
             onChange={handleEmailChange}
           />
           <TextField
-            data-testid="password"
+            inputProps={{ "data-testid": "password-input" }}
             className="password"
             name="password"
-            label="Password"
+            placeholder="Password"
             type="password"
             value={password}
             onChange={handlePasswordChange}
@@ -105,7 +115,7 @@ export default function SignIn() {
         <Stack spacing={2} direction="row">
           <LoadingButton
             fullWidth
-            data-testid="signin"
+            data-testid="signin-button"
             size="large"
             type="submit"
             variant="contained"
@@ -115,7 +125,7 @@ export default function SignIn() {
           <br />
           <LoadingButton
             fullWidth
-            data-testid="signup"
+            data-testid="signup-button"
             size="large"
             variant="contained"
             onClick={() => handleSignUp()}

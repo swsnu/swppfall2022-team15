@@ -1,48 +1,29 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { Provider } from "react-redux";
-import ProjectDetail from "./ProjectDetail";
-import { store } from "../../../store";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router";
+
+import ProjectDetail from "./ProjectDetail";
+import { renderWithProviders } from "../../../test-utils/mocks";
 
 describe("ProjectDetail", () => {
-  it("should render correctly", () => {
-    render(
-      <Provider store={store}>
+  it("should handle create notification button click", () => {
+    renderWithProviders(
+      <MemoryRouter>
         <ProjectDetail />
-      </Provider>
+      </MemoryRouter>
     );
+
+    userEvent.click(screen.getByTestId("createNotificationButton"));
   });
 
-  it("should handle create notification button", () => {
-    render(
-      <Provider store={store}>
+  it("should handle close multi step form button click", () => {
+    renderWithProviders(
+      <MemoryRouter>
         <ProjectDetail />
-      </Provider>
+      </MemoryRouter>
     );
 
-    const createNotificationButton = screen.getByTestId(
-      "createNotificationButton"
-    );
-    expect(createNotificationButton).toBeInTheDocument();
-
-    fireEvent.click(createNotificationButton);
-
-  });
-
-  it("should handle modal", () => {
-    render(
-      <Provider store={store}>
-        <ProjectDetail />
-      </Provider>
-    );
-
-    const createNotificationButton = screen.getByTestId(
-      "createNotificationButton"
-    );
-    expect(createNotificationButton).toBeInTheDocument();
-
-    fireEvent.click(createNotificationButton);
-
+    userEvent.click(screen.getByTestId("createNotificationButton"));
     userEvent.keyboard("{esc}");
   });
 });

@@ -6,7 +6,6 @@ export const StyledLabel = styled(Box)<any>(({ theme, ownerState }) => {
   const filledVariant = ownerState.variant === "filled";
 
   const outlinedVariant = ownerState.variant === "outlined";
-
   const softVariant = ownerState.variant === "soft";
 
   const defaultStyle = {

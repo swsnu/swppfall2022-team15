@@ -12,30 +12,32 @@ export const fetchTargets = createAsyncThunk(
   }
 );
 
-export const fetchTargetsByProjectId = createAsyncThunk(
-  "target/fetchTargets",
-  async (projectId:number) => {
-    const response = await axios.get<TargetType[]>(`/api/targetuser/projectId=${projectId}`);
-    return response.data;
-  }
-);
-
 export const fetchTarget = createAsyncThunk(
   "target/fetchTarget",
   async (targetId: number) => {
-    const response = await axios.get<TargetType>(`/api/targetuser/${targetId}/`);
+    const response = await axios.get<TargetType>(
+      `/api/targetuser/${targetId}/`
+    );
     return response.data;
   }
 );
 
 export const createTarget = createAsyncThunk(
-    "target/createTarget",
-    async (target: {name: string, notification_type: string, endpoint: string, project: number }) => {
-      const response = await axios.post<TargetType>("/api/targetuser/", target);
-      return response.data;
-    }
+  "target/createTarget",
+  async (requestData: {
+    name: string;
+    data: object;
+    endpoint: string;
+    notification_type: string;
+  }) => {
+    console.log(requestData);
+    const response = await axios.post<TargetType>(
+      `/api/targetuser/`,
+      requestData
+    );
+    return response.data;
+  }
 );
-
 
 const initialState: {
   targets: TargetType[];
@@ -55,6 +57,9 @@ export const TargetSlice = createSlice({
     });
     builder.addCase(fetchTarget.fulfilled, (state, action) => {
       state.selectedTarget = action.payload;
+    });
+    builder.addCase(createTarget.fulfilled, (state, action) => {
+      state.targets.push(action.payload);
     });
   },
 });

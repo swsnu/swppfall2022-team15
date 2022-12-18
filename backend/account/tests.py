@@ -1,3 +1,5 @@
+from unittest import mock
+
 from django.urls import reverse
 from model_bakery import baker
 from rest_framework import status
@@ -49,3 +51,19 @@ class SignUpAPITestCase(APITestCase):
 
         # When, Then
         self.assertTrue(user.has_module_perms(None))
+
+
+class GmailViewTestCase(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_user('test@test.com', 'test')
+
+    @mock.patch('requests.post', return_value=mock.Mock(status_code=200, json=lambda: {
+        'expires_in': 30
+    }))
+    def test_gmail(self, _):
+        self.client.force_login(self.user)
+        response = self.client.post('/api/gmail/', data={
+            'code': '123',
+        })
+
+        self.assertEqual(response.status_code, 302)

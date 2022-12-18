@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 
 import { FaHome, FaHistory, FaFolderOpen, FaUser } from "react-icons/fa";
 import { FiTarget } from "react-icons/fi";
-import { HiTemplate } from "react-icons/hi";
 import { MdMessage, MdLogout } from "react-icons/md";
 
 import "./NotiSidebar.css";
@@ -13,18 +12,16 @@ import logo from "../../assets/NotiLogo.png";
 import { authSelector, logout } from "../../store/slices/auth";
 import { AppDispatch } from "../../store";
 
-
 export default function NotiSidebar() {
   const location = useLocation();
 
   const userState = useSelector(authSelector);
-  const [ username, setUsername ] = useState("");
+  const [username, setUsername] = useState("");
 
   const homeClass = location.pathname === "/home" ? "active" : "item";
   const projectsClass = location.pathname === "/projects" ? "active" : "item";
   const targetsClass = location.pathname === "/targets" ? "active" : "item";
   const messagesClass = location.pathname === "/messages" ? "active" : "item";
-  const templatesClass = location.pathname === "/templates" ? "active" : "item";
   const historyClass = location.pathname === "/history" ? "active" : "item";
 
   const dispatch = useDispatch<AppDispatch>();
@@ -34,17 +31,19 @@ export default function NotiSidebar() {
   const projectIcon = <FaFolderOpen size="48"></FaFolderOpen>;
   const targetIcon = <FiTarget size="48"></FiTarget>;
   const messageIcon = <MdMessage size="48"></MdMessage>;
-  const templateIcon = <HiTemplate size="48"></HiTemplate>;
   const historyIcon = <FaHistory size="48"></FaHistory>;
   const logoutIcon = <MdLogout size="48"></MdLogout>;
 
   const logoutHandler = () => {
     dispatch(logout());
-  }
-  
+  };
+
   useEffect(() => {
-    if(userState.user) {
-      setUsername(userState.user.username.charAt(0).toUpperCase() + userState.user.username.slice(1));
+    if (userState.user) {
+      setUsername(
+        userState.user.username.charAt(0).toUpperCase() +
+          userState.user.username.slice(1)
+      );
     }
   }, [userState.user]);
 
@@ -55,7 +54,11 @@ export default function NotiSidebar() {
           <img className="Icon" src={logo} alt="" />
         </div>
         <Menu>
-          <MenuItem className="userInfo" icon={userIcon}>
+          <MenuItem
+            className="userInfo"
+            icon={userIcon}
+            routerLink={<Link to="/email" />}
+            >
             {username}
           </MenuItem>
         </Menu>
@@ -97,15 +100,6 @@ export default function NotiSidebar() {
             Messages{" "}
           </MenuItem>
           <MenuItem
-            routerLink={<Link to="/templates" />}
-            className={templatesClass}
-            data-testid="templatesButton"
-            icon={templateIcon}
-          >
-            {" "}
-            Templates{" "}
-          </MenuItem>
-          <MenuItem
             routerLink={<Link to="/history" />}
             className={historyClass}
             data-testid="historyButton"
@@ -116,7 +110,12 @@ export default function NotiSidebar() {
           </MenuItem>
         </Menu>
         <Menu className="logout">
-          <MenuItem className="item" icon={logoutIcon} data-testid={"logout-button"} onClick={logoutHandler}>
+          <MenuItem
+            className="item"
+            icon={logoutIcon}
+            data-testid={"logout-button"}
+            onClick={logoutHandler}
+          >
             {" "}
             Log Out{" "}
           </MenuItem>
@@ -125,4 +124,3 @@ export default function NotiSidebar() {
     </div>
   );
 }
-

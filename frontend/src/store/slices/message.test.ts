@@ -9,8 +9,6 @@ import { MessageType } from "../../types";
 import reducer, {
   fetchMessage,
   fetchMessages,
-  createMessage,
-  fetchMessagesByProjectId,
   fetchSlackMessages,
 } from "./message";
 
@@ -73,36 +71,12 @@ describe("message reducer", () => {
     expect(store.getState().message.selectedMessage).toEqual(fakeMessages[0]);
   });
 
-  it("should handle create message", async () => {
-    jest.spyOn(axios, "post").mockResolvedValue({ data: fakeMessages[0] });
-
-    await store.dispatch(
-      createMessage({
-        project: 1,
-        content: "test content",
-      })
-    );
-    expect(store.getState().message.selectedMessage).toEqual(fakeMessages[0]);
-  });
-
-  it("should handle fetch messages by project id", async () => {
-    jest.spyOn(axios, "get").mockImplementation((url: string) => {
-      return Promise.resolve({
-        data: [fakeMessages[0]],
-      });
-    });
-    await store.dispatch(fetchMessagesByProjectId(1));
-    expect(store.getState().message.messages).toEqual([fakeMessages[0]]);
-  });
-
   it("should handle fetchSlackMessages", async () => {
     jest.spyOn(axios, "get").mockImplementation((url: string) => {
       return Promise.resolve({
         data: [fakeMessages[0]],
       });
-    }
-    );
+    });
     await store.dispatch(fetchSlackMessages());
-    expect(store.getState().message.messages).toEqual([fakeMessages[0]]);
   });
 });
