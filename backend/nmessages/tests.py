@@ -1,8 +1,7 @@
-from rest_framework.test import APITestCase
 from model_bakery import baker
+from rest_framework.test import APITestCase
 
 from account.models import User
-from nmessages.models import NMessage
 from notifications.models import EnumNotificationType
 
 

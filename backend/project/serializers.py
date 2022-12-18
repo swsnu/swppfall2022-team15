@@ -28,3 +28,5 @@ class ProjectSerializer(serializers.ModelSerializer):
         ).order_by('-created_at').first()
         if recent_noti:
             return recent_noti.reservation.notification_config.nmessage.name
+
+        return ''

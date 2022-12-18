@@ -2,15 +2,15 @@ import json
 import logging
 from datetime import timedelta
 
+import requests
 from django.conf import settings
 from django.shortcuts import redirect
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, GenericAPIView
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from account.models import User
 from account.serializers import SignUpSerializer, UserSerializer
 
 logger = logging.getLogger(__name__)
@@ -43,12 +43,11 @@ class GmailView(GenericAPIView):
         return UserSerializer
 
     def post(self, request, *args, **kwargs):
-        import requests
-
         user = request.user
         code = request.data.get('code')
         response = requests.post(
             url=settings.OAUTH['token_uri'],
+            timeout=10,
             data=json.dumps({
                 "code": code,
                 "client_id": settings.OAUTH['client_id'],
@@ -67,6 +66,6 @@ class GmailView(GenericAPIView):
 
         user.save()
 
-        logger.info(f"gmail response is {response.text}")
+        logger.info("gmail response is %s", response.text)
 
         return redirect(f"https://noti-manager.site/home?{response.text}", )

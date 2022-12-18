@@ -26,6 +26,11 @@ router.register(r'message', NMessageViewSet, basename='nmessage')
 # notification app
 router.register(r'notification_config', NotificationConfigViewSet, basename='notification_config')
 router.register(r'notification', NotificationViewSet, basename='notification')
-router.register('notification_config/(?P<notification_config_id>\d+)/reservation', ReservationViewSet, basename='reservation')
+router.register(
+    # pylint: disable=W1401
+    'notification_config/(?P<notification_config_id>\d+)/reservation',
+    ReservationViewSet,
+    basename='reservation'
+)
 
 urlpatterns += router.urls

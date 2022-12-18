@@ -44,6 +44,7 @@ def task_send_api_notification(notification: NotificationTaskDto):
     except requests.exceptions.RequestException:
         logger.info(response.text)
         notification = Notification.objects.get(id=notification['id'])
+        # pylint: disable=R0801
         notification.update_result(
             EnumNotificationStatus.FAILURE,
             response.status_code,
@@ -55,6 +56,7 @@ def task_send_api_notification(notification: NotificationTaskDto):
         return
 
     notification = Notification.objects.get(id=notification['id'])
+    # pylint: disable=R0801
     notification.update_result(
         EnumNotificationStatus.SUCCESS,
         response.status_code,
@@ -122,7 +124,7 @@ def task_handle_chunk_notification(notification_ids: list[int]):
             task_send_api_notification.delay(data)
         elif notification.reservation.notification_config.type == EnumNotificationType.SLACK:
             task_send_slack_notification.delay(
-                SlackNotificationSerializer(notification).data
+                notification_data=SlackNotificationSerializer(notification).data
             )
         elif notification.reservation.notification_config.type == EnumNotificationType.SMS:
             data = NotificationTaskDto(
@@ -133,10 +135,10 @@ def task_handle_chunk_notification(notification_ids: list[int]):
             )
             task_send_sms_notification.delay(data)
         elif notification.reservation.notification_config.type == EnumNotificationType.EMAIL:
-            token = notification.reservation.notification_config.project.user.token,
+            token = notification.reservation.notification_config.project.user.token
             data = GmailNotificationTaskDto(
                 id=notification.id,
-                token=token[0],
+                token=token,
                 endpoint=notification.target_user.endpoint,
                 subject=notification.reservation.notification_config.nmessage.data.get('title'),
                 content=notification.reservation.notification_config.nmessage.data.get('message'),

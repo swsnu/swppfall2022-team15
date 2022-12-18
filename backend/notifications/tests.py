@@ -1,12 +1,10 @@
-import json
 from datetime import datetime, timedelta
 from unittest import mock
-from unittest.mock import call, MagicMock
+from unittest.mock import call
 
 from django.test import TestCase
 from django.utils import timezone
 from model_bakery import baker
-from requests import RequestException
 from rest_framework.test import APITestCase
 
 from account.models import User
@@ -97,6 +95,7 @@ class NotificationAPITestCase(APITestCase):
         # When
         self.client.force_authenticate(user=self.user)
         response = self.client.get(
+            # pylint: disable=C0301
             f'/api/notification/metrics/?start={start_str}&end={end_str}&interval=hour&projectId={project.id}&type={EnumNotificationType.SLACK}'
         )
 
@@ -106,21 +105,21 @@ class NotificationAPITestCase(APITestCase):
     def test_list(self):
         self.client.force_authenticate(user=self.user)
         response = self.client.get(
-            f'/api/notification/'
+            '/api/notification/'
         )
         self.assertEqual(response.status_code, 200)
 
     def test_list_query_string(self):
         self.client.force_authenticate(user=self.user)
         response = self.client.get(
-            f'/api/notification/?type=SLACK&status=PENDING'
+            '/api/notification/?type=SLACK&status=PENDING'
         )
         self.assertEqual(response.status_code, 200)
 
     def test_stat(self):
         self.client.force_authenticate(user=self.user)
         response = self.client.get(
-            f'/api/notification/stat/'
+            '/api/notification/stat/'
         )
         self.assertEqual(response.status_code, 200)
 
@@ -134,7 +133,7 @@ class ReservationAPITestCase(APITestCase):
         notification_config = baker.make(NotificationConfig)
 
         self.client.force_authenticate(user=self.user)
-        response = self.client.get(f'/api/notification_config/{notification_config.id}/reservation/')
+        self.client.get(f'/api/notification_config/{notification_config.id}/reservation/')
 
 class NotificationConfigAPITestCase(APITestCase):
     @classmethod
@@ -234,7 +233,7 @@ class TaskSendApiNotificationTest(TestCase):
 
     @mock.patch('requests.post', return_value=mock.Mock(status_code=200, text=''))
     def test_task_send_api_notification(self, _):
-        # Given
+        # pylint: disable=R0801
         target_user = baker.make(
             TargetUser, notification_type=EnumNotificationType.SLACK
         )

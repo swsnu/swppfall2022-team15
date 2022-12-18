@@ -5,8 +5,13 @@ from django.conf import settings
 from django.utils import timezone
 from rest_framework import serializers
 
-from notifications.models import NotificationConfig, Reservation, EnumNotificationMode, Notification, \
-    EnumNotificationType
+from notifications.models import (
+    NotificationConfig,
+    Reservation,
+    EnumNotificationMode,
+    Notification,
+    EnumNotificationType,
+)
 from notifications.services import task_bulk_create_notification
 
 
@@ -49,7 +54,9 @@ class NotificationConfigCreateSerializer(serializers.ModelSerializer):
                 if token is None:
                     raise serializers.ValidationError('token is required')
                 if expires_at := token.get('expires_at'):
-                    if datetime.strptime(expires_at, '%Y-%m-%d %H:%M:%S') + timedelta(minutes=1) < datetime.now():
+                    # pylint: disable=C0301
+                    threshold = datetime.strptime(expires_at, '%Y-%m-%d %H:%M:%S') + timedelta(minutes=1)
+                    if threshold < datetime.now():
                         raise serializers.ValidationError('token is expired')
 
         for time in reservation_time:

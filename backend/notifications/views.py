@@ -49,7 +49,7 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
 
     def get_queryset(self):
         noti_type = self.request.query_params.get('type')
-        status = self.request.query_params.get('status')
+        noti_status = self.request.query_params.get('status')
 
         q = Q()
         q &= Q(reservation__notification_config__project__user=self.request.user)
@@ -59,8 +59,8 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
             q &= Q(reservation__notification_config__type=noti_type)
         ##if target:
         ##    q &= Q(reservation__notification_config__target=target)
-        if status:
-            q &= Q(status=status)
+        if noti_status:
+            q &= Q(status=noti_status)
 
         return self.queryset.filter(q)
 
@@ -96,12 +96,13 @@ class NotificationViewSet(ListModelMixin, GenericViewSet):
     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
     def metrics(self, request):
         def convert(metric):
-            result = dict()
-            result['status'] = metric['status']
-            result['time'] = datetime.datetime.strftime(metric['time'], '%Y-%m-%d %H:%M:%S')
-            result['count'] = metric['count']
-            result['project'] = metric['project']
-            result['type'] = metric['type']
+            result = {
+                'status': metric['status'],
+                'time': datetime.datetime.strftime(metric['time'], '%Y-%m-%d %H:%M:%S'),
+                'count': metric['count'],
+                'project': metric['project'],
+                'type': metric['type']
+            }
             return result
 
         start_time = request.query_params.get('start')
@@ -138,6 +139,7 @@ class ReservationViewSet(ModelViewSet):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
 
+    # pylint: disable=W0221
     def list(self, request, notification_config_id):
         queryset = self.filter_queryset(self.get_queryset().filter(
             notification_config_id=notification_config_id
