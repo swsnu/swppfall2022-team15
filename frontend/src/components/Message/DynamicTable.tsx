@@ -62,7 +62,7 @@ export default function DynamicTable(props: {
         >
           <Table stickyHeader>
             <TableHead>
-              <TableRow>
+              <TableRow key={0}>
                 <TableCell>
                   <Container>Index</Container>
                 </TableCell>
@@ -125,6 +125,7 @@ export default function DynamicTable(props: {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          data-testid="table-pagination"
         />
       </Scrollbar>
     </Card>

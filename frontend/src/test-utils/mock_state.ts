@@ -1,5 +1,4 @@
 import { RootState } from "../store";
-import { EnumNotificationStatus } from "../Enums";
 
 const preloadedState: RootState = {
   project: {
@@ -47,7 +46,13 @@ const preloadedState: RootState = {
         data: {},
       },
     ],
-    selectedTarget: null,
+    selectedTarget: {
+      id: 1,
+      name: "test target",
+      notification_type: "EMAIL",
+      endpoint: "email@email.com",
+      data: {},
+    },
   },
   message: {
     messages: {

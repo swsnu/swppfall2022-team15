@@ -8,7 +8,7 @@ import {
   RecurrenceType,
 } from "../../components/Recurrence";
 import MessageForm from "../../components/Message/MessageForm";
-import {Button, Grid, TextField, Typography} from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { targetSelect } from "../../store/slices/target";
 import { RRule } from "rrule";
@@ -19,7 +19,7 @@ import {
   getTargetColumns,
   getTargetKeys,
 } from "../../components/Message/utils/dyanamicTableUtils";
-import {EnumNotificationType} from "../../Enums";
+import { EnumNotificationType } from "../../Enums";
 
 interface IProps {
   notificationType: string;
@@ -33,32 +33,18 @@ export default function ReservationStep(props: IProps) {
 
   const projectState = useSelector(projectSelect);
   const projectId = projectState.selectedProject?.id;
-  let messageForm;
-  if (message) {
-    messageForm = MessageForm(
-      {
-        notificationType,
-        name: message.name,
-        setName: (x: string) => {},
-        data: message.data,
-        setData: (_: string) => {},
-        fieldErrors: {},
-        setFieldErrors: (_: any) => {},
-      },
-      true
-    );
-  } else {
-    messageForm = (
-      <TextField
-        id="outlined-multiline-static"
-        fullWidth
-        multiline
-        value={"Message Not Selected"}
-        rows={1}
-        disabled
-      />
-    );
-  }
+  let messageForm = MessageForm(
+    {
+      notificationType,
+      name: message.name,
+      setName: (x: string) => {},
+      data: message.data,
+      setData: (_: string) => {},
+      fieldErrors: {},
+      setFieldErrors: (_: any) => {},
+    },
+    true
+  );
 
   const targetState = useSelector(targetSelect);
 
@@ -126,18 +112,20 @@ export default function ReservationStep(props: IProps) {
     await createNotificationConfig(config);
   };
   const reservationWarning = () => {
-      let text = "Reservations can be made as many as 100 at most."
-      if (notificationType == EnumNotificationType.EMAIL.toString()) {
-          text = text.concat( " Emails can only be reserved up to one hour from now.")
-      }
-      return (
-        <Typography color="error" variant="body2">
-          {text}
-          <br/>
-          <br/>
-        </Typography>
-      )
-  }
+    let text = "Reservations can be made as many as 100 at most.";
+    if (notificationType === EnumNotificationType.EMAIL.toString()) {
+      text = text.concat(
+        " Emails can only be reserved up to one hour from now."
+      );
+    }
+    return (
+      <Typography color="error" variant="body2">
+        {text}
+        <br />
+        <br />
+      </Typography>
+    );
+  };
 
   const reservation = (
     <>

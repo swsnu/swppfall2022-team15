@@ -4,12 +4,20 @@ import { fireEvent, screen } from "@testing-library/react";
 import preloadedState from "../../test-utils/mock_state";
 import { EnumNotificationType } from "../../Enums";
 import axios from "axios";
+import userEvent from "@testing-library/user-event";
 
 describe("MessageCreateModal", () => {
-  it("should render", () => {
+  it("should render", async () => {
+    jest.spyOn(axios, "get").mockImplementation(() => {
+      return Promise.resolve({
+        data: {}
+      });
+    });
     renderWithProviders(
-      <MessageCreateModal open={true} handleClose={() => {}} />
+      <MessageCreateModal open={true} handleClose={() => {}} messageId={1} />
     );
+
+    userEvent.keyboard("{esc}");
   });
 
   it("should handle create button correctly", () => {
@@ -108,4 +116,6 @@ describe("MessageCreateModal", () => {
     const button = screen.getByTestId("create-button");
     fireEvent.click(button);
   });
+
+
 });

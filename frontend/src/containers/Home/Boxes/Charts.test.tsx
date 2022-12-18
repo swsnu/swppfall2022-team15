@@ -33,4 +33,9 @@ describe("Charts", () => {
     );
   });
 
+  it("should handle tabs correctly: 2", () => {
+    renderWithProviders(
+      <Charts selectedTab={2} selectedProject={0} selectedType={0} />
+    );
+  });
 });

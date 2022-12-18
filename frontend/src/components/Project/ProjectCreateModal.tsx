@@ -5,9 +5,6 @@ import {
   DialogContent,
   DialogTitle,
   InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
   TextField,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -27,19 +24,20 @@ interface IProps {
 }
 
 export default function ProjectCreateModal(props: IProps) {
-  const [projectType, setProjectType] = useState("INDIVIDUAL");
+  const projectType = "INDIVIDUAL";
   const [projectName, setProjectName] = useState("");
   const dispatch = useDispatch<AppDispatch>();
 
   const clearForm = () => {
     setProjectName("");
   };
-  const initializeFields = async () => {
-    const project = await fetchProject(props.projectid!);
-    setProjectName(project.name);
-  };
+  
 
   useEffect(() => {
+    const initializeFields = async () => {
+      const project = await fetchProject(props.projectid!);
+      setProjectName(project.name);
+    };
     if (props.projectid) {
       initializeFields();
     }

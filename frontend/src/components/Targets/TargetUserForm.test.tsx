@@ -88,7 +88,7 @@ describe("TargetCreateForm", () => {
         setData={() => {}}
       />
     );
-    const apiAuthInput = screen.getByTestId("type-input");
+    const apiAuthInput = screen.getByTestId("type-input-webhook");
     fireEvent.change(apiAuthInput, { target: { value: "somethingelse" } });
   });
 
@@ -104,7 +104,7 @@ describe("TargetCreateForm", () => {
         setData={() => {}}
       />
     );
-    const apiAuthInput = screen.getByTestId("type-input");
+    const apiAuthInput = screen.getByTestId("type-input-webhook");
     fireEvent.change(apiAuthInput, { target: { value: "basic" } });
   });
 
@@ -120,7 +120,7 @@ describe("TargetCreateForm", () => {
         setData={() => {}}
       />
     );
-    const apiAuthInput = screen.getByTestId("type-input");
+    const apiAuthInput = screen.getByTestId("type-input-webhook");
     fireEvent.change(apiAuthInput, { target: { value: "basic" } });
 
     const usernameInput = screen.getByTestId("username-input");
@@ -142,7 +142,7 @@ describe("TargetCreateForm", () => {
         setData={() => {}}
       />
     );
-    const apiAuthInput = screen.getByTestId("type-input");
+    const apiAuthInput = screen.getByTestId("type-input-webhook");
     fireEvent.change(apiAuthInput, { target: { value: "bearer" } });
   });
 
@@ -158,7 +158,7 @@ describe("TargetCreateForm", () => {
         setData={() => {}}
       />
     );
-    const apiAuthInput = screen.getByTestId("type-input");
+    const apiAuthInput = screen.getByTestId("type-input-webhook");
     fireEvent.change(apiAuthInput, { target: { value: "bearer" } });
 
     const tokenInput = screen.getByTestId("username-input");
@@ -177,7 +177,7 @@ describe("TargetCreateForm", () => {
         setData={() => {}}
       />
     );
-    const apiAuthInput = screen.getByTestId("type-input");
+    const apiAuthInput = screen.getByTestId("type-input-webhook");
     fireEvent.change(apiAuthInput, { target: { value: "api_key" } });
   });
 
@@ -194,7 +194,7 @@ describe("TargetCreateForm", () => {
       />
     );
 
-    const apiAuthInput = screen.getByTestId("type-input");
+    const apiAuthInput = screen.getByTestId("type-input-webhook");
     fireEvent.change(apiAuthInput, { target: { value: "api_key" } });
 
     const tokenInput = screen.getByTestId("key-input");

@@ -1,15 +1,17 @@
 import { useState, Fragment } from "react";
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
+import {
+  Box,
+  Collapse,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  Paper,
+} from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
@@ -68,8 +70,6 @@ function Row(props: { row: NotificationConfigType }) {
                   <TableRow>
                     <TableCell>id</TableCell>
                     <TableCell>reserved_at</TableCell>
-                    {/*<TableCell align="right">Amount</TableCell>*/}
-                    {/*<TableCell align="right">Total price ($)</TableCell>*/}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -81,18 +81,6 @@ function Row(props: { row: NotificationConfigType }) {
                       <TableCell>{reservation.reserved_at}</TableCell>
                     </TableRow>
                   ))}
-                  {/*{row.history?.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.endpoint}</TableCell>
-                       <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell>
-                    </TableRow>
-                  ))}*/}
                 </TableBody>
               </Table>
             </Box>
