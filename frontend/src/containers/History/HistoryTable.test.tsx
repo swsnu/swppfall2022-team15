@@ -1,5 +1,5 @@
 import { renderWithProviders } from "../../test-utils/mocks";
-import { fireEvent, screen, waitFor } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import HistoryTable from "./HistoryTable";
 import preloadedState from "../../test-utils/mock_state";
 import axios from "axios";

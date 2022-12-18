@@ -200,7 +200,7 @@ export default function BarLineAnalytics(props: IProps) {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            inputProps={{ "data-testid": "button" }}
+            inputProps={{ "data-testid": "select-type" }}
             value={type}
             label="Type"
             onChange={(e) => {

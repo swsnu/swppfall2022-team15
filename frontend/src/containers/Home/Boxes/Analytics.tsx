@@ -41,7 +41,7 @@ export default function Analytics() {
           ))}
         </Tabs>
       );
-    } else if (selectedTab === 2) {
+    } else {
       return (
         <Tabs
           value={selectedType}
