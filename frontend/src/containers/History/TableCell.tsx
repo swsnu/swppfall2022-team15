@@ -53,6 +53,7 @@ export default function HistoryTableHeadCell(props: IProps) {
               onClick={props.handleClick}
               data-testid={`click ${value}`}
               disableRipple
+              key={value}
             >
               <span>{value}</span>
             </MenuItem>
