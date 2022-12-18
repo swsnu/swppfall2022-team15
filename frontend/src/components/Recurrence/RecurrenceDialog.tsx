@@ -19,7 +19,6 @@ interface IProps {
 
 const RecurrenceDialog = (props: IProps) => {
   const { open, onClose, recurrence, handleRecurrenceChange, setRrule } = props;
-  const [errorField] = useState<any>();
 
   const handleClickConfirm = () => {
     let frequency;
@@ -94,9 +93,6 @@ const RecurrenceDialog = (props: IProps) => {
         break;
     }
 
-    if (errorField) {
-      alert("fields are invalid");
-    }
     handleRecurrenceChange(recurrence);
     setRrule(newRrule);
     onClose();
