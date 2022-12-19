@@ -14,7 +14,7 @@ describe("SplitButton", () => {
     );
   });
 
-  it("should handle clickL immediate", () => {
+  it("should handle click: immediate", () => {
     const setMode = jest.fn();
     const setOpen = jest.fn();
     render(
@@ -41,7 +41,7 @@ describe("SplitButton", () => {
     );
     fireEvent.click(screen.getByTestId("ArrowDropDownIcon"));
     fireEvent.click(screen.getByText("RESERVATION"));
-    userEvent.click(document.body);
+    fireEvent.click(screen.getByTestId("button"));
   });
 
   it("should handle toggle", () => {
@@ -70,7 +70,8 @@ describe("SplitButton", () => {
         setOpen={setOpen}
       />
     );
-    
+    fireEvent.click(screen.getByTestId("ArrowDropDownIcon"));
+    userEvent.click(document.body);
     
   });
 });

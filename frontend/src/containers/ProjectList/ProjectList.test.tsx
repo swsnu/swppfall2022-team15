@@ -1,4 +1,4 @@
-import { fireEvent, screen } from "@testing-library/react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import axios from "axios";
 
@@ -156,8 +156,16 @@ describe("<ProjectList />", () => {
     const iconButton = screen.getByTestId("icon-button");
     fireEvent.click(iconButton);
 
+    await waitFor(() => {
+      expect(screen.getByTestId("delete-button")).toBeInTheDocument();
+    });
+
     const deleteButton = screen.getByTestId("delete-button");
     fireEvent.click(deleteButton);
+
+    await waitFor(() => {
+      expect(deleteButton).not.toBeInTheDocument();
+    })
   });
 
   it("should handle click create button", () => {
@@ -205,7 +213,7 @@ describe("<ProjectList />", () => {
     fireEvent.click(pageButton);
   });
 
-  it("should handle click edit button", () => {
+  it("should handle click edit button", async () => {
     jest.spyOn(axios, "patch").mockImplementation((url: string) => {
       return Promise.resolve();
     });
@@ -228,7 +236,12 @@ describe("<ProjectList />", () => {
     const iconButton = screen.getByTestId("icon-button");
     fireEvent.click(iconButton);
 
-    const deleteButton = screen.getByTestId("edit-button");
-    fireEvent.click(deleteButton);
+    const editButton = screen.getByTestId("edit-button");
+    fireEvent.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByText("Name")).toBeInTheDocument();
+    });
   });
+
 });

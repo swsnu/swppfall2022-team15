@@ -5,7 +5,7 @@ export async function deleteTarget(targetId: number) {
   try {
     return await axios.delete(`/api/targetuser/${targetId}/`);
   } catch (e: any) {
-    console.log(e.response);
+    return;
   }
 }
 
@@ -14,7 +14,7 @@ export async function getTarget(targetId: number) {
     const resp = await axios.get<TargetType>(`/api/targetuser/${targetId}/`);
     return resp.data;
   } catch (e: any) {
-    console.log(e.response);
+    return;
   }
 }
 
@@ -25,6 +25,6 @@ export async function updateTarget(targetId: number, requestData: any) {
     );
     return resp.data;
   } catch (e: any) {
-    console.log(e.response);
+    return;
   }
 }

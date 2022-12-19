@@ -71,32 +71,31 @@ export default function SignUp() {
     }
 
     try {
-      await axios.post(
-        "/api/signup/",
-        JSON.stringify({
-          email: email,
-          username: username,
-          password: password,
-        }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-            withCredentials: true,
-          },
-        }
-      ).then(response => {
-        if(response.status === 201) {
+      await axios
+        .post(
+          "/api/signup/",
+          JSON.stringify({
+            email: email,
+            username: username,
+            password: password,
+          }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+              withCredentials: true,
+            },
+          }
+        )
+        .then((response) => {
           alert("Account created successfully");
           navigate(`/login`);
-        }
-      });
-
+        });
     } catch (error: any) {
       if (!error.response) {
         setError("Error connecting to server");
       } else {
         setError("Email already exists");
-      } 
+      }
     }
   };
 
@@ -119,7 +118,7 @@ export default function SignUp() {
             name="username"
             label="Username"
             value={username}
-            inputProps={{"data-testid" : "username-input"}}
+            inputProps={{ "data-testid": "username-input" }}
             onChange={handleUsernameChange}
           />
           <TextField
@@ -128,7 +127,7 @@ export default function SignUp() {
             label="Password"
             type="password"
             value={password}
-            inputProps={{"data-testid" : "password-input"}}
+            inputProps={{ "data-testid": "password-input" }}
             onChange={handlePasswordChange}
           />
           <TextField
@@ -137,7 +136,7 @@ export default function SignUp() {
             label="Confirm Password"
             type="password"
             value={passwordConfirm}
-            inputProps={{"data-testid" : "password-confirm"}}
+            inputProps={{ "data-testid": "password-confirm" }}
             onChange={handlePasswordConfirmChange}
           />
         </Stack>

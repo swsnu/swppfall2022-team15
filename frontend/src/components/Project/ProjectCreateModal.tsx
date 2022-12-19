@@ -32,7 +32,6 @@ export default function ProjectCreateModal(props: IProps) {
     setProjectName("");
   };
   
-
   useEffect(() => {
     const initializeFields = async () => {
       const project = await fetchProject(props.projectid!);

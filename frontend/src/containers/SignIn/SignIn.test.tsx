@@ -98,4 +98,28 @@ describe("<SignIn />", () => {
       expect(screen.getByText("Error connecting to server")).toBeInTheDocument();
     });
   });
+
+  it("should successfully login", async () => {
+    jest.spyOn(axios, "post").mockImplementation(() => {
+      return Promise.resolve({
+        data: {
+          token: "test",
+        },
+        status: 200,
+      });
+    });
+
+    renderWithProviders(<SignIn />);
+
+    const emailInput = screen.getByTestId("email-input");
+    const passwordInput = screen.getByTestId("password-input");
+
+    fireEvent.change(emailInput, { target: { value: "test@test.com" } });
+    fireEvent.change(passwordInput, { target: { value: "test" } });
+
+    fireEvent.click(screen.getByTestId("signin-button"));
+    await waitFor(() => {
+      expect(mockNavigate).toBeCalledWith("/home");
+    });
+  });
 });
