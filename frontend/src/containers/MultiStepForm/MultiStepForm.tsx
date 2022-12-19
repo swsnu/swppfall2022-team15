@@ -85,8 +85,7 @@ export default function MultiStepForm() {
       justifyContent="top"
       marginTop={4}
     >
-      <Grid xs></Grid>
-      <Grid xs={8}>
+      <Grid item xs={8}>
         <Stepper data-testid="stepper" activeStep={activeStep}>
           {steps.map((label, index) => {
             const stepProps: { completed?: boolean } = {};
@@ -171,7 +170,6 @@ export default function MultiStepForm() {
           </Box>
         </Fragment>
       </Grid>
-      <Grid xs></Grid>
     </Grid>
   );
 }

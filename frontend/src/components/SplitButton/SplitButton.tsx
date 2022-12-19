@@ -61,7 +61,7 @@ export default function SplitButton(props: IProps) {
         ref={anchorRef}
         aria-label="split button"
       >
-        <Button onClick={handleClick}>{props.options[selectedIndex]}</Button>
+        <Button onClick={handleClick} data-testid="button">{props.options[selectedIndex]}</Button>
         <Button
           size="small"
           aria-controls={open ? "split-button-menu" : undefined}
