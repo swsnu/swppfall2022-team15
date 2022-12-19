@@ -1,32 +1,39 @@
 import {
   Button,
+  Card,
   IconButton,
   MenuItem,
   Popover,
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
+  TablePagination,
+  Link,
 } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
+import { Grid, TableContainer } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Iconify from "../components/iconify/Iconify";
-import Label from "../components/label/Label";
-import ProjectCreateModal from "../components/Project/ProjectCreateModal";
-import { deleteProject } from "../services/project";
-import { AppDispatch } from "../store";
-import { fetchProjects, projectListSelector } from "../store/slices/project";
+import { useNavigate } from "react-router-dom";
+import { Container } from "@mui/system";
+
+import Iconify from "../../components/Iconify/Iconify";
+import ProjectCreateModal from "../../components/Project/ProjectCreateModal";
+import { deleteProject } from "../../services/project";
+import { AppDispatch } from "../../store";
+import { fetchProjects, projectListSelector } from "../../store/slices/project";
+import Scrollbar from "../../components/Scrollbar/Scrollbar";
+import "./ProjectList.css";
 
 export default function ProjectListTable() {
   const [open, setOpen]: [HTMLElement | null, any] = useState(null);
   const [createModalopen, setCreateModalOpen] = useState(false);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [projectId, setProjectId]: any = useState(null);
 
-  const handleOpenMenu = (event: any) => {
-    setOpen(event.currentTarget);
-  };
+  const navigate = useNavigate();
 
   const handleCloseMenu = () => {
     setOpen(null);
@@ -39,68 +46,143 @@ export default function ProjectListTable() {
     dispatch(fetchProjects());
   };
 
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(fetchProjects());
+  }, [dispatch]);
+  const projects = useSelector(projectListSelector);
+
+  const handleOpenMenu = (event: any) => {
+    setOpen(event.currentTarget);
+  };
+
   const handleClickCreateButton = (event: React.MouseEvent) => {
     setCreateModalOpen(true);
   };
 
-  const dispatch = useDispatch<AppDispatch>();
-  useEffect(() => {
-    dispatch(fetchProjects());
-  }, []);
-  const projects = useSelector(projectListSelector);
+  const handleClickRow = (id: number) => {
+    navigate(`/projects/${id}`);
+  };
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
   return (
-    <div>
+    <>
       <ProjectCreateModal
         open={createModalopen}
-        handleClose={() => setCreateModalOpen(false)}
-      ></ProjectCreateModal>
-      <Grid container justifyContent="flex-end">
-        <Button onClick={handleClickCreateButton}>New Project</Button>
-      </Grid>
-      <TableContainer sx={{ minWidth: 800 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Most Recently Sent Notification</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {projects.map((row) => {
-              const { id, name, project_type } = row;
-              return (
-                <TableRow hover key={id} tabIndex={-1}>
-                  <TableCell align="left">{name}</TableCell>
+        handleClose={() => {
+          setCreateModalOpen(false);
+          setProjectId(null);
+        }}
+        projectid={projectId}
+      />
+      <Container maxWidth="xl" className="projectList">
+        <Grid container justifyContent="space-between">
+          <Grid item>
+            <h2>{"Projects"}</h2>
+          </Grid>
+          <Grid item className="projectButton">
+            <Button
+              data-testid="create-button"
+              onClick={handleClickCreateButton}
+            >
+              New Project
+            </Button>
+          </Grid>
+        </Grid>
+        <Card>
+          <Scrollbar>
+            <TableContainer
+              style={{
+                maxHeight: "calc(90vh - 200px)",
+              }}
+            >
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>
+                      <Container>Index</Container>
+                    </TableCell>
+                    <TableCell>
+                      <Container>Project Name</Container>
+                    </TableCell>
+                    <TableCell>
+                      <Container>Number of Requests</Container>
+                    </TableCell>
+                    <TableCell>
+                      <Container>Most Recently Sent Notification</Container>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
 
-                  <TableCell align="left">
-                    <Label
-                      color={
-                        (project_type === "organization" && "primary") ||
-                        "secondary"
-                      }
-                    >
-                      {project_type}
-                    </Label>
-                  </TableCell>
+                <TableBody>
+                  {projects
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      const { id, name } = row;
+                      return (
+                        <TableRow hover key={id} tabIndex={-1}>
+                          <TableCell>
+                            <Container>{index + 1}</Container>
+                          </TableCell>
+                          <TableCell>
+                            <Container>
+                              <Link
+                                href="#"
+                                underline="hover"
+                                onClick={() => handleClickRow(id)}
+                              >
+                                {name}
+                              </Link>
+                            </Container>
+                          </TableCell>
+                          <TableCell>
+                            <Container>{row.number_of_requests}</Container>
+                          </TableCell>
+                          <TableCell>
+                            <Container>
+                              {row.most_recently_sent_notification}
+                            </Container>
+                          </TableCell>
 
-                  <TableCell align="right">
-                    <IconButton
-                      size="large"
-                      color="inherit"
-                      onClick={handleOpenMenu}
-                      data-id={id}
-                    >
-                      <Iconify icon={"eva:more-vertical-fill"} />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                          <TableCell align="right">
+                            <IconButton
+                              size="large"
+                              color="inherit"
+                              onClick={handleOpenMenu}
+                              data-id={id}
+                              data-testid="icon-button"
+                            >
+                              <Iconify icon={"eva:more-vertical-fill"} />
+                            </IconButton>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={projects.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Scrollbar>
+        </Card>
+      </Container>
       <Popover
         open={Boolean(open)}
         anchorEl={open}
@@ -119,15 +201,27 @@ export default function ProjectListTable() {
           },
         }}
       >
-        <MenuItem>
+        <MenuItem
+          onClick={async () => {
+            handleCloseMenu();
+            const projectId = open!.dataset.id;
+            await setProjectId(projectId);
+            setCreateModalOpen(true);
+          }}
+          data-testid="edit-button"
+        >
           <Iconify icon={"eva:edit-fill"} sx={{ mr: 2 }} />
           Edit
         </MenuItem>
-        <MenuItem sx={{ color: "error.main" }} onClick={handleClickDelete}>
+        <MenuItem
+          sx={{ color: "error.main" }}
+          onClick={handleClickDelete}
+          data-testid="delete-button"
+        >
           <Iconify icon={"eva:trash-2-outline"} sx={{ mr: 2 }} />
           Delete
         </MenuItem>
       </Popover>
-    </div>
+    </>
   );
 }

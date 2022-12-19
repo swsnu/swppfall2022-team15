@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from account.models import User
-from project.models import Project
+from project.models import Project, ProjectTypeChoices
 
 
 class ProjectTestCase(APITestCase):
@@ -14,17 +14,17 @@ class ProjectTestCase(APITestCase):
             Project.objects.create(
                 name='project1',
                 user=self.user,
-                project_type=Project.ProjectType.INDIVIDUAL
+                project_type=ProjectTypeChoices.INDIVIDUAL
             ),
             Project.objects.create(
                 name='project2',
                 user=self.user,
-                project_type=Project.ProjectType.INDIVIDUAL
+                project_type=ProjectTypeChoices.INDIVIDUAL
             ),
             Project.objects.create(
                 name='project3',
                 user=self.user,
-                project_type=Project.ProjectType.INDIVIDUAL
+                project_type=ProjectTypeChoices.INDIVIDUAL
             )
         ]
 
@@ -46,7 +46,12 @@ class ProjectTestCase(APITestCase):
         self.client.force_login(self.user)
         resp = self.client.post(url, data={
             'name': 'new project',
-            'project_type': Project.ProjectType.INDIVIDUAL.value
+            'project_type': ProjectTypeChoices.INDIVIDUAL.value
         })
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
         self.assertTrue(Project.objects.filter(user=self.user, name='new project').exists())
+
+    def test_notification_config(self):
+        self.client.force_login(self.user)
+
+        self.client.get(f'/api/project/{self.projects[0].id}/notification_config/')

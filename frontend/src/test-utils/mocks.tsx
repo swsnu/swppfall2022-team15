@@ -1,31 +1,23 @@
-import { configureStore, PreloadedState } from "@reduxjs/toolkit";
-import { render, RenderOptions } from "@testing-library/react";
-import { PropsWithChildren } from "react";
-import { ProSidebarProvider } from "react-pro-sidebar";
-import { Provider } from "react-redux";
+import {PreloadedState} from "@reduxjs/toolkit";
+import {render, RenderOptions} from "@testing-library/react";
+import {PropsWithChildren} from "react";
+import {ProSidebarProvider} from "react-pro-sidebar";
+import {Provider} from "react-redux";
 
-import { AppStore, RootState } from "../store";
-import ProjectReducer from "../store/slices/project";
+import {AppStore, RootState} from "../store";
+import {setupStore} from "../store/slices";
+import {createTheme, ThemeProvider} from "@mui/material";
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
   preloadedState?: PreloadedState<RootState>;
   store?: AppStore;
 }
 
-export const getMockStore = (preloadedState?: PreloadedState<RootState>) => {
-  return configureStore({
-    reducer: {
-      projects: ProjectReducer,
-    },
-    preloadedState,
-  });
-};
-
 export function renderWithProviders(
   ui: React.ReactElement,
   {
     preloadedState,
-    store = getMockStore(preloadedState),
+    store = setupStore(preloadedState),
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {
@@ -38,4 +30,10 @@ export function renderWithProviders(
   }
 
   return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
+}
+
+export function MockTheme({ children }: any, ) {
+  // FIXME
+  const theme = createTheme({palette: {mode: "dark"}});
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }
