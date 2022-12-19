@@ -234,8 +234,8 @@ describe("MessageStep", () => {
       />,
       { preloadedState }
     );
-    fireEvent.click(screen.getByTestId("loadMessageButton"));
-    fireEvent.click(screen.getByText("Close"));
+    fireEvent.click(screen.getByLabelText("Create"));
+    fireEvent.click(screen.getByLabelText("Load"));
   });
 
   it("should handle load mode and close : esc", async () => {
