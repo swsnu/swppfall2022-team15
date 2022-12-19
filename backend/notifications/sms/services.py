@@ -37,21 +37,27 @@ def task_send_sms_notification(notification_data):
     started_at = timezone.now()
     response = requests.post(
         url=settings.NCLOUD_SMS_ENDPOINT,
+        timeout=10,
         json=request_data,
         headers=headers,
     )
     finished_at = timezone.now()
     try:
         response.raise_for_status()
-    except requests.exceptions.RequestException as e:
+    except requests.exceptions.RequestException:
         logger.info(response.text)
         notification = Notification.objects.get(id=notification_data['id'])
-        notification.update_result(EnumNotificationStatus.FAILURE, response.status_code, response.text, started_at, finished_at)
+        notification.update_result(
+            # pylint: disable=C0301
+            EnumNotificationStatus.FAILURE, response.status_code, response.text, started_at, finished_at
+        )
 
         return
 
     notification = Notification.objects.get(id=notification_data['id'])
-    notification.update_result(EnumNotificationStatus.SUCCESS, response.status_code, response.text, started_at, finished_at)
+    notification.update_result(
+        EnumNotificationStatus.SUCCESS, response.status_code, response.text, started_at, finished_at
+    )
 
 
 def create_ncloud_headers():
@@ -60,7 +66,7 @@ def create_ncloud_headers():
     secret_key = bytes(settings.NCLOUD_SECRET_KEY, 'UTF-8')
 
     method = 'POST'
-    uri = '/sms/v2/services/{}/messages'.format(settings.NCLOUD_SERVICE_ID)
+    uri = f'/sms/v2/services/{settings.NCLOUD_SERVICE_ID}/messages'
     timestamp = str(int(time.time() * 1000))
     message = f'{method} {uri}\n{timestamp}\n{access_key}'
     message = bytes(message, 'UTF-8')

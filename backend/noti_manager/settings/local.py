@@ -34,5 +34,4 @@ SMS_SENDER =''
 NCLOUD_ACCESS_KEY = ''
 NCLOUD_SECRET_KEY = ''
 NCLOUD_SERVICE_ID = ''
-NCLOUD_SMS_ENDPOINT = 'https://sens.apigw.ntruss.com/sms/v2/services/ncp:sms:kr:256583376592:notimanager/messages'
-
+NCLOUD_SMS_ENDPOINT = ''

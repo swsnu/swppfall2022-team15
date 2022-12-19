@@ -60,6 +60,7 @@ class Notification(TimeStampedModel):
     started_at = models.DateTimeField(null=True)
     finished_at = models.DateTimeField(null=True)
 
+    # pylint: disable=R0913
     def update_result(self, status, response_status, response_data, started_at, finished_at):
         self.status = status
         self.response = {
