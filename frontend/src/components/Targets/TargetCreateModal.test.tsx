@@ -30,7 +30,7 @@ describe("TargetCreateModal", () => {
     userEvent.keyboard("{esc}");
   });
 
-  it("should select notification type", () => {
+  it("should select notification type", async () => {
     renderWithProviders(
       <TargetCreateModal open={true} handleClose={() => {}} />
     );
@@ -38,13 +38,14 @@ describe("TargetCreateModal", () => {
     fireEvent.change(select, { target: { value: "EMAIL" } });
   });
 
-  it("should handle click: confirm", () => {
+  it("should handle click: confirm", async () => {
+    jest.spyOn(axios, "patch").mockImplementation(() => Promise.resolve());
     const handleClick = jest.fn();
     renderWithProviders(
-      <TargetCreateModal open={true} handleClose={handleClick} />
+      <TargetCreateModal open={true} handleClose={handleClick} targetId={1} />, { preloadedState }
     );
     const confirmButton = screen.getByText("Confirm");
-    confirmButton.click();
+    fireEvent.click(confirmButton);
   });
 
   it("should handle click: with slack data", () => {
