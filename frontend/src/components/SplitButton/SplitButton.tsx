@@ -44,16 +44,6 @@ export default function SplitButton(props: IProps) {
     setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event: Event) => {
-    if (
-      anchorRef.current &&
-      anchorRef.current.contains(event.target as HTMLElement)
-    ) {
-      return;
-    }
-    setOpen(false);
-  };
-
   return (
     <React.Fragment>
       <ButtonGroup
@@ -92,7 +82,7 @@ export default function SplitButton(props: IProps) {
             }}
           >
             <Paper>
-              <ClickAwayListener onClickAway={handleClose}>
+
                 <MenuList id="split-button-menu" autoFocusItem>
                   {props.options.map((option, index) => (
                     <MenuItem
@@ -105,7 +95,7 @@ export default function SplitButton(props: IProps) {
                     </MenuItem>
                   ))}
                 </MenuList>
-              </ClickAwayListener>
+
             </Paper>
           </Grow>
         )}

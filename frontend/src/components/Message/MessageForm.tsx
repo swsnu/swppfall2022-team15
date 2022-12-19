@@ -13,7 +13,6 @@ interface IProps {
 
 export default function MessageCreateForm(
   props: IProps,
-  disabled: boolean = false
 ) {
   let form;
   const {
@@ -25,6 +24,7 @@ export default function MessageCreateForm(
     fieldErrors,
     setFieldErrors,
   } = props;
+  let disabled = false;
 
   switch (notificationType) {
     case EnumNotificationType.SLACK:

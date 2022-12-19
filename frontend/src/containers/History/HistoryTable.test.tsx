@@ -121,17 +121,14 @@ describe("HistoryTable", () => {
           totalSuccess: 0,
           totalFailure: 0,
           selectedNotification: null,
-          notifications_selectedProject: []
-        }
-      }
+          notifications_selectedProject: [],
+        },
+      },
     });
 
     await screen.findByText("test1");
 
     fireEvent.click(screen.getByTitle("Next page"));
     fireEvent.click(screen.getByTitle("Previous page"));
-
   });
-
-  
 });

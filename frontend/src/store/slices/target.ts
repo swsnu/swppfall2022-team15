@@ -30,7 +30,6 @@ export const createTarget = createAsyncThunk(
     endpoint: string;
     notification_type: string;
   }) => {
-    console.log(requestData);
     const response = await axios.post<TargetType>(
       `/api/targetuser/`,
       requestData

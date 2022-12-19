@@ -7,8 +7,12 @@ describe("Label", () => {
     render(<Label />);
   });
 
-  it("should render - start and end icon", () => {
-    render(<Label startIcon={true} endIcon={true} />);
+  it("should render - start icon", () => {
+    render(<Label startIcon={true} />);
+  });
+
+  it("should render - end icon", () => {
+    render(<Label endIcon={true} />);
   });
 
   it("should render - filled variant", () => {

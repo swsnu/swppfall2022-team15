@@ -61,26 +61,6 @@ export default function BarLineAnalytics(props: IProps) {
         } else {
           await dispatch(getDailyDataByType(props.noti_type));
         }
-      } else if (type === 20) {
-        if (props.type === 0) {
-          await dispatch(getWeeklyData());
-        } else if (props.type === 1) {
-          if (projectState) {
-            await dispatch(getWeeklyDataByProject(projectState.id));
-          }
-        } else {
-          await dispatch(getWeeklyDataByType(props.noti_type));
-        }
-      } else {
-        if (props.type === 0) {
-          await dispatch(getMonthlyData());
-        } else if (props.type === 1) {
-          if (projectState) {
-            await dispatch(getMonthlyDataByProject(projectState.id));
-          }
-        } else {
-          await dispatch(getMonthlyDataByType(props.noti_type));
-        }
       }
     };
     handleTypeChange();
@@ -110,50 +90,6 @@ export default function BarLineAnalytics(props: IProps) {
           total.push({
             x: date,
             y: analyticsData.barLineDataDaily.Total[date],
-          });
-        }
-      } else if (type === 20) {
-        for (let i = 15; i >= 0; i--) {
-          const today = moment();
-          const date = moment()
-            .subtract(i, "weeks")
-            .subtract(today.weekday() - 1, "days")
-            .format("YYYY-MM-DD");
-          success.push({
-            x: date,
-            y: analyticsData.barLineDataWeekly.Success[date],
-          });
-          fail.push({
-            x: date,
-            y: analyticsData.barLineDataWeekly.Failure[date],
-          });
-          pending.push({
-            x: date,
-            y: analyticsData.barLineDataWeekly.Pending[date],
-          });
-          total.push({
-            x: date,
-            y: analyticsData.barLineDataWeekly.Total[date],
-          });
-        }
-      } else {
-        for (let i = 12; i >= 0; i--) {
-          const date = moment().subtract(i, "months").format("YYYY-MM-01");
-          success.push({
-            x: date,
-            y: analyticsData.barLineDataMonthly.Success[date],
-          });
-          fail.push({
-            x: date,
-            y: analyticsData.barLineDataMonthly.Failure[date],
-          });
-          pending.push({
-            x: date,
-            y: analyticsData.barLineDataMonthly.Pending[date],
-          });
-          total.push({
-            x: date,
-            y: analyticsData.barLineDataMonthly.Total[date],
           });
         }
       }
@@ -203,13 +139,8 @@ export default function BarLineAnalytics(props: IProps) {
             inputProps={{ "data-testid": "select-type" }}
             value={type}
             label="Type"
-            onChange={(e) => {
-              setType(e.target.value as number);
-            }}
           >
             <MenuItem value={10}>Daily</MenuItem>
-            <MenuItem value={20}>Weekly</MenuItem>
-            <MenuItem value={30}>Monthly</MenuItem>
           </Select>
         </FormControl>
         <ReactApexChart
