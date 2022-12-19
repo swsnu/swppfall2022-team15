@@ -321,7 +321,7 @@ describe("TargetUserStep", () => {
     fireEvent.change(screen.getByTestId("type-input-webhook"), {
       target: { value: "bearer" },
     });
-    fireEvent.change(screen.getByTestId("username-input"), {
+    fireEvent.change(screen.getByTestId("token-input"), {
       target: { value: "test" },
     });
 
