@@ -11,9 +11,6 @@ class TargetUserViewSet(CreateByNotificationTypeMixin, ModelViewSet):
     serializer_class = TargetUserSerializer
     permission_classes = (IsAuthenticated,)
 
-    def list(self, request, *args, **kwargs):
-        return super().list(request, *args, **kwargs)
-
     # pylint: disable=inconsistent-return-statements
     def get_create_serializer_class(self):
         return TargetUserSerializer

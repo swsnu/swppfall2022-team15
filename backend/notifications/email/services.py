@@ -43,12 +43,12 @@ def task_send_gmail_notification(notification_task_dto):
     }
     started_at = timezone.now()
     response = requests.post(
+        # pylint: disable=C0301
         url=f'https://www.googleapis.com/gmail/v1/users/me/messages/send?access_token={access_token}',
         json=request_data,
         timeout=5,
         headers=headers,
     )
-    print(response.text)
     finished_at = timezone.now()
     notification = Notification.objects.get(id=notification_task_dto['id'])
     try:
@@ -70,5 +70,3 @@ def task_send_gmail_notification(notification_task_dto):
         started_at,
         finished_at
     )
-
-    return

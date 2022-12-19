@@ -11,6 +11,7 @@ class EmailServiceTestCase(TestCase):
 
     @mock.patch('requests.post', return_value=mock.Mock(status_code=200, text=''))
     def test_task_send_gmail_notification(self, _):
+        # pylint: disable=R0801
         target_user = baker.make(
             TargetUser, notification_type=EnumNotificationType.SLACK
         )
@@ -48,4 +49,3 @@ class EmailServiceTestCase(TestCase):
             'subject': '',
             'content': ''
         })
-
