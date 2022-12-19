@@ -90,12 +90,14 @@ export default function MessageStep(props: IProps) {
         <RadioGroup
           aria-label="notificationType"
           onChange={(e) => {
+            console.log(e.target.value)
             if (e.target.value === "load" && message) {
               setName(message?.name);
               setData(message?.data);
             }
             setMode(e.target.value);
           }}
+          data-testid={"mode-radio-group"}
           defaultValue="load"
           name="radio-buttons-group"
         >

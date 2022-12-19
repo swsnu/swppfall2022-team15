@@ -45,21 +45,7 @@ export default function MultiStepForm() {
   };
 
   const handleNext = () => {
-    if (!notificationType) {
-      setError("Notification Type is required");
-      return;
-    }
-
-    if (activeStep === 2 && targetUsers.length === 0) {
-      setError("This field is required");
-      return;
-    }
-
     let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
@@ -73,9 +59,6 @@ export default function MultiStepForm() {
     }
   };
 
-  const handleFinish = () => {
-    navigate("/home");
-  };
 
   return (
     <Grid
@@ -159,15 +142,11 @@ export default function MultiStepForm() {
               Back
             </Button>
             <Box sx={{ flex: "1 1 auto" }} />
-            {activeStep !== steps.length - 1 ? (
+            {
               <Button onClick={handleNext} data-testid="next-button">
                 Next
               </Button>
-            ) : (
-              <Button onClick={handleFinish} data-testid="finish-button">
-                Finish
-              </Button>
-            )}
+            }
           </Box>
         </Fragment>
       </Grid>

@@ -1,11 +1,7 @@
-
 import MultiStepForm from "./MultiStepForm";
-import { Provider } from "react-redux";
 import React from "react";
-import { fireEvent, screen } from "@testing-library/react";
-import { renderWithProviders } from "../../test-utils/mocks";
-import { EnumNotificationType } from "../../Enums";
-import preloadedState from "../../test-utils/mock_state";
+import {fireEvent, render, screen} from "@testing-library/react";
+import {renderWithProviders} from "../../test-utils/mocks";
 
 const mockNavigate = jest.fn();
 jest.mock("react-router-dom", () => {
@@ -30,26 +26,29 @@ jest.mock("@mui/material", () => {
   };
 });
 
-const useStateSpy = jest.spyOn(React, "useState");
-
 describe("MultiStepForm", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("temp", async () => {
-    expect(true).toBe(true);
-  });
-/*
   it("should navigate to home when back button is clicked at first stage", async () => {
-    renderWithProviders(<MultiStepForm />);
-
+    render(<MultiStepForm />);
     const stepper = screen.getByTestId("stepper");
     var activeStep = Number(stepper.getAttribute("activeStep"));
 
     if (activeStep === 0) {
       fireEvent.click(screen.getByTestId("back-button"));
       expect(mockNavigate).toHaveBeenCalledWith("/home");
+    }
+  });
+
+    it("should navigate to when next button is clicked at first stage", async () => {
+    renderWithProviders(<MultiStepForm />);
+    const stepper = screen.getByTestId("stepper");
+    var activeStep = Number(stepper.getAttribute("activeStep"));
+
+    if (activeStep === 0) {
+      fireEvent.click(screen.getByTestId("next-button"));
     }
   });
 
@@ -83,10 +82,11 @@ describe("MultiStepForm", () => {
   it("should go to next stage when next button is clicked", async () => {
     renderWithProviders(<MultiStepForm />);
 
-    const stepper = screen.getByTestId("stepper");
-    var activeStep = Number(stepper.getAttribute("activeStep"));
+    const nextButton = screen.getByTestId('next-button')
+    fireEvent.click(nextButton)
+    fireEvent.click(nextButton)
 
+    const backButton = screen.getByTestId('back-button')
+    fireEvent.click(backButton)
   });
-*/
-
 });
