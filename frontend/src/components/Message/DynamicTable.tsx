@@ -79,18 +79,17 @@ export default function DynamicTable(props: {
                   return (
                     <TableRow
                       hover
-                      key={row.id}
                       tabIndex={-1}
                       onClick={() => handleClickRow(row.id)}
                       data-testid={`table-row-${row.id}`}
                     >
-                      <TableCell key={row.id}>
+                      <TableCell>
                         <Container>{index + 1}</Container>
                       </TableCell>
-                      {props.keys.map((key: string) => {
+                      {props.keys.map((key: string, index: number) => {
                         let value = inDepthFieldParser(key, row);
                         return (
-                          <TableCell align="left">
+                          <TableCell align="left" key={index}>
                             <Container>{value}</Container>
                           </TableCell>
                         );
