@@ -64,10 +64,8 @@ export default function SignIn() {
       );
       const token = response.data.token;
 
-      if (response.status === 200) {
-        setToken(token);
-        navigate(`/home`);
-      }
+      setToken(token);
+      navigate(`/home`);
     } catch (error: any) {
       if (!error.response) {
         setError("Error connecting to server");

@@ -16,14 +16,8 @@ import { AppDispatch } from "../../../store";
 import {
   analyticsSelector,
   getDailyData,
-  getWeeklyData,
-  getMonthlyData,
   getDailyDataByProject,
   getDailyDataByType,
-  getWeeklyDataByProject,
-  getWeeklyDataByType,
-  getMonthlyDataByProject,
-  getMonthlyDataByType,
 } from "../../../store/slices/analytics";
 import moment from "moment";
 import { projectSelect } from "../../../store/slices/project";
@@ -51,20 +45,18 @@ export default function BarLineAnalytics(props: IProps) {
 
   useEffect(() => {
     const handleTypeChange = async () => {
-      if (type === 10) {
-        if (props.type === 0) {
-          await dispatch(getDailyData());
-        } else if (props.type === 1) {
-          if (projectState) {
-            await dispatch(getDailyDataByProject(projectState.id));
-          }
-        } else {
-          await dispatch(getDailyDataByType(props.noti_type));
+      if (props.type === 0) {
+        await dispatch(getDailyData());
+      } else if (props.type === 1) {
+        if (projectState) {
+          await dispatch(getDailyDataByProject(projectState.id));
         }
+      } else {
+        await dispatch(getDailyDataByType(props.noti_type));
       }
     };
     handleTypeChange();
-  }, [type, projectState, props.type, props.noti_type, dispatch]);
+  }, [projectState, props.type, props.noti_type, dispatch]);
   useEffect(() => {
     function getData() {
       let success = [];
@@ -72,51 +64,49 @@ export default function BarLineAnalytics(props: IProps) {
       let pending = [];
       let total = [];
 
-      if (type === 10) {
-        for (let i = 14; i >= 0; i--) {
-          const date = moment().subtract(i, "days").format("YYYY-MM-DD");
-          success.push({
-            x: date,
-            y: analyticsData.barLineDataDaily.Success[date],
-          });
-          fail.push({
-            x: date,
-            y: analyticsData.barLineDataDaily.Failure[date],
-          });
-          pending.push({
-            x: date,
-            y: analyticsData.barLineDataDaily.Pending[date],
-          });
-          total.push({
-            x: date,
-            y: analyticsData.barLineDataDaily.Total[date],
-          });
-        }
+      for (let i = 14; i >= 0; i--) {
+        const date = moment().subtract(i, "days").format("YYYY-MM-DD");
+        success.push({
+          x: date,
+          y: analyticsData.barLineDataDaily.Success[date],
+        });
+        fail.push({
+          x: date,
+          y: analyticsData.barLineDataDaily.Failure[date],
+        });
+        pending.push({
+          x: date,
+          y: analyticsData.barLineDataDaily.Pending[date],
+        });
+        total.push({
+          x: date,
+          y: analyticsData.barLineDataDaily.Total[date],
+        });
       }
 
       const data = [
         {
           name: "Success",
           type: "column",
-          fill: {colors: green[300]},
+          fill: { colors: green[300] },
           data: success,
         },
         {
           name: "Failure",
           type: "column",
-          fill: {colors: red[300]},
+          fill: { colors: red[300] },
           data: fail,
         },
         {
           name: "Pending",
           type: "column",
-          fill: {colors: blue[300]},
+          fill: { colors: blue[300] },
           data: pending,
         },
         {
           name: "Total",
           type: "line",
-          fill: {colors: grey[300]},
+          fill: { colors: grey[300] },
           data: total,
         },
       ];
@@ -179,7 +169,7 @@ export default function BarLineAnalytics(props: IProps) {
             dataLabels: {
               style: {
                 colors: [green[300], red[300], blue[300], grey[300]],
-              }
+              },
             },
             markers: {
               colors: [green[300], red[300], blue[300], grey[300]],

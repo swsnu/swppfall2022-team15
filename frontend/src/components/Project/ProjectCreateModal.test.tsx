@@ -20,11 +20,9 @@ describe("<ProjectCreateModal />", () => {
         data: {},
       })
     );
-
     renderWithProviders(
       <ProjectCreateModal open={true} handleClose={() => {}} />
     );
-
     const nameInput = screen.getByTestId("name-input");
     const confirmButton = screen.getByTestId("confirm-button");
 
@@ -67,6 +65,11 @@ describe("<ProjectCreateModal />", () => {
         data: {},
       });
     });
+    jest.spyOn(axios, "get").mockImplementation(() => {
+      return Promise.resolve({
+        data: [],
+      });
+    });
     renderWithProviders(
       <ProjectCreateModal open={true} handleClose={() => {}} projectid={1} />,
       { preloadedState }
@@ -76,5 +79,9 @@ describe("<ProjectCreateModal />", () => {
       target: { value: "test" },
     });
     fireEvent.click(screen.getByTestId("confirm-button"));
+    await waitFor(() => {
+      expect(screen.getByTestId("name-input")).toHaveValue("");
+    });
   });
+
 });
