@@ -97,14 +97,14 @@ export default function TargetUserStep(props: IProps) {
           justifyContent="top"
           marginTop={4}
         >
-          <Grid lg />
-          <Grid lg={10}>
+          <Grid item lg />
+          <Grid item lg={10}>
             {form}
             <Button data-testid="confirm-button" onClick={handleClickConfirm}>
               Confirm
             </Button>
           </Grid>
-          <Grid lg />
+          <Grid item lg />
         </Grid>
       </Dialog>
       <Button variant="contained" onClick={() => setDialogOpen(true)}>

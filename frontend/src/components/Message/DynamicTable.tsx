@@ -62,13 +62,10 @@ export default function DynamicTable(props: {
         >
           <Table stickyHeader>
             <TableHead>
-              <TableRow key={0}>
-                <TableCell>
-                  <Container>Index</Container>
-                </TableCell>
-                {props.columns.map((col) => {
+              <TableRow>
+                {props.columns.map((col, index) => {
                   return (
-                    <TableCell>
+                    <TableCell key={index}>
                       <Container>{col}</Container>
                     </TableCell>
                   );
@@ -87,7 +84,7 @@ export default function DynamicTable(props: {
                       onClick={() => handleClickRow(row.id)}
                       data-testid={`table-row-${row.id}`}
                     >
-                      <TableCell>
+                      <TableCell key={row.id}>
                         <Container>{index + 1}</Container>
                       </TableCell>
                       {props.keys.map((key: string) => {

@@ -90,7 +90,6 @@ export default function MessageStep(props: IProps) {
         <RadioGroup
           aria-label="notificationType"
           onChange={(e) => {
-            console.log(e.target.value)
             if (e.target.value === "load" && message) {
               setName(message?.name);
               setData(message?.data);
@@ -122,8 +121,8 @@ export default function MessageStep(props: IProps) {
           justifyContent="top"
           marginTop={4}
         >
-          <Grid lg></Grid>
-          <Grid lg={10}>
+          <Grid item lg></Grid>
+          <Grid item lg={10}>
             <DynamicTable
               columns={getMessageColumns(notificationType)} // todo: refactor
               keys={getMessageKeys(notificationType)}
@@ -141,7 +140,7 @@ export default function MessageStep(props: IProps) {
             />
           </Grid>
 
-          <Grid lg></Grid>
+          <Grid item lg></Grid>
         </Grid>
         <Button onClick={() => setDialogOpen(false)}>Close</Button>
       </Dialog>
