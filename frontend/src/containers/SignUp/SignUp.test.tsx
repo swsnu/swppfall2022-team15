@@ -39,6 +39,7 @@ describe("SignUp", () => {
         },
       })
     );
+    jest.spyOn(window, "alert").mockImplementation(() => {});
 
     renderWithProviders(<SignUp />);
     const emailInput = screen.getByTestId("email-input");
