@@ -32,6 +32,20 @@ describe("TargetCreateForm", () => {
     );
   });
 
+  it("should render slack with value", () => {
+    renderWithProviders(
+      <TargetUserForm
+        notificationType={EnumNotificationType.SLACK}
+        targetName={"test"}
+        setTargetName={() => {}}
+        endpoint={"test"}
+        setEndpoint={() => {}}
+        data={{api_key: "api_key"}}
+        setData={() => {}}
+      />
+    );
+  });
+
   it("should render webhook", () => {
     renderWithProviders(
       <TargetUserForm
@@ -130,6 +144,22 @@ describe("TargetCreateForm", () => {
     fireEvent.change(passwordInput, { target: { value: "test" } });
   });
 
+  it("should handle apiAuth: basic, data change - with value", () => {
+    renderWithProviders(
+      <TargetUserForm
+        notificationType={EnumNotificationType.WEBHOOK}
+        targetName={"test"}
+        setTargetName={() => {}}
+        endpoint={"test"}
+        setEndpoint={() => {}}
+        data={{username: "username", password:"password"}}
+        setData={() => {}}
+      />
+    );
+    const apiAuthInput = screen.getByTestId("type-input-webhook");
+    fireEvent.change(apiAuthInput, { target: { value: "basic" } });
+  });
+
   it("should handle apiAuth: bearer", () => {
     renderWithProviders(
       <TargetUserForm
@@ -139,6 +169,22 @@ describe("TargetCreateForm", () => {
         endpoint={"test"}
         setEndpoint={() => {}}
         data={{}}
+        setData={() => {}}
+      />
+    );
+    const apiAuthInput = screen.getByTestId("type-input-webhook");
+    fireEvent.change(apiAuthInput, { target: { value: "bearer" } });
+  });
+
+  it("should handle apiAuth: bearer", () => {
+    renderWithProviders(
+      <TargetUserForm
+        notificationType={EnumNotificationType.WEBHOOK}
+        targetName={"test"}
+        setTargetName={() => {}}
+        endpoint={"test"}
+        setEndpoint={() => {}}
+        data={{token: "token"}}
         setData={() => {}}
       />
     );
@@ -161,7 +207,7 @@ describe("TargetCreateForm", () => {
     const apiAuthInput = screen.getByTestId("type-input-webhook");
     fireEvent.change(apiAuthInput, { target: { value: "bearer" } });
 
-    const tokenInput = screen.getByTestId("username-input");
+    const tokenInput = screen.getByTestId("token-input");
     fireEvent.change(tokenInput, { target: { value: "test" } });
   });
 
@@ -174,6 +220,22 @@ describe("TargetCreateForm", () => {
         endpoint={"test"}
         setEndpoint={() => {}}
         data={{}}
+        setData={() => {}}
+      />
+    );
+    const apiAuthInput = screen.getByTestId("type-input-webhook");
+    fireEvent.change(apiAuthInput, { target: { value: "api_key" } });
+  });
+
+    it("should handle apiAuth: api_key with key", () => {
+    renderWithProviders(
+      <TargetUserForm
+        notificationType={EnumNotificationType.WEBHOOK}
+        targetName={"test"}
+        setTargetName={() => {}}
+        endpoint={"test"}
+        setEndpoint={() => {}}
+        data={{key:"key", value: "value"}}
         setData={() => {}}
       />
     );

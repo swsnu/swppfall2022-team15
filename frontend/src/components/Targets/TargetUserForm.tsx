@@ -112,7 +112,7 @@ export const TargetUserForm = (props: IProps) => {
             type="text"
             fullWidth
             value={"token" in data ? data["token"] : ""}
-            inputProps={{ "data-testid": "username-input" }}
+            inputProps={{ "data-testid": "token-input" }}
             onChange={(event) => {
               setData({ ...data, token: event.target.value });
             }}
